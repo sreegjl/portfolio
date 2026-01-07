@@ -363,7 +363,6 @@ if (document.getElementById('markdown-content')) {
         const pathsToTry = [
             `files/notes/${filename}`,
             `./files/notes/${filename}`,
-            `/files/notes/${filename}`
         ];
 
         console.log('Paths to try:', pathsToTry);
@@ -474,7 +473,7 @@ if (document.getElementById('notesTableBody')) {
         const loadingDiv = document.getElementById('loading');
         const emptyState = document.getElementById('emptyState');
 
-        const pathsToTry = ['files/notes/', './files/notes/', '/files/notes/'];
+        const pathsToTry = ['files/notes/', './files/notes/'];
         let mdFiles = [];
         let successPath = null;
 
