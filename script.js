@@ -467,49 +467,89 @@ if (document.getElementById('markdown-content')) {
 
 // ===== NOTES TABLE PAGE - Load and display notes list =====
 if (document.getElementById('notesTableBody')) {
+    console.log('Notes table page detected');
+    
     async function loadNotes() {
+        console.log('loadNotes function called');
         const notesTableBody = document.getElementById('notesTableBody');
         const notesTable = document.getElementById('notesTable');
         const loadingDiv = document.getElementById('loading');
         const emptyState = document.getElementById('emptyState');
 
-        const pathsToTry = ['files/notes/', './files/notes/'];
+        console.log('Elements found:', {
+            notesTableBody: !!notesTableBody,
+            notesTable: !!notesTable,
+            loadingDiv: !!loadingDiv,
+            emptyState: !!emptyState
+        });
+
         let mdFiles = [];
-        let successPath = null;
+        let successPath = 'files/notes/';
 
-        for (const path of pathsToTry) {
-            try {
-                console.log(`Trying to fetch directory: ${path}`);
-                const response = await fetch(path);
+        // Try to load from manifest file (for GitHub Pages)
+        try {
+            console.log('Trying to fetch notes-manifest.json');
+            const manifestResponse = await fetch('notes-manifest.json');
+            
+            if (manifestResponse.ok) {
+                const manifest = await manifestResponse.json();
+                console.log('Manifest loaded:', manifest);
+                mdFiles = manifest.notes || [];
+                console.log(`Found ${mdFiles.length} notes in manifest`);
+            } else {
+                console.log('No manifest found, trying directory listing');
+                // Fallback to directory listing (for local development)
+                const pathsToTry = ['files/notes/', './files/notes/'];
                 
-                if (response.ok) {
-                    const html = await response.text();
-                    
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const links = doc.querySelectorAll('a');
-                    
-                    links.forEach(link => {
-                        const href = link.getAttribute('href');
-                        if (href && href.endsWith('.md')) {
-                            const filename = href.split('/').pop();
-                            mdFiles.push(filename);
-                        }
-                    });
+                for (const path of pathsToTry) {
+                    try {
+                        console.log(`Trying to fetch directory: ${path}`);
+                        const response = await fetch(path);
+                        
+                        console.log(`Response for ${path}:`, response.status, response.statusText);
+                        
+                        if (response.ok) {
+                            const html = await response.text();
+                            console.log(`HTML response length: ${html.length}`);
+                            
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const links = doc.querySelectorAll('a');
+                            
+                            console.log(`Found ${links.length} links in directory listing`);
+                            
+                            links.forEach(link => {
+                                const href = link.getAttribute('href');
+                                if (href && href.endsWith('.md')) {
+                                    const filename = href.split('/').pop();
+                                    console.log(`MD file found: ${filename}`);
+                                    mdFiles.push(filename);
+                                }
+                            });
 
-                    if (mdFiles.length > 0) {
-                        successPath = path;
-                        break;
+                            if (mdFiles.length > 0) {
+                                successPath = path;
+                                console.log(`Success! Found ${mdFiles.length} markdown files`);
+                                break;
+                            }
+                        }
+                    } catch (error) {
+                        console.error(`Error with path ${path}:`, error);
                     }
                 }
-            } catch (error) {
-                console.error(`Error with path ${path}:`, error);
             }
+        } catch (error) {
+            console.error('Error loading manifest:', error);
         }
 
+        console.log(`Total MD files found: ${mdFiles.length}`);
+        console.log(`MD files:`, mdFiles);
+
         if (mdFiles.length === 0) {
+            console.warn('No markdown files found, showing empty state');
             loadingDiv.style.display = 'none';
             emptyState.style.display = 'block';
+            emptyState.innerHTML = '<p>No notes found. Check console for debugging info.</p>';
             return;
         }
 
