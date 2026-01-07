@@ -253,11 +253,16 @@ nav {
 }
 
 .resume-header h1 {
-    font-size: clamp(3rem, 8vw, 5rem);
+    font-size: clamp(2rem, 10vw, 6rem);
     font-weight: 900;
+    letter-spacing: 8px;
     text-transform: uppercase;
-    letter-spacing: -2px;
     margin-bottom: 10px;
+    text-align: left;
+    color: #000;
+    -webkit-text-stroke: 1px #000;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
 }
 
 .resume-header h1 .char {
@@ -387,13 +392,387 @@ nav {
     }
 }
 
+/* NOTES */
+
+.notes-section {
+    min-height: 100vh;
+    background: #f5f5f5;
+    padding: 120px 40px 80px;
+}
+
+.notes-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.notes-header {
+    margin-bottom: 30px;
+}
+
+.notes-header h1 {
+    font-size: clamp(2rem, 10vw, 6rem);
+    font-weight: 900;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-align: left;
+    color: #000;
+    -webkit-text-stroke: 1px #000;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+}
+
+.notes-header h1 .char {
+    margin-top: 25px;
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+}
+
+.notes-header .subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+    opacity: 0;
+}
+
+.notes-table-container {
+    background: #f7f6f6;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.tag-filter-section {
+    padding: 0 0 30px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    background: transparent;
+}
+
+.tag-filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    background: transparent;
+    color: #000;
+    font-size: 0.8rem;
+    border-radius: 16px;
+    text-transform: lowercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid #000;
+}
+
+.filter-tag:hover {
+    background: #f5f5f5;
+}
+
+.filter-tag.active {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.notes-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.notes-table thead {
+    background: #000;
+    color: #fff;
+}
+
+.notes-table th {
+    padding: 20px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.notes-table td {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.notes-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.notes-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.notes-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.note-title {
+    font-weight: 600;
+    color: #000;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.note-title:hover {
+    color: #666;
+}
+
+.note-date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.note-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #000;
+    color: #fff;
+    font-size: 0.75rem;
+    border-radius: 12px;
+    text-transform: lowercase;
+    font-weight: 500;
+}
+
+.no-tags {
+    color: #ccc;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.note-preview {
+    color: #888;
+    font-size: 0.9rem;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: #999;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+}
+
+.loading {
+    padding: 60px 20px;
+    text-align: center;
+    color: #666;
+}
 
 
+/* NOTE */
 
+.note-page {
+    min-height: 100vh;
+    background: #f5f5f5;
+    padding: 120px 40px 80px;
+}
 
+.note-content {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 60px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
+.back-link {
+    display: inline-block;
+    margin-bottom: 30px;
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
 
+.back-link:hover {
+    color: #000;
+}
 
+.back-link::before {
+    content: "← ";
+}
+
+.note-content h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.note-metadata {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.note-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.note-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    background: #000;
+    color: #fff;
+    font-size: 0.8rem;
+    border-radius: 16px;
+    text-transform: lowercase;
+    font-weight: 500;
+}
+
+.note-sources {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.note-sources strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.note-sources ul {
+    display: inline;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.note-sources li {
+    display: inline;
+    margin: 0;
+}
+
+.note-sources li:not(:last-child)::after {
+    content: ", ";
+}
+
+.note-content h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 15px;
+}
+
+.note-content h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 12px;
+}
+
+.note-content p {
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.note-content ul,
+.note-content ol {
+    margin-bottom: 20px;
+    padding-left: 30px;
+}
+
+.note-content li {
+    line-height: 1.7;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.note-content code {
+    background: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.note-content pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 20px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.note-content pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+.note-content blockquote {
+    border-left: 4px solid #000;
+    padding-left: 20px;
+    margin: 20px 0;
+    color: #666;
+    font-style: italic;
+}
+
+.note-content a {
+    color: #000;
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+}
+
+.note-content a:hover {
+    opacity: 0.6;
+}
+
+.note-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.note-content hr {
+    border: none;
+    border-top: 2px solid #eee;
+    margin: 40px 0;
+}
+
+.loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.error {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
 
 /* SOCIALS, NAVBAR, & FOOTER */
 
@@ -511,5 +890,73 @@ footer {
 
     .project:nth-child(3) .project-square .sign {
         color: #41C6FF;
+    }
+
+    .notes-section {
+        padding: 100px 0 60px;
+    }
+
+    .notes-content {
+        padding: 0;
+    }
+
+    .notes-header {
+        padding: 0 20px;
+    }
+
+    /* Force visibility on mobile as failsafe */
+    .notes-header h1 .char {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    .notes-header .subtitle {
+        opacity: 1 !important;
+    }
+
+    .notes-table-container {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .tag-filter-section {
+        padding: 0 20px 20px 20px;
+    }
+
+    .notes-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .notes-table th,
+    .notes-table td {
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+
+    .note-tags {
+        max-width: 200px;
+    }
+
+    .note-page {
+        padding: 100px 0 60px;
+    }
+
+    .note-content {
+        padding: 40px 20px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .note-content h1 {
+        font-size: 2rem;
+    }
+
+    .note-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .note-content h3 {
+        font-size: 1.2rem;
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sree Gajula - Portfolio</title>
+    <title>Note - @sreegjl</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Badeen+Display&family=Inter:wght@700&family=Bebas+Neue&family=Konkhmer+Sleokchher&display=swap" rel="stylesheet">
@@ -19,35 +19,15 @@
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1>HI, I'M <span class="outline">SREE</span>.<br>I WORK ACROSS<br>DEVELOPMENT,<br>DESIGN, AND 3D.</h1>
-        </div>
-    </section>
-
-    <section class="projects-section">
-        <div class="projects-content">
-            <div class="projects-header">Projects</div>
-            
-            <div class="projects-grid">
-                <div class="project">
-                    <a href="https://github.com/sreegjl/timelines" class="project-square" target="_blank">timelines</a>
-                </div>
-
-                <div class="project">
-                    <a href="https://www.youtube.com/@PopNerdStudio" class="project-square" target="_blank">
-                        <div class="stacked-text">
-                            <div class="top">POP</div>
-                            <div class="bottom">NERD</div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="project">
-                    <a href="https://github.com/vsiddireddy/Sign_Gen" class="project-square" target="_blank">
-                        <span class="signgen"><span class="sign">Sign</span>Gen</span>
-                    </a>
-                </div>
+    <section class="note-page">
+        <div class="note-content">
+            <a href="notes.html" class="back-link">Back to Notes</a>
+            <div id="loading" class="loading">
+                <p>Loading note...</p>
+            </div>
+            <div id="markdown-content"></div>
+            <div id="error" class="error" style="display: none;">
+                <p>Note not found or could not be loaded.</p>
             </div>
         </div>
     </section>
@@ -58,7 +38,7 @@
                 <div class="socials-header">Get in touch...</div>
                 
                 <div class="socials-grid">
-                    <a href="mailto:sreegjl@gmail.com" class="social-link">
+                    <a href="/cdn-cgi/l/email-protection#e794958282808d8ba7808a868e8bc984888a" class="social-link">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                         </svg>
@@ -86,6 +66,11 @@
     <footer>
         <p>© 2026 Sree Gajula</p>
     </footer>
+
+    <!-- Markdown-it for better Markdown rendering -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markdown-it@13/dist/markdown-it.min.js"></script>
+    <!-- Markdown-it for better Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@13/dist/markdown-it.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
