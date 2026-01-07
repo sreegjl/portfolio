@@ -1,6 +1,12 @@
 {
-     "notes": [
-       "RAM.md",
-       "Hesiod - Theogony.md"
-     ]
-   }
+  "notes": [
+    "Fetch-Execute Cycle.md",
+    "Hesiod - Theogony.md",
+    "Late Bronze Age Collapse.md",
+    "RAM.md",
+    "The HACK Assembler.md",
+    "The HACK CPU.md",
+    "The HACK Machine Language.md",
+    "Von Neumann Architecture.md"
+  ]
+}
