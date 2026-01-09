@@ -5,6 +5,7 @@ tags:
 
 # Hesiod's Theogony
 
+<font size=2>Disclaimer: These notes reflect the content and attitudes of the ancient sources I’m summarizing. They should not be interpreted as my personal opinions.</font>
 
 At the start of the poem, the Heliconian Muses (Cleio, Euterpe, Melpomene, Thalia, Erato, Terpsichore, Polymia, Urania, and Calliope), the nine daughters of Zeus, are described as going to hymn Zeus, as well as the other immortal gods. In ancient Greek culture, the Muses are divine patrons of the arts, and one of their roles is to celebrate the king of the gods through song and poetry. 
 

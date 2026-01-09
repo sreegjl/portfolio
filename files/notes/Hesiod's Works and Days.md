@@ -5,6 +5,8 @@ tags:
 
 # Hesiod's Works and Days
 
+<font size=2>Disclaimer: These notes reflect the content and attitudes of the ancient sources I’m summarizing. They should not be interpreted as my personal opinions.</font>
+
 Hesiod opens Works and Days by invoking the Pierian Muses and addressing Zeus, asking him to establish justice among mortals. He hopes that his poem will speak truth to Perses, his brother.  
 
 Hesiod then explains that there are two kinds of Strife. One is blameworthy: the harsh, destructive Eris born first from Night, who fosters war, conflict, and ruin. The other Strife is praised: she stirs mortals to honest labor and productive competition. Hesiod urges Perses to reject Wicked Strife, which leads to quarrels and lawsuits, and instead to follow Good Strife, which drives a man to work diligently and prosper.
