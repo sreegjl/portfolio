@@ -1,6 +1,6 @@
 ---
 tags:
-  - mythology
+  - greek-mythology
 date: 01/08/2026
 ---
 

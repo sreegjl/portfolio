@@ -6,6 +6,8 @@ date: 12/23/2025
 
 # The HACK Machine Language
 
+<font size=2>These are my notes from the Nand2Tetris course, covering hardware construction, computer architecture, virtual machines, and low-level software built from first principles. My project files from this course can be found on <a href="https://github.com/sreegjl/nand2tetris" target="_blank">GitHub</a>.</font>
+
 The HACK machine languages recognizes three registers:
 - D register, data register; holds a 16-bit value
 - A register, address / data register; holds a 16-bit value
@@ -30,6 +32,8 @@ M=-1 // RAM[100]=-1
 - `comp` = what to compute (an ALU operation)
 - `dest` = where to store the computed value
 - `jump` = what to do next
+
+<img src="files/images/C-intruction.png" alt="C-Instruction">
 
 Examples:
 ```

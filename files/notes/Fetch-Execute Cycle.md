@@ -6,6 +6,8 @@ date: 12/28/2025
 
 # Fetch-Execute Cycle
 
+<font size=2>These are my notes from the Nand2Tetris course, covering hardware construction, computer architecture, virtual machines, and low-level software built from first principles. My project files from this course can be found on <a href="https://github.com/sreegjl/nand2tetris" target="_blank">GitHub</a>.</font>
+
 The most basic task of a CPU is to fetch an instruction from program memory and then execute it. To fetch an instruction, the CPU must place the instruction’s memory address on the program memory’s address input and then read the instruction code stored at that location.
 
 The hardware responsible for the fetch phase is the Program Counter (PC). The PC holds the address of the next instruction to be executed. After each instruction, or when a jump occurs, the PC is updated to point to a new address. The output of the PC is connected to the address input of program memory, and the memory’s output provides the instruction code to the CPU.

@@ -5,6 +5,9 @@ date: 01/01/2026
 ---
 
 # The HACK Assembler
+
+<font size=2>These are my notes from the Nand2Tetris course, covering hardware construction, computer architecture, virtual machines, and low-level software built from first principles. My project files from this course can be found on <a href="https://github.com/sreegjl/nand2tetris" target="_blank">GitHub</a>.</font>
+
 ### Translating A-Instructions
 If the value is a **decimal constant**, generate the equivalent 15-bit binary constant.
 If the value is a **symbol**, it falls into one of the following categories:

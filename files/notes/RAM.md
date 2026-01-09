@@ -6,6 +6,8 @@ date: 12/18/2025
 
 # Random Access Memory (RAM)
 
+<font size=2>These are my notes from the Nand2Tetris course, covering hardware construction, computer architecture, virtual machines, and low-level software built from first principles. My project files from this course can be found on <a href="https://github.com/sreegjl/nand2tetris" target="_blank">GitHub</a>.</font>
+
 ### AND-OR Latch
 If we take an OR gate and feed its output back into one of its inputs (input B), the output will be 0 as long as input A is 0. When input A is set to 1, the output becomes 1. If input A is then set back to 0, the output remains 1 because input B is still 1. This feedback allows the circuit to store a 1.  
 

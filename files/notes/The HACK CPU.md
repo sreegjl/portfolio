@@ -4,8 +4,10 @@ tags:
 date: 12/28/2025
 ---
 
+# The HACK CPU
 
-### The HACK CPU
+<font size=2>These are my notes from the Nand2Tetris course, covering hardware construction, computer architecture, virtual machines, and low-level software built from first principles. My project files from this course can be found on <a href="https://github.com/sreegjl/nand2tetris" target="_blank">GitHub</a>.</font>
+
 The Hack CPU is a 16-bit processor designed to execute the current instruction and figure out which instruction to execute next. The CPU is connected to both the ROM and the RAM.
 
 The HACK CPU has three inputs:
@@ -18,6 +20,8 @@ The HACK CPU has four outputs:
 - `writeM`; Write to memory? (yes / no) (to Data Memory)
 - `addressM`; 15-bit Memory Address (to Data Memory)
 - `pc`; 15-bit Address of next instruction (to Instruction Memory)
+
+<img src="files/images/HackCPUInterface.png" alt="Hack CPU Interface">
 
 **Hack CPU Operation**
 
@@ -33,6 +37,8 @@ Given jump instructions like `@100`; `D = D-1; JEQ`:
 
 In the following implementation of the HACK CPU, the symbol `c` represents control bits. 
 
+<img src="files/images/HackCPUImplementation.png" alt="Hack CPU Implementation">
+
 **Instruction Handling**
 
 When handling an A-instruction that is passed into the Mux16, the CPU decodes the instruction into an op-code and a 15-bit value. If the op-code is 0, the instruction is identified as an A-instruction, and the 15-bit value is loaded into the A-register. The value stored in the A-register is then made available to the rest of the CPU for use in subsequent steps.
@@ -41,11 +47,15 @@ When handling a C-instruction that is passed into the Mux16, the CPU decodes the
 
 The A register can be loaded in two cases: directly from an A-instruction, or from the ALU output when a C-instruction specifies A as a destination; the control logic ensures the correct source is selected and that these conditions are combined when generating the A register’s load signal.
 
+<img src="files/images/HackInstructionHandling.png" alt="Hack Instruction Handling">
+
 **ALU Operation**
 
 The data inputs of the [[Arithmetic Logic Unit (ALU)]] come from the D-register and either the value from the A-register or the M-register. The ALU also has six control bits, taken from the instruction, which specify which operation to carry out.
 
 The ALU output is made available to the D-register, the A-register, and externally to the M-register interface. Which register actually receives the value is determined by the instruction’s destination bits. The ALU also has two control outputs, which indicate whether the result is zero or negative.
+
+<img src="files/images/HackALUOperation.png" alt="Hack ALU Operation">
 
 **Control**
 
@@ -63,3 +73,5 @@ else
 	if(load==1)PC=A
 	else   PC++
 ```
+
+<img src="files/images/HackControl.png" alt="Hack Control">

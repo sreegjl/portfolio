@@ -3,7 +3,10 @@ tags:
   - nand2tetris
 date: 12/28/2025
 ---
+
 # Von Neumann Architecture
+
+<font size=2>These are my notes from the Nand2Tetris course, covering hardware construction, computer architecture, virtual machines, and low-level software built from first principles. My project files from this course can be found on <a href="https://github.com/sreegjl/nand2tetris" target="_blank">GitHub</a>.</font>
 
 In theory, a universal Turing machine can execute any computable program. The von Neumann architecture is a practical realization of this idea in real computers.
 
