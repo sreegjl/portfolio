@@ -1,6 +1,7 @@
 ---
 tags:
   - nand2tetris
+date: 01/01/2026
 ---
 
 # The HACK Assembler

@@ -1,6 +1,7 @@
 ---
 tags:
   - nand2tetris
+date: 12/23/2025
 ---
 
 # The HACK Machine Language

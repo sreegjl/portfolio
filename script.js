@@ -563,8 +563,9 @@ if (document.getElementById('notesTableBody')) {
                         const lines = content.split('\n');
                         let title = file.replace('.md', '');
                         let tags = [];
+                        let date = null;
                         let contentStartIndex = 0;
-                        
+
                         if (lines[0]?.trim() === '---') {
                             let frontmatterEndIndex = -1;
                             for (let i = 1; i < lines.length; i++) {
@@ -573,10 +574,10 @@ if (document.getElementById('notesTableBody')) {
                                     break;
                                 }
                             }
-                            
+
                             if (frontmatterEndIndex > 0) {
                                 contentStartIndex = frontmatterEndIndex + 1;
-                                
+
                                 let inTagsSection = false;
                                 for (let i = 1; i < frontmatterEndIndex; i++) {
                                     const line = lines[i].trim();
@@ -588,10 +589,27 @@ if (document.getElementById('notesTableBody')) {
                                     } else if (inTagsSection && !line.startsWith('-') && line !== '') {
                                         inTagsSection = false;
                                     }
+
+                                    if (line.startsWith('date:')) {
+                                        const dateValue = line.replace('date:', '').trim();
+                                        // Parse date in MM/DD/YYYY format
+                                        const [month, day, year] = dateValue.split('/');
+                                        if (month && day && year) {
+                                            const dateObj = new Date(year, month - 1, day);
+                                            date = {
+                                                display: dateObj.toLocaleDateString('en-US', {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric'
+                                                }),
+                                                timestamp: dateObj.getTime()
+                                            };
+                                        }
+                                    }
                                 }
                             }
                         }
-                        
+
                         for (let i = contentStartIndex; i < lines.length; i++) {
                             const line = lines[i].trim();
                             if (line.startsWith('#')) {
@@ -599,12 +617,19 @@ if (document.getElementById('notesTableBody')) {
                                 break;
                             }
                         }
-                        
-                        const date = new Date().toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric'
-                        });
+
+                        // Fallback to current date if no date found in frontmatter
+                        if (!date) {
+                            const currentDate = new Date();
+                            date = {
+                                display: currentDate.toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'short',
+                                    day: 'numeric'
+                                }),
+                                timestamp: currentDate.getTime()
+                            };
+                        }
                         
                         return {
                             filename: file,
@@ -620,6 +645,9 @@ if (document.getElementById('notesTableBody')) {
             );
 
             const validNotes = notes.filter(note => note !== null);
+
+            // Sort notes by date, newest first
+            validNotes.sort((a, b) => b.date.timestamp - a.date.timestamp);
 
             loadingDiv.style.display = 'none';
 
@@ -701,7 +729,7 @@ if (document.getElementById('notesTableBody')) {
                 <td>
                     <a href="note.html?note=${encodedFilename}" class="note-title">${note.title}</a>
                 </td>
-                <td class="note-date">${note.date}</td>
+                <td class="note-date">${note.date.display}</td>
                 <td class="note-tags">${tagsHTML}</td>
             `;
             notesTableBody.appendChild(row);

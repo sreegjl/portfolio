@@ -1,6 +1,7 @@
 ---
 tags:
   - mythology
+date: 01/07/2026
 ---
 
 # Hesiod's Theogony

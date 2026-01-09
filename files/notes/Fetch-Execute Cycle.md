@@ -1,6 +1,7 @@
 ---
 tags:
   - nand2tetris
+date: 12/28/2025
 ---
 
 # Fetch-Execute Cycle

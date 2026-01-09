@@ -1,6 +1,7 @@
 ---
 tags:
   - nand2tetris
+date: 12/18/2025
 ---
 
 # Random Access Memory (RAM)
