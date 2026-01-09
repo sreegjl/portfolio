@@ -33,7 +33,7 @@ M=-1 // RAM[100]=-1
 - `dest` = where to store the computed value
 - `jump` = what to do next
 
-<img src="files/images/C-intruction.png" alt="C-Instruction">
+<img src="files/images/C-Instruction.png" alt="C-Instruction">
 
 Examples:
 ```
