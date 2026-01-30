@@ -1,7 +1,7 @@
 ---
 tags:
   - nand2tetris
-date: 01/17/2025
+date: 01/17/2026
 ---
 
 # Virtual Machine
