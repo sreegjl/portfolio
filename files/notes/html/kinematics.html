@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinematics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="notes.css">
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-links">
+    <a href="../../../notes.html" class="nav-link">NOTES</a>
+  </div>
+</nav>
+
+<div class="page">
+
+
+  <header>
+    <div>
+      <h1>kinematics</h1>
+      <span>cheat sheet</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Graph relations ── -->
+  <div class="section">
+    <p class="section-label">Graph relations</p>
+    <div class="grid">
+
+      <div class="card">
+        <p class="card-title">Position–time</p>
+        <div class="row">
+          <span class="row-desc">Slope</span>
+          <span class="badge teal">velocity</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Steep slope</span>
+          <span class="row-val">fast speed</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Slope = 0</span>
+          <span class="row-val">at rest</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Concave up</span>
+          <span class="row-val">positive \(a\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Concave down</span>
+          <span class="row-val">negative \(a\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Straight line</span>
+          <span class="row-val">zero \(a\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Velocity–time</p>
+        <div class="row">
+          <span class="row-desc">Slope</span>
+          <span class="badge amber">acceleration</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Area under curve</span>
+          <span class="badge teal">displacement \(\Delta x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Area above zero</span>
+          <span class="row-val">+ displacement</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Area below zero</span>
+          <span class="row-val">− displacement</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Slope = 0</span>
+          <span class="row-val">constant velocity</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Acceleration–time</p>
+        <div class="row">
+          <span class="row-desc">Area under curve</span>
+          <span class="badge purple">change in velocity \(\Delta v\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Flat (constant \(a\))</span>
+          <span class="row-val">uniform acceleration</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Line at zero</span>
+          <span class="row-val">constant velocity</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Key definitions</p>
+        <div class="row">
+          <span class="row-desc">velocity</span>
+          <span class="row-val">\(\displaystyle v = \frac{\Delta x}{\Delta t}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">acceleration</span>
+          <span class="row-val">\(\displaystyle a = \frac{\Delta v}{\Delta t}\)</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <p class="card-title">Calculus connections</p>
+      <div class="row">
+        <span class="row-desc">Slope of graph</span>
+        <span class="row-val">derivative of that quantity</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Area under graph</span>
+        <span class="row-val">integral of that quantity</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Distance</span>
+        <span class="row-val">total area (ignore sign)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Displacement \(\Delta x\)</span>
+        <span class="row-val">signed area (+ and − cancel)</span>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- ── Kinematic equations ── -->
+  <div class="section">
+    <p class="section-label">The 4 kinematic equations</p>
+
+    <p class="prose">
+      All four assume <strong>constant acceleration</strong>. There are five variables total — \(x\), \(v_0\), \(v\), \(a\), and \(t\) — and each equation is missing one of them. When solving a problem, identify which variable you don't know and don't need, then use the equation that's missing that variable.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Equations — pick by missing variable</p>
+        <div class="row">
+          <span class="row-desc">Missing \(x\)</span>
+          <span class="row-val">\(v = v_0 + at\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Missing \(v\)</span>
+          <span class="row-val">\(x = x_0 + v_0 t + \tfrac{1}{2}at^2\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Missing \(t\)</span>
+          <span class="row-val">\(v^2 = v_0^2 + 2a(x - x_0)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Missing \(a\)</span>
+          <span class="row-val">\(x - x_0 = \tfrac{1}{2}(v_0 + v)t\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">The 5 variables</p>
+        <div class="row">
+          <span class="row-desc">\(x\)</span>
+          <span class="row-val">displacement</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(v_0\)</span>
+          <span class="row-val">initial velocity</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(v\)</span>
+          <span class="row-val">final velocity</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(a\)</span>
+          <span class="row-val">acceleration</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(t\)</span>
+          <span class="row-val">time</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Free fall ── -->
+  <div class="section">
+    <p class="section-label">Free fall</p>
+
+    <p class="prose">
+      An object is in <strong>free fall</strong> when gravity is the only force acting on it — air resistance is negligible. All free-falling objects near Earth's surface accelerate at the same constant rate regardless of mass, denoted \(g = 9.8\,\text{m/s}^2\) downward. The kinematic equations apply directly, with \(a = -g\) if up is positive.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Key facts</p>
+        <div class="row">
+          <span class="row-desc">Acceleration due to gravity</span>
+          <span class="row-val">\(g = 9.8\,\text{m/s}^2\) downward</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Dropped from rest</span>
+          <span class="row-val">\(v_0 = 0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">At the peak</span>
+          <span class="row-val">\(v = 0\), but \(a = -g\) still</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Acceleration on the way up</span>
+          <span class="row-val">still \(-g\) downward</span>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <p class="card-title">Thrown upward — signs (up = +)</p>
+        <div class="row">
+          <span class="row-desc">On the way up</span>
+          <span class="row-val">\(v > 0\), \(a < 0\) — slowing</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">At the top</span>
+          <span class="row-val">\(v = 0\), \(a < 0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">On the way down</span>
+          <span class="row-val">\(v < 0\), \(a < 0\) — speeding up</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(v\) vs. \(t\) graph</span>
+          <span class="row-val">straight line, slope \(= -g\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(y\) vs. \(t\) graph</span>
+          <span class="row-val">concave-down parabola</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Vectors in 2D ── -->
+  <div class="section">
+    <p class="section-label">Vectors in 2D</p>
+
+    <p class="prose">
+      A 2D vector can be broken into two perpendicular components along the \(x\) and \(y\) axes. The total vector and its components form a right triangle — so trigonometry and the Pythagorean theorem apply directly.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">SOH CAH TOA</p>
+        <div class="row">
+          <span class="row-desc">\(\sin\theta\)</span>
+          <span class="row-val">\(\dfrac{\text{opposite}}{\text{hypotenuse}}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\cos\theta\)</span>
+          <span class="row-val">\(\dfrac{\text{adjacent}}{\text{hypotenuse}}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\tan\theta\)</span>
+          <span class="row-val">\(\dfrac{\text{opposite}}{\text{adjacent}}\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Applied to vectors</p>
+        <div class="row">
+          <span class="row-desc">Horizontal component</span>
+          <span class="row-val">\(v_x = v\cos\theta\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Vertical component</span>
+          <span class="row-val">\(v_y = v\sin\theta\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Magnitude from components</span>
+          <span class="row-val">\(v = \sqrt{v_x^2 + v_y^2}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Angle from components</span>
+          <span class="row-val">\(\theta = \tan^{-1}\!\left(\dfrac{v_y}{v_x}\right)\)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 0.75rem;">
+      <p class="card-title">Special angles</p>
+      <table style="width:100%; border-collapse:collapse; font-size: 0.8rem; margin-top: 0.25rem;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border-strong); font-family: var(--mono); font-weight:500; color: var(--muted); font-size: 0.7rem;"></th>
+            <th style="text-align:center; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border-strong); font-family: var(--mono); font-weight:500; color: var(--muted); font-size: 0.7rem;">\(0°\)</th>
+            <th style="text-align:center; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border-strong); font-family: var(--mono); font-weight:500; color: var(--muted); font-size: 0.7rem;">\(30°\)</th>
+            <th style="text-align:center; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border-strong); font-family: var(--mono); font-weight:500; color: var(--muted); font-size: 0.7rem;">\(45°\)</th>
+            <th style="text-align:center; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border-strong); font-family: var(--mono); font-weight:500; color: var(--muted); font-size: 0.7rem;">\(60°\)</th>
+            <th style="text-align:center; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border-strong); font-family: var(--mono); font-weight:500; color: var(--muted); font-size: 0.7rem;">\(90°\)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--muted); font-size: 0.78rem;">\(\sin\theta\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text);">\(0\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text);">\(\tfrac{1}{2}\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text);">\(\tfrac{\sqrt{2}}{2}\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text);">\(\tfrac{\sqrt{3}}{2}\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text);">\(1\)</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--muted); font-size: 0.78rem;">\(\cos\theta\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text);">\(1\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text);">\(\tfrac{\sqrt{3}}{2}\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text);">\(\tfrac{\sqrt{2}}{2}\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text);">\(\tfrac{1}{2}\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); color: var(--text);">\(0\)</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.45rem 0.5rem; color: var(--muted); font-size: 0.78rem;">\(\tan\theta\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; color: var(--text);">\(0\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; color: var(--text);">\(\tfrac{\sqrt{3}}{3}\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; color: var(--text);">\(1\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; color: var(--text);">\(\sqrt{3}\)</td>
+            <td style="text-align:center; padding: 0.45rem 0.5rem; color: var(--text);">\(\infty\)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Projectile motion ── -->
+  <div class="section">
+    <p class="section-label">Projectile motion</p>
+
+    <p class="prose">
+      A projectile moves in two dimensions with gravity as the only force — free fall plus horizontal motion. The key insight is that the horizontal and vertical dimensions are <strong>independent</strong>: analyze them separately using the kinematic equations, with the same \(t\) in both.
+    </p>
+
+    <p class="prose" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      Time in the air is determined entirely by vertical motion. Horizontal speed affects range, not hang time.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Horizontal (a<sub>x</sub> = 0)</p>
+        <div class="row">
+          <span class="row-desc">Velocity</span>
+          <span class="row-val">\(v_x = v_{x0}\) (constant)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Position</span>
+          <span class="row-val">\(x = x_0 + v_{x0}t\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Acceleration</span>
+          <span class="row-val">\(a_x = 0\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Vertical (a<sub>y</sub> = −g)</p>
+        <div class="row">
+          <span class="row-desc">Velocity</span>
+          <span class="row-val">\(v_y = v_{y0} - gt\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Position</span>
+          <span class="row-val">\(y = y_0 + v_{y0}t - \tfrac{1}{2}gt^2\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">No-time</span>
+          <span class="row-val">\(v_y^2 = v_{y0}^2 - 2g\Delta y\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Launched horizontally</span>
+          <span class="row-val">\(v_{y0} = 0\)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top: 0.75rem;">
+      <div class="card">
+        <p class="card-title">Key facts</p>
+        <div class="row">
+          <span class="row-desc">At the peak</span>
+          <span class="row-val">\(v_y = 0\), \(v_x\) unchanged</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Total speed at peak</span>
+          <span class="row-val">\(v = v_x\) only</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Hang time depends on</span>
+          <span class="row-val">\(v_{y0}\), \(\Delta y\), \(g\) only</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(t\) is a scalar</span>
+          <span class="row-val">same value in both \(x\) and \(y\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Trajectory shape</span>
+          <span class="row-val">parabola</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Symmetry (lands at same height)</p>
+        <div class="row">
+          <span class="row-desc">Time up = time down</span>
+          <span class="row-val">\(\Delta t_\text{up} = \Delta t_\text{down}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(v_y\) at same height</span>
+          <span class="row-val">equal magnitude, opposite sign</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Net vertical displacement</span>
+          <span class="row-val">\(\Delta y = 0\)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top: 0.75rem;">
+
+      <div class="card">
+        <p class="card-title">Quick-reference identities</p>
+        <div class="row">
+          <span class="row-desc">Total speed</span>
+          <span class="row-val">\(v = \sqrt{v_x^2 + v_y^2}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Horizontal component</span>
+          <span class="row-val">\(v_x = v\cos\theta\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Vertical component</span>
+          <span class="row-val">\(v_y = v\sin\theta\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Speed at peak</span>
+          <span class="row-val">\(v_\text{top} = v_x = v\cos\theta\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">When not to use kinematics</p>
+        <div class="row">
+          <span class="row-desc">\(a = 0\) (horizontal motion)</span>
+          <span class="row-val">just use \(d = vt\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(a \neq 0\) (vertical motion)</span>
+          <span class="row-val">use kinematic equations</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Finding \(t\)</span>
+          <span class="row-val">always solve from \(y\) first</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 0.75rem;">
+      <p class="card-title">Problem-solving strategy</p>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">1</span>
+        <span class="row-desc">Split all vector quantities into \(x\) and \(y\) components</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">2</span>
+        <span class="row-desc">Find time \(t\) using whichever direction gives enough info — usually \(y\) since that's where \(a \neq 0\)</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">3</span>
+        <span class="row-desc">Use that same \(t\) in the other direction</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">4</span>
+        <span class="row-desc">At the peak: \(v_y = 0\), so \(v = v_x\)</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">5</span>
+        <span class="row-desc">If launch height = landing height: \(t_\text{up} = t_\text{down}\) and \(v_y\) has equal magnitude but opposite sign at matching heights</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+// Data: a = 2 m/s², x = t^2
+const tVals = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0];
+const xVals = tVals.map(t => t * t); // x = ½ * 2 * t² = t²
+
+function drawGraph(canvasId, xData, yData, curveType, opts) {
+  const canvas = document.getElementById(canvasId);
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.offsetWidth;
+  const H = 200;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad = { top: 18, right: 20, bottom: 36, left: 42 };
+  const pw = W - pad.left - pad.right;
+  const ph = H - pad.top - pad.bottom;
+
+  const xMin = opts.xMin, xMax = opts.xMax;
+  const yMin = opts.yMin, yMax = opts.yMax;
+
+  function cx(v) { return pad.left + (v - xMin) / (xMax - xMin) * pw; }
+  function cy(v) { return pad.top + (1 - (v - yMin) / (yMax - yMin)) * ph; }
+
+  // background
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, W, H);
+
+  // grid
+  ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+  ctx.lineWidth = 1;
+  for (let g of opts.xTicks) {
+    ctx.beginPath(); ctx.moveTo(cx(g), pad.top); ctx.lineTo(cx(g), pad.top + ph); ctx.stroke();
+  }
+  for (let g of opts.yTicks) {
+    ctx.beginPath(); ctx.moveTo(pad.left, cy(g)); ctx.lineTo(pad.left + pw, cy(g)); ctx.stroke();
+  }
+
+  // axes
+  ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad.left, pad.top); ctx.lineTo(pad.left, pad.top + ph); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(pad.left, pad.top + ph); ctx.lineTo(pad.left + pw, pad.top + ph); ctx.stroke();
+
+  // tick labels
+  ctx.fillStyle = '#9e9e98';
+  ctx.font = '10px DM Mono, monospace';
+  ctx.textAlign = 'center';
+  for (let v of opts.xTicks) {
+    ctx.fillText(v, cx(v), pad.top + ph + 14);
+  }
+  ctx.textAlign = 'right';
+  for (let v of opts.yTicks) {
+    ctx.fillText(v, pad.left - 6, cy(v) + 3);
+  }
+
+  // axis labels
+  ctx.fillStyle = '#6b6b66';
+  ctx.font = '11px DM Sans, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(opts.xLabel, pad.left + pw / 2, H - 2);
+  ctx.save();
+  ctx.translate(10, pad.top + ph / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText(opts.yLabel, 0, 0);
+  ctx.restore();
+
+  // curve
+  const curveColors = { parabola: '#0f6e56', linear: '#854f0b', sqrt: '#0f6e56', v2linear: '#854f0b' };
+  ctx.strokeStyle = curveColors[curveType] || '#0f6e56';
+  ctx.lineWidth = 2;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  const steps = 120;
+  for (let i = 0; i <= steps; i++) {
+    const xv = xMin + (xMax - xMin) * i / steps;
+    let yv;
+    if (curveType === 'parabola') yv = xv * xv;
+    else if (curveType === 'linear') yv = xv;
+    else if (curveType === 'sqrt') yv = 2 * Math.sqrt(Math.max(0, xv));
+    else if (curveType === 'v2linear') yv = 4 * xv;
+    else yv = xv;
+    if (i === 0) ctx.moveTo(cx(xv), cy(yv));
+    else ctx.lineTo(cx(xv), cy(yv));
+  }
+  ctx.stroke();
+
+  // data points
+  for (let i = 0; i < xData.length; i++) {
+    const px = cx(xData[i]), py = cy(yData[i]);
+    ctx.beginPath();
+    ctx.arc(px, py, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#534ab7';
+    ctx.fill();
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+
+  // slope annotation on linear graphs
+  if (curveType === 'linear') {
+    ctx.fillStyle = '#854f0b';
+    ctx.font = '10px DM Sans, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('slope = ½a = 1  →  a = 2 m/s²', cx(1), cy(7.5));
+  }
+  if (curveType === 'v2linear') {
+    ctx.fillStyle = '#854f0b';
+    ctx.font = '10px DM Sans, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('slope = 2a = 4  →  a = 2 m/s²', cx(0.2), cy(17));
+  }
+}
+
+window.addEventListener('load', () => {
+  // Graph 1: x vs t (parabola)
+  drawGraph('graph1', tVals, xVals, 'parabola', {
+    xMin: 0, xMax: 3.2,
+    yMin: 0, yMax: 10,
+    xTicks: [0, 1, 2, 3],
+    yTicks: [0, 2, 4, 6, 8, 10],
+    xLabel: 't  (s)',
+    yLabel: 'x  (m)'
+  });
+
+  // Graph 2: x vs t² (line)
+  const t2Vals = tVals.map(t => t * t);
+  drawGraph('graph2', t2Vals, xVals, 'linear', {
+    xMin: 0, xMax: 10,
+    yMin: 0, yMax: 10,
+    xTicks: [0, 2, 4, 6, 8, 10],
+    yTicks: [0, 2, 4, 6, 8, 10],
+    xLabel: 't²  (s²)',
+    yLabel: 'x  (m)'
+  });
+});
+</script>
+
+<script>
+  const toggle = document.getElementById('studyToggle');
+  const page   = document.querySelector('.page');
+
+  toggle.addEventListener('click', () => {
+    const entering = !page.classList.contains('study-mode');
+    page.classList.toggle('study-mode');
+    if (!entering) {
+      document.querySelectorAll('.revealed').forEach(el => el.classList.remove('revealed'));
+    }
+  });
+
+  document.addEventListener('click', e => {
+    if (!page.classList.contains('study-mode')) return;
+    const target = e.target.closest('.row-val, .badge');
+    if (target) target.classList.toggle('revealed');
+  });
+</script>
+</body>
+</html>

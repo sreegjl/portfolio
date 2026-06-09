@@ -166,22 +166,82 @@ function animateSlideUp(selector, options = {}) {
 gsap.registerPlugin(ScrollTrigger);
 
 // ===== HOME PAGE ANIMATIONS =====
-const heroHeading = document.querySelector('.hero-text h1');
-if (heroHeading) {
-    splitText(heroHeading);
-    animateChars('.hero-text h1 .char', {
-        trigger: '.hero-text',
-        stagger: 0.02
+const heroH1 = document.querySelector('.hero-main h1');
+if (heroH1) {
+    const cursor = heroH1.querySelector('.hero-cursor');
+    const fullName = 'sree gajula';
+    let typingTimer = null;
+
+    // Pull out any existing text node and replace with a controlled one
+    Array.from(heroH1.childNodes).forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) heroH1.removeChild(node);
     });
+    const textNode = document.createTextNode('');
+    heroH1.insertBefore(textNode, cursor);
+
+    // Cursor hidden until typing finishes
+    cursor.style.opacity = '0';
+    cursor.style.animation = 'none';
+
+    function revealAfterTyping() {
+        gsap.to('.hero-subtitle', { opacity: 1, duration: 0.6, ease: 'power2.out' });
+        gsap.to('.hero-status',   { opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.12 });
+        gsap.to('.hero-scroll',   { opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.25 });
+    }
+
+    function startTyping(onComplete) {
+        if (typingTimer) clearTimeout(typingTimer);
+        textNode.textContent = '';
+        cursor.style.opacity = '0';
+        cursor.style.animation = 'none';
+
+        let i = 0;
+        function typeChar() {
+            if (i < fullName.length) {
+                textNode.textContent = fullName.slice(0, ++i);
+                typingTimer = setTimeout(typeChar, 72);
+            } else {
+                cursor.style.opacity = '1';
+                cursor.style.animation = '';
+                if (onComplete) onComplete();
+            }
+        }
+        typeChar();
+    }
+
+    // Initial load sequence
+    gsap.set('.hero-main h1', { opacity: 1 });
+    gsap.to('.hero-label', { opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.1 });
+    setTimeout(() => startTyping(revealAfterTyping), 400);
+
+    // Re-type when hero scrolls back into view
+    ScrollTrigger.create({
+        trigger: '.hero',
+        start: 'top 80%',
+        onEnterBack: () => {
+            gsap.set(['.hero-subtitle', '.hero-status', '.hero-scroll'], { opacity: 0 });
+            startTyping(revealAfterTyping);
+        }
+    });
+
+    // Live clock
+    const clockEl = document.getElementById('heroClock');
+    if (clockEl) {
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            clockEl.textContent = `${h}:${m}:${s} LOCAL`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    }
 }
 
 const projectsHeading = document.querySelector('.projects-header');
 if (projectsHeading) {
-    splitTextIntoChars(projectsHeading);
-    animateChars('.projects-header .char', {
-        trigger: '.projects-header',
-        stagger: 0.02
-    });
+    animateFadeIn('.projects-header', { trigger: '.projects-header' });
 }
 
 // GSAP hover animations for project squares
@@ -279,10 +339,7 @@ document.querySelectorAll('.project-square').forEach(square => {
 // ===== RESUME PAGE ANIMATIONS =====
 const resumeTitle = document.querySelector('.resume-header h1');
 if (resumeTitle) {
-    splitTextIntoChars(resumeTitle);
-    animateChars('.resume-header h1 .char', {
-        trigger: '.resume-header'
-    });
+    animateFadeIn('.resume-header h1', { trigger: '.resume-header' });
 }
 
 const resumeSubtitle = document.querySelector('.resume-header .subtitle');
@@ -311,21 +368,8 @@ if (resumeSections.length > 0) {
 // ===== NOTES PAGE ANIMATIONS =====
 const notesTitle = document.querySelector('.notes-header h1');
 if (notesTitle) {
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    splitTextIntoChars(notesTitle);
-    animateChars('.notes-header h1 .char', {
-        trigger: '.notes-header',
-        isMobile: isMobile
-    });
-}
-
-const notesSubtitle = document.querySelector('.notes-header .subtitle');
-if (notesSubtitle) {
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    animateFadeIn('.notes-header .subtitle', {
-        trigger: '.notes-header',
-        isMobile: isMobile
-    });
+    animateFadeIn('.notes-header h1',       { trigger: '.notes-header' });
+    animateFadeIn('.notes-header .subtitle', { trigger: '.notes-header' });
 }
 
 // ===== NOTE PAGE - Individual note loading =====
@@ -416,6 +460,8 @@ if (document.getElementById('markdown-content')) {
                     let titleFromFilename = filename.replace('.md', '');
                     titleFromFilename = titleFromFilename.replace(/\b\w/g, l => l.toUpperCase());
                     document.title = `${titleFromFilename} - @sreegjl`;
+                    const stickyTitle = document.getElementById('noteStickyTitle');
+                    if (stickyTitle) stickyTitle.textContent = titleFromFilename;
                     
                     let metadataHTML = '';
                     if (frontmatter.tags && frontmatter.tags.length > 0) {
@@ -466,7 +512,7 @@ if (document.getElementById('markdown-content')) {
 }
 
 // ===== NOTES TABLE PAGE - Load and display notes list =====
-if (document.getElementById('notesTableBody')) {
+if (document.getElementById('notesTableBody') || document.getElementById('htmlNotesTableBody')) {
     console.log('Notes table page detected');
     
     async function loadNotes() {
@@ -736,5 +782,89 @@ if (document.getElementById('notesTableBody')) {
         });
     }
 
-    document.addEventListener('DOMContentLoaded', loadNotes);
+    async function loadHtmlNotes() {
+        const htmlNotesTableBody = document.getElementById('htmlNotesTableBody');
+        const htmlNotesCount = document.getElementById('htmlNotesCount');
+        const htmlLoading = document.getElementById('htmlLoading');
+        const htmlContainer = document.getElementById('htmlNotesContainer');
+
+        let htmlFiles = [];
+        let base = 'files/notes/html/';
+
+        try {
+            const manifestResponse = await fetch('notes-manifest.json');
+            if (manifestResponse.ok) {
+                const manifest = await manifestResponse.json();
+                htmlFiles = manifest.htmlNotes || [];
+                if (manifest.htmlNotesBase) base = manifest.htmlNotesBase;
+            }
+        } catch (error) {
+            console.error('Error loading HTML notes from manifest:', error);
+        }
+
+        if (htmlFiles.length === 0) {
+            htmlLoading.style.display = 'none';
+            return;
+        }
+
+        try {
+            const htmlNotes = await Promise.all(
+                htmlFiles.map(async (path) => {
+                    try {
+                        const response = await fetch(`${base}${path}`);
+                        const html = await response.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const title = doc.querySelector('title')?.textContent || path.split('/').pop().replace('.html', '');
+                        const parts = path.split('/');
+                        const folder = parts.length > 1 ? parts[0] : null;
+                        return { path, folder, title };
+                    } catch (error) {
+                        console.error(`Error loading ${path}:`, error);
+                        return null;
+                    }
+                })
+            );
+
+            const validNotes = htmlNotes.filter(n => n !== null);
+            htmlLoading.style.display = 'none';
+
+            if (validNotes.length === 0) return;
+
+            const encodedHref = path => base + path.split('/').map(encodeURIComponent).join('/');
+
+            // Sort: root notes first, then notes within folders, alphabetically
+            validNotes.sort((a, b) => {
+                if (!a.folder && b.folder) return -1;
+                if (a.folder && !b.folder) return 1;
+                return a.title.localeCompare(b.title);
+            });
+
+            validNotes.forEach((note, index) => {
+                const row = document.createElement('a');
+                row.className = 'note-row';
+                row.href = encodedHref(note.path);
+                row.innerHTML = `
+                    <span class="note-row-num">${String(index + 1).padStart(2, '0')}</span>
+                    <span class="note-row-name">${note.title}</span>
+                    <span class="note-row-tag">${note.folder || ''}</span>
+                `;
+                htmlNotesTableBody.appendChild(row);
+            });
+
+            if (htmlNotesCount) {
+                htmlNotesCount.textContent = `${String(validNotes.length).padStart(3, '0')} — NOTES`;
+            }
+
+            htmlContainer.style.display = 'block';
+        } catch (error) {
+            console.error('Error loading HTML notes:', error);
+            htmlLoading.style.display = 'none';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadNotes();
+        loadHtmlNotes();
+    });
 }

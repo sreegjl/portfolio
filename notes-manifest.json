@@ -9,5 +9,9 @@
     "The HACK Machine Language.md",
     "Virtual Machine.md",
     "Von Neumann Architecture.md"
-  ]
+  ],
+  "htmlNotes": [
+    "kinematics.html"
+  ],
+  "htmlNotesBase": "files/notes/html/"
 }
