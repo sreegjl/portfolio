@@ -789,7 +789,7 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
         const htmlContainer = document.getElementById('htmlNotesContainer');
 
         let htmlFiles = [];
-        let base = 'files/notes/html/';
+        let base = 'notes/';
 
         try {
             const manifestResponse = await fetch('notes-manifest.json');
@@ -815,8 +815,9 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                         const html = await response.text();
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(html, 'text/html');
-                        const title = doc.querySelector('title')?.textContent || path.split('/').pop().replace('.html', '');
-                        const parts = path.split('/');
+                        const dirPath = path.replace(/\/index\.html$/, '');
+                        const parts = dirPath.split('/');
+                        const title = doc.querySelector('title')?.textContent || parts[parts.length - 1];
                         const folder = parts.length > 1 ? parts[0] : null;
                         return { path, folder, title };
                     } catch (error) {
@@ -831,7 +832,7 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
 
             if (validNotes.length === 0) return;
 
-            const encodedHref = path => base + path.split('/').map(encodeURIComponent).join('/');
+            const encodedHref = path => base + path.replace(/\/index\.html$/, '').split('/').map(encodeURIComponent).join('/') + '/';
 
             // Sort: root notes first, then notes within folders, alphabetically
             validNotes.sort((a, b) => {

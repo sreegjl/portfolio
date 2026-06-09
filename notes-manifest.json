@@ -11,7 +11,7 @@
     "Von Neumann Architecture.md"
   ],
   "htmlNotes": [
-    "kinematics.html"
+    "kinematics/index.html"
   ],
-  "htmlNotesBase": "files/notes/html/"
+  "htmlNotesBase": "notes/"
 }
