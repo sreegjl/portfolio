@@ -541,7 +541,7 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
         // Try to load from manifest file (for GitHub Pages)
         try {
             console.log('Trying to fetch notes-manifest.json');
-            const manifestResponse = await fetch('notes-manifest.json');
+            const manifestResponse = await fetch(`notes-manifest.json?v=${Date.now()}`, { cache: 'no-store' });
             
             if (manifestResponse.ok) {
                 const manifest = await manifestResponse.json();
@@ -798,7 +798,7 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
         let base = 'notes/';
 
         try {
-            const manifestResponse = await fetch('notes-manifest.json');
+            const manifestResponse = await fetch(`notes-manifest.json?v=${Date.now()}`, { cache: 'no-store' });
             if (manifestResponse.ok) {
                 const manifest = await manifestResponse.json();
                 htmlFiles = manifest.htmlNotes || [];
@@ -814,12 +814,14 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
         }
 
         try {
-            const validNotes = htmlFiles.map(({ path, title }) => {
-                const dirPath = path.replace(/\/index\.html$/, '');
-                const parts = dirPath.split('/');
-                const folder = parts.length > 1 ? parts[0] : null;
-                return { path, folder, title: title || parts[parts.length - 1] };
-            });
+            const validNotes = htmlFiles
+                .filter(entry => entry && typeof entry.path === 'string')
+                .map(({ path, title }) => {
+                    const dirPath = path.replace(/\/index\.html$/, '');
+                    const parts = dirPath.split('/');
+                    const folder = parts.length > 1 ? parts[0] : null;
+                    return { path, folder, title: title || parts[parts.length - 1] };
+                });
 
             htmlLoading.style.display = 'none';
 
