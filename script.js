@@ -522,18 +522,15 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
     console.log('Notes table page detected');
     
     async function loadNotes() {
-        console.log('loadNotes function called');
         const notesTableBody = document.getElementById('notesTableBody');
         const notesTable = document.getElementById('notesTable');
         const loadingDiv = document.getElementById('loading');
         const emptyState = document.getElementById('emptyState');
 
-        console.log('Elements found:', {
-            notesTableBody: !!notesTableBody,
-            notesTable: !!notesTable,
-            loadingDiv: !!loadingDiv,
-            emptyState: !!emptyState
-        });
+        // "Written" notes section is currently commented out of the page
+        if (!notesTableBody || !notesTable || !loadingDiv || !emptyState) {
+            return;
+        }
 
         let mdFiles = [];
         let successPath = 'files/notes/';
