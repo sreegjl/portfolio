@@ -20,6 +20,7 @@
   };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
 <nav>
@@ -654,23 +655,6 @@ window.addEventListener('load', () => {
 });
 </script>
 
-<script>
-  const toggle = document.getElementById('studyToggle');
-  const page   = document.querySelector('.page');
-
-  toggle.addEventListener('click', () => {
-    const entering = !page.classList.contains('study-mode');
-    page.classList.toggle('study-mode');
-    if (!entering) {
-      document.querySelectorAll('.revealed').forEach(el => el.classList.remove('revealed'));
-    }
-  });
-
-  document.addEventListener('click', e => {
-    if (!page.classList.contains('study-mode')) return;
-    const target = e.target.closest('.row-val, .badge');
-    if (target) target.classList.toggle('revealed');
-  });
-</script>
+<script src="../notes.js"></script>
 </body>
 </html>

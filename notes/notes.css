@@ -78,6 +78,12 @@ body {
   padding: 2rem 1.5rem 3rem;
 }
 
+.page > header,
+.page > .section {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
 header {
   margin-bottom: 2.5rem;
   border-bottom: 1px solid var(--border-strong);

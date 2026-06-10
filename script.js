@@ -244,6 +244,12 @@ if (projectsHeading) {
     animateFadeIn('.projects-header', { trigger: '.projects-header' });
 }
 
+// Fade in "Selected Work" section on scroll
+const projectsContent = document.querySelector('.projects-content');
+if (projectsContent) {
+    animateFadeIn('.projects-content', { trigger: '.projects-section' });
+}
+
 // GSAP hover animations for project squares
 document.querySelectorAll('.project-square').forEach(square => {
     const hoverColor = getComputedStyle(square).getPropertyValue('--hover-color');
@@ -808,26 +814,13 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
         }
 
         try {
-            const htmlNotes = await Promise.all(
-                htmlFiles.map(async (path) => {
-                    try {
-                        const response = await fetch(`${base}${path}`);
-                        const html = await response.text();
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        const dirPath = path.replace(/\/index\.html$/, '');
-                        const parts = dirPath.split('/');
-                        const title = doc.querySelector('title')?.textContent || parts[parts.length - 1];
-                        const folder = parts.length > 1 ? parts[0] : null;
-                        return { path, folder, title };
-                    } catch (error) {
-                        console.error(`Error loading ${path}:`, error);
-                        return null;
-                    }
-                })
-            );
+            const validNotes = htmlFiles.map(({ path, title }) => {
+                const dirPath = path.replace(/\/index\.html$/, '');
+                const parts = dirPath.split('/');
+                const folder = parts.length > 1 ? parts[0] : null;
+                return { path, folder, title: title || parts[parts.length - 1] };
+            });
 
-            const validNotes = htmlNotes.filter(n => n !== null);
             htmlLoading.style.display = 'none';
 
             if (validNotes.length === 0) return;
@@ -858,6 +851,7 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
             }
 
             htmlContainer.style.display = 'block';
+            animateFadeIn('.notes-list-wrap', { trigger: '.notes-content' });
         } catch (error) {
             console.error('Error loading HTML notes:', error);
             htmlLoading.style.display = 'none';

@@ -168,6 +168,7 @@ nav {
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 40px;
+    opacity: 0;
 }
 
 .projects-header-row {
@@ -455,6 +456,7 @@ nav {
 
 .notes-list-wrap {
     margin-bottom: 10px;
+    opacity: 0;
 }
 
 .notes-list-header {
