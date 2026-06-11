@@ -71,9 +71,9 @@ nav {
 
 .nav-links {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
-  align-items: flex-end;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
 }
 
 .nav-link {
@@ -85,6 +85,11 @@ nav {
   color: var(--text);
   text-decoration: none;
   transition: opacity 0.2s;
+}
+
+.nav-link.active {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .nav-link:hover { opacity: 0.6; }

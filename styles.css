@@ -80,9 +80,9 @@ nav {
 
 .nav-links {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: flex-end;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
 }
 
 .nav-link {
@@ -94,6 +94,11 @@ nav {
     text-transform: uppercase;
     letter-spacing: 0.08em;
     transition: opacity 0.3s ease;
+}
+
+.nav-link.active {
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 .nav-link:hover {
@@ -500,7 +505,7 @@ nav {
 .notes-section {
     min-height: 100vh;
     background: var(--bg);
-    padding: 60px 40px 80px;
+    padding: 30px 40px 80px;
 }
 
 .notes-content {
@@ -509,7 +514,7 @@ nav {
 }
 
 .notes-header {
-    margin-bottom: 30px;
+    display: none;
 }
 
 .notes-section-label {
@@ -1111,15 +1116,11 @@ nav {
     }
 
     .notes-section {
-        padding: 40px 0 60px;
+        padding: 16px 0 60px;
     }
 
     .notes-content {
         padding: 0 14px;
-    }
-
-    .notes-header {
-        display: none;
     }
 
     .notes-table-container {
