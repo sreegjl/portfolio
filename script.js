@@ -826,13 +826,6 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
 
             const encodedHref = path => base + path.replace(/\/index\.html$/, '').split('/').map(encodeURIComponent).join('/') + '/';
 
-            // Sort: root notes first, then notes within folders, alphabetically
-            validNotes.sort((a, b) => {
-                if (!a.folder && b.folder) return -1;
-                if (a.folder && !b.folder) return 1;
-                return a.title.localeCompare(b.title);
-            });
-
             validNotes.forEach((note, index) => {
                 const row = document.createElement('a');
                 row.className = 'note-row';

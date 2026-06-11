@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
 <script>
   window.MathJax = {
     tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
@@ -25,8 +26,12 @@
 <body>
 <nav>
   <a href="../../" class="logo">@sreegjl</a>
-  <div class="nav-links">
-    <a href="../../notes.html" class="nav-link">NOTES</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../notes.html" class="nav-link">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
   </div>
 </nav>
 
@@ -520,6 +525,10 @@
 const tVals = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0];
 const xVals = tVals.map(t => t * t); // x = ½ * 2 * t² = t²
 
+function cssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
 function drawGraph(canvasId, xData, yData, curveType, opts) {
   const canvas = document.getElementById(canvasId);
   const dpr = window.devicePixelRatio || 1;
@@ -541,12 +550,21 @@ function drawGraph(canvasId, xData, yData, curveType, opts) {
   function cx(v) { return pad.left + (v - xMin) / (xMax - xMin) * pw; }
   function cy(v) { return pad.top + (1 - (v - yMin) / (yMax - yMin)) * ph; }
 
+  const colorSurface = cssVar('--surface');
+  const colorBorder = cssVar('--border');
+  const colorBorderStrong = cssVar('--border-strong');
+  const colorHint = cssVar('--hint');
+  const colorMuted = cssVar('--muted');
+  const colorTeal = cssVar('--accent-teal');
+  const colorAmber = cssVar('--accent-amber');
+  const colorPurple = cssVar('--accent-purple');
+
   // background
-  ctx.fillStyle = '#ffffff';
+  ctx.fillStyle = colorSurface;
   ctx.fillRect(0, 0, W, H);
 
   // grid
-  ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+  ctx.strokeStyle = colorBorder;
   ctx.lineWidth = 1;
   for (let g of opts.xTicks) {
     ctx.beginPath(); ctx.moveTo(cx(g), pad.top); ctx.lineTo(cx(g), pad.top + ph); ctx.stroke();
@@ -556,13 +574,13 @@ function drawGraph(canvasId, xData, yData, curveType, opts) {
   }
 
   // axes
-  ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+  ctx.strokeStyle = colorBorderStrong;
   ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(pad.left, pad.top); ctx.lineTo(pad.left, pad.top + ph); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(pad.left, pad.top + ph); ctx.lineTo(pad.left + pw, pad.top + ph); ctx.stroke();
 
   // tick labels
-  ctx.fillStyle = '#9e9e98';
+  ctx.fillStyle = colorHint;
   ctx.font = '10px DM Mono, monospace';
   ctx.textAlign = 'center';
   for (let v of opts.xTicks) {
@@ -574,7 +592,7 @@ function drawGraph(canvasId, xData, yData, curveType, opts) {
   }
 
   // axis labels
-  ctx.fillStyle = '#6b6b66';
+  ctx.fillStyle = colorMuted;
   ctx.font = '11px DM Sans, sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText(opts.xLabel, pad.left + pw / 2, H - 2);
@@ -585,8 +603,8 @@ function drawGraph(canvasId, xData, yData, curveType, opts) {
   ctx.restore();
 
   // curve
-  const curveColors = { parabola: '#0f6e56', linear: '#854f0b', sqrt: '#0f6e56', v2linear: '#854f0b' };
-  ctx.strokeStyle = curveColors[curveType] || '#0f6e56';
+  const curveColors = { parabola: colorTeal, linear: colorAmber, sqrt: colorTeal, v2linear: colorAmber };
+  ctx.strokeStyle = curveColors[curveType] || colorTeal;
   ctx.lineWidth = 2;
   ctx.lineJoin = 'round';
   ctx.beginPath();
@@ -609,29 +627,29 @@ function drawGraph(canvasId, xData, yData, curveType, opts) {
     const px = cx(xData[i]), py = cy(yData[i]);
     ctx.beginPath();
     ctx.arc(px, py, 4, 0, Math.PI * 2);
-    ctx.fillStyle = '#534ab7';
+    ctx.fillStyle = colorPurple;
     ctx.fill();
-    ctx.strokeStyle = '#ffffff';
+    ctx.strokeStyle = colorSurface;
     ctx.lineWidth = 1.5;
     ctx.stroke();
   }
 
   // slope annotation on linear graphs
   if (curveType === 'linear') {
-    ctx.fillStyle = '#854f0b';
+    ctx.fillStyle = colorAmber;
     ctx.font = '10px DM Sans, sans-serif';
     ctx.textAlign = 'left';
     ctx.fillText('slope = ½a = 1  →  a = 2 m/s²', cx(1), cy(7.5));
   }
   if (curveType === 'v2linear') {
-    ctx.fillStyle = '#854f0b';
+    ctx.fillStyle = colorAmber;
     ctx.font = '10px DM Sans, sans-serif';
     ctx.textAlign = 'left';
     ctx.fillText('slope = 2a = 4  →  a = 2 m/s²', cx(0.2), cy(17));
   }
 }
 
-window.addEventListener('load', () => {
+function renderGraphs() {
   // Graph 1: x vs t (parabola)
   drawGraph('graph1', tVals, xVals, 'parabola', {
     xMin: 0, xMax: 3.2,
@@ -652,7 +670,10 @@ window.addEventListener('load', () => {
     xLabel: 't²  (s²)',
     yLabel: 'x  (m)'
   });
-});
+}
+
+window.addEventListener('load', renderGraphs);
+document.addEventListener('themechange', renderGraphs);
 </script>
 
 <script src="../notes.js"></script>

@@ -22,13 +22,37 @@
   --radius: 10px;
 }
 
+[data-theme="dark"] {
+  --bg: #16161a;
+  --surface: #1e1e23;
+  --border: rgba(255,255,255,0.09);
+  --border-strong: rgba(255,255,255,0.18);
+  --text: #f1f0ea;
+  --muted: #a3a39c;
+  --hint: #6f6f69;
+  --accent-teal: #36c9a0;
+  --accent-teal-bg: rgba(54,201,160,0.14);
+  --accent-purple: #a99cf5;
+  --accent-purple-bg: rgba(169,156,245,0.14);
+  --accent-amber: #e8b366;
+  --accent-amber-bg: rgba(232,179,102,0.14);
+  --accent-coral: #ec9572;
+  --accent-coral-bg: rgba(236,149,114,0.14);
+}
+
+body, body *,
+body *::before,
+body *::after {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
 nav {
   position: sticky;
   top: 0;
   z-index: 100;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   padding: 20px 40px;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
@@ -64,6 +88,52 @@ nav {
 }
 
 .nav-link:hover { opacity: 0.6; }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border-strong);
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.theme-toggle:hover { opacity: 0.6; }
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
 
 body {
   font-family: var(--sans);
@@ -136,6 +206,16 @@ header span {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1rem 1.125rem;
+}
+
+.section > .card,
+.section > .grid {
+  margin-bottom: 0.75rem;
+}
+
+.section > .card:last-child,
+.section > .grid:last-child {
+  margin-bottom: 0;
 }
 
 .card .card-title {

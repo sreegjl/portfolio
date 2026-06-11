@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Note - @sreegjl</title>
+    <title>Tools</title>
 
     <link rel="icon" href="/files/favicon/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
@@ -32,19 +32,25 @@
         </div>
     </nav>
 
-    <div class="note-sticky-header" id="noteStickyHeader">
-        <a href="notes.html" class="note-sticky-back">← notes</a>
-        <span class="note-sticky-title" id="noteStickyTitle"></span>
-    </div>
-
-    <section class="note-page">
-        <div class="note-content">
-<div id="loading" class="loading">
-                <p>Loading note...</p>
+    <section class="notes-section">
+        <div class="notes-content">
+            <div class="notes-header">
+                <h1>Tools</h1>
+                <p class="subtitle">Interactive tools for physics, math, and engineering problems.</p>
             </div>
-            <div id="markdown-content"></div>
-            <div id="error" class="error" style="display: none;">
-                <p>Note not found or could not be loaded.</p>
+
+            <div class="notes-list-wrap">
+                <div class="notes-list-header">
+                    <span class="notes-list-label">ALL TOOLS</span>
+                    <span class="notes-list-count">001 — TOOLS</span>
+                </div>
+                <div class="notes-list">
+                    <a class="note-row" href="tools/fbd.html">
+                        <span class="note-row-num">01</span>
+                        <span class="note-row-name">Free Body Diagram Builder</span>
+                        <span class="note-row-tag">MECHANICS</span>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -63,13 +69,15 @@
         </div>
     </footer>
 
-    <!-- Markdown-it for better Markdown rendering -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markdown-it@13/dist/markdown-it.min.js"></script>
-    <!-- Markdown-it for better Markdown rendering -->
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it@13/dist/markdown-it.min.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.to('.notes-list-wrap', { opacity: 1, duration: 0.8, ease: 'power3.out' });
+        });
+    </script>
 </body>
 </html>

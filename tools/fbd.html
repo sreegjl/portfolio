@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Body Diagram Builder</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script src="/theme.js"></script>
+
+<style>
+  :root {
+    --fbd-weight: #993c1d;
+    --fbd-weight-bg: #faece7;
+    --fbd-normal: #0f6e56;
+    --fbd-normal-bg: #e1f5ee;
+    --fbd-friction: #854f0b;
+    --fbd-friction-bg: #faeeda;
+    --fbd-tension: #534ab7;
+    --fbd-tension-bg: #eeedfe;
+    --fbd-applied: #2c5fa8;
+    --fbd-applied-bg: #e6edf8;
+    --fbd-custom: #555550;
+    --fbd-custom-bg: #ececea;
+    --fbd-net: #c0392b;
+  }
+
+  [data-theme="dark"] {
+    --fbd-weight: #ec9572;
+    --fbd-weight-bg: rgba(236,149,114,0.14);
+    --fbd-normal: #36c9a0;
+    --fbd-normal-bg: rgba(54,201,160,0.14);
+    --fbd-friction: #e8b366;
+    --fbd-friction-bg: rgba(232,179,102,0.14);
+    --fbd-tension: #a99cf5;
+    --fbd-tension-bg: rgba(169,156,245,0.14);
+    --fbd-applied: #87aee6;
+    --fbd-applied-bg: rgba(135,174,230,0.14);
+    --fbd-custom: #cdcbc4;
+    --fbd-custom-bg: rgba(255,255,255,0.08);
+    --fbd-net: #ec9572;
+  }
+
+  .fbd-page {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .fbd-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-14);
+    padding-bottom: 1.25rem;
+  }
+
+  .fbd-header h1 {
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-weight: 400;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+  }
+
+  .fbd-header p {
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-size: 0.75rem;
+    color: var(--hint);
+    font-style: italic;
+  }
+
+  .fbd-layout {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .fbd-canvas-wrap {
+    flex: 1 1 420px;
+    background: var(--surface);
+    border: 1px solid var(--border-08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .fbd-canvas-wrap canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .fbd-panel {
+    flex: 1 1 320px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .fbd-card {
+    background: var(--surface);
+    border: 1px solid var(--border-08);
+    border-radius: 10px;
+    padding: 1rem 1.125rem;
+  }
+
+  .fbd-card-title {
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .fbd-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .fbd-field:last-of-type { margin-bottom: 0; }
+
+  .fbd-field label {
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .fbd-field select,
+  .fbd-field input {
+    font-family: var(--sans, 'DM Sans', sans-serif);
+    font-size: 0.85rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border-10);
+    border-radius: 6px;
+    padding: 0.5rem 0.6rem;
+    width: 100%;
+  }
+
+  .fbd-field select:focus,
+  .fbd-field input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .fbd-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .fbd-add-btn {
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--invert-text);
+    background: var(--invert-bg);
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.2s ease;
+  }
+
+  .fbd-add-btn:hover { opacity: 0.8; }
+
+  .fbd-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .fbd-empty {
+    font-size: 0.8rem;
+    color: var(--hint);
+    font-style: italic;
+  }
+
+  .fbd-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid var(--border-08);
+    border-radius: 8px;
+  }
+
+  .fbd-item-swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .fbd-item-label {
+    font-size: 0.8rem;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  .fbd-item-label .fbd-item-sub {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--hint);
+    font-family: var(--mono, 'DM Mono', monospace);
+  }
+
+  .fbd-item-remove {
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-size: 0.85rem;
+    color: var(--hint);
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.2rem 0.3rem;
+    transition: color 0.2s ease;
+  }
+
+  .fbd-item-remove:hover { color: var(--text); }
+
+  .fbd-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+
+  .fbd-toggle-row input { width: auto; }
+
+  .fbd-toggle-row input[type="checkbox"] {
+    accent-color: var(--text);
+  }
+
+  .fbd-section-toggle {
+    margin-bottom: 0.9rem;
+  }
+
+  .fbd-section-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .fbd-stat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  #accelStats {
+    margin-top: 0.75rem;
+  }
+
+  .fbd-stat-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .fbd-stat-label {
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-size: 0.78rem;
+    color: var(--hint);
+  }
+
+  .fbd-stat-val {
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .fbd-stat-net.fbd-stat-label,
+  .fbd-stat-net.fbd-stat-val {
+    color: var(--fbd-net);
+    font-weight: 600;
+  }
+
+  .fbd-divider {
+    height: 1px;
+    background: var(--border-08);
+    margin: 1rem 0;
+  }
+
+  .fbd-subsection-label {
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--hint);
+    margin-bottom: 0.6rem;
+  }
+
+  .fbd-clear-btn {
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--border-10);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.2s ease;
+  }
+
+  .fbd-clear-btn:hover { opacity: 0.6; }
+
+  .fbd-segmented {
+    display: flex;
+    border: 1px solid var(--border-10);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .fbd-seg-btn {
+    flex: 1;
+    font-family: var(--sans, 'DM Sans', sans-serif);
+    font-size: 0.85rem;
+    color: var(--text);
+    background: var(--bg);
+    border: none;
+    padding: 0.5rem 0.6rem;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .fbd-seg-btn + .fbd-seg-btn {
+    border-left: 1px solid var(--border-10);
+  }
+
+  .fbd-seg-btn.active {
+    background: var(--invert-bg);
+    color: var(--invert-text);
+  }
+
+  .fbd-input-unit {
+    position: relative;
+  }
+
+  .fbd-input-unit input {
+    padding-right: 2.6rem;
+  }
+
+  .fbd-input-unit .fbd-unit {
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--mono, 'DM Mono', monospace);
+    font-size: 0.72rem;
+    color: var(--hint);
+    pointer-events: none;
+    text-transform: lowercase;
+  }
+
+  .fbd-direction-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .fbd-direction-row .fbd-input-unit {
+    flex: 1;
+  }
+
+  .fbd-dial {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--bg);
+    cursor: pointer;
+    touch-action: none;
+  }
+
+  .fbd-dial:focus,
+  .fbd-dial:focus-visible {
+    outline: none;
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../notes.html" class="nav-link">NOTES</a>
+      <a href="../tools.html" class="nav-link">TOOLS</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="fbd-page">
+  <div class="fbd-header">
+    <h1>free body diagram builder</h1>
+    <p>add forces acting on an object and see them drawn to scale</p>
+  </div>
+
+  <div class="fbd-layout">
+    <div class="fbd-canvas-wrap">
+      <canvas id="fbdCanvas" width="600" height="600"></canvas>
+    </div>
+
+    <div class="fbd-panel">
+      <div class="fbd-card">
+        <p class="fbd-card-title">Object</p>
+
+        <div class="fbd-field">
+          <label>Shape</label>
+          <div class="fbd-segmented" id="shapeSegmented">
+            <button type="button" class="fbd-seg-btn active" data-shape="square">Square</button>
+            <button type="button" class="fbd-seg-btn" data-shape="rectangle">Rectangle</button>
+            <button type="button" class="fbd-seg-btn" data-shape="point">Point</button>
+          </div>
+          <input type="hidden" id="objectShape" value="square">
+        </div>
+
+        <div class="fbd-row-2" id="objectSizeFields">
+          <div class="fbd-field">
+            <label for="objectWidth" id="objectWidthLabel">Size</label>
+            <div class="fbd-input-unit">
+              <input type="number" id="objectWidth" value="60" min="2" step="any">
+              <span class="fbd-unit">px</span>
+            </div>
+          </div>
+          <div class="fbd-field" id="objectHeightField" style="display: none;">
+            <label for="objectHeight">Height</label>
+            <div class="fbd-input-unit">
+              <input type="number" id="objectHeight" value="40" min="2" step="any">
+              <span class="fbd-unit">px</span>
+            </div>
+          </div>
+        </div>
+
+        <label class="fbd-toggle-row" style="margin-top: 0.5rem;">
+          <input type="checkbox" id="showGround">
+          Show ground
+        </label>
+
+        <div class="fbd-field" id="groundAngleField" style="display: none; margin-top: 0.75rem;">
+          <label for="groundAngle">Incline angle (°)</label>
+          <input type="number" id="groundAngle" value="0" step="any">
+        </div>
+      </div>
+
+      <div class="fbd-card" id="addForceCard">
+        <p class="fbd-card-title">Add a force</p>
+
+        <div class="fbd-field">
+          <label for="forceType">Type</label>
+          <select id="forceType">
+            <option value="weight">Weight (Fg)</option>
+            <option value="normal">Normal (N)</option>
+            <option value="friction">Friction (f)</option>
+            <option value="tension">Tension (T)</option>
+            <option value="applied">Applied (F)</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+
+        <div class="fbd-field">
+          <label for="forceMagnitude">Magnitude</label>
+          <div class="fbd-input-unit">
+            <input type="number" id="forceMagnitude" value="10" min="0" step="any">
+            <span class="fbd-unit">N</span>
+          </div>
+        </div>
+
+        <div class="fbd-field">
+          <label id="forceAngleLabel">Direction — drag the dial</label>
+          <div class="fbd-direction-row">
+            <canvas class="fbd-dial" id="angleDial" width="56" height="56" tabindex="0"></canvas>
+            <div class="fbd-input-unit">
+              <input type="number" id="forceAngle" value="270" step="any">
+              <span class="fbd-unit">° ccw</span>
+            </div>
+          </div>
+        </div>
+
+        <label class="fbd-toggle-row" style="margin-bottom: 0.75rem;">
+          <input type="checkbox" id="forceRelative">
+          Angle relative to ground / incline
+        </label>
+
+        <div class="fbd-field" style="margin-bottom: 0.75rem;">
+          <label for="forceLabel">Label (optional)</label>
+          <input type="text" id="forceLabel" placeholder="e.g. T1, F_app">
+        </div>
+
+        <button class="fbd-add-btn" id="addForceBtn" type="button">Add force</button>
+      </div>
+
+      <div class="fbd-card">
+        <p class="fbd-card-title">Forces</p>
+        <div class="fbd-list" id="forceList">
+          <p class="fbd-empty">No forces added yet.</p>
+        </div>
+      </div>
+
+      <div class="fbd-card">
+        <label class="fbd-toggle-row fbd-section-toggle">
+          <input type="checkbox" id="showNet" checked>
+          <span class="fbd-section-title">Net force &amp; motion</span>
+        </label>
+
+        <div class="fbd-stat-list">
+          <div class="fbd-stat-row">
+            <span class="fbd-stat-label">ΣFx</span>
+            <span class="fbd-stat-val" id="sumFxVal">0.00 N</span>
+          </div>
+          <div class="fbd-stat-row">
+            <span class="fbd-stat-label">ΣFy</span>
+            <span class="fbd-stat-val" id="sumFyVal">0.00 N</span>
+          </div>
+          <div class="fbd-stat-row">
+            <span class="fbd-stat-label fbd-stat-net">|ΣF|</span>
+            <span class="fbd-stat-val fbd-stat-net" id="netMagVal">0.00 N</span>
+          </div>
+          <div class="fbd-stat-row">
+            <span class="fbd-stat-label">∠ direction</span>
+            <span class="fbd-stat-val" id="netAngleVal">0.0°</span>
+          </div>
+        </div>
+
+        <div class="fbd-divider"></div>
+
+        <p class="fbd-subsection-label">Acceleration — a = ΣF / m</p>
+
+        <div class="fbd-field">
+          <label for="objectMass">Mass</label>
+          <div class="fbd-input-unit">
+            <input type="number" id="objectMass" value="1" min="0" step="any">
+            <span class="fbd-unit">kg</span>
+          </div>
+        </div>
+
+        <div class="fbd-stat-list" id="accelStats">
+          <div class="fbd-stat-row">
+            <span class="fbd-stat-label">a<sub>x</sub></span>
+            <span class="fbd-stat-val" id="axVal">0.00 m/s²</span>
+          </div>
+          <div class="fbd-stat-row">
+            <span class="fbd-stat-label">a<sub>y</sub></span>
+            <span class="fbd-stat-val" id="ayVal">0.00 m/s²</span>
+          </div>
+          <div class="fbd-stat-row">
+            <span class="fbd-stat-label fbd-stat-net">|a|</span>
+            <span class="fbd-stat-val fbd-stat-net" id="aMagVal">0.00 m/s²</span>
+          </div>
+          <div class="fbd-stat-row">
+            <span class="fbd-stat-label">∠ direction</span>
+            <span class="fbd-stat-val" id="aAngleVal">0.0°</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="fbd-clear-btn" id="clearBtn" type="button">Clear all forces</button>
+    </div>
+  </div>
+</div>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<script>
+(function () {
+  const canvas = document.getElementById('fbdCanvas');
+  const ctx = canvas.getContext('2d');
+
+  const typeMeta = {
+    weight:   { name: 'Weight',   symbol: 'Fg',    color: '--fbd-weight',   bg: '--fbd-weight-bg' },
+    normal:   { name: 'Normal',   symbol: 'N',     color: '--fbd-normal',   bg: '--fbd-normal-bg' },
+    friction: { name: 'Friction', symbol: 'f',     color: '--fbd-friction', bg: '--fbd-friction-bg' },
+    tension:  { name: 'Tension',  symbol: 'T',     color: '--fbd-tension',  bg: '--fbd-tension-bg' },
+    applied:  { name: 'Applied',  symbol: 'F',     color: '--fbd-applied',  bg: '--fbd-applied-bg' },
+    custom:   { name: 'Custom',   symbol: 'F',     color: '--fbd-custom',   bg: '--fbd-custom-bg' }
+  };
+
+  let forces = [];
+  let nextId = 1;
+  let logicalSize = canvas.width;
+  let composing = false;
+  let dialDragging = false;
+
+  const cssVar = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+  function addForce(type, magnitude, angleDeg, label, relative) {
+    forces.push({ id: nextId++, type, magnitude, angle: angleDeg, label, relative });
+    renderList();
+    draw();
+  }
+
+  function removeForce(id) {
+    forces = forces.filter(f => f.id !== id);
+    renderList();
+    draw();
+  }
+
+  function renderList() {
+    const list = document.getElementById('forceList');
+    list.innerHTML = '';
+
+    if (forces.length === 0) {
+      const p = document.createElement('p');
+      p.className = 'fbd-empty';
+      p.textContent = 'No forces added yet.';
+      list.appendChild(p);
+      return;
+    }
+
+    forces.forEach(f => {
+      const meta = typeMeta[f.type];
+      const item = document.createElement('div');
+      item.className = 'fbd-item';
+
+      const swatch = document.createElement('span');
+      swatch.className = 'fbd-item-swatch';
+      swatch.style.background = cssVar(meta.color);
+
+      const label = document.createElement('span');
+      label.className = 'fbd-item-label';
+      const name = f.label ? f.label : meta.symbol;
+      const angleSuffix = f.relative ? '° (rel. to ground)' : '°';
+      label.innerHTML = `${name} — ${meta.name}<span class="fbd-item-sub">${f.magnitude} N at ${f.angle}${angleSuffix}</span>`;
+
+      const remove = document.createElement('button');
+      remove.className = 'fbd-item-remove';
+      remove.type = 'button';
+      remove.textContent = '×';
+      remove.addEventListener('click', () => removeForce(f.id));
+
+      item.appendChild(swatch);
+      item.appendChild(label);
+      item.appendChild(remove);
+      list.appendChild(item);
+    });
+  }
+
+  function drawArrow(cx, cy, dx, dy, color, label, labelDx, labelDy) {
+    const tipX = cx + dx;
+    const tipY = cy + dy;
+    const headLen = 10;
+    const angle = Math.atan2(dy, dx);
+
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 2.5;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(tipX, tipY);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(tipX, tipY);
+    ctx.lineTo(tipX - headLen * Math.cos(angle - Math.PI / 6), tipY - headLen * Math.sin(angle - Math.PI / 6));
+    ctx.lineTo(tipX - headLen * Math.cos(angle + Math.PI / 6), tipY - headLen * Math.sin(angle + Math.PI / 6));
+    ctx.closePath();
+    ctx.fill();
+
+    if (label) {
+      const labelOffset = 16;
+      const margin = 4;
+      ctx.font = '600 13px "DM Mono", monospace';
+      ctx.fillStyle = color;
+
+      let align = dx >= 0 ? 'left' : 'right';
+      let baseline = dy >= 0 ? 'top' : 'bottom';
+      let lx = tipX + (dx >= 0 ? labelOffset / 2 : -labelOffset / 2) + (labelDx || 0);
+      let ly = tipY + (dy >= 0 ? labelOffset / 2 : -labelOffset / 2) + (labelDy || 0);
+
+      // keep the label inside the canvas bounds, even if that means
+      // flipping it to the other side of the arrow tip
+      const textWidth = ctx.measureText(label).width;
+      if (align === 'left' && lx + textWidth > logicalSize - margin) {
+        align = 'right';
+        lx = logicalSize - margin;
+      } else if (align === 'right' && lx - textWidth < margin) {
+        align = 'left';
+        lx = margin;
+      }
+
+      const textHeight = 13;
+      if (baseline === 'top' && ly + textHeight > logicalSize - margin) {
+        baseline = 'bottom';
+        ly = logicalSize - margin;
+      } else if (baseline === 'bottom' && ly - textHeight < margin) {
+        baseline = 'top';
+        ly = margin;
+      }
+
+      ctx.textAlign = align;
+      ctx.textBaseline = baseline;
+      ctx.fillText(label, lx, ly);
+    }
+  }
+
+  // distance from the center to the edge of the object along a unit
+  // direction (dirX, dirY), for a rectangle with half-width hw and
+  // half-height hh centered at the origin (0 for a point)
+  function edgeDistance(dirX, dirY, hw, hh) {
+    if (hw === 0 && hh === 0) return 0;
+    const tx = dirX !== 0 ? hw / Math.abs(dirX) : Infinity;
+    const ty = dirY !== 0 ? hh / Math.abs(dirY) : Infinity;
+    return Math.min(tx, ty);
+  }
+
+  function getObjectHalfExtents() {
+    const shape = document.getElementById('objectShape').value;
+    if (shape === 'point') return { hw: 0, hh: 0 };
+    const width = parseFloat(document.getElementById('objectWidth').value) || 0;
+    if (shape === 'rectangle') {
+      const height = parseFloat(document.getElementById('objectHeight').value) || 0;
+      return { hw: width / 2, hh: height / 2 };
+    }
+    return { hw: width / 2, hh: width / 2 };
+  }
+
+  function drawGround(cx, cy, rot, objectHh, size) {
+    // direction along the slope, and the down-normal into the ground
+    const dirX = Math.cos(rot);
+    const dirY = Math.sin(rot);
+    const normX = -Math.sin(rot);
+    const normY = Math.cos(rot);
+
+    // point where the object's bottom edge touches the slope
+    const contactX = cx + normX * objectHh;
+    const contactY = cy + normY * objectHh;
+
+    const halfLen = size * 0.75;
+
+    ctx.strokeStyle = cssVar('--border-14');
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(contactX - dirX * halfLen, contactY - dirY * halfLen);
+    ctx.lineTo(contactX + dirX * halfLen, contactY + dirY * halfLen);
+    ctx.stroke();
+
+    // hatching on the ground side of the line
+    const hatchDirX = (dirX + normX) / Math.SQRT2;
+    const hatchDirY = (dirY + normY) / Math.SQRT2;
+    const hatchSpacing = 14;
+    const hatchLen = 10;
+
+    ctx.strokeStyle = cssVar('--border-08');
+    ctx.lineWidth = 1;
+    for (let t = -halfLen; t <= halfLen; t += hatchSpacing) {
+      const px = contactX + dirX * t;
+      const py = contactY + dirY * t;
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(px + hatchDirX * hatchLen, py + hatchDirY * hatchLen);
+      ctx.stroke();
+    }
+  }
+
+  // current state of the "Add a force" form, used to draw a live ghost
+  // preview of the force before it's committed — only while the user is
+  // actively composing it (a field is focused or the dial is being dragged)
+  function getPreviewForce() {
+    if (!composing) return null;
+    const magnitude = parseFloat(document.getElementById('forceMagnitude').value);
+    if (!magnitude || magnitude <= 0) return null;
+    const type = document.getElementById('forceType').value;
+    let angle = parseFloat(document.getElementById('forceAngle').value) || 0;
+    angle = ((angle % 360) + 360) % 360;
+    const relative = document.getElementById('forceRelative').checked;
+    return { type, magnitude, angle, relative };
+  }
+
+  // pick a "nice" round magnitude for the scale legend
+  function niceScaleValue(maxMag) {
+    const raw = maxMag / 4;
+    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const norm = raw / mag;
+    let nice;
+    if (norm < 1.5) nice = 1;
+    else if (norm < 3) nice = 2;
+    else if (norm < 7) nice = 5;
+    else nice = 10;
+    return nice * mag;
+  }
+
+  // small dotted arc from the +x axis to a direction (math angle in
+  // radians, CCW from +x), labeled with the angle in degrees
+  function drawAngleArc(cx, cy, rad, color) {
+    const arcR = 28;
+    let canvasEnd = -rad;
+    while (canvasEnd <= -Math.PI) canvasEnd += Math.PI * 2;
+    while (canvasEnd > Math.PI) canvasEnd -= Math.PI * 2;
+    const ccw = canvasEnd < 0;
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    ctx.save();
+    ctx.setLineDash([2, 3]);
+    ctx.beginPath();
+    ctx.arc(cx, cy, arcR, 0, canvasEnd, ccw);
+    ctx.stroke();
+    ctx.restore();
+
+    const mid = canvasEnd / 2;
+    const lx = cx + (arcR + 14) * Math.cos(mid);
+    const ly = cy + (arcR + 14) * Math.sin(mid);
+    const deg = Math.round(((rad * 180 / Math.PI) % 360 + 360) % 360);
+
+    ctx.fillStyle = color;
+    ctx.font = '11px "DM Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(`${deg}°`, lx, ly);
+  }
+
+  function drawGrid(size, cx, cy) {
+    const gridSpacing = 30;
+    ctx.strokeStyle = cssVar('--border-08');
+    ctx.lineWidth = 1;
+    for (let x = gridSpacing; x < size; x += gridSpacing) {
+      ctx.beginPath();
+      ctx.moveTo(x + 0.5, 0);
+      ctx.lineTo(x + 0.5, size);
+      ctx.stroke();
+    }
+    for (let y = gridSpacing; y < size; y += gridSpacing) {
+      ctx.beginPath();
+      ctx.moveTo(0, y + 0.5);
+      ctx.lineTo(size, y + 0.5);
+      ctx.stroke();
+    }
+
+    // dotted axes through the center of the object
+    ctx.strokeStyle = cssVar('--border-14');
+    ctx.lineWidth = 1;
+    ctx.setLineDash([2, 4]);
+    ctx.beginPath();
+    ctx.moveTo(0, cy);
+    ctx.lineTo(size, cy);
+    ctx.moveTo(cx, 0);
+    ctx.lineTo(cx, size);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = cssVar('--hint');
+    ctx.font = '11px "DM Mono", monospace';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('+x', size - 6, cy - 10);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText('+y', cx + 8, 6);
+  }
+
+  function draw() {
+    const size = logicalSize;
+    const cx = size / 2;
+    const cy = size / 2;
+    const { hw: objectHw, hh: objectHh } = getObjectHalfExtents();
+
+    const groundEnabled = document.getElementById('showGround').checked;
+    const groundAngleDeg = groundEnabled ? (parseFloat(document.getElementById('groundAngle').value) || 0) : 0;
+    const rot = (-groundAngleDeg * Math.PI) / 180;
+
+    ctx.clearRect(0, 0, size, size);
+
+    ctx.fillStyle = cssVar('--surface');
+    ctx.fillRect(0, 0, size, size);
+
+    drawGrid(size, cx, cy);
+
+    if (groundEnabled) {
+      drawGround(cx, cy, rot, objectHh, size);
+    }
+
+    // central object, rotated to sit flush on the incline
+    ctx.fillStyle = cssVar('--bg');
+    ctx.strokeStyle = cssVar('--border-14');
+    ctx.lineWidth = 1.5;
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rot);
+    if (objectHw === 0 && objectHh === 0) {
+      ctx.beginPath();
+      ctx.arc(0, 0, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.rect(-objectHw, -objectHh, objectHw * 2, objectHh * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    const preview = getPreviewForce();
+
+    if (forces.length === 0 && !preview) {
+      updateNetReadout(0, 0);
+      return;
+    }
+
+    // scale arrow lengths relative to the largest magnitude (including
+    // the force currently being composed, so the preview is to scale)
+    const maxMag = Math.max(...forces.map(f => f.magnitude), preview ? preview.magnitude : 0, 1);
+    const maxLen = size * 0.30;
+    const scale = mag => Math.max((mag / maxMag) * maxLen, mag === 0 ? 0 : maxLen * 0.12);
+
+    const effectiveAngle = f => f.relative ? ((f.angle + groundAngleDeg) % 360 + 360) % 360 : f.angle;
+
+    // direction + edge-start helper, shared by real arrows and the preview
+    const arrowGeometry = angleDeg => {
+      const rad = (angleDeg * Math.PI) / 180;
+      const dirX = Math.cos(rad);
+      const dirY = -Math.sin(rad);
+      const localDirX = dirX * Math.cos(rot) + dirY * Math.sin(rot);
+      const localDirY = -dirX * Math.sin(rot) + dirY * Math.cos(rot);
+      const edgeDist = edgeDistance(localDirX, localDirY, objectHw, objectHh);
+      return { rad, dirX, dirY, edgeDist };
+    };
+
+    let sumX = 0;
+    let sumY = 0;
+    forces.forEach(f => {
+      const rad = (effectiveAngle(f) * Math.PI) / 180;
+      sumX += Math.cos(rad) * f.magnitude;
+      sumY += Math.sin(rad) * f.magnitude;
+    });
+
+    const showNet = document.getElementById('showNet').checked;
+    const netMag = Math.hypot(sumX, sumY);
+    const netAngle = Math.atan2(sumY, sumX);
+    const showNetArrow = showNet && netMag > maxMag * 1e-6;
+
+    // build the list of arrows to draw, then group by direction so
+    // overlapping arrows (e.g. the net force lining up with a single
+    // applied force) get spread apart instead of stacking exactly
+    const arrows = forces.map(f => ({
+      angle: effectiveAngle(f),
+      magnitude: f.magnitude,
+      color: cssVar(typeMeta[f.type].color),
+      label: (f.label ? f.label : typeMeta[f.type].symbol) + ` = ${f.magnitude}N`,
+      dashed: false
+    }));
+
+    if (showNetArrow) {
+      arrows.push({
+        angle: ((netAngle * 180 / Math.PI) + 360) % 360,
+        magnitude: netMag,
+        color: cssVar('--fbd-net'),
+        label: `ΣF = ${netMag.toFixed(2)}N`,
+        dashed: true
+      });
+    }
+
+    const offsetSpacing = 12;
+    const labelSpacing = 64;
+    const groups = new Map();
+    arrows.forEach(a => {
+      const key = Math.round(a.angle);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(a);
+    });
+    groups.forEach(group => {
+      group.forEach((a, i) => {
+        a.offset = (i - (group.length - 1) / 2) * offsetSpacing;
+        a.labelOffset = group.length > 1 ? i * labelSpacing : 0;
+      });
+    });
+
+    arrows.forEach(a => {
+      const { rad, dirX, dirY, edgeDist } = arrowGeometry(a.angle);
+      const len = scale(a.magnitude);
+      const dx = Math.cos(rad) * len;
+      const dy = -Math.sin(rad) * len;
+
+      // perpendicular direction, used to separate overlapping arrows
+      const perpX = Math.sin(rad);
+      const perpY = Math.cos(rad);
+
+      const startX = cx + dirX * edgeDist + perpX * a.offset;
+      const startY = cy + dirY * edgeDist + perpY * a.offset;
+
+      const labelDx = perpX * a.labelOffset;
+      const labelDy = perpY * a.labelOffset;
+
+      if (a.dashed) {
+        ctx.save();
+        ctx.setLineDash([6, 5]);
+        drawArrow(startX, startY, dx, dy, a.color, a.label, labelDx, labelDy);
+        ctx.restore();
+      } else {
+        drawArrow(startX, startY, dx, dy, a.color, a.label, labelDx, labelDy);
+      }
+    });
+
+    // live ghost preview of the force currently being composed: a faint
+    // dashed arrow plus an angle arc back to the +x axis
+    if (preview) {
+      const previewAngle = effectiveAngle(preview);
+      const { rad, dirX, dirY, edgeDist } = arrowGeometry(previewAngle);
+      const len = scale(preview.magnitude);
+      const dx = Math.cos(rad) * len;
+      const dy = -Math.sin(rad) * len;
+      const startX = cx + dirX * edgeDist;
+      const startY = cy + dirY * edgeDist;
+      const color = cssVar(typeMeta[preview.type].color);
+
+      ctx.save();
+      ctx.globalAlpha = 0.4;
+      ctx.setLineDash([4, 4]);
+      drawArrow(startX, startY, dx, dy, color, null);
+      ctx.restore();
+
+      ctx.save();
+      ctx.globalAlpha = 0.6;
+      drawAngleArc(cx, cy, rad, color);
+      ctx.restore();
+    }
+
+    if (forces.length > 0) {
+      // scale legend, bottom-left
+      const legendForce = niceScaleValue(maxMag);
+      const legendLen = (legendForce / maxMag) * maxLen;
+      const lx0 = 14;
+      const ly0 = size - 14;
+      ctx.strokeStyle = cssVar('--text');
+      ctx.fillStyle = cssVar('--text');
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(lx0, ly0);
+      ctx.lineTo(lx0 + legendLen, ly0);
+      ctx.moveTo(lx0, ly0 - 4);
+      ctx.lineTo(lx0, ly0 + 4);
+      ctx.moveTo(lx0 + legendLen, ly0 - 4);
+      ctx.lineTo(lx0 + legendLen, ly0 + 4);
+      ctx.stroke();
+
+      ctx.font = '11px "DM Mono", monospace';
+      ctx.fillStyle = cssVar('--hint');
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`= ${legendForce} N`, lx0 + legendLen + 8, ly0);
+
+      // net force readout, top-right
+      if (showNet) {
+        const displayAngle = ((netAngle * 180 / Math.PI) + 360) % 360;
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'top';
+        ctx.font = '600 12px "DM Mono", monospace';
+        ctx.fillStyle = cssVar('--fbd-net');
+        ctx.fillText(`ΣF = ${netMag.toFixed(2)} N`, size - 10, 10);
+        ctx.font = '11px "DM Mono", monospace';
+        ctx.fillStyle = cssVar('--hint');
+        ctx.fillText(`at ${displayAngle.toFixed(1)}° · ${forces.length} force${forces.length === 1 ? '' : 's'}`, size - 10, 26);
+      }
+    }
+
+    updateNetReadout(sumX, sumY);
+  }
+
+  function updateNetReadout(sumX, sumY) {
+    if (Math.abs(sumX) < 1e-9) sumX = 0;
+    if (Math.abs(sumY) < 1e-9) sumY = 0;
+    const mag = Math.hypot(sumX, sumY);
+    const angle = mag === 0 ? 0 : ((Math.atan2(sumY, sumX) * 180 / Math.PI) + 360) % 360;
+
+    document.getElementById('sumFxVal').textContent = `${sumX.toFixed(2)} N`;
+    document.getElementById('sumFyVal').textContent = `${sumY.toFixed(2)} N`;
+    document.getElementById('netMagVal').textContent = `${mag.toFixed(2)} N`;
+    document.getElementById('netAngleVal').textContent = `${angle.toFixed(1)}°`;
+
+    const axVal = document.getElementById('axVal');
+    const ayVal = document.getElementById('ayVal');
+    const aMagVal = document.getElementById('aMagVal');
+    const aAngleVal = document.getElementById('aAngleVal');
+
+    const mass = parseFloat(document.getElementById('objectMass').value) || 0;
+    if (mass <= 0) {
+      axVal.textContent = '—';
+      ayVal.textContent = '—';
+      aMagVal.textContent = '—';
+      aAngleVal.textContent = '—';
+      return;
+    }
+
+    axVal.textContent = `${(sumX / mass).toFixed(2)} m/s²`;
+    ayVal.textContent = `${(sumY / mass).toFixed(2)} m/s²`;
+    aMagVal.textContent = `${(mag / mass).toFixed(2)} m/s²`;
+    aAngleVal.textContent = `${angle.toFixed(1)}°`;
+  }
+
+  // object shape wiring
+  const shapeInput = document.getElementById('objectShape');
+  const shapeButtons = document.querySelectorAll('#shapeSegmented .fbd-seg-btn');
+  const objectSizeFields = document.getElementById('objectSizeFields');
+  const objectWidthLabel = document.getElementById('objectWidthLabel');
+  const objectHeightField = document.getElementById('objectHeightField');
+
+  function updateShapeFields() {
+    const shape = shapeInput.value;
+    objectSizeFields.style.display = shape === 'point' ? 'none' : 'grid';
+    objectHeightField.style.display = shape === 'rectangle' ? 'flex' : 'none';
+    objectWidthLabel.textContent = shape === 'rectangle' ? 'Width' : 'Size';
+  }
+
+  shapeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      shapeButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      shapeInput.value = btn.dataset.shape;
+      updateShapeFields();
+      draw();
+    });
+  });
+
+  document.getElementById('objectWidth').addEventListener('input', draw);
+  document.getElementById('objectHeight').addEventListener('input', draw);
+
+  // ground / incline wiring
+  const showGround = document.getElementById('showGround');
+  const groundAngleField = document.getElementById('groundAngleField');
+
+  showGround.addEventListener('change', () => {
+    groundAngleField.style.display = showGround.checked ? 'flex' : 'none';
+    draw();
+  });
+
+  document.getElementById('groundAngle').addEventListener('input', draw);
+
+  document.getElementById('forceRelative').addEventListener('change', () => {
+    const forceAngleLabel = document.getElementById('forceAngleLabel');
+    forceAngleLabel.textContent = document.getElementById('forceRelative').checked
+      ? 'Direction — drag the dial (rel. to slope)'
+      : 'Direction — drag the dial';
+    draw();
+  });
+
+  // live preview redraw triggers
+  document.getElementById('forceType').addEventListener('change', draw);
+  document.getElementById('forceMagnitude').addEventListener('input', draw);
+
+  // angle dial
+  const angleDial = document.getElementById('angleDial');
+  const dialCtx = angleDial.getContext('2d');
+  const forceAngleInput = document.getElementById('forceAngle');
+
+  function drawDial() {
+    const w = angleDial.width;
+    const h = angleDial.height;
+    const cx = w / 2;
+    const cy = h / 2;
+    const r = Math.min(cx, cy) - 4;
+
+    dialCtx.clearRect(0, 0, w, h);
+
+    dialCtx.strokeStyle = cssVar('--border-14');
+    dialCtx.lineWidth = 1.5;
+    dialCtx.beginPath();
+    dialCtx.arc(cx, cy, r, 0, Math.PI * 2);
+    dialCtx.stroke();
+
+    const angle = parseFloat(forceAngleInput.value) || 0;
+    const rad = (angle * Math.PI) / 180;
+    const hx = cx + Math.cos(rad) * r;
+    const hy = cy - Math.sin(rad) * r;
+
+    dialCtx.strokeStyle = cssVar('--text');
+    dialCtx.fillStyle = cssVar('--text');
+    dialCtx.lineWidth = 2;
+    dialCtx.beginPath();
+    dialCtx.moveTo(cx, cy);
+    dialCtx.lineTo(hx, hy);
+    dialCtx.stroke();
+
+    dialCtx.beginPath();
+    dialCtx.arc(hx, hy, 3.5, 0, Math.PI * 2);
+    dialCtx.fill();
+  }
+
+  function setAngleFromDialEvent(e) {
+    const rect = angleDial.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    let angle = Math.atan2(-y, x) * 180 / Math.PI;
+    angle = ((angle % 360) + 360) % 360;
+    forceAngleInput.value = Math.round(angle);
+    drawDial();
+    draw();
+  }
+
+  angleDial.addEventListener('pointerdown', e => {
+    dialDragging = true;
+    composing = true;
+    angleDial.focus();
+    angleDial.setPointerCapture(e.pointerId);
+    setAngleFromDialEvent(e);
+  });
+  angleDial.addEventListener('pointermove', e => {
+    if (dialDragging) setAngleFromDialEvent(e);
+  });
+  angleDial.addEventListener('pointerup', () => {
+    dialDragging = false;
+    updateComposing();
+  });
+
+  forceAngleInput.addEventListener('input', () => {
+    drawDial();
+    draw();
+  });
+
+  // only show the live ghost preview while the user is actively composing
+  // a force: a field in the "Add a force" card is focused, or the dial
+  // is being dragged
+  const addForceCard = document.getElementById('addForceCard');
+
+  function updateComposing() {
+    const wasComposing = composing;
+    composing = dialDragging || addForceCard.contains(document.activeElement);
+    if (composing !== wasComposing) draw();
+  }
+
+  addForceCard.addEventListener('focusin', updateComposing);
+  addForceCard.addEventListener('focusout', () => setTimeout(updateComposing, 0));
+
+  // clicking the canvas ends composing, even if a field stays focused
+  canvas.addEventListener('pointerdown', () => {
+    if (addForceCard.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
+    dialDragging = false;
+    composing = false;
+    draw();
+  });
+
+  document.addEventListener('themechange', drawDial);
+
+  document.getElementById('addForceBtn').addEventListener('click', () => {
+    const type = document.getElementById('forceType').value;
+    const magnitude = parseFloat(document.getElementById('forceMagnitude').value) || 0;
+    const label = document.getElementById('forceLabel').value.trim();
+
+    let angle = parseFloat(document.getElementById('forceAngle').value) || 0;
+    angle = ((angle % 360) + 360) % 360;
+    const relative = document.getElementById('forceRelative').checked;
+
+    addForce(type, magnitude, angle, label, relative);
+    document.getElementById('forceLabel').value = '';
+
+    composing = false;
+    document.activeElement.blur();
+    draw();
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    forces = [];
+    renderList();
+    draw();
+  });
+
+  document.getElementById('showNet').addEventListener('change', draw);
+  document.getElementById('objectMass').addEventListener('input', draw);
+
+  // resize canvas to its displayed size for crisp rendering
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    logicalSize = rect.width;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.width * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvas.style.height = rect.width + 'px';
+    draw();
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('load', resizeCanvas);
+  document.addEventListener('themechange', draw);
+
+  drawDial();
+  draw();
+})();
+</script>
+</body>
+</html>

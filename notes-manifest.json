@@ -11,7 +11,8 @@
     "Von Neumann Architecture.md"
   ],
   "htmlNotes": [
-    { "path": "kinematics/index.html", "title": "Kinematics" }
+    { "path": "kinematics/index.html", "title": "Kinematics" },
+    { "path": "force-dynamics/index.html", "title": "Force & Translational Dynamics" }
   ],
   "htmlNotesBase": "notes/"
 }

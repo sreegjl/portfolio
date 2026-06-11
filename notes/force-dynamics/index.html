@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Force &amp; Translational Dynamics</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../notes.html" class="nav-link">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <div>
+      <h1>force &amp; dynamics</h1>
+      <span>translational dynamics cheat sheet</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Newton's laws of motion ── -->
+  <div class="section">
+    <p class="section-label">Newton's laws of motion</p>
+
+    <p class="prose">
+      Three laws describe how forces govern motion: the <strong>1st law</strong> says objects resist changes to their motion, the <strong>2nd law</strong> relates net force to acceleration, and the <strong>3rd law</strong> describes how objects interact through paired forces.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">The three laws</p>
+        <div class="row">
+          <span class="row-desc">1st law</span>
+          <span class="row-val">no net force \(\Rightarrow\) constant velocity</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">2nd law</span>
+          <span class="row-val">\(\displaystyle \sum \vec{F} = m\vec{a}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">3rd law</span>
+          <span class="row-val">\(\vec{F}_{\text{A on B}} = -\vec{F}_{\text{B on A}}\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Common forces</p>
+        <div class="row">
+          <span class="row-desc">Weight</span>
+          <span class="row-val">\(F_g = mg\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Normal force</span>
+          <span class="row-val">\(N\), \(\perp\) to surface</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Friction</span>
+          <span class="row-val">\(f = \mu N\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Tension</span>
+          <span class="row-val">\(T\), equal along an ideal rope</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Applied force</span>
+          <span class="row-val">\(F_{\text{app}}\)</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      The <strong>1st law</strong> states that an object at rest stays at rest, and an object in motion stays in motion at constant velocity, unless acted on by a net external force. So a system at rest or moving at <strong>constant velocity</strong> is in <strong>translational equilibrium</strong> — its acceleration is zero, so the net external force must also be zero.
+    </p>
+
+    <p class="prose" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\sum \vec{F} = 0 \iff \vec{a} = 0\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Acceleration vs. velocity direction</p>
+      <div class="row">
+        <span class="row-desc">Direction of \(\vec{a}\)</span>
+        <span class="row-val">always matches the direction of \(\sum \vec{F}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(\vec{a}\) same direction as \(\vec{v}\)</span>
+        <span class="row-val">system speeds up</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(\vec{a}\) opposite direction to \(\vec{v}\)</span>
+        <span class="row-val">system slows down</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Inertial reference frame</span>
+        <span class="row-val">non-accelerating frame — Newton's laws hold</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      The <strong>2nd law</strong> states that the acceleration of a system is directly proportional to the net force acting on it, inversely proportional to its mass, and in the same direction as the net force. So \(\vec{a}\) is <strong>directly proportional</strong> to \(\sum \vec{F}\) and <strong>inversely proportional</strong> to \(m\) — the larger the mass, the more force it takes to produce the same acceleration.
+    </p>
+
+    <p class="prose" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\vec{a} = \frac{\sum \vec{F}}{m}\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Force, mass &amp; acceleration</p>
+      <div class="row">
+        <span class="row-desc">\(\sum \vec{F}\) doubles, \(m\) constant</span>
+        <span class="row-val">\(\vec{a}\) doubles</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(m\) doubles, \(\sum \vec{F}\) constant</span>
+        <span class="row-val">\(\vec{a}\) halves</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Units</span>
+        <span class="row-val">\(1\ \text{N} = 1\ \text{kg}\cdot\text{m/s}^2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Mass vs. weight</span>
+        <span class="row-val">mass is constant; weight (\(F_g = mg\)) depends on \(g\)</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      The <strong>3rd law</strong> states that for every action there is an equal and opposite reaction. Forces never exist alone — they arise from <strong>interactions</strong> between two objects, so they always come in pairs. If object \(\text{A}\) exerts a force on object \(\text{B}\), then \(\text{B}\) exerts a force back on \(\text{A}\) that is equal in magnitude and opposite in direction.
+    </p>
+
+    <p class="prose" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\vec{F}_{\text{A on B}} = -\vec{F}_{\text{B on A}}\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Force pair facts</p>
+      <div class="row">
+        <span class="row-desc">Act on</span>
+        <span class="row-val">two different objects</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Magnitude</span>
+        <span class="row-val">always equal</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Direction</span>
+        <span class="row-val">always opposite</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Force type</span>
+        <span class="row-val">always the same (both gravity, both contact, etc.)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Net effect of a pair</span>
+        <span class="badge teal">zero — but on different objects</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Systems: internal vs external forces ── -->
+  <div class="section">
+    <p class="section-label">Systems: internal vs. external forces</p>
+
+    <p class="prose">
+      A <strong>system</strong> is any object or group of objects you choose to analyze together. Once a system is defined, every force acting on it is either <strong>internal</strong> (both members of the pair act within the system) or <strong>external</strong> (only one member acts on the system).
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Internal forces</p>
+        <div class="row">
+          <span class="row-desc">Pair members</span>
+          <span class="row-val">both act inside the system</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Net effect on system</span>
+          <span class="badge teal">zero — they cancel</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Shown on system's FBD?</span>
+          <span class="row-val">no</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">External forces</p>
+        <div class="row">
+          <span class="row-desc">Pair members</span>
+          <span class="row-val">other half acts outside the system</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Net effect on system</span>
+          <span class="badge amber">can change its motion</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Shown on system's FBD?</span>
+          <span class="row-val">yes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 0.75rem;">
+      <p class="card-title">Choosing a system</p>
+      <div class="row">
+        <span class="row-desc">Smaller system</span>
+        <span class="row-val">more interactions become external</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Larger system</span>
+        <span class="row-val">more interactions become internal (cancel)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Throughout a problem</span>
+        <span class="row-val">stay consistent with one chosen system</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Forces in two dimensions ── -->
+  <div class="section">
+    <p class="section-label">Forces in two dimensions</p>
+
+    <p class="prose">
+      The \(x\) and \(y\) directions are <strong>independent</strong>: a system can be balanced (non-accelerating) along one axis while unbalanced (accelerating) along the other.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Resolving forces by axis</p>
+      <div class="row">
+        <span class="row-desc">Net force, \(x\)-axis</span>
+        <span class="row-val">\(\displaystyle \sum F_x = ma_x\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Net force, \(y\)-axis</span>
+        <span class="row-val">\(\displaystyle \sum F_y = ma_y\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Force at angle \(\theta\), components</span>
+        <span class="row-val">\(F_x = F\cos\theta\), \(\;F_y = F\sin\theta\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(\sum F_x = 0\) but \(\sum F_y \neq 0\)</span>
+        <span class="row-val">accelerates only along \(y\)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Free-body diagrams for a system ── -->
+  <div class="section">
+    <p class="section-label">Free-body diagrams for a system</p>
+
+    <p class="prose">
+      Once internal forces are accounted for, a system — no matter how many objects it contains — can be drawn as a single point. Only external forces appear on its free-body diagram.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Drawing a system FBD</p>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">1</span>
+        <span class="row-desc">Represent the entire system as a single dot</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">2</span>
+        <span class="row-desc">Only draw forces from objects <em>outside</em> the system</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">3</span>
+        <span class="row-desc">Leave off internal force pairs — they cancel</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">4</span>
+        <span class="row-desc">Apply \(\sum \vec{F} = m\vec{a}\) using the system's total mass</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Center of mass ── -->
+  <div class="section">
+    <p class="section-label">Center of mass</p>
+
+    <p class="prose">
+      The <strong>center of mass</strong> is the point where a system's mass can be treated as concentrated — it's where gravity effectively acts, and the point represented by the dot in a system's FBD.
+    </p>
+
+    <p class="prose" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[x_{\text{cm}} = \frac{\sum_i m_i x_i}{\sum_i m_i}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Two-object system</p>
+        <div class="row">
+          <span class="row-desc">General formula</span>
+          <span class="row-val">\(\displaystyle x_{\text{cm}} = \frac{m_1 x_1 + m_2 x_2}{m_1 + m_2}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Equal masses</span>
+          <span class="row-val">midpoint between them</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Unequal masses</span>
+          <span class="row-val">closer to the heavier object</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Finding the center of mass</p>
+        <div class="row">
+          <span class="row-desc">Look for</span>
+          <span class="row-val">lines of symmetry — CM lies on them</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Adding mass off-center</span>
+          <span class="row-val">shifts CM toward the added mass</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Gravity acts at</span>
+          <span class="row-val">the system's center of mass</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Problem-solving strategy ── -->
+  <div class="section">
+    <p class="section-label">Problem-solving strategy</p>
+
+    <div class="card">
+      <p class="card-title">Steps</p>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">1</span>
+        <span class="row-desc">Define the system — a single object or a group</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">2</span>
+        <span class="row-desc">Identify only the external forces acting on it, then draw the FBD</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">3</span>
+        <span class="row-desc">Leave internal forces off the diagram — they cancel within the system</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">4</span>
+        <span class="row-desc">Apply \(\sum \vec{F} = m\vec{a}\), or \(\sum \vec{F} = 0\) for constant velocity / rest</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">5</span>
+        <span class="row-desc">If forces act at angles, resolve them into \(x\)- and \(y\)-components first</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">6</span>
+        <span class="row-desc">Solve \(\sum F_x = ma_x\) and \(\sum F_y = ma_y\) separately — the axes don't interact</span>
+      </div>
+      <div class="row">
+        <span class="badge teal" style="flex-shrink:0">7</span>
+        <span class="row-desc">For questions about internal structure (e.g. center of mass), analyze mass distribution separately</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../notes.js"></script>
+</body>
+</html>
