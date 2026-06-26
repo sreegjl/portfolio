@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Forces &amp; Gravity</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../tools.html" class="nav-link">TOOLS</a>
+      <a href="../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <div>
+      <h1>contact forces &amp; gravity</h1>
+      <span>friction, springs, inclines &amp; gravitational fields</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Gravitational force & fields ── -->
+  <div class="section">
+    <p class="section-label">Gravity &amp; fields</p>
+
+    <p class="prose">
+      <strong>Newton's law of universal gravitation</strong> states that every pair of masses attracts each other with a force proportional to each mass and inversely proportional to the square of the distance between their centers. This is the underlying law. The familiar \(F_g = mg\) is just a special case near Earth's surface.
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\left|\vec{F}_g\right| = G\frac{m_1 m_2}{r^2}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(G\)</span>
+          <span class="row-val">\(6.67 \times 10^{-11}\ \text{N·m}^2/\text{kg}^2\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(m_1,\,m_2\)</span>
+          <span class="row-val">masses of the two objects (kg)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(r\)</span>
+          <span class="row-val">center-to-center distance (m)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Direction</span>
+          <span class="row-val">attractive, along the line joining both centers</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Scaling relationships</p>
+        <div class="row">
+          <span class="row-desc">\(r\) doubles</span>
+          <span class="row-val">\(F_g\) decreases by factor of 4</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(r\) halves</span>
+          <span class="row-val">\(F_g\) increases by factor of 4</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Either mass doubles</span>
+          <span class="row-val">\(F_g\) doubles</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">3rd law check</span>
+          <span class="row-val">force on \(m_1\) equals force on \(m_2\) in magnitude</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      A <strong>gravitational field</strong> is a vector field that describes the gravitational force per unit mass at every point in space around a source mass \(M\). It lets you treat gravity as a property of space itself rather than as action at a distance.
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\vec{g} = \frac{\vec{F}_g}{m} = -G\frac{M}{r^2}\hat{r}\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Gravitational field strength</p>
+      <div class="row">
+        <span class="row-desc">Definition</span>
+        <span class="row-val">force per unit mass: \(\vec{g} = \vec{F}_g / m\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Units</span>
+        <span class="row-val">\(\text{N/kg} = \text{m/s}^2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Direction</span>
+        <span class="row-val">toward the source mass \(M\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">At Earth's surface</span>
+        <span class="row-val">\(g = GM_E / R_E^2 \approx 9.8\ \text{m/s}^2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Far from surface</span>
+        <span class="row-val">\(g\) decreases as \(1/r^2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Using the field</span>
+        <span class="row-val">\(\vec{F}_g = m\vec{g}\), works for any test mass \(m\)</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 0.75rem;">
+      <p class="card-title">Universal vs. surface gravity</p>
+      <div class="row">
+        <span class="row-desc">Surface approximation</span>
+        <span class="row-val">\(F_g = mg\), valid when \(r \approx R_E\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Universal law</span>
+        <span class="row-val">\(F_g = Gm_1m_2/r^2\), exact, works everywhere</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">When to use universal law</span>
+        <span class="row-val">orbits, altitude problems, non-Earth bodies</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Inclines ── -->
+  <div class="section">
+    <p class="section-label">Inclines</p>
+
+    <p class="prose">
+      On a <strong>horizontal surface</strong>, \(\vec{F}_g\) and \(\vec{F}_n\) are equal and opposite, so the block doesn't accelerate. When the surface is <strong>tilted</strong> to angle \(\theta\), \(\vec{F}_n\) remains perpendicular to the surface but is no longer aligned with \(\vec{F}_g\), which still pulls straight down. The forces become unbalanced and the block accelerates.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Horizontal surface</p>
+        <div class="row">
+          <span class="row-desc">\(F_g\)</span>
+          <span class="row-val">\(= mg\) (downward)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(F_n\)</span>
+          <span class="row-val">\(= mg\) (upward, balanced)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Net force</span>
+          <span class="badge teal">zero, no acceleration</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Inclined surface (angle \(\theta\))</p>
+        <div class="row">
+          <span class="row-desc">\(F_g\)</span>
+          <span class="row-val">\(= mg\) (still straight down)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(F_n\)</span>
+          <span class="row-val">\(< mg\) (perpendicular to surface)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Net force</span>
+          <span class="badge amber">nonzero, accelerates down the incline</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      A convenient <strong>coordinate system</strong> for incline problems orients one axis <strong>parallel</strong> (\(\parallel\)) to the surface and one axis <strong>perpendicular</strong> (\(\perp\)) to the surface. In this frame the block only accelerates in one dimension (\(+\!\parallel\), down the slope), simplifying the analysis.
+    </p>
+
+    <p class="prose">
+      \(\vec{F}_n\) lies entirely in the \(\perp\) dimension. \(\vec{F}_g\) is diagonal to both axes, so it must be resolved into components. The component triangle formed by \(\vec{F}_g\) and its components is similar to the triangle formed by the incline itself, so the same angle \(\theta\) appears in both triangles.
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[F_{g\,\parallel} = mg\sin\theta \qquad F_{g\,\perp} = mg\cos\theta\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Forces on the incline</p>
+      <div class="row">
+        <span class="row-desc">Gravity (parallel)</span>
+        <span class="row-val">\(mg\sin\theta\), down the slope</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Gravity (perpendicular)</span>
+        <span class="row-val">\(mg\cos\theta\), into the surface</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Normal force</span>
+        <span class="row-val">\(F_n = mg\cos\theta\), balanced by \(F_{g\,\perp}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Net force (frictionless)</span>
+        <span class="row-val">\(mg\sin\theta\), down the slope (unbalanced)</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Applying Newton's 2nd law along the slope gives the block's acceleration. You can check the limiting cases: at \(\theta = 0°\) the surface is flat and \(a = 0\); at \(\theta = 90°\) the block is in free fall and \(a = g\).
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[a = g\sin\theta \quad \text{(frictionless incline)}\]
+    </p>
+
+    <p class="prose">
+      When <strong>friction</strong> is present and the block is at rest or sliding <em>down</em>, \(\vec{F}_f\) points <em>up</em> the slope (opposing motion). This reduces the net force and therefore the acceleration.
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[a = g\sin\theta - \frac{F_f}{m} \quad \text{(with friction, sliding down)}\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Key reminders</p>
+      <div class="row">
+        <span class="row-desc">Memorize</span>
+        <span class="row-val">\(F_{g\,\parallel} = mg\sin\theta\), \(F_{g\,\perp} = mg\cos\theta\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Perpendicular direction</span>
+        <span class="row-val">always balanced (no acceleration \(\perp\) to surface)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Friction direction</span>
+        <span class="row-val">up slope if sliding/stationary down; down slope if sliding up</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Sanity check</span>
+        <span class="row-val">test \(\theta = 0°\) and \(\theta = 90°\) to verify your expression</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Friction ── -->
+  <div class="section">
+    <p class="section-label">Friction</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Block on an incline</span>
+      </div>
+      <canvas id="fbd-incline" data-fbd width="400" height="400"></canvas>
+      <div class="graph-caption">adjust µs and µk to explore static vs kinetic friction</div>
+    </div>
+
+    <p class="prose">
+      When two surfaces are in contact and sliding (or something attempts to make them slide), interatomic electric forces produce a macroscopic force component <strong>parallel</strong> to the surfaces called <strong>friction</strong>. The perpendicular component is the normal force. Friction depends on only two factors: the <strong>normal force</strong> between the surfaces and the <strong>material properties</strong> of the surfaces in contact. It does <em>not</em> depend on sliding speed or contact area.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Kinetic friction</p>
+        <div class="row">
+          <span class="row-desc">When</span>
+          <span class="row-val">surfaces sliding relative to each other</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Direction</span>
+          <span class="row-val">opposes sliding</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Formula</span>
+          <span class="row-val">\(F_{f,k} = \mu_k F_n\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Magnitude</span>
+          <span class="badge teal">constant for given \(F_n\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Static friction</p>
+        <div class="row">
+          <span class="row-desc">When</span>
+          <span class="row-val">surfaces not sliding, prevents motion</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Direction</span>
+          <span class="row-val">opposes <em>attempted</em> sliding</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Formula</span>
+          <span class="row-val">\(F_{f,s} \leq \mu_s F_n\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Magnitude</span>
+          <span class="badge amber">adjusts up to a max</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Kinetic friction is <strong>always equal to</strong> \(\mu_k F_n\), while static friction <strong>can be anything from zero up to</strong> \(\mu_s F_n\). The actual static friction force depends on the other forces acting. It adopts whatever value is needed to prevent sliding, until the applied force exceeds the maximum.
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[F_{f,s\,\text{max}} = \mu_s F_n \qquad F_{f,k} = \mu_k F_n\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">What affects friction magnitude?</p>
+      <div class="row">
+        <span class="row-desc">Normal force</span>
+        <span class="badge teal">yes, directly proportional</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Material properties</span>
+        <span class="badge teal">yes, determines \(\mu\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Sliding speed</span>
+        <span class="badge amber">no</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Contact area</span>
+        <span class="badge amber">no</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Why do these factors matter? All surfaces have microscopic imperfections ("hills" and "valleys"). The <strong>normal force</strong> determines how tightly the surfaces are pressed together, pushing the imperfections deeper into each other and making sliding harder. The <strong>material properties</strong> determine the shape and density of these imperfections.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Coefficient of friction (\(\mu\))</p>
+        <div class="row">
+          <span class="row-desc">Units</span>
+          <span class="row-val">dimensionless (N/N cancel)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Typical range</span>
+          <span class="row-val">between 0 and 1</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\mu_s\) vs. \(\mu_k\)</span>
+          <span class="row-val">typically \(\mu_s > \mu_k\) for any surface pair</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Implication</span>
+          <span class="row-val">harder to start sliding than to keep sliding</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Common \(\mu_k\) values</p>
+        <div class="row">
+          <span class="row-desc">Rubber on asphalt</span>
+          <span class="row-val">\(0.5 - 0.8\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Rubber on ice</span>
+          <span class="row-val">\(0.15\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Wood on wood</span>
+          <span class="row-val">\(0.30\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Steel on steel</span>
+          <span class="row-val">\(0.57\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Teflon on teflon</span>
+          <span class="row-val">\(0.04\)</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      The general model for friction combines both types into one expression. For <strong>kinetic friction</strong>, use \(=\) with \(\mu_k\). For <strong>static friction</strong>, use \(\leq\) with \(\mu_s\), then use Newton's 2nd law to find the actual value.
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\left|\vec{F}_f\right| \leq \mu\left|\vec{F}_n\right|\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Friction on an incline</p>
+      <div class="row">
+        <span class="row-desc">Normal force on incline</span>
+        <span class="row-val">\(F_n = mg\cos\theta\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Kinetic friction on incline</span>
+        <span class="row-val">\(F_{f,k} = \mu_k mg\cos\theta\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Acceleration (sliding down)</span>
+        <span class="row-val">\(a = g(\sin\theta - \mu_k\cos\theta)\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Stationary on incline when</span>
+        <span class="row-val">\(\tan\theta \leq \mu_s\)</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Spring force ── -->
+  <div class="section">
+    <p class="section-label">Spring force</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title" id="spring-title">Mass hanging from a spring</span>
+      </div>
+      <canvas id="fbd-spring" data-fbd width="600" height="390"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      Springs exert a force that depends on how much their length is changed from their <strong>equilibrium length</strong> \(L_0\), the length at which the spring exerts no force. The farther a spring is stretched or compressed from equilibrium, the stronger the force it exerts.
+    </p>
+
+    <p class="prose">
+      Experiments show that the spring force \(\vec{F}_s\) is <strong>directly proportional</strong> to the displacement \(\Delta\vec{x}\) from equilibrium, and always points <strong>opposite</strong> to the displacement, always back toward equilibrium. This relationship is called <strong>Hooke's law</strong>.
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\vec{F}_s = -k\,\Delta\vec{x}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(\vec{F}_s\)</span>
+          <span class="row-val">force the spring exerts (N)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(k\)</span>
+          <span class="row-val">spring constant (N/m), always positive</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\Delta\vec{x}\)</span>
+          <span class="row-val">displacement from equilibrium (m)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Negative sign</span>
+          <span class="row-val">force opposes displacement</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">The spring constant \(k\)</p>
+        <div class="row">
+          <span class="row-desc">Meaning</span>
+          <span class="row-val">stiffness of the spring</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Large \(k\)</span>
+          <span class="row-val">stiff spring, more force per unit stretch</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Small \(k\)</span>
+          <span class="row-val">loose spring, less force per unit stretch</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Units</span>
+          <span class="row-val">\(\text{N/m}\)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Restoring force behavior</p>
+      <div class="row">
+        <span class="row-desc">At equilibrium (\(\Delta x = 0\))</span>
+        <span class="badge teal">spring exerts zero force</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Stretched (\(\Delta x > 0\))</span>
+        <span class="row-val">\(F_s\) is negative, pulls back</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Compressed (\(\Delta x < 0\))</span>
+        <span class="row-val">\(F_s\) is positive, pushes back</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Direction</span>
+        <span class="row-val">always toward equilibrium</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      On a graph of \(F_s\) vs. \(\Delta x\), Hooke's law produces a straight line through the origin with slope \(-k\). A stiffer spring has a steeper slope. The spring constant can be determined experimentally from this slope.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Ideal spring assumptions</p>
+      <div class="row">
+        <span class="row-desc">Mass</span>
+        <span class="row-val">negligible, no inertia or weight</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Hooke's law</span>
+        <span class="row-val">followed perfectly at all displacements</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Real springs</span>
+        <span class="badge amber">deviate at large displacements</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Permanent deformation</span>
+        <span class="row-val">occurs if stretched/compressed too far</span>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<script src="../fbd-mini.js"></script>
+<script>
+function initFBDs() {
+  drawFBD('fbd-incline', {
+    shape: 'square', size: 46, ground: true, showNet: true,
+    controls: [
+      { id: 'mass', label: 'Mass', unit: 'kg', min: 1, max: 10, value: 5, step: 0.5 },
+      { id: 'angle', label: 'Angle', unit: '°', min: 5, max: 60, value: 30, step: 1 },
+      { id: 'mus', label: 'µs', unit: '', min: 0, max: 1, value: 0.3, step: 0.05, lte: 'muk' },
+      { id: 'muk', label: 'µk', unit: '', min: 0, max: 1, value: 0.2, step: 0.05, gte: 'mus', greyAfter: 'mus' }
+    ],
+    update: function (v) {
+      var rad = v.angle * Math.PI / 180;
+      var Fg = +(v.mass * 9.8).toFixed(1);
+      var Fn = +(Fg * Math.cos(rad)).toFixed(1);
+      var Fpar = +(Fg * Math.sin(rad)).toFixed(1);
+      var forces = [
+        { type: 'weight', magnitude: Fg, angle: 270, label: 'Fg = ' + Fg + ' N' },
+        { type: 'normal', magnitude: Fn, angle: 90, relative: true, label: 'Fn = ' + Fn + ' N' }
+      ];
+      var cap;
+      var mus = Math.max(v.mus, v.muk);
+      if (v.muk === 0 && v.mus === 0) {
+        cap = 'Frictionless: \\(\\sum F = ' + Fpar + '\\text{ N down slope}\\)';
+      } else {
+        var maxFs = +(mus * Fn).toFixed(1);
+        var fk = +(v.muk * Fn).toFixed(1);
+        var isStatic = Fpar <= maxFs;
+        var f = isStatic ? Fpar : fk;
+        var fLabel = isStatic ? 'fs = ' + f + ' N' : 'fk = ' + fk + ' N';
+        var net = isStatic ? 0 : +(Fpar - fk).toFixed(1);
+        if (f > 0) forces.push({ type: 'friction', magnitude: f, angle: 0, relative: true, label: fLabel });
+        cap = isStatic
+          ? 'Static: \\(F_{g\\parallel} = ' + Fpar + ' \\leq f_{s,\\max} = ' + maxFs + '\\text{ N}\\)'
+          : 'Kinetic: \\(\\sum F = ' + net + '\\text{ N down slope}\\)';
+      }
+      return { caption: cap, groundAngle: v.angle, forces: forces };
+    }
+  });
+  var springMode = 'vertical';
+
+  function drawCurrentSpring() {
+    var wrap = document.getElementById('fbd-spring').parentElement;
+    var oldCd = wrap.querySelector('.fbd-controls');
+    if (oldCd) oldCd.remove();
+    var title = document.getElementById('spring-title');
+
+    if (springMode === 'vertical') {
+      title.textContent = 'Mass hanging from a spring';
+      drawFBD('fbd-spring', {
+        shape: 'square', size: 40, ground: false,
+        spring: { k: 100, coils: 10, width: 14 },
+        controls: [
+          { id: 'mode', label: 'Mode', type: 'toggle', toggleLabel: 'vertical', toggleFn: function () { springMode = 'horizontal'; drawCurrentSpring(); } },
+          { id: 'mass', label: 'Mass', unit: 'kg', min: 0.5, max: 5, value: 2, step: 0.5 },
+          { id: 'k', label: 'k', unit: 'N/m', min: 20, max: 200, value: 100, step: 10 }
+        ],
+        update: function (v) {
+          var Fg = +(v.mass * 9.8).toFixed(1);
+          var dx = +(Fg / v.k).toFixed(3);
+          return {
+            caption: '\\(F_s = F_g = ' + Fg + '\\text{ N},\\; \\Delta x = ' + (dx * 100).toFixed(1) + '\\text{ cm}\\)',
+            springK: v.k,
+            forces: [
+              { type: 'weight', magnitude: Fg, angle: 270, label: 'Fg = ' + Fg + ' N' },
+              { type: 'tension', magnitude: Fg, angle: 90, label: 'Fs = ' + Fg + ' N' }
+            ]
+          };
+        }
+      });
+    } else {
+      title.textContent = 'Block on a frictionless surface with spring';
+      drawFBD('fbd-spring', {
+        shape: 'square', size: 36, ground: true, groundAngle: 0, showNet: true,
+        spring: { horizontal: true, coils: 12, width: 10, displacement: 0.15 },
+        controls: [
+          { id: 'mode', label: 'Mode', type: 'toggle', toggleLabel: 'horizontal', toggleFn: function () { springMode = 'vertical'; drawCurrentSpring(); } },
+          { id: 'dx', label: 'Δx', unit: 'm', min: -0.25, max: 0.25, value: 0.15, step: 0.01 },
+          { id: 'k', label: 'k', unit: 'N/m', min: 20, max: 200, value: 80, step: 10 }
+        ],
+        update: function (v) {
+          var Fs = +(v.k * Math.abs(v.dx)).toFixed(1);
+          var dir = v.dx > 0 ? 180 : 0;
+          var dirLabel = v.dx > 0 ? 'left' : 'right';
+          var forces = [
+            { type: 'weight', magnitude: 20, angle: 270, label: 'Fg = 20 N' },
+            { type: 'normal', magnitude: 20, angle: 90, label: 'Fn = 20 N' }
+          ];
+          var cap;
+          if (Math.abs(v.dx) < 0.005) {
+            cap = '\\(\\Delta x = 0\\), spring at rest, no spring force';
+          } else {
+            forces.push({ type: 'tension', magnitude: Fs, angle: dir, label: 'Fs = ' + Fs + ' N' });
+            cap = '\\(F_s = k|\\Delta x| = ' + v.k + ' \\times ' + Math.abs(v.dx).toFixed(2) + ' = ' + Fs + '\\text{ N ' + dirLabel + '}\\)';
+          }
+          return { caption: cap, springDisp: v.dx, forces: forces };
+        }
+      });
+    }
+  }
+
+  drawCurrentSpring();
+}
+window.addEventListener('load', initFBDs);
+</script>
+<script src="../notes.js"></script>
+</body>
+</html>

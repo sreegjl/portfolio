@@ -40,8 +40,8 @@
 
   <header>
     <div>
-      <h1>force &amp; dynamics</h1>
-      <span>translational dynamics cheat sheet</span>
+      <h1>force &amp; translational dynamics</h1>
+      <span>Newton's laws, systems &amp; free-body diagrams</span>
     </div>
     <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
       <span class="study-toggle-label">study mode</span>
@@ -99,11 +99,19 @@
       </div>
     </div>
 
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Person on a scale in an elevator</span>
+      </div>
+      <canvas id="elevator-viz" width="600" height="390"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
     <p class="prose">
-      The <strong>1st law</strong> states that an object at rest stays at rest, and an object in motion stays in motion at constant velocity, unless acted on by a net external force. So a system at rest or moving at <strong>constant velocity</strong> is in <strong>translational equilibrium</strong> — its acceleration is zero, so the net external force must also be zero.
+      The <strong>1st law</strong> states that an object at rest stays at rest, and an object in motion stays in motion at constant velocity, unless acted on by a net external force. So a system at rest or moving at <strong>constant velocity</strong> is in <strong>translational equilibrium</strong>, meaning its acceleration is zero and the net external force must also be zero.
     </p>
 
-    <p class="prose" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
       \[\sum \vec{F} = 0 \iff \vec{a} = 0\]
     </p>
 
@@ -123,15 +131,15 @@
       </div>
       <div class="row">
         <span class="row-desc">Inertial reference frame</span>
-        <span class="row-val">non-accelerating frame — Newton's laws hold</span>
+        <span class="row-val">non-accelerating frame where Newton's laws hold</span>
       </div>
     </div>
 
     <p class="prose">
-      The <strong>2nd law</strong> states that the acceleration of a system is directly proportional to the net force acting on it, inversely proportional to its mass, and in the same direction as the net force. So \(\vec{a}\) is <strong>directly proportional</strong> to \(\sum \vec{F}\) and <strong>inversely proportional</strong> to \(m\) — the larger the mass, the more force it takes to produce the same acceleration.
+      The <strong>2nd law</strong> states that the acceleration of a system is directly proportional to the net force acting on it, inversely proportional to its mass, and in the same direction as the net force. So \(\vec{a}\) is <strong>directly proportional</strong> to \(\sum \vec{F}\) and <strong>inversely proportional</strong> to \(m\). The larger the mass, the more force it takes to produce the same acceleration.
     </p>
 
-    <p class="prose" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
       \[\vec{a} = \frac{\sum \vec{F}}{m}\]
     </p>
 
@@ -156,10 +164,10 @@
     </div>
 
     <p class="prose">
-      The <strong>3rd law</strong> states that for every action there is an equal and opposite reaction. Forces never exist alone — they arise from <strong>interactions</strong> between two objects, so they always come in pairs. If object \(\text{A}\) exerts a force on object \(\text{B}\), then \(\text{B}\) exerts a force back on \(\text{A}\) that is equal in magnitude and opposite in direction.
+      The <strong>3rd law</strong> states that for every action there is an equal and opposite reaction. Forces never exist alone. They arise from <strong>interactions</strong> between two objects, so they always come in pairs. If object \(\text{A}\) exerts a force on object \(\text{B}\), then \(\text{B}\) exerts a force back on \(\text{A}\) that is equal in magnitude and opposite in direction.
     </p>
 
-    <p class="prose" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
       \[\vec{F}_{\text{A on B}} = -\vec{F}_{\text{B on A}}\]
     </p>
 
@@ -183,14 +191,14 @@
       </div>
       <div class="row">
         <span class="row-desc">Net effect of a pair</span>
-        <span class="badge teal">zero — but on different objects</span>
+        <span class="badge teal">zero (but on different objects)</span>
       </div>
     </div>
   </div>
 
   <!-- ── Systems: internal vs external forces ── -->
   <div class="section">
-    <p class="section-label">Systems: internal vs. external forces</p>
+    <p class="section-label">Internal vs. external forces</p>
 
     <p class="prose">
       A <strong>system</strong> is any object or group of objects you choose to analyze together. Once a system is defined, every force acting on it is either <strong>internal</strong> (both members of the pair act within the system) or <strong>external</strong> (only one member acts on the system).
@@ -205,7 +213,7 @@
         </div>
         <div class="row">
           <span class="row-desc">Net effect on system</span>
-          <span class="badge teal">zero — they cancel</span>
+          <span class="badge teal">zero, they cancel</span>
         </div>
         <div class="row">
           <span class="row-desc">Shown on system's FBD?</span>
@@ -249,7 +257,7 @@
 
   <!-- ── Forces in two dimensions ── -->
   <div class="section">
-    <p class="section-label">Forces in two dimensions</p>
+    <p class="section-label">Forces in 2D</p>
 
     <p class="prose">
       The \(x\) and \(y\) directions are <strong>independent</strong>: a system can be balanced (non-accelerating) along one axis while unbalanced (accelerating) along the other.
@@ -278,10 +286,10 @@
 
   <!-- ── Free-body diagrams for a system ── -->
   <div class="section">
-    <p class="section-label">Free-body diagrams for a system</p>
+    <p class="section-label">Free-body diagrams</p>
 
     <p class="prose">
-      Once internal forces are accounted for, a system — no matter how many objects it contains — can be drawn as a single point. Only external forces appear on its free-body diagram.
+      Once internal forces are accounted for, a system can be drawn as a single point, regardless of how many objects it contains. Only external forces appear on its free-body diagram.
     </p>
 
     <div class="card">
@@ -296,12 +304,20 @@
       </div>
       <div class="row">
         <span class="badge teal" style="flex-shrink:0">3</span>
-        <span class="row-desc">Leave off internal force pairs — they cancel</span>
+        <span class="row-desc">Leave off internal force pairs (they cancel)</span>
       </div>
       <div class="row">
         <span class="badge teal" style="flex-shrink:0">4</span>
         <span class="row-desc">Apply \(\sum \vec{F} = m\vec{a}\) using the system's total mass</span>
       </div>
+    </div>
+
+    <div class="graph-card" style="margin-top: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Box pushed across a surface</span>
+      </div>
+      <canvas id="fbd-newton2" data-fbd width="400" height="400"></canvas>
+      <div class="graph-caption">\(\sum F = 20\text{ N right}\), \(a = 4\text{ m/s}^2\)</div>
     </div>
   </div>
 
@@ -310,10 +326,10 @@
     <p class="section-label">Center of mass</p>
 
     <p class="prose">
-      The <strong>center of mass</strong> is the point where a system's mass can be treated as concentrated — it's where gravity effectively acts, and the point represented by the dot in a system's FBD.
+      The <strong>center of mass</strong> is the point where a system's mass can be treated as concentrated. It's where gravity effectively acts, and the point represented by the dot in a system's FBD.
     </p>
 
-    <p class="prose" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
       \[x_{\text{cm}} = \frac{\sum_i m_i x_i}{\sum_i m_i}\]
     </p>
 
@@ -338,7 +354,7 @@
         <p class="card-title">Finding the center of mass</p>
         <div class="row">
           <span class="row-desc">Look for</span>
-          <span class="row-val">lines of symmetry — CM lies on them</span>
+          <span class="row-val">lines of symmetry (CM lies on them)</span>
         </div>
         <div class="row">
           <span class="row-desc">Adding mass off-center</span>
@@ -354,13 +370,13 @@
 
   <!-- ── Problem-solving strategy ── -->
   <div class="section">
-    <p class="section-label">Problem-solving strategy</p>
+    <p class="section-label">Problem solving</p>
 
     <div class="card">
       <p class="card-title">Steps</p>
       <div class="row">
         <span class="badge teal" style="flex-shrink:0">1</span>
-        <span class="row-desc">Define the system — a single object or a group</span>
+        <span class="row-desc">Define the system, whether a single object or a group</span>
       </div>
       <div class="row">
         <span class="badge teal" style="flex-shrink:0">2</span>
@@ -368,7 +384,7 @@
       </div>
       <div class="row">
         <span class="badge teal" style="flex-shrink:0">3</span>
-        <span class="row-desc">Leave internal forces off the diagram — they cancel within the system</span>
+        <span class="row-desc">Leave internal forces off the diagram (they cancel within the system)</span>
       </div>
       <div class="row">
         <span class="badge teal" style="flex-shrink:0">4</span>
@@ -380,7 +396,7 @@
       </div>
       <div class="row">
         <span class="badge teal" style="flex-shrink:0">6</span>
-        <span class="row-desc">Solve \(\sum F_x = ma_x\) and \(\sum F_y = ma_y\) separately — the axes don't interact</span>
+        <span class="row-desc">Solve \(\sum F_x = ma_x\) and \(\sum F_y = ma_y\) separately since the axes are independent</span>
       </div>
       <div class="row">
         <span class="badge teal" style="flex-shrink:0">7</span>
@@ -391,6 +407,34 @@
 
 </div>
 
+<script src="../elevator-viz.js"></script>
+<script src="../fbd-mini.js"></script>
+<script>
+  drawElevator('elevator-viz', { mass: 70 });
+function initFBDs() {
+  drawFBD('fbd-newton2', {
+    shape: 'square', size: 50, ground: true, groundAngle: 0, showNet: true,
+    controls: [
+      { id: 'fapp', label: 'Applied', unit: 'N', min: 0, max: 60, value: 30, step: 1 },
+      { id: 'mass', label: 'Mass', unit: 'kg', min: 1, max: 10, value: 5, step: 0.5 }
+    ],
+    update: function (v) {
+      var Fg = +(v.mass * 9.8).toFixed(1);
+      var a = v.mass > 0 ? +(v.fapp / v.mass).toFixed(1) : 0;
+      var cap = v.fapp > 0
+        ? '\\(\\sum F = ' + v.fapp + '\\text{ N right},\\; a = ' + a + '\\text{ m/s}^2\\)'
+        : '\\(\\sum F = 0\\), object at rest';
+      var forces = [
+        { type: 'weight', magnitude: Fg, angle: 270, label: 'Fg = ' + Fg + ' N' },
+        { type: 'normal', magnitude: Fg, angle: 90, label: 'Fn = ' + Fg + ' N' }
+      ];
+      if (v.fapp > 0) forces.push({ type: 'applied', magnitude: v.fapp, angle: 0, label: 'Fapp=' + v.fapp + ' N' });
+      return { caption: cap, forces: forces };
+    }
+  });
+}
+window.addEventListener('load', initFBDs);
+</script>
 <script src="../notes.js"></script>
 </body>
 </html>

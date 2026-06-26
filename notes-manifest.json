@@ -12,7 +12,9 @@
   ],
   "htmlNotes": [
     { "path": "kinematics/index.html", "title": "Kinematics" },
-    { "path": "force-dynamics/index.html", "title": "Force & Translational Dynamics" }
+    { "path": "force-dynamics/index.html", "title": "Force & Translational Dynamics" },
+    { "path": "forces/index.html", "title": "Contact Forces & Gravity" },
+    { "path": "circular-motion/index.html", "title": "Circular Motion & Orbits" }
   ],
   "htmlNotesBase": "notes/"
 }

@@ -156,22 +156,27 @@
         <span class="row-val">signed area (+ and − cancel)</span>
       </div>
     </div>
+
+    <div class="graph-card" style="margin-top: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Motion graphs: drag the cursor, adjust v₀ and a</span>
+      </div>
+      <canvas id="kg-triple" width="600" height="250"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
   </div>
-
-
-
 
   <!-- ── Kinematic equations ── -->
   <div class="section">
-    <p class="section-label">The 4 kinematic equations</p>
+    <p class="section-label">Kinematic equations</p>
 
     <p class="prose">
-      All four assume <strong>constant acceleration</strong>. There are five variables total — \(x\), \(v_0\), \(v\), \(a\), and \(t\) — and each equation is missing one of them. When solving a problem, identify which variable you don't know and don't need, then use the equation that's missing that variable.
+      All four assume <strong>constant acceleration</strong>. There are five variables total (\(x\), \(v_0\), \(v\), \(a\), and \(t\)) and each equation is missing one of them. When solving a problem, identify which variable you don't know and don't need, then use the equation that's missing that variable.
     </p>
 
     <div class="grid">
       <div class="card">
-        <p class="card-title">Equations — pick by missing variable</p>
+        <p class="card-title">Equations (by missing variable)</p>
         <div class="row">
           <span class="row-desc">Missing \(x\)</span>
           <span class="row-val">\(v = v_0 + at\)</span>
@@ -221,7 +226,7 @@
     <p class="section-label">Free fall</p>
 
     <p class="prose">
-      An object is in <strong>free fall</strong> when gravity is the only force acting on it — air resistance is negligible. All free-falling objects near Earth's surface accelerate at the same constant rate regardless of mass, denoted \(g = 9.8\,\text{m/s}^2\) downward. The kinematic equations apply directly, with \(a = -g\) if up is positive.
+      An object is in <strong>free fall</strong> when gravity is the only force acting on it, meaning air resistance is negligible. All free-falling objects near Earth's surface accelerate at the same constant rate regardless of mass, denoted \(g = 9.8\,\text{m/s}^2\) downward. The kinematic equations apply directly, with \(a = -g\) if up is positive.
     </p>
 
     <div class="grid">
@@ -247,10 +252,10 @@
       </div>
 
       <div class="card">
-        <p class="card-title">Thrown upward — signs (up = +)</p>
+        <p class="card-title">Thrown upward, signs (up = +)</p>
         <div class="row">
           <span class="row-desc">On the way up</span>
-          <span class="row-val">\(v > 0\), \(a < 0\) — slowing</span>
+          <span class="row-val">\(v > 0\), \(a < 0\), slowing</span>
         </div>
         <div class="row">
           <span class="row-desc">At the top</span>
@@ -258,7 +263,7 @@
         </div>
         <div class="row">
           <span class="row-desc">On the way down</span>
-          <span class="row-val">\(v < 0\), \(a < 0\) — speeding up</span>
+          <span class="row-val">\(v < 0\), \(a < 0\), speeding up</span>
         </div>
         <div class="row">
           <span class="row-desc">\(v\) vs. \(t\) graph</span>
@@ -277,7 +282,7 @@
     <p class="section-label">Vectors in 2D</p>
 
     <p class="prose">
-      A 2D vector can be broken into two perpendicular components along the \(x\) and \(y\) axes. The total vector and its components form a right triangle — so trigonometry and the Pythagorean theorem apply directly.
+      A 2D vector can be broken into two perpendicular components along the \(x\) and \(y\) axes. The total vector and its components form a right triangle, so trigonometry and the Pythagorean theorem apply directly.
     </p>
 
     <div class="grid">
@@ -365,11 +370,19 @@
   <div class="section">
     <p class="section-label">Projectile motion</p>
 
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Projectile trajectory</span>
+      </div>
+      <canvas id="kg-projectile" width="600" height="330"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
     <p class="prose">
-      A projectile moves in two dimensions with gravity as the only force — free fall plus horizontal motion. The key insight is that the horizontal and vertical dimensions are <strong>independent</strong>: analyze them separately using the kinematic equations, with the same \(t\) in both.
+      A projectile moves in two dimensions with gravity as the only force, combining free fall with horizontal motion. The key insight is that the horizontal and vertical dimensions are <strong>independent</strong>: analyze them separately using the kinematic equations, with the same \(t\) in both.
     </p>
 
-    <p class="prose" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
       Time in the air is determined entirely by vertical motion. Horizontal speed affects range, not hang time.
     </p>
 
@@ -500,7 +513,7 @@
       </div>
       <div class="row">
         <span class="badge teal" style="flex-shrink:0">2</span>
-        <span class="row-desc">Find time \(t\) using whichever direction gives enough info — usually \(y\) since that's where \(a \neq 0\)</span>
+        <span class="row-desc">Find time \(t\) using whichever direction gives enough info, usually \(y\) since that's where \(a \neq 0\)</span>
       </div>
       <div class="row">
         <span class="badge teal" style="flex-shrink:0">3</span>
@@ -677,6 +690,13 @@ window.addEventListener('load', renderGraphs);
 document.addEventListener('themechange', renderGraphs);
 </script>
 
+<script src="../kinematics-viz.js"></script>
+<script>
+window.addEventListener('load', function () {
+  drawTripleGraph('kg-triple', { v0: 4, a: 2 });
+  drawProjectile('kg-projectile', { angle: 45, v0: 20 });
+});
+</script>
 <script src="../notes.js"></script>
 </body>
 </html>

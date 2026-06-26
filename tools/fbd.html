@@ -481,15 +481,27 @@
           <select id="forceType">
             <option value="weight">Weight (Fg)</option>
             <option value="normal">Normal (N)</option>
-            <option value="friction">Friction (f)</option>
+            <option value="friction_s">Static friction (fs)</option>
+            <option value="friction_k">Kinetic friction (fk)</option>
             <option value="tension">Tension (T)</option>
             <option value="applied">Applied (F)</option>
             <option value="custom">Custom</option>
           </select>
         </div>
 
+        <div class="fbd-row-2" id="frictionHelper" style="display: none; margin-bottom: 0.75rem;">
+          <div class="fbd-field">
+            <label for="frictionMu" id="frictionMuLabel">μs</label>
+            <input type="number" id="frictionMu" value="0.4" min="0" max="2" step="0.01">
+          </div>
+          <div class="fbd-field">
+            <label for="frictionFn">Fn (N)</label>
+            <input type="number" id="frictionFn" value="10" min="0" step="any">
+          </div>
+        </div>
+
         <div class="fbd-field">
-          <label for="forceMagnitude">Magnitude</label>
+          <label for="forceMagnitude" id="forceMagLabel">Magnitude</label>
           <div class="fbd-input-unit">
             <input type="number" id="forceMagnitude" value="10" min="0" step="any">
             <span class="fbd-unit">N</span>
@@ -603,12 +615,14 @@ window.MathJax = {
   const ctx = canvas.getContext('2d');
 
   const typeMeta = {
-    weight:   { name: 'Weight',   symbol: 'Fg',    color: '--fbd-weight',   bg: '--fbd-weight-bg' },
-    normal:   { name: 'Normal',   symbol: 'N',     color: '--fbd-normal',   bg: '--fbd-normal-bg' },
-    friction: { name: 'Friction', symbol: 'f',     color: '--fbd-friction', bg: '--fbd-friction-bg' },
-    tension:  { name: 'Tension',  symbol: 'T',     color: '--fbd-tension',  bg: '--fbd-tension-bg' },
-    applied:  { name: 'Applied',  symbol: 'F',     color: '--fbd-applied',  bg: '--fbd-applied-bg' },
-    custom:   { name: 'Custom',   symbol: 'F',     color: '--fbd-custom',   bg: '--fbd-custom-bg' }
+    weight:     { name: 'Weight',           symbol: 'Fg',   color: '--fbd-weight',   bg: '--fbd-weight-bg' },
+    normal:     { name: 'Normal',           symbol: 'N',    color: '--fbd-normal',   bg: '--fbd-normal-bg' },
+    friction:   { name: 'Friction',         symbol: 'f',    color: '--fbd-friction', bg: '--fbd-friction-bg' },
+    friction_s: { name: 'Static friction',  symbol: 'fs',   color: '--fbd-friction', bg: '--fbd-friction-bg' },
+    friction_k: { name: 'Kinetic friction', symbol: 'fk',   color: '--fbd-friction', bg: '--fbd-friction-bg' },
+    tension:    { name: 'Tension',          symbol: 'T',    color: '--fbd-tension',  bg: '--fbd-tension-bg' },
+    applied:    { name: 'Applied',          symbol: 'F',    color: '--fbd-applied',  bg: '--fbd-applied-bg' },
+    custom:     { name: 'Custom',           symbol: 'F',    color: '--fbd-custom',   bg: '--fbd-custom-bg' }
   };
 
   let forces = [];
@@ -656,7 +670,8 @@ window.MathJax = {
       label.className = 'fbd-item-label';
       const name = f.label ? f.label : meta.symbol;
       const angleSuffix = f.relative ? '° (rel. to ground)' : '°';
-      label.innerHTML = `${name} — ${meta.name}<span class="fbd-item-sub">${f.magnitude} N at ${f.angle}${angleSuffix}</span>`;
+      const magPrefix = f.type === 'friction_s' ? '≤ ' : '';
+      label.innerHTML = `${name} — ${meta.name}<span class="fbd-item-sub">${magPrefix}${f.magnitude} N at ${f.angle}${angleSuffix}</span>`;
 
       const remove = document.createElement('button');
       remove.className = 'fbd-item-remove';
@@ -972,7 +987,7 @@ window.MathJax = {
       angle: effectiveAngle(f),
       magnitude: f.magnitude,
       color: cssVar(typeMeta[f.type].color),
-      label: (f.label ? f.label : typeMeta[f.type].symbol) + ` = ${f.magnitude}N`,
+      label: (f.label ? f.label : typeMeta[f.type].symbol) + (f.type === 'friction_s' ? ` ≤ ${f.magnitude}N` : ` = ${f.magnitude}N`),
       dashed: false
     }));
 
@@ -1169,8 +1184,43 @@ window.MathJax = {
     draw();
   });
 
+  // friction helper wiring
+  const frictionHelper = document.getElementById('frictionHelper');
+  const frictionMu = document.getElementById('frictionMu');
+  const frictionMuLabel = document.getElementById('frictionMuLabel');
+  const frictionFn = document.getElementById('frictionFn');
+  const forceMagLabel = document.getElementById('forceMagLabel');
+  const forceTypeSelect = document.getElementById('forceType');
+
+  function isFrictionType(t) { return t === 'friction_s' || t === 'friction_k'; }
+
+  function updateFrictionUI() {
+    const t = forceTypeSelect.value;
+    const show = isFrictionType(t);
+    frictionHelper.style.display = show ? 'grid' : 'none';
+    if (show) {
+      frictionMuLabel.textContent = t === 'friction_s' ? 'μs' : 'μk';
+      forceMagLabel.textContent = t === 'friction_s' ? 'Magnitude (≤ μs·Fn)' : 'Magnitude (= μk·Fn)';
+      calcFriction();
+    } else {
+      forceMagLabel.textContent = 'Magnitude';
+    }
+  }
+
+  function calcFriction() {
+    if (!isFrictionType(forceTypeSelect.value)) return;
+    const mu = parseFloat(frictionMu.value) || 0;
+    const fn = parseFloat(frictionFn.value) || 0;
+    const mag = +(mu * fn).toFixed(2);
+    document.getElementById('forceMagnitude').value = mag;
+    draw();
+  }
+
+  forceTypeSelect.addEventListener('change', () => { updateFrictionUI(); draw(); });
+  frictionMu.addEventListener('input', calcFriction);
+  frictionFn.addEventListener('input', calcFriction);
+
   // live preview redraw triggers
-  document.getElementById('forceType').addEventListener('change', draw);
   document.getElementById('forceMagnitude').addEventListener('input', draw);
 
   // angle dial

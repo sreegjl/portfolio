@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circular Motion &amp; Orbits</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../tools.html" class="nav-link">TOOLS</a>
+      <a href="../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <div>
+      <h1>circular motion &amp; orbits</h1>
+      <span>centripetal acceleration, orbits &amp; Kepler's law</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Centripetal acceleration ── -->
+  <div class="section">
+    <p class="section-label">Centripetal acceleration</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Top view: block on a frictionless table, string to center</span>
+      </div>
+      <canvas id="fbd-hcircle" data-fbd width="400" height="400"></canvas>
+      <div class="graph-caption"><span>\(F_g\) and \(F_n\) cancel, tension provides centripetal force</span></div>
+    </div>
+
+    <p class="prose">
+      When a net force acts <strong>perpendicular</strong> to an object's velocity, the object changes <strong>direction</strong> without changing speed. If this perpendicular force always points toward a fixed center, the object follows a circular path. The inward acceleration is called <strong>centripetal acceleration</strong>, and the net inward force causing it is called <strong>centripetal force</strong>.
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[a_c = \frac{v^2}{r} \qquad \vec{a}_c = \frac{\sum \vec{F}_{\text{rad}}}{m}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Directions</p>
+        <div class="row">
+          <span class="row-desc">Velocity \(\vec{v}\)</span>
+          <span class="row-val">tangent to the circular path</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\sum \vec{F}_{\text{rad}}\)</span>
+          <span class="row-val">toward the center (radial)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\vec{a}_c\)</span>
+          <span class="row-val">toward the center (radial)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Scaling</p>
+        <div class="row">
+          <span class="row-desc">\(v\) doubles</span>
+          <span class="row-val">\(a_c\) quadruples</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(r\) doubles</span>
+          <span class="row-val">\(a_c\) halves</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(m\) doubles, same \(a_c\)</span>
+          <span class="row-val">\(\sum F_{\text{rad}}\) doubles</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      "Centripetal force" is not a new type of force. It's just the <strong>net radial force</strong> from whatever forces point toward or away from the center (tension, gravity, normal force, friction, etc.). When multiple forces have radial components, add them as vectors to find \(\sum \vec{F}_{\text{rad}}\).
+    </p>
+
+  </div>
+
+  <!-- ── Vertical circles ── -->
+  <div class="section">
+    <p class="section-label">Vertical circles</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Ball swung in a vertical circle</span>
+      </div>
+      <canvas id="fbd-vtop" data-fbd width="400" height="400"></canvas>
+      <div class="graph-caption">Both \(F_T\) and \(F_g\) point toward center</div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">At the top</p>
+      <div class="row">
+        <span class="row-desc">Radial forces</span>
+        <span class="row-val">\(F_T\) and \(F_g\) both point inward</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(\sum F_{\text{rad}}\)</span>
+        <span class="row-val">\(F_T + mg\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Min speed to maintain path</span>
+        <span class="row-val">\(v_{\text{min}} = \sqrt{gr}\) (when \(F_T = 0\))</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 0.75rem;">
+      <p class="card-title">At angle \(\theta\) from bottom</p>
+      <div class="row">
+        <span class="row-desc">Radial component of \(F_g\)</span>
+        <span class="row-val">\(mg\cos\theta\) (outward)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Tangential component of \(F_g\)</span>
+        <span class="row-val">\(mg\sin\theta\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(\sum F_{\text{rad}}\)</span>
+        <span class="row-val">\(F_T - mg\cos\theta\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(\sum F_{\text{tan}}\)</span>
+        <span class="row-val">\(mg\sin\theta\)</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      An object in circular motion moves at <strong>constant speed</strong> only if there is zero tangential force. A nonzero tangential force causes the object to speed up or slow down along its path. The net acceleration is the vector sum of \(\vec{a}_c\) (radial) and \(\vec{a}_{\text{tan}}\) (tangential).
+    </p>
+
+    <div class="card">
+      <p class="card-title">Key reminders</p>
+      <div class="row">
+        <span class="row-desc">Applies to partial arcs too</span>
+        <span class="row-val">a car rounding a curve is circular motion</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Constant speed</span>
+        <span class="badge teal">only radial accel, no tangential force</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Changing speed</span>
+        <span class="badge amber">both radial and tangential accel</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Equate \(a_c\) expressions</span>
+        <span class="row-val">\(\dfrac{v^2}{r} = \dfrac{\sum F_{\text{rad}}}{m}\)</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Circular orbits ── -->
+  <div class="section">
+    <p class="section-label">Orbits &amp; Kepler's law</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Orbital simulator</span>
+      </div>
+      <canvas id="orbit-sim" width="600" height="390"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      An object in <strong>uniform circular motion</strong> follows a circular path at constant speed. Its <strong>period</strong> \(T\) is the time for one full revolution, and its <strong>frequency</strong> \(f\) is cycles per unit time. They are inverses: \(T = 1/f\).
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[T = \frac{2\pi r}{v} \qquad f = \frac{1}{T}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Period and frequency</p>
+        <div class="row">
+          <span class="row-desc">\(T\)</span>
+          <span class="row-val">time per revolution (s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(f\)</span>
+          <span class="row-val">revolutions per unit time (\(\text{s}^{-1}\))</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Speed from orbit</span>
+          <span class="row-val">\(v = 2\pi r / T\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Satellite orbits</p>
+        <div class="row">
+          <span class="row-desc">Centripetal force source</span>
+          <span class="row-val">gravity: \(F_g = G\dfrac{mM}{r^2}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Orbital acceleration</span>
+          <span class="row-val">\(a = G\dfrac{M}{r^2}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Orbital speed</span>
+          <span class="row-val">\(v^2 = GM/r\)</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      For a satellite in a circular orbit, gravity provides the centripetal force. Setting \(v^2/r = GM/r^2\) and substituting \(v = 2\pi r/T\) gives <strong>Kepler's third law</strong>: orbital period squared is proportional to orbital radius cubed.
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[T^2 = \frac{4\pi^2}{GM}\,r^3 \qquad \Longrightarrow \qquad T^2 \propto r^3\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Key facts</p>
+      <div class="row">
+        <span class="row-desc">Acceleration depends on</span>
+        <span class="row-val">\(M\) and \(r\) only (not satellite mass)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Comparing orbits around same body</span>
+        <span class="row-val">\(T^2 \propto r^3\) since \(4\pi^2/GM\) is constant</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Real orbits</span>
+        <span class="badge amber">elliptical, but often nearly circular</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Assumption</span>
+        <span class="row-val">central body much more massive than satellite</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../fbd-mini.js"></script>
+<script>
+function initFBDs() {
+  drawFBD('fbd-hcircle', {
+    shape: 'point', size: 34, ground: false, maxForce: 200,
+    orbit: { radius: 100, position: 180, centerOffset: [20, 0], animate: true },
+    controls: [
+      { id: 'v', label: 'Speed', unit: 'm/s', min: 1, max: 20, value: 5, step: 0.5 },
+      { id: 'r', label: 'Radius', unit: 'm', min: 0.5, max: 5, value: 2, step: 0.5 }
+    ],
+    update: function (vals) {
+      var m = 2;
+      var ac = +(vals.v * vals.v / vals.r).toFixed(1);
+      var ft = +(m * ac).toFixed(1);
+      return {
+        caption: '\\(a_c = v^2/r = ' + ac + '\\text{ m/s}^2,\\; F_T = ma_c = ' + ft + '\\text{ N}\\) &ensp; (\\(m = ' + m + '\\text{ kg}\\))',
+        orbitSpeed: vals.v / vals.r * 0.003,
+        orbitRadius: 40 + (vals.r / 5) * 80,
+        orbitVelocity: vals.v,
+        forces: [
+          { type: 'tension', magnitude: ft, towardCenter: true, label: 'FT = ' + ft + ' N' }
+        ]
+      };
+    }
+  });
+  drawFBD('fbd-vtop', {
+    shape: 'point', size: 34, ground: false,
+    orbit: { radius: 120, position: 90, centerOffset: [0, 25], animate: true, vertical: true, clockwise: true },
+    controls: [
+      { id: 'mass', label: 'Mass', unit: 'kg', min: 0.2, max: 3, value: 0.5, step: 0.1 },
+      { id: 'vTop', label: 'Speed (top)', unit: 'm/s', min: 3.5, max: 12, value: 5, step: 0.5 }
+    ],
+    update: function (v) {
+      var g = 9.8, r = 1;
+      var Fg = +(v.mass * g).toFixed(1);
+      var ft = +(v.mass * v.vTop * v.vTop / r - v.mass * g).toFixed(1);
+      if (ft < 0) ft = 0;
+      var net = +(Fg + ft).toFixed(1);
+      return {
+        caption: '\\(F_T = mv^2/r - mg = ' + ft + '\\text{ N},\\; \\sum F = ' + net + '\\text{ N}\\)',
+        orbitSpeed: Math.max(0.005, v.vTop * 0.006),
+        forces: [
+          { type: 'weight', magnitude: Fg, angle: 270, label: 'Fg = ' + Fg + ' N' },
+          { type: 'tension', magnitude: ft, towardCenter: true, label: 'FT = ' + ft + ' N' }
+        ]
+      };
+    }
+  });
+}
+window.addEventListener('load', initFBDs);
+
+// ── Orbital simulator ──
+(function () {
+  var canvas = document.getElementById('orbit-sim');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.6);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var G_k = 4 * Math.PI * Math.PI; // AU³/(yr²·M☉), Kepler form
+  var AU_KMS = 4.74; // 1 AU/yr in km/s
+  var vals = { r: 1, M: 1, m: 1 }; // r in AU, M in M☉, m in M⊕
+  var angle = 0, paused = false, animId = null;
+  var starX = w / 2, starY = h / 2;
+  var maxR_AU = 2;
+  var pxPerAU = (Math.min(w, h) * 0.38) / maxR_AU;
+
+  function orbV_auy() { return vals.r > 0 && vals.M > 0 ? Math.sqrt(G_k * vals.M / vals.r) : 0; }
+  function orbV_kms() { return orbV_auy() * AU_KMS; }
+  function orbT() { var v = orbV_auy(); return v > 0 ? 2 * Math.PI * vals.r / v : Infinity; }
+  function orbFg() {
+    if (vals.r <= 0 || vals.M <= 0 || vals.m <= 0) return 0;
+    var M = vals.M * 1.989e30, m = vals.m * 5.972e24, r = vals.r * 1.496e11;
+    return 6.674e-11 * M * m / (r * r);
+  }
+  function orbAc() {
+    if (vals.r <= 0) return 0;
+    var v = orbV_kms() * 1000;
+    return v * v / (vals.r * 1.496e11);
+  }
+  function fmtSci(x) {
+    if (!isFinite(x) || x === 0) return '0';
+    var e = Math.floor(Math.log10(Math.abs(x)));
+    var m = x / Math.pow(10, e);
+    return m.toFixed(1) + 'e' + e;
+  }
+
+  function drawArrow(sx, sy, dx, dy, color, hl) {
+    hl = hl || 7;
+    var a = Math.atan2(dy, dx);
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(sx + dx, sy + dy);
+    ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+    ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+    ctx.closePath(); ctx.fill();
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    // grid
+    var gs = 25;
+    ctx.strokeStyle = css('--border') || 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    // orbit path
+    var rPx = vals.r * pxPerAU;
+    ctx.save(); ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = css('--hint'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(starX, starY, rPx, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+
+    // planet position
+    var px = starX + rPx * Math.cos(angle);
+    var py = starY - rPx * Math.sin(angle);
+
+    // force arrows (equal magnitude, opposite direction - 3rd law)
+    var fg = orbFg();
+    var fRef = 6.674e-11 * (vals.M * 1.989e30) * (1 * 5.972e24) / (1 * 1.496e11) ** 2;
+    var fLen = Math.min(Math.max((fg / fRef) * 30, 10), rPx * 0.45);
+    var toPlanetX = (px - starX) / rPx;
+    var toPlanetY = (py - starY) / rPx;
+
+    var fColor = css('--fbd-weight');
+    drawArrow(px, py, -toPlanetX * fLen, -toPlanetY * fLen, fColor);
+    drawArrow(starX, starY, toPlanetX * fLen, toPlanetY * fLen, fColor);
+
+    // velocity arrow on planet (tangent)
+    var vKms = orbV_kms();
+    var vLen = Math.min(vKms / 1.2, 50);
+    var tanX = Math.cos(angle + Math.PI / 2);
+    var tanY = -Math.sin(angle + Math.PI / 2);
+    ctx.save(); ctx.globalAlpha = 0.5; ctx.setLineDash([3, 3]);
+    drawArrow(px, py, tanX * vLen, tanY * vLen, css('--hint'), 5);
+    ctx.restore();
+
+    // star
+    var starR = 6 + vals.M * 5;
+    ctx.fillStyle = css('--accent-amber') || '#e8b366';
+    ctx.beginPath(); ctx.arc(starX, starY, starR, 0, Math.PI * 2); ctx.fill();
+
+    // planet
+    var planetR = Math.max(3, Math.min(2 + Math.log10(vals.m + 1) * 4, 8));
+    ctx.fillStyle = css('--accent-teal');
+    ctx.beginPath(); ctx.arc(px, py, planetR, 0, Math.PI * 2); ctx.fill();
+
+    // legend
+    var legX = w - 10, legY = 12;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+
+    var T = orbT();
+    var ac = orbAc();
+    var kep = (T * T) / (vals.r * vals.r * vals.r);
+
+    ctx.fillStyle = css('--hint');
+    ctx.fillText('v = ' + vKms.toFixed(1) + ' km/s', legX, legY);
+    legY += 14;
+    ctx.fillText('T = ' + (T < 0.1 ? (T * 365.25).toFixed(1) + ' days' : T.toFixed(2) + ' yr'), legX, legY);
+    legY += 14;
+    ctx.fillText('ac = ' + (ac < 0.01 ? fmtSci(ac) : ac.toFixed(3)) + ' m/s²', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--fbd-weight');
+    ctx.fillText('Fg = ' + fmtSci(fg) + ' N', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--accent-purple');
+    ctx.fillText('T²/r³ = ' + kep.toFixed(2) + ' yr²/AU³', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.fillText('3rd law: same Fg on both', legX, legY);
+  }
+
+  var BASE_DT = 5.28e-10; // yr/frame at realtime (1/60s real = 1/60s sim)
+  function tick() {
+    if (paused) { animId = null; return; }
+    var dt = BASE_DT * Math.pow(10, speedExp);
+    var omega = orbV_auy() / vals.r;
+    angle += omega * dt;
+    render();
+    animId = requestAnimationFrame(tick);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var v = orbV_kms(), T = orbT(), fg = orbFg();
+    var Tstr = T < 0.1 ? (T * 365.25).toFixed(1) + '\\text{ days}' : T.toFixed(2) + '\\text{ yr}';
+    var txt = '\\(v = ' + v.toFixed(1) + '\\text{ km/s},\\; T = ' + Tstr + ',\\; F_g = ' + fmtSci(fg) + '\\text{ N}\\)';
+    cap.querySelector('span').innerHTML = txt;
+    if (window.MathJax) MathJax.typesetPromise([cap]).catch(function () {});
+  }
+
+  // controls
+  var cd = document.createElement('div');
+  cd.className = 'fbd-controls';
+
+  function makeSlider(id, label, unit, min, max, val, step, onChange) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = val;
+    var dp = step < 1 ? ('' + step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+val).toFixed(dp) + ' ' + unit;
+    inp.addEventListener('input', function () {
+      vals[id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + unit;
+      onChange(); render(); updateCaption();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+  }
+
+  makeSlider('r', 'Radius', 'AU', 0.3, 2, 1, 0.1, function () {});
+  makeSlider('M', 'Star mass', 'M☉', 0.5, 3, 1, 0.1, function () {});
+  makeSlider('m', 'Planet mass', 'M⊕', 0.1, 300, 1, 0.1, function () {});
+
+  // time speed (log scale)
+  var speedExp = 7.2;
+  var speedRow = document.createElement('div'); speedRow.className = 'fbd-control';
+  var speedLbl = document.createElement('span'); speedLbl.className = 'fbd-control-label'; speedLbl.textContent = 'Speed';
+  var speedInp = document.createElement('input');
+  speedInp.type = 'range'; speedInp.min = 0; speedInp.max = 100; speedInp.step = 1; speedInp.value = 100;
+  var speedVal = document.createElement('span'); speedVal.className = 'fbd-control-val';
+  function fmtSpeed(e) {
+    var x = Math.pow(10, e);
+    if (x < 1000) return Math.round(x) + '×';
+    if (x < 1e6) return (x / 1000).toFixed(0) + 'K×';
+    return (x / 1e6).toFixed(1) + 'M×';
+  }
+  function sliderToExp(v) { return Math.pow(v / 100, 0.15) * 7.2; }
+  speedExp = sliderToExp(100);
+  speedVal.textContent = fmtSpeed(speedExp);
+  speedInp.addEventListener('input', function () {
+    speedExp = sliderToExp(parseFloat(speedInp.value));
+    speedVal.textContent = fmtSpeed(speedExp);
+  });
+  speedRow.appendChild(speedLbl); speedRow.appendChild(speedInp); speedRow.appendChild(speedVal);
+  cd.appendChild(speedRow);
+
+  wrap.appendChild(cd);
+
+  // scrub bar
+  var tScrub = document.createElement('input');
+  tScrub.type = 'range'; tScrub.min = 0; tScrub.max = 1000; tScrub.value = 0; tScrub.step = 1;
+  tScrub.id = 'orbit-sim-scrub';
+  tScrub.style.cssText = 'width:100%;height:3px;margin:0;padding:0;display:block;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none;background:var(--border-strong);border-radius:2px;transition:opacity 0.2s;';
+  var scStyle = document.createElement('style');
+  scStyle.textContent = '#orbit-sim-scrub::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent-purple);cursor:pointer;}#orbit-sim-scrub::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent-purple);border:none;cursor:pointer;}';
+  document.head.appendChild(scStyle);
+  canvas.after(tScrub);
+
+  var cardWrap = canvas.closest('.graph-card');
+  var scrubbing = false;
+  cardWrap.addEventListener('mouseenter', function () { tScrub.style.opacity = '0.5'; });
+  cardWrap.addEventListener('mouseleave', function () { if (!scrubbing) tScrub.style.opacity = '0'; });
+
+  var playBtn = null;
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.r = +(0.3 + Math.random() * 4.7).toFixed(1);
+      vals.M = +(0.5 + Math.random() * 2.5).toFixed(1);
+      vals.m = +(0.1 + Math.random() * 299.9).toFixed(1);
+      var ctrls = cd.querySelectorAll('input[type="range"]');
+      var spans = cd.querySelectorAll('.fbd-control-val');
+      if (ctrls[0]) { ctrls[0].value = vals.r; spans[0].textContent = vals.r.toFixed(1) + ' AU'; }
+      if (ctrls[1]) { ctrls[1].value = vals.M; spans[1].textContent = vals.M.toFixed(1) + ' M☉'; }
+      if (ctrls[2]) { ctrls[2].value = vals.m; spans[2].textContent = vals.m.toFixed(1) + ' M⊕'; }
+      render(); updateCaption();
+    });
+    cap.appendChild(rb);
+
+    playBtn = document.createElement('button');
+    playBtn.className = 'fbd-pause'; playBtn.type = 'button';
+    playBtn.textContent = 'play'; playBtn.style.display = 'none';
+    playBtn.addEventListener('click', function () {
+      paused = false; playBtn.style.display = 'none'; tick();
+    });
+    cap.appendChild(playBtn);
+  }
+
+  tScrub.addEventListener('input', function () {
+    angle = (parseFloat(tScrub.value) / 1000) * Math.PI * 2;
+    scrubbing = true; paused = true;
+    if (playBtn) playBtn.style.display = '';
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    render();
+  });
+  tScrub.addEventListener('mouseup', function () { scrubbing = false; });
+
+  cardWrap.addEventListener('keydown', function (e) {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      if (paused) { paused = false; if (playBtn) playBtn.style.display = 'none'; tick(); }
+      else { paused = true; if (playBtn) playBtn.style.display = ''; if (animId) { cancelAnimationFrame(animId); animId = null; } }
+    }
+  });
+  cardWrap.setAttribute('tabindex', '0');
+
+  // sync scrub during playback
+  var origTick = tick;
+  tick = function () {
+    if (paused) { animId = null; return; }
+    var dt = BASE_DT * Math.pow(10, speedExp);
+    var omega = orbV_auy() / vals.r;
+    angle += omega * dt;
+    if (!scrubbing) tScrub.value = Math.round(((angle % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2)) / (Math.PI * 2) * 1000);
+    render();
+    animId = requestAnimationFrame(tick);
+  };
+
+  render(); updateCaption(); tick();
+  document.addEventListener('themechange', render);
+})();
+</script>
+<script src="../notes.js"></script>
+</body>
+</html>
