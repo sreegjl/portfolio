@@ -545,7 +545,7 @@ window.addEventListener('load', initFBDs);
     var rb = document.createElement('button');
     rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
     rb.addEventListener('click', function () {
-      vals.r = +(0.3 + Math.random() * 4.7).toFixed(1);
+      vals.r = +(0.3 + Math.random() * 1.7).toFixed(1);
       vals.M = +(0.5 + Math.random() * 2.5).toFixed(1);
       vals.m = +(0.1 + Math.random() * 299.9).toFixed(1);
       var ctrls = cd.querySelectorAll('input[type="range"]');
