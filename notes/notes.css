@@ -376,7 +376,7 @@ canvas { display: block; width: 100%; }
   gap: 0.5rem;
 }
 
-.graph-caption span { flex: 1; }
+.graph-caption > :first-child { flex: 1; }
 
 .fbd-randomize {
   font-family: var(--mono);

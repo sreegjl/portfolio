@@ -219,7 +219,7 @@
         txt = '\\(F_n = m(g + a) = ' + mass + '(' + g + ' + ' + vals.accel.toFixed(1) + ') = ' + Fn.toFixed(0) + '\\text{ N}\\)';
       }
       cap.querySelector('span').innerHTML = txt;
-      if (window.MathJax) MathJax.typesetPromise([cap]).catch(function () {});
+      var cs = cap.querySelector('span'); if (cs && window.MathJax) MathJax.typesetPromise([cs]).catch(function () {});
     }
 
     // controls

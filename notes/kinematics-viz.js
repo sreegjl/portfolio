@@ -48,7 +48,7 @@
     var cursorT = 2.5, dragging = false;
     var tMax = 5;
     var pad = { l: 32, r: 8, t: 18, b: 22 };
-    var gap = 18;
+    var gap = 30;
     var pw = (w - pad.l - pad.r - gap * 2) / 3;
     var ph = h - pad.t - pad.b;
 
@@ -58,9 +58,9 @@
       ctx.fillRect(0, 0, w, h);
 
       var panels = [
-        { title: 'Position (x vs t)', unit: 'm', yMin: -115, yMax: 115, fn: function (t) { return vals.v0 * t + 0.5 * vals.a * t * t; } },
-        { title: 'Velocity (v vs t)', unit: 'm/s', yMin: -35, yMax: 35, fn: function (t) { return vals.v0 + vals.a * t; } },
-        { title: 'Accel (a vs t)', unit: 'm/s²', yMin: -6, yMax: 6, fn: function (t) { return vals.a; } }
+        { title: 'Position (x vs t)', unit: 'm', yMin: -80, yMax: 80, fn: function (t) { return vals.v0 * t + 0.5 * vals.a * t * t; } },
+        { title: 'Velocity (v vs t)', unit: 'm/s', yMin: -25, yMax: 25, fn: function (t) { return vals.v0 + vals.a * t; } },
+        { title: 'Accel (a vs t)', unit: 'm/s²', yMin: -5, yMax: 5, fn: function (t) { return vals.a; } }
       ];
 
       panels.forEach(function (p, i) {
@@ -76,17 +76,25 @@
         for (var gx = 0; gx <= 5; gx++) {
           var x = tx(gx);
           ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, pad.t + ph); ctx.stroke();
+          if (gx > 0) {
+            ctx.font = '600 8px "DM Mono", monospace';
+            ctx.fillStyle = css('--muted');
+            ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+            ctx.fillText(gx, x, pad.t + ph + 3);
+          }
         }
         var ySteps = 4;
         for (var gy = 0; gy <= ySteps; gy++) {
           var yv = yMin + (yMax - yMin) * gy / ySteps;
           var y = ty(yv);
           ctx.beginPath(); ctx.moveTo(px, y); ctx.lineTo(px + pw, y); ctx.stroke();
-          ctx.font = '600 8px "DM Mono", monospace';
-          ctx.fillStyle = css('--muted');
-          ctx.textAlign = 'right';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(Math.abs(yv) >= 10 ? yv.toFixed(0) : yv.toFixed(1), px - 4, y);
+          if (gy > 0) {
+            ctx.font = '600 8px "DM Mono", monospace';
+            ctx.fillStyle = css('--muted');
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(Math.abs(yv) >= 10 ? yv.toFixed(0) : yv.toFixed(1), px - 4, y);
+          }
         }
 
         // zero line
@@ -97,7 +105,11 @@
           ctx.beginPath(); ctx.moveTo(px, zy); ctx.lineTo(px + pw, zy); ctx.stroke();
         }
 
-        // curve
+        // curve (clipped to panel)
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(px, pad.t, pw, ph);
+        ctx.clip();
         ctx.strokeStyle = css('--accent-teal');
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -106,6 +118,7 @@
           if (ct === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
         }
         ctx.stroke();
+        ctx.restore();
 
         // cursor
         var curX = tx(cursorT);
@@ -121,11 +134,11 @@
         ctx.beginPath(); ctx.arc(curX, curY, 4, 0, Math.PI * 2); ctx.fill();
 
         // value at cursor
-        ctx.font = '600 9px "DM Mono", monospace';
+        ctx.font = '600 11px "DM Mono", monospace';
         ctx.fillStyle = css('--accent-purple');
         ctx.textAlign = 'center';
         ctx.textBaseline = curY > pad.t + ph / 2 ? 'bottom' : 'top';
-        var valY = curY + (curY > pad.t + ph / 2 ? -8 : 8);
+        var valY = curY + (curY > pad.t + ph / 2 ? -20 : 20);
         ctx.fillText(p.fn(cursorT).toFixed(1) + ' ' + p.unit, curX, valY);
 
         // title
@@ -177,7 +190,7 @@
       var v = vals.v0 + vals.a * cursorT;
       var txt = '\\(t = ' + cursorT.toFixed(1) + '\\text{ s},\\; x = ' + x.toFixed(1) + '\\text{ m},\\; v = ' + v.toFixed(1) + '\\text{ m/s},\\; a = ' + vals.a.toFixed(1) + '\\text{ m/s}^2\\)';
       cap.querySelector('span').innerHTML = txt;
-      if (window.MathJax) MathJax.typesetPromise([cap]).catch(function () {});
+      var cs = cap.querySelector('span'); if (cs && window.MathJax) MathJax.typesetPromise([cs]).catch(function () {});
     }
 
     buildControls(wrap, [
@@ -411,7 +424,7 @@
         txt = '\\(R = ' + range + '\\text{ m},\\; H = ' + maxH + '\\text{ m},\\; t_f = ' + tF + '\\text{ s}\\)';
       }
       cap.querySelector('span').innerHTML = txt;
-      if (window.MathJax) MathJax.typesetPromise([cap]).catch(function () {});
+      var cs = cap.querySelector('span'); if (cs && window.MathJax) MathJax.typesetPromise([cs]).catch(function () {});
     }
 
     var controlsDiv = buildControls(wrap, [

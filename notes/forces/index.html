@@ -206,6 +206,14 @@
       \(\vec{F}_n\) lies entirely in the \(\perp\) dimension. \(\vec{F}_g\) is diagonal to both axes, so it must be resolved into components. The component triangle formed by \(\vec{F}_g\) and its components is similar to the triangle formed by the incline itself, so the same angle \(\theta\) appears in both triangles.
     </p>
 
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Gravity decomposition on an incline</span>
+      </div>
+      <canvas id="incline-decomp" width="600" height="360"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
     <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
       \[F_{g\,\parallel} = mg\sin\theta \qquad F_{g\,\perp} = mg\cos\theta\]
     </p>
@@ -276,7 +284,7 @@
         <span class="graph-card-title">Block on an incline</span>
       </div>
       <canvas id="fbd-incline" data-fbd width="400" height="400"></canvas>
-      <div class="graph-caption">adjust µs and µk to explore static vs kinetic friction</div>
+      <div class="graph-caption"><span>adjust µs and µk to explore static vs kinetic friction</span></div>
     </div>
 
     <p class="prose">
@@ -547,6 +555,229 @@
 
 </div>
 
+<script>
+// ── Incline decomposition ──
+(function () {
+  var canvas = document.getElementById('incline-decomp');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.65);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var vals = { angle: 30 };
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function drawArrow(sx, sy, dx, dy, color, hl) {
+    hl = hl || 7;
+    var a = Math.atan2(dy, dx);
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(sx + dx, sy + dy);
+    ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+    ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+    ctx.closePath(); ctx.fill();
+  }
+
+  function render() {
+    var rad = vals.angle * Math.PI / 180;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    // grid
+    var gs = 25;
+    ctx.strokeStyle = css('--border') || 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    var groundY = h - 20;
+    var slopeLen = w * 0.95;
+    var baseX = w * 0.03;
+
+    var topX = baseX + slopeLen * Math.cos(rad);
+    var topY = groundY - slopeLen * Math.sin(rad);
+
+    // ground
+    ctx.strokeStyle = css('--border-strong') || 'rgba(0,0,0,0.14)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, groundY); ctx.lineTo(w, groundY); ctx.stroke();
+
+    // slope surface
+    ctx.strokeStyle = css('--border-strong') || 'rgba(0,0,0,0.14)';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(baseX, groundY); ctx.lineTo(topX, topY); ctx.stroke();
+
+    // hatching on slope
+    ctx.strokeStyle = css('--border') || 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    var slopeDir = { x: Math.cos(rad), y: -Math.sin(rad) };
+    var slopeN = { x: Math.sin(rad), y: Math.cos(rad) };
+    for (var si = 12; si < slopeLen; si += 14) {
+      var sx = baseX + slopeDir.x * si;
+      var sy = groundY + slopeDir.y * si;
+      ctx.beginPath();
+      ctx.moveTo(sx, sy);
+      ctx.lineTo(sx + slopeN.x * 7, sy + slopeN.y * 7);
+      ctx.stroke();
+    }
+
+    // angle arc
+    var arcR = 35;
+    ctx.strokeStyle = css('--accent-purple');
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(baseX, groundY, arcR, -rad, 0); ctx.stroke();
+    ctx.font = '600 11px "DM Mono", monospace';
+    ctx.fillStyle = css('--accent-purple');
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('θ=' + vals.angle + '°', baseX + arcR + 6, groundY - arcR * Math.sin(rad / 2) / 2 - 2);
+
+    // block position
+    var blockDist = slopeLen * 0.5;
+    var bx = baseX + blockDist * Math.cos(rad);
+    var by = groundY - blockDist * Math.sin(rad);
+    var bS = 32;
+    var bcx = bx - Math.sin(rad) * bS / 2;
+    var bcy = by - Math.cos(rad) * bS / 2;
+
+    // block
+    ctx.save(); ctx.translate(bcx, bcy); ctx.rotate(-rad);
+    ctx.fillStyle = css('--bg'); ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+    ctx.fillRect(-bS / 2, -bS / 2, bS, bS);
+    ctx.strokeRect(-bS / 2, -bS / 2, bS, bS);
+    ctx.restore();
+
+    var fgLen = 90;
+    var parLen = fgLen * Math.sin(rad);
+    var perpLen = fgLen * Math.cos(rad);
+    var fgTipX = bcx, fgTipY = bcy + fgLen;
+
+    // Fg (solid, straight down)
+    drawArrow(bcx, bcy, 0, fgLen, css('--fbd-weight'));
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.fillStyle = css('--fbd-weight');
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText('Fg', bcx - 8, bcy + fgLen / 2);
+
+    if (vals.angle > 2) {
+      // Fg// component (from block center, down the slope)
+      var parDx = -Math.cos(rad) * parLen;
+      var parDy = Math.sin(rad) * parLen;
+      ctx.save(); ctx.setLineDash([4, 3]);
+      drawArrow(bcx, bcy, parDx, parDy, css('--accent-teal'), 6);
+      ctx.restore();
+      ctx.font = '600 9px "DM Mono", monospace';
+      ctx.fillStyle = css('--accent-teal');
+      ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+      ctx.fillText('Fg//', bcx + parDx - 6, bcy + parDy - 4);
+
+      // Fg_perp component (from block center, into the slope)
+      var perpDx = Math.sin(rad) * perpLen;
+      var perpDy = Math.cos(rad) * perpLen;
+      ctx.save(); ctx.setLineDash([4, 3]);
+      drawArrow(bcx, bcy, perpDx, perpDy, css('--fbd-normal'), 6);
+      ctx.restore();
+      ctx.fillStyle = css('--fbd-normal');
+      ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+      ctx.fillText('Fg_perp', bcx + perpDx + 6, bcy + perpDy + 4);
+
+      // dashed lines completing the parallelogram (from component tips to Fg tip)
+      ctx.save(); ctx.setLineDash([2, 3]);
+      ctx.strokeStyle = css('--hint'); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(bcx + parDx, bcy + parDy); ctx.lineTo(fgTipX, fgTipY); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(bcx + perpDx, bcy + perpDy); ctx.lineTo(fgTipX, fgTipY); ctx.stroke();
+      ctx.restore();
+
+      // right angle where components meet at Fg tip
+      var sq = 6;
+      ctx.strokeStyle = css('--hint'); ctx.lineWidth = 1;
+      var ux = Math.cos(rad), uy = -Math.sin(rad);
+      var vx = -Math.sin(rad), vy = -Math.cos(rad);
+      ctx.beginPath();
+      ctx.moveTo(fgTipX + ux * sq, fgTipY + uy * sq);
+      ctx.lineTo(fgTipX + ux * sq + vx * sq, fgTipY + uy * sq + vy * sq);
+      ctx.lineTo(fgTipX + vx * sq, fgTipY + vy * sq);
+      ctx.stroke();
+
+      // Fn arrow (perpendicular away from slope, opposite to Fg_perp)
+      var fnDx = -Math.sin(rad) * perpLen;
+      var fnDy = -Math.cos(rad) * perpLen;
+      drawArrow(bcx, bcy, fnDx, fnDy, css('--fbd-normal'));
+      ctx.font = '600 9px "DM Mono", monospace';
+      ctx.fillStyle = css('--fbd-normal');
+      ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+      ctx.fillText('Fn', bcx + fnDx - 6, bcy + fnDy - 2);
+    }
+
+    // legend (top-right)
+    var lx = w - 10, ly = 14;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+
+    ctx.fillStyle = css('--accent-purple');
+    ctx.fillText('θ = ' + vals.angle + '°', lx, ly); ly += 16;
+
+    ctx.fillStyle = css('--accent-teal');
+    ctx.fillText('Fg// = ' + Math.sin(rad).toFixed(2) + ' mg', lx, ly); ly += 16;
+
+    ctx.fillStyle = css('--fbd-normal');
+    ctx.fillText('Fg_perp = ' + Math.cos(rad).toFixed(2) + ' mg', lx, ly); ly += 16;
+
+    ctx.fillStyle = css('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.fillText('Fn = Fg_perp', lx, ly);
+  }
+
+  function updateCaption() {
+    if (!cap) return;
+    var rad = vals.angle * Math.PI / 180;
+    var cs = cap.querySelector('span');
+    if (cs) {
+      cs.innerHTML = '\\(F_{g\\parallel} = mg\\sin' + vals.angle + '° = ' + Math.sin(rad).toFixed(2) + 'mg,\\quad F_{g\\perp} = mg\\cos' + vals.angle + '° = ' + Math.cos(rad).toFixed(2) + 'mg\\)';
+      if (window.MathJax) MathJax.typesetPromise([cs]).catch(function () {});
+    }
+  }
+
+  // controls
+  var cd = document.createElement('div');
+  cd.className = 'fbd-controls';
+  var row = document.createElement('div'); row.className = 'fbd-control';
+  var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = 'Angle';
+  var inp = document.createElement('input');
+  inp.type = 'range'; inp.min = 15; inp.max = 70; inp.step = 1; inp.value = 30;
+  var vs = document.createElement('span'); vs.className = 'fbd-control-val'; vs.textContent = '30°';
+  inp.addEventListener('input', function () {
+    vals.angle = parseFloat(inp.value);
+    vs.textContent = vals.angle + '°';
+    render(); updateCaption();
+  });
+  row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+  cd.appendChild(row);
+  wrap.appendChild(cd);
+
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.angle = 5 + Math.floor(Math.random() * 65);
+      inp.value = vals.angle; vs.textContent = vals.angle + '°';
+      render(); updateCaption();
+    });
+    cap.appendChild(rb);
+  }
+
+  render(); updateCaption();
+  document.addEventListener('themechange', render);
+})();
+</script>
 <script src="../fbd-mini.js"></script>
 <script>
 function initFBDs() {

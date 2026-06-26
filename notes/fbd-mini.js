@@ -299,7 +299,7 @@
         var vdy = -Math.sin(tanDir) * vLen;
         var vHead = Math.max(4, Math.min(vLen * 0.25, 8));
         ctx.save(); ctx.globalAlpha = 0.45; ctx.setLineDash([3, 3]);
-        drawArrow(ctx, vsx, vsy, vdx, vdy, css('--hint'), 'v', w, h, vHead);
+        drawArrow(ctx, vsx, vsy, vdx, vdy, css('--hint'), null, w, h, vHead);
         ctx.restore();
       }
     }
@@ -372,7 +372,7 @@
       forces.forEach(function (f) { if (f.magnitude > maxMag) maxMag = f.magnitude; });
     }
     if (maxMag === 0) maxMag = 1;
-    var maxLen = h * 0.3;
+    var maxLen = h * 0.22;
 
     function edgeDist(dxDir, dyDir) {
       if (hw === 0) return 0;
@@ -615,7 +615,7 @@
       if (init.orbitBreak !== undefined && config.orbit) config.orbit.broken = init.orbitBreak;
       var wrap = canvas.parentElement;
       var cap = wrap.querySelector('.graph-caption');
-      if (cap && init.caption) { cap.innerHTML = '<span>' + init.caption + '</span>'; if (window.MathJax) MathJax.typesetPromise([cap]).catch(function(){}); }
+      if (cap && init.caption) { var cs = cap.querySelector('span'); if (cs) { cs.innerHTML = init.caption; if (window.MathJax) MathJax.typesetPromise([cs]).catch(function(){}); } }
 
       var wrap = canvas.parentElement;
       var old = wrap.querySelector('.fbd-controls');
@@ -769,7 +769,7 @@
           if (upd.orbitRadius !== undefined && config.orbit) config.orbit.radius = upd.orbitRadius;
           if (upd.orbitVelocity !== undefined && config.orbit) config.orbit.velocity = upd.orbitVelocity;
           if (upd.orbitBreak !== undefined && config.orbit) { config.orbit.broken = upd.orbitBreak; if (upd.orbitBreak) store[canvasId].fallTime = 0; }
-          if (cap && upd.caption) { cap.querySelector('span').innerHTML = upd.caption; if (window.MathJax) MathJax.typesetPromise([cap]).catch(function(){}); }
+          if (cap && upd.caption) { var cs = cap.querySelector('span'); if (cs) { cs.innerHTML = upd.caption; if (window.MathJax) MathJax.typesetPromise([cs]).catch(function(){}); } }
           store[canvasId].revealed = {};
           render(canvasId, store[canvasId].hovIdx);
           updateAnim(canvasId);
