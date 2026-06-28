@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practice: Contact Forces &amp; Gravity</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <div>
+      <h1>practice: contact forces &amp; gravity</h1>
+      <span>inclines, friction, springs &amp; gravitational fields</span>
+    </div>
+  </header>
+
+  <div class="quiz-top">
+    <div class="quiz-score"></div>
+    <button class="quiz-regen" type="button" id="eqBtn">show equations</button>
+    <button class="quiz-regen" type="button" id="regenBtn">new questions</button>
+  </div>
+
+  <div class="quiz-eqs" id="eqPanel">
+    <p class="quiz-eqs-title">Key equations</p>
+    <div class="quiz-eqs-list">
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Parallel gravity</span><span class="quiz-eq-val">\(F_{g\parallel} = mg\sin\theta\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Perp gravity</span><span class="quiz-eq-val">\(F_{g\perp} = mg\cos\theta\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Static friction</span><span class="quiz-eq-val">\(f_{s,\max} = \mu_s F_n\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Kinetic friction</span><span class="quiz-eq-val">\(f_k = \mu_k F_n\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Hooke's law</span><span class="quiz-eq-val">\(F_s = k\Delta x\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Gravitation</span><span class="quiz-eq-val">\(F_g = G\dfrac{m_1 m_2}{r^2}\)</span></div>
+    </div>
+  </div>
+
+  <!-- Q1 (generated) -->
+  <div class="quiz-q" id="q1">
+    <p class="quiz-q-num">Question 1</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-opts"></div>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <!-- Q2 (generated) -->
+  <div class="quiz-q" id="q2">
+    <p class="quiz-q-num">Question 2</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-opts"></div>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <!-- Q3 (generated) -->
+  <div class="quiz-q" id="q3">
+    <p class="quiz-q-num">Question 3</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-opts"></div>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <!-- Q4 (generated) -->
+  <div class="quiz-q" id="q4">
+    <p class="quiz-q-num">Question 4</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-opts"></div>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <!-- Q5 (derivation) -->
+  <div class="quiz-q" id="q5">
+    <p class="quiz-q-num">Question 5</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-opts"></div>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <!-- Q6 (derivation) -->
+  <div class="quiz-q" id="q6">
+    <p class="quiz-q-num">Question 6</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-opts"></div>
+    <div class="quiz-explain"></div>
+  </div>
+
+</div>
+
+<script src="../quiz-gen.js"></script>
+<script src="../quiz.js"></script>
+<script>
+function generateAll() {
+  QuizGen.inclineParallel(document.getElementById('q1'));
+  QuizGen.frictionCheck(document.getElementById('q2'));
+  QuizGen.springForce(document.getElementById('q3'));
+  QuizGen.inverseSquare(document.getElementById('q4'));
+  QuizGen.deriveAccelIncline(document.getElementById('q5'));
+  QuizGen.deriveSpringDisplacement(document.getElementById('q6'));
+  document.querySelectorAll('.quiz-opt').forEach(function (o) {
+    o.classList.remove('quiz-correct', 'quiz-wrong', 'quiz-locked');
+  });
+  document.querySelectorAll('.quiz-explain').forEach(function (e) {
+    e.classList.remove('show');
+  });
+  var s = document.querySelector('.quiz-score');
+  if (s) s.textContent = '';
+  initQuiz();
+}
+generateAll();
+document.getElementById('regenBtn').addEventListener('click', generateAll);
+document.getElementById('eqBtn').addEventListener('click', function () {
+  document.getElementById('eqPanel').classList.toggle('show');
+  this.textContent = document.getElementById('eqPanel').classList.contains('show') ? 'hide equations' : 'show equations';
+});
+</script>
+<script src="../notes.js"></script>
+</body>
+</html>

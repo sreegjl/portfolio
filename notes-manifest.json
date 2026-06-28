@@ -12,9 +12,13 @@
   ],
   "htmlNotes": [
     { "path": "kinematics/index.html", "title": "Kinematics" },
+    { "path": "quiz-1a/index.html", "title": "Practice: Kinematics" },
     { "path": "force-dynamics/index.html", "title": "Force & Translational Dynamics" },
+    { "path": "quiz-2a/index.html", "title": "Practice: Forces & Dynamics" },
     { "path": "forces/index.html", "title": "Contact Forces & Gravity" },
-    { "path": "circular-motion/index.html", "title": "Circular Motion & Orbits" }
+    { "path": "quiz-3a/index.html", "title": "Practice: Contact Forces & Gravity" },
+    { "path": "circular-motion/index.html", "title": "Circular Motion & Orbits" },
+    { "path": "quiz-4a/index.html", "title": "Practice: Circular Motion & Orbits" }
   ],
   "htmlNotesBase": "notes/"
 }

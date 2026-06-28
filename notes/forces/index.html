@@ -28,7 +28,6 @@
   <a href="../../" class="logo">@sreegjl</a>
   <div class="nav-right">
     <div class="nav-links">
-      <a href="../../tools.html" class="nav-link">TOOLS</a>
       <a href="../../notes.html" class="nav-link active">NOTES</a>
     </div>
     <span class="nav-divider"></span>
@@ -550,11 +549,275 @@
         <span class="row-val">occurs if stretched/compressed too far</span>
       </div>
     </div>
+
   </div>
 
 
 </div>
 
+<script>
+(function () {
+  var canvas = document.getElementById('pulley-spring');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.55);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var vals = { mB: 2, k: 80 };
+  var g = 9.8;
+
+  function drawArrow(sx, sy, dx, dy, color, hl) {
+    hl = hl || 6;
+    var a = Math.atan2(dy, dx);
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(sx + dx, sy + dy);
+    ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+    ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+    ctx.closePath(); ctx.fill();
+  }
+
+  function drawSpringH(x1, x2, y, coils, amp) {
+    var lead = 6;
+    var cx1 = x1 + lead, cx2 = x2 - lead;
+    var segW = (cx2 - cx1) / (coils * 2);
+    ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5; ctx.lineJoin = 'bevel';
+    ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(cx1, y);
+    for (var i = 0; i < coils * 2; i++) {
+      ctx.lineTo(cx1 + (i + 1) * segW, y + (i % 2 === 0 ? amp : -amp));
+    }
+    ctx.lineTo(x2, y); ctx.stroke(); ctx.lineJoin = 'miter';
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    // grid
+    var gs = 25;
+    ctx.strokeStyle = css('--border') || 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    var T = vals.mB * g;
+    var dx = T / vals.k;
+    var dxPx = Math.min(dx * 60, 120);
+
+    // table surface
+    var tableY = h * 0.4;
+    var tableLeft = 0;
+    var tableRight = w * 0.72;
+    ctx.strokeStyle = css('--border-strong') || 'rgba(0,0,0,0.14)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(tableLeft, tableY); ctx.lineTo(tableRight, tableY); ctx.stroke();
+    // table edge
+    ctx.beginPath(); ctx.moveTo(tableRight, tableY); ctx.lineTo(tableRight, tableY + 8); ctx.stroke();
+
+    // wall
+    var wallX = w * 0.06;
+    ctx.strokeStyle = css('--border-strong') || 'rgba(0,0,0,0.14)';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(wallX, tableY - 50); ctx.lineTo(wallX, tableY); ctx.stroke();
+    ctx.strokeStyle = css('--border') || 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (var wi = tableY - 50; wi < tableY; wi += 8) {
+      ctx.beginPath(); ctx.moveTo(wallX, wi); ctx.lineTo(wallX - 5, wi + 5); ctx.stroke();
+    }
+
+    // block A
+    var bASize = 34;
+    var bAx = wallX + 60 + dxPx + bASize / 2;
+    var bAy = tableY - bASize / 2;
+
+    // spring from wall to block A
+    drawSpringH(wallX, bAx - bASize / 2, bAy, 10, 8);
+
+    // block A
+    ctx.fillStyle = css('--bg'); ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+    ctx.fillRect(bAx - bASize / 2, bAy - bASize / 2, bASize, bASize);
+    ctx.strokeRect(bAx - bASize / 2, bAy - bASize / 2, bASize, bASize);
+    ctx.font = '600 11px "DM Mono", monospace';
+    ctx.fillStyle = css('--text'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('A', bAx, bAy);
+
+    // pulley
+    var pulleyR = 12;
+    var pulleyX = tableRight;
+    var pulleyY = tableY - pulleyR - 2;
+    ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(pulleyX, pulleyY, pulleyR, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = css('--surface');
+    ctx.beginPath(); ctx.arc(pulleyX, pulleyY, 3, 0, Math.PI * 2); ctx.fill();
+    ctx.stroke();
+
+    // string from A to pulley (horizontal)
+    ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(bAx + bASize / 2, bAy);
+    ctx.lineTo(pulleyX - pulleyR, pulleyY);
+    ctx.stroke();
+
+    // string around pulley and down
+    ctx.beginPath();
+    ctx.arc(pulleyX, pulleyY, pulleyR, Math.PI, Math.PI / 2, true);
+    ctx.stroke();
+
+    // block B
+    var bBSize = 34;
+    var bBx = pulleyX + pulleyR;
+    var bBy = pulleyY + pulleyR + 30 + bBSize / 2;
+
+    // string from pulley to block B
+    ctx.beginPath();
+    ctx.moveTo(bBx, pulleyY + pulleyR);
+    ctx.lineTo(bBx, bBy - bBSize / 2);
+    ctx.stroke();
+
+    // block B
+    ctx.fillStyle = css('--bg'); ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+    ctx.fillRect(bBx - bBSize / 2, bBy - bBSize / 2, bBSize, bBSize);
+    ctx.strokeRect(bBx - bBSize / 2, bBy - bBSize / 2, bBSize, bBSize);
+    ctx.font = '600 11px "DM Mono", monospace';
+    ctx.fillStyle = css('--text'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('B', bBx, bBy);
+
+    // force arrows on A
+    var arrowLen = 35;
+    var fColor = css('--fbd-weight');
+    var nColor = css('--fbd-normal');
+    var tColor = css('--fbd-tension');
+    var sColor = css('--accent-teal');
+
+    // Fs on A (left, toward wall)
+    drawArrow(bAx - bASize / 2 - 2, bAy, -arrowLen, 0, sColor);
+    ctx.font = '600 9px "DM Mono", monospace'; ctx.fillStyle = sColor;
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText('Fs', bAx - bASize / 2 - arrowLen - 6, bAy);
+
+    // T on A (right, toward pulley)
+    drawArrow(bAx + bASize / 2 + 2, bAy, arrowLen, 0, tColor);
+    ctx.fillStyle = tColor; ctx.textAlign = 'left';
+    ctx.fillText('T', bAx + bASize / 2 + arrowLen + 6, bAy);
+
+    // Fg on A (down, small)
+    drawArrow(bAx - 10, bAy + bASize / 2 + 2, 0, 20, fColor, 5);
+    ctx.fillStyle = fColor; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.fillText('Fg', bAx - 10, bAy + bASize / 2 + 24);
+
+    // Fn on A (up, small)
+    drawArrow(bAx + 10, bAy - bASize / 2 - 2, 0, -20, nColor, 5);
+    ctx.fillStyle = nColor; ctx.textBaseline = 'bottom';
+    ctx.fillText('Fn', bAx + 10, bAy - bASize / 2 - 24);
+
+    // T on B (up)
+    drawArrow(bBx + 10, bBy - bBSize / 2 - 2, 0, -arrowLen, tColor);
+    ctx.fillStyle = tColor; ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+    ctx.fillText('T', bBx + 16, bBy - bBSize / 2 - arrowLen - 2);
+
+    // Fg on B (down)
+    drawArrow(bBx - 10, bBy + bBSize / 2 + 2, 0, arrowLen, fColor);
+    ctx.fillStyle = fColor; ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillText('Fg', bBx - 16, bBy + bBSize / 2 + arrowLen + 2);
+
+    // delta x annotation
+    if (dxPx > 5) {
+      var eqX = wallX + 60 + bASize / 2;
+      var annY = tableY + 15;
+      ctx.save(); ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = css('--accent-purple'); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(eqX, tableY); ctx.lineTo(eqX, annY + 8); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(bAx - bASize / 2, tableY); ctx.lineTo(bAx - bASize / 2, annY + 8); ctx.stroke();
+      ctx.restore();
+      ctx.strokeStyle = css('--accent-purple'); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(eqX, annY + 5); ctx.lineTo(bAx - bASize / 2, annY + 5); ctx.stroke();
+      ctx.font = '600 9px "DM Mono", monospace';
+      ctx.fillStyle = css('--accent-purple');
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText('Δx = ' + dx.toFixed(2) + ' m', (eqX + bAx - bASize / 2) / 2, annY + 10);
+    }
+
+    // legend
+    var lx = w - 10, ly = 14;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = tColor;
+    ctx.fillText('T = mBg = ' + T.toFixed(1) + ' N', lx, ly); ly += 14;
+    ctx.fillStyle = sColor;
+    ctx.fillText('Fs = kΔx = ' + T.toFixed(1) + ' N', lx, ly); ly += 14;
+    ctx.fillStyle = css('--accent-purple');
+    ctx.fillText('Δx = ' + dx.toFixed(2) + ' m', lx, ly); ly += 14;
+    ctx.fillStyle = css('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.fillText('At rest: T = Fs = mBg', lx, ly);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var T = vals.mB * g;
+    var dx = T / vals.k;
+    var cs = cap.querySelector('span');
+    if (cs) {
+      cs.innerHTML = '\\(k\\Delta x = m_B g \\implies \\Delta x = \\dfrac{m_B g}{k} = \\dfrac{' + vals.mB + ' \\times 9.8}{' + vals.k + '} = ' + dx.toFixed(3) + '\\text{ m}\\)';
+      if (window.MathJax) MathJax.typesetPromise([cs]).catch(function () {});
+    }
+  }
+
+  // controls
+  var cd = document.createElement('div'); cd.className = 'fbd-controls';
+
+  function addSlider(id, label, unit, min, max, val, step) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = val;
+    var dp = step < 1 ? ('' + step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+val).toFixed(dp) + ' ' + unit;
+    inp.addEventListener('input', function () {
+      vals[id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + unit;
+      render(); updateCaption();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+    return inp;
+  }
+
+  addSlider('mB', 'Mass B', 'kg', 0.5, 5, 2, 0.5);
+  addSlider('k', 'k', 'N/m', 20, 200, 80, 10);
+  wrap.appendChild(cd);
+
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.mB = +(0.5 + Math.random() * 4.5).toFixed(1);
+      vals.k = 20 + Math.round(Math.random() * 18) * 10;
+      var ctrls = cd.querySelectorAll('input[type="range"]');
+      var spans = cd.querySelectorAll('.fbd-control-val');
+      if (ctrls[0]) { ctrls[0].value = vals.mB; spans[0].textContent = vals.mB.toFixed(1) + ' kg'; }
+      if (ctrls[1]) { ctrls[1].value = vals.k; spans[1].textContent = vals.k + ' N/m'; }
+      render(); updateCaption();
+    });
+    cap.appendChild(rb);
+  }
+
+  render(); updateCaption();
+  document.addEventListener('themechange', render);
+})();
+</script>
 <script>
 // ── Incline decomposition ──
 (function () {

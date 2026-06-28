@@ -193,10 +193,31 @@
       var cs = cap.querySelector('span'); if (cs && window.MathJax) MathJax.typesetPromise([cs]).catch(function () {});
     }
 
-    buildControls(wrap, [
+    var controlsDiv = buildControls(wrap, [
       { id: 'v0', label: 'v₀', unit: 'm/s', min: -10, max: 10, value: vals.v0, step: 0.5 },
       { id: 'a', label: 'a', unit: 'm/s²', min: -5, max: 5, value: vals.a, step: 0.5 }
     ], vals, function () { render(); updateCaption(); });
+
+    // time slider
+    var tRow = document.createElement('div'); tRow.className = 'fbd-control';
+    var tLbl = document.createElement('span'); tLbl.className = 'fbd-control-label'; tLbl.textContent = 't';
+    var tInp = document.createElement('input');
+    tInp.type = 'range'; tInp.min = 0; tInp.max = tMax; tInp.step = 0.1; tInp.value = cursorT;
+    var tSpan = document.createElement('span'); tSpan.className = 'fbd-control-val';
+    tSpan.textContent = cursorT.toFixed(1) + ' s';
+    tInp.addEventListener('input', function () {
+      cursorT = parseFloat(tInp.value);
+      tSpan.textContent = cursorT.toFixed(1) + ' s';
+      render(); updateCaption();
+    });
+    tRow.appendChild(tLbl); tRow.appendChild(tInp); tRow.appendChild(tSpan);
+    controlsDiv.appendChild(tRow);
+
+    // sync slider when cursor is dragged on canvas
+    var origMousedown = canvas.onmousedown;
+    function syncTSlider() { tInp.value = cursorT; tSpan.textContent = cursorT.toFixed(1) + ' s'; }
+    canvas.addEventListener('mousedown', function () { setTimeout(syncTSlider, 0); });
+    canvas.addEventListener('mousemove', function () { if (dragging) syncTSlider(); });
 
     // randomize button
     if (cap) {

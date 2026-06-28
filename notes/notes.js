@@ -1,3 +1,12 @@
+// Track page visit for progress
+try {
+  var visited = JSON.parse(localStorage.getItem('notesVisited') || '{}');
+  var path = window.location.pathname.replace(/\/index\.html$/, '/');
+  if (path.charAt(path.length - 1) !== '/') path += '/';
+  visited[path] = true;
+  localStorage.setItem('notesVisited', JSON.stringify(visited));
+} catch(e) {}
+
 // Fade in header and sections top to bottom on page load
 if (window.gsap) {
   gsap.to('.page > header, .page > .section', {

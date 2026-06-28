@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practice: Kinematics</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <div>
+      <h1>practice: kinematics</h1>
+      <span>test yourself on motion, graphs &amp; projectiles</span>
+    </div>
+  </header>
+
+  <div class="quiz-top">
+    <div class="quiz-score"></div>
+    <button class="quiz-regen" type="button" id="eqBtn">show equations</button>
+    <button class="quiz-regen" type="button" id="regenBtn">new questions</button>
+  </div>
+
+  <div class="quiz-eqs" id="eqPanel">
+    <p class="quiz-eqs-title">Key equations</p>
+    <div class="quiz-eqs-list">
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Velocity</span><span class="quiz-eq-val">\(v = v_0 + at\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Position</span><span class="quiz-eq-val">\(x = x_0 + v_0 t + \tfrac{1}{2}at^2\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">No-time</span><span class="quiz-eq-val">\(v^2 = v_0^2 + 2a\Delta x\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Average</span><span class="quiz-eq-val">\(\Delta x = \tfrac{1}{2}(v_0 + v)t\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Horizontal</span><span class="quiz-eq-val">\(v_x = v_0\cos\theta\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Vertical</span><span class="quiz-eq-val">\(v_y = v_0\sin\theta - gt\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Gravity</span><span class="quiz-eq-val">\(g = 9.8\text{ m/s}^2\)</span></div>
+    </div>
+  </div>
+
+  <!-- Q1 (generated) -->
+  <div class="quiz-q" id="q1">
+    <p class="quiz-q-num">Question 1</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-opts"></div>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="quiz-q">
+    <p class="quiz-q-num">Question 2</p>
+    <p class="quiz-q-text">
+      On a velocity-time graph, displacement is represented by:
+    </p>
+    <div class="quiz-opts">
+      <div class="quiz-opt" data-correct="false">
+        <span class="quiz-opt-letter">A</span>
+        <span class="quiz-opt-text">The slope of the line</span>
+      </div>
+      <div class="quiz-opt" data-correct="true">
+        <span class="quiz-opt-letter">B</span>
+        <span class="quiz-opt-text">The area under the curve</span>
+      </div>
+      <div class="quiz-opt" data-correct="false">
+        <span class="quiz-opt-letter">C</span>
+        <span class="quiz-opt-text">The y-intercept</span>
+      </div>
+      <div class="quiz-opt" data-correct="false">
+        <span class="quiz-opt-letter">D</span>
+        <span class="quiz-opt-text">The curvature of the line</span>
+      </div>
+    </div>
+    <div class="quiz-explain">
+      The area under a v-t graph gives displacement. The slope of a v-t graph gives acceleration.
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="quiz-q">
+    <p class="quiz-q-num">Question 3</p>
+    <p class="quiz-q-text">
+      A ball is thrown straight up with \(v_0 = 20\text{ m/s}\). At the highest point, the ball's velocity and acceleration are:
+    </p>
+    <div class="quiz-opts">
+      <div class="quiz-opt" data-correct="false">
+        <span class="quiz-opt-letter">A</span>
+        <span class="quiz-opt-text">\(v = 0\), \(a = 0\)</span>
+      </div>
+      <div class="quiz-opt" data-correct="true">
+        <span class="quiz-opt-letter">B</span>
+        <span class="quiz-opt-text">\(v = 0\), \(a = 9.8\text{ m/s}^2\) downward</span>
+      </div>
+      <div class="quiz-opt" data-correct="false">
+        <span class="quiz-opt-letter">C</span>
+        <span class="quiz-opt-text">\(v = 20\text{ m/s}\), \(a = 9.8\text{ m/s}^2\) downward</span>
+      </div>
+      <div class="quiz-opt" data-correct="false">
+        <span class="quiz-opt-letter">D</span>
+        <span class="quiz-opt-text">\(v = 0\), \(a = 9.8\text{ m/s}^2\) upward</span>
+      </div>
+    </div>
+    <div class="quiz-explain">
+      At the peak, velocity is momentarily zero, but acceleration due to gravity is always \(9.8\text{ m/s}^2\) downward throughout the entire flight.
+    </div>
+  </div>
+
+  <!-- Q4 (generated) -->
+  <div class="quiz-q" id="q4">
+    <p class="quiz-q-num">Question 4</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-opts"></div>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <!-- Q5 (derivation) -->
+  <div class="quiz-q" id="q5">
+    <p class="quiz-q-num">Question 5</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-opts"></div>
+    <div class="quiz-explain"></div>
+  </div>
+
+</div>
+
+<script src="../quiz-gen.js"></script>
+<script src="../quiz.js"></script>
+<script>
+function generateAll() {
+  QuizGen.kinematicsDistance(document.getElementById('q1'));
+  QuizGen.projectileVx(document.getElementById('q4'));
+  QuizGen.deriveRangeProjectile(document.getElementById('q5'));
+  // reset all question states
+  document.querySelectorAll('.quiz-opt').forEach(function (o) {
+    o.classList.remove('quiz-correct', 'quiz-wrong', 'quiz-locked');
+  });
+  document.querySelectorAll('.quiz-explain').forEach(function (e) {
+    e.classList.remove('show');
+  });
+  var s = document.querySelector('.quiz-score');
+  if (s) s.textContent = '';
+  initQuiz();
+}
+generateAll();
+document.getElementById('regenBtn').addEventListener('click', generateAll);
+document.getElementById('eqBtn').addEventListener('click', function () {
+  document.getElementById('eqPanel').classList.toggle('show');
+  this.textContent = document.getElementById('eqPanel').classList.contains('show') ? 'hide equations' : 'show equations';
+});
+</script>
+<script src="../notes.js"></script>
+</body>
+</html>

@@ -1,3 +1,19 @@
+// ===== YOUTUBE PICKER =====
+document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.yt-picker-btn');
+    if (btn) {
+        e.stopPropagation();
+        var menu = btn.nextElementSibling;
+        var wasOpen = menu.classList.contains('open');
+        document.querySelectorAll('.yt-picker-menu.open').forEach(function (m) { m.classList.remove('open'); });
+        if (!wasOpen) menu.classList.add('open');
+        return;
+    }
+    if (!e.target.closest('.yt-picker-menu')) {
+        document.querySelectorAll('.yt-picker-menu.open').forEach(function (m) { m.classList.remove('open'); });
+    }
+});
+
 // ===== UTILITY FUNCTIONS =====
 
 // Scramble text effect
@@ -518,7 +534,7 @@ if (document.getElementById('markdown-content')) {
 }
 
 // ===== NOTES TABLE PAGE - Load and display notes list =====
-if (document.getElementById('notesTableBody') || document.getElementById('htmlNotesTableBody')) {
+if (document.getElementById('notesTableBody') || document.getElementById('htmlNotesTableBody') || document.getElementById('topicsList')) {
     console.log('Notes table page detected');
     
     async function loadNotes() {
@@ -786,68 +802,156 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
     }
 
     async function loadHtmlNotes() {
-        const htmlNotesTableBody = document.getElementById('htmlNotesTableBody');
-        const htmlNotesCount = document.getElementById('htmlNotesCount');
-        const htmlLoading = document.getElementById('htmlLoading');
-        const htmlContainer = document.getElementById('htmlNotesContainer');
+        var topicsList = document.getElementById('topicsList');
+        var htmlLoading = document.getElementById('htmlLoading');
 
-        let htmlFiles = [];
-        let base = 'notes/';
-
-        try {
-            const manifestResponse = await fetch(`notes-manifest.json?v=${Date.now()}`, { cache: 'no-store' });
-            if (manifestResponse.ok) {
-                const manifest = await manifestResponse.json();
-                htmlFiles = manifest.htmlNotes || [];
-                if (manifest.htmlNotesBase) base = manifest.htmlNotesBase;
+        var topics = [
+            {
+                num: 1, title: 'Kinematics',
+                lessons: [
+                    { type: 'note', name: 'Kinematics', desc: 'Graph relations, kinematic equations, and projectile motion', path: 'kinematics/' },
+                    { type: 'practice', name: 'Practice: Kinematics', desc: 'Test your understanding of motion and kinematics', path: 'quiz-1a/' }
+                ]
+            },
+            {
+                num: 2, title: 'Force & Translational Dynamics',
+                lessons: [
+                    { type: 'note', name: 'Force & Translational Dynamics', desc: "Newton's laws, free-body diagrams, and center of mass", path: 'force-dynamics/' },
+                    { type: 'practice', name: 'Practice: Forces & Dynamics', desc: "Apply Newton's laws and analyze forces in 2D", path: 'quiz-2a/' }
+                ]
+            },
+            {
+                num: 3, title: 'Contact Forces & Gravity',
+                lessons: [
+                    { type: 'note', name: 'Contact Forces & Gravity', desc: 'Gravity, inclines, friction, and spring force', path: 'forces/' },
+                    { type: 'practice', name: 'Practice: Contact Forces', desc: 'Solve problems with gravity, friction, and springs', path: 'quiz-3a/' }
+                ]
+            },
+            {
+                num: 4, title: 'Circular Motion & Orbits',
+                lessons: [
+                    { type: 'note', name: 'Circular Motion & Orbits', desc: "Centripetal acceleration, vertical circles, and Kepler's law", path: 'circular-motion/' },
+                    { type: 'practice', name: 'Practice: Circular Motion', desc: 'Practice circular motion and orbital mechanics', path: 'quiz-4a/' }
+                ]
             }
-        } catch (error) {
-            console.error('Error loading HTML notes from manifest:', error);
-        }
+        ];
 
-        if (htmlFiles.length === 0) {
-            htmlLoading.style.display = 'none';
-            return;
-        }
+        var base = 'notes/';
+        var checkSvg = '<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
-        try {
-            const validNotes = htmlFiles
-                .filter(entry => entry && typeof entry.path === 'string')
-                .map(({ path, title }) => {
-                    const dirPath = path.replace(/\/index\.html$/, '');
-                    const parts = dirPath.split('/');
-                    const folder = parts.length > 1 ? parts[0] : null;
-                    return { path, folder, title: title || parts[parts.length - 1] };
-                });
+        var studied = {};
+        try { studied = JSON.parse(localStorage.getItem('notesStudied') || '{}'); } catch(e) {}
 
-            htmlLoading.style.display = 'none';
+        if (!topicsList) return;
+        htmlLoading.style.display = 'none';
 
-            if (validNotes.length === 0) return;
+        var allCheckButtons = [];
+        var totalLessons = 0;
+        topics.forEach(function (t) { totalLessons += t.lessons.length; });
 
-            const encodedHref = path => base + path.replace(/\/index\.html$/, '').split('/').map(encodeURIComponent).join('/') + '/';
+        var subtitleEl = document.getElementById('syllabusSubtitle');
+        if (subtitleEl) subtitleEl.textContent = topics.length + ' topics · ' + totalLessons + ' lessons';
 
-            validNotes.forEach((note, index) => {
-                const row = document.createElement('a');
-                row.className = 'note-row';
-                row.href = encodedHref(note.path);
-                row.innerHTML = `
-                    <span class="note-row-num">${String(index + 1).padStart(2, '0')}</span>
-                    <span class="note-row-name">${note.title}</span>
-                    <span class="note-row-tag">${note.folder || ''}</span>
-                `;
-                htmlNotesTableBody.appendChild(row);
+        totalLessons = 0;
+
+        topics.forEach(function (t) {
+            var numStr = String(t.num).padStart(2, '0');
+            var lessonCount = t.lessons.length;
+            totalLessons += lessonCount;
+
+            var card = document.createElement('div');
+            card.className = 'module-card';
+
+            var headerHTML = '<div class="module-header">' +
+                '<div class="module-num">' + numStr + '</div>' +
+                '<div class="module-header-text">' +
+                    '<div class="module-title">' + t.title + '</div>' +
+                    '<div class="module-meta">' + lessonCount + ' lessons</div>' +
+                '</div>' +
+            '</div>';
+
+            var lessonsHTML = '<div class="module-lessons">';
+            t.lessons.forEach(function (l) {
+                var key = base + l.path;
+                var isChecked = !!studied[key];
+                var iconClass = l.type === 'note' ? 'lesson-icon-note' : 'lesson-icon-practice';
+                var iconSymbol = l.type === 'note' ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+                lessonsHTML += '<div class="lesson-row">' +
+                    '<a href="' + base + l.path + '" class="lesson-icon ' + iconClass + '">' + iconSymbol + '</a>' +
+                    '<a href="' + base + l.path + '" class="lesson-info">' +
+                        '<div class="lesson-name-row">' +
+                            '<span class="lesson-name">' + l.name + '</span>' +
+                        '</div>' +
+                        '<div class="lesson-desc">' + l.desc + '</div>' +
+                    '</a>' +
+                    '<button class="lesson-check' + (isChecked ? ' checked' : '') + '" data-key="' + key + '" type="button" title="Mark as studied">' + checkSvg + '</button>' +
+                '</div>';
             });
+            lessonsHTML += '</div>';
 
-            if (htmlNotesCount) {
-                htmlNotesCount.textContent = `${String(validNotes.length).padStart(3, '0')} — NOTES`;
+            card.innerHTML = headerHTML + lessonsHTML;
+            topicsList.appendChild(card);
+        });
+
+        // Collect all check buttons
+        allCheckButtons = topicsList.querySelectorAll('.lesson-check');
+
+        function updateSidebar() {
+            var count = 0;
+            allCheckButtons.forEach(function (btn) { if (btn.classList.contains('checked')) count++; });
+
+            var countEl = document.getElementById('studiedCount');
+            var totalEl = document.getElementById('totalLessons');
+            var fillEl = document.getElementById('sidebarProgressFill');
+            if (countEl) countEl.textContent = count;
+            if (totalEl) totalEl.textContent = totalLessons;
+            if (fillEl) fillEl.style.width = (count / totalLessons * 100) + '%';
+
+            // Up next
+            var upNextTopic = document.getElementById('upNextTopic');
+            var upNextLink = document.getElementById('upNextLink');
+            var upNextCard = document.getElementById('upNextCard');
+            var nextLesson = null;
+            for (var i = 0; i < topics.length; i++) {
+                for (var j = 0; j < topics[i].lessons.length; j++) {
+                    var key = base + topics[i].lessons[j].path;
+                    if (!studied[key]) {
+                        nextLesson = { topic: topics[i].title, lesson: topics[i].lessons[j] };
+                        break;
+                    }
+                }
+                if (nextLesson) break;
             }
-
-            htmlContainer.style.display = 'block';
-            animateFadeIn('.notes-list-wrap', { trigger: '.notes-content' });
-        } catch (error) {
-            console.error('Error loading HTML notes:', error);
-            htmlLoading.style.display = 'none';
+            var continueBtn = document.getElementById('continueBtn');
+            if (nextLesson && upNextTopic && upNextLink) {
+                upNextTopic.textContent = nextLesson.topic;
+                upNextLink.href = base + nextLesson.lesson.path;
+                upNextCard.style.display = '';
+                if (continueBtn) continueBtn.href = base + nextLesson.lesson.path;
+            } else if (upNextCard) {
+                upNextTopic.textContent = 'All done!';
+                upNextLink.style.display = 'none';
+                if (continueBtn) continueBtn.href = base + topics[0].lessons[0].path;
+            }
         }
+
+        allCheckButtons.forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var key = btn.getAttribute('data-key');
+                if (btn.classList.contains('checked')) {
+                    btn.classList.remove('checked');
+                    delete studied[key];
+                } else {
+                    btn.classList.add('checked');
+                    studied[key] = true;
+                }
+                try { localStorage.setItem('notesStudied', JSON.stringify(studied)); } catch(ex) {}
+                updateSidebar();
+            });
+        });
+
+        updateSidebar();
     }
 
     document.addEventListener('DOMContentLoaded', () => {

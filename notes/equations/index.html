@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equation Sheet</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <div>
+      <h1>equation sheet</h1>
+      <span>all key equations in one place</span>
+    </div>
+  </header>
+
+  <div class="section">
+    <p class="section-label">Kinematics</p>
+    <div class="card">
+      <div class="row">
+        <span class="row-desc">Velocity</span>
+        <span class="row-val">\(v = v_0 + at\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Position</span>
+        <span class="row-val">\(x = x_0 + v_0 t + \tfrac{1}{2}at^2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">No-time</span>
+        <span class="row-val">\(v^2 = v_0^2 + 2a\Delta x\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Average</span>
+        <span class="row-val">\(\Delta x = \tfrac{1}{2}(v_0 + v)t\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Horizontal component</span>
+        <span class="row-val">\(v_x = v_0\cos\theta\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Vertical component</span>
+        <span class="row-val">\(v_y = v_0\sin\theta - gt\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Projectile range</span>
+        <span class="row-val">\(R = \dfrac{v_0^2\sin 2\theta}{g}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Gravity</span>
+        <span class="row-val">\(g = 9.8\text{ m/s}^2\)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Force &amp; Dynamics</p>
+    <div class="card">
+      <div class="row">
+        <span class="row-desc">Newton's 2nd law</span>
+        <span class="row-val">\(\sum \vec{F} = m\vec{a}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Newton's 3rd law</span>
+        <span class="row-val">\(\vec{F}_{A \text{ on } B} = -\vec{F}_{B \text{ on } A}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Weight</span>
+        <span class="row-val">\(F_g = mg\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Elevator scale</span>
+        <span class="row-val">\(F_n = m(g + a)\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Center of mass</span>
+        <span class="row-val">\(x_{\text{cm}} = \dfrac{\sum m_i x_i}{\sum m_i}\)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Contact Forces &amp; Gravity</p>
+    <div class="card">
+      <div class="row">
+        <span class="row-desc">Gravity parallel (incline)</span>
+        <span class="row-val">\(F_{g\parallel} = mg\sin\theta\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Gravity perpendicular</span>
+        <span class="row-val">\(F_{g\perp} = mg\cos\theta\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Incline acceleration</span>
+        <span class="row-val">\(a = g(\sin\theta - \mu_k\cos\theta)\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Static friction (max)</span>
+        <span class="row-val">\(f_{s,\max} = \mu_s F_n\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Kinetic friction</span>
+        <span class="row-val">\(f_k = \mu_k F_n\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Hooke's law</span>
+        <span class="row-val">\(F_s = -k\Delta x\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Spring equilibrium</span>
+        <span class="row-val">\(\Delta x = \dfrac{mg}{k}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Universal gravitation</span>
+        <span class="row-val">\(F_g = G\dfrac{m_1 m_2}{r^2}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Gravitational field</span>
+        <span class="row-val">\(g = \dfrac{GM}{r^2}\)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Circular Motion &amp; Orbits</p>
+    <div class="card">
+      <div class="row">
+        <span class="row-desc">Centripetal acceleration</span>
+        <span class="row-val">\(a_c = \dfrac{v^2}{r}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Centripetal force</span>
+        <span class="row-val">\(\sum F_{\text{rad}} = \dfrac{mv^2}{r}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Min speed (top of loop)</span>
+        <span class="row-val">\(v_{\min} = \sqrt{gr}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Normal force (top of loop)</span>
+        <span class="row-val">\(F_n = m\!\left(\dfrac{v^2}{r} - g\right)\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Weightless speed (hilltop)</span>
+        <span class="row-val">\(v = \sqrt{gr}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Period</span>
+        <span class="row-val">\(T = \dfrac{2\pi r}{v}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Frequency</span>
+        <span class="row-val">\(f = \dfrac{1}{T}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Orbital speed</span>
+        <span class="row-val">\(v = \sqrt{\dfrac{GM}{r}}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Kepler's 3rd law</span>
+        <span class="row-val">\(T^2 = \dfrac{4\pi^2}{GM}\,r^3\)</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../notes.js"></script>
+</body>
+</html>
