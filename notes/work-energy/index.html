@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work &amp; Energy</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../physics/" class="syllabus-back">← Physics</a>
+    <div>
+      <h1>work &amp; energy</h1>
+      <span>kinetic energy, work, the work-energy theorem, and potential energy</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Work ── -->
+  <div class="section">
+    <p class="section-label">Work</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Thruster force on a spacecraft, single instant</span>
+      </div>
+      <canvas id="work-angle-canvas" width="600" height="320"></canvas>
+      <div class="graph-caption"><span id="work-angle-caption"></span></div>
+    </div>
+
+    <p class="prose">
+      The energy transferred to or from an object by a force is called <strong>work</strong>. The work done by an individual force on an object during a displacement is:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[W = Fd\cos\theta\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(F\)</span>
+          <span class="row-val">magnitude of the individual force (N)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(d\)</span>
+          <span class="row-val">magnitude of the displacement (m)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\theta\)</span>
+          <span class="row-val">angle between force and displacement vectors</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Units</span>
+          <span class="row-val">joules (J)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Sign of work</p>
+        <div class="row">
+          <span class="row-desc">\(\theta = 0°\) (parallel)</span>
+          <span class="row-val"><span class="badge teal">\(W = +Fd\)</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\theta = 90°\) (perpendicular)</span>
+          <span class="row-val"><span class="badge amber">\(W = 0\)</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\theta = 180°\) (antiparallel)</span>
+          <span class="row-val"><span class="badge coral">\(W = -Fd\)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Work is a <strong>scalar</strong>: only the component of force along the displacement direction does work, \(\cos\theta\) extracts it. A force perpendicular to displacement, like gravity on a satellite in circular orbit, does <strong>zero work</strong>. Try the angle slider above to see how tilting the thrust changes it.
+    </p>
+
+    <p class="prose">
+      Since \(W = Fd\) for a constant force, work is just the <strong>area between the force curve and the d-axis</strong>: a rectangle when force is constant, a trapezoid when it varies linearly. Try the sliders below.
+    </p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Area under a force-displacement graph</span>
+      </div>
+      <canvas id="fd-graph-canvas" width="600" height="290"></canvas>
+      <div class="graph-caption"><span id="fd-graph-caption"></span></div>
+    </div>
+  </div>
+
+  <!-- ── Kinetic energy ── -->
+  <div class="section">
+    <p class="section-label">Kinetic energy</p>
+
+    <p class="prose">
+      When an object is in translational motion, modeled as a single point at its center of mass, it has <strong>translational kinetic energy</strong> depending on its mass and speed:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[K = \dfrac{1}{2}mv^2\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Key properties</p>
+      <div class="row">
+        <span class="row-desc">Units</span>
+        <span class="row-val">joules \((\text{J}) = \text{kg} \cdot \text{m}^2 / \text{s}^2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Type</span>
+        <span class="row-val">scalar,magnitude only, no direction</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Minimum value</span>
+        <span class="row-val">\(K \geq 0\) always</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      The <strong>net work</strong> done on an object equals its change in kinetic energy, the <strong>work-kinetic energy theorem</strong>:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[W_{\text{net}} = \sum_{i} W_i = \Delta K = K_f - K_i\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Applying the theorem</p>
+      <div class="row">
+        <span class="row-desc">Net work &gt; 0</span>
+        <span class="row-val">kinetic energy increases,object speeds up</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Net work &lt; 0</span>
+        <span class="row-val">kinetic energy decreases,object slows down</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Net work = 0</span>
+        <span class="row-val">kinetic energy unchanged,constant speed</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Multiple forces</span>
+        <span class="row-val">sum work by each, or use \(\vec{F}_{\text{net}}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Reference frame</span>
+        <span class="row-val">\(K\) and \(W_{\text{net}}\) depend on the observer's frame</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Potential energy ── -->
+  <div class="section">
+    <p class="section-label">Potential energy</p>
+
+    <p class="prose">
+      When a force does <strong>negative work</strong> on an object, it removes kinetic energy. Whether that energy is recoverable depends on the type of force:
+    </p>
+
+    <div class="card">
+      <p class="card-title">Conservative vs. nonconservative</p>
+      <div class="row">
+        <span class="row-desc">Conservative (gravity, spring force)</span>
+        <span class="row-val">negative work stored as potential energy, recoverable</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Nonconservative (friction, air resistance)</span>
+        <span class="row-val">negative work dissipated as heat/sound, not recoverable</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      <strong>Potential energy</strong> \((U)\) is energy associated with the configuration, the relative positions, of objects in a system that interact via a conservative force.
+    </p>
+
+    <p class="prose">
+      Gravity requires a system of two interacting masses, modeled by <strong>Newton's law of universal gravitation</strong>, \(F_g = G\frac{m_1 m_2}{r^2}\). The system's gravitational potential energy is:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[U_g = -G\dfrac{m_1 m_2}{r}\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Key properties</p>
+      <div class="row">
+        <span class="row-desc">Sign</span>
+        <span class="row-val">always negative</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">As \(r \to \infty\)</span>
+        <span class="row-val">\(U_g \to 0\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">As \(r\) decreases</span>
+        <span class="row-val">\(U_g\) becomes more negative</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Near Earth's surface, \(g\) is nearly constant and \(F_g = mg\). The corresponding change in potential energy is:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\Delta U_g = mg\Delta y\]
+    </p>
+
+    <p class="prose">
+      Only <strong>changes</strong> in \(U_g\) matter, the zero reference is arbitrary and chosen for convenience.
+    </p>
+
+    <p class="prose">
+      The other common conservative force is the spring force. A spring stretched or compressed by \(\Delta x\) from its relaxed length exerts a restoring force, \(F_s = k\Delta x\) (<strong>Hooke's law</strong>). The elastic potential energy stored is:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[U_s = \dfrac{1}{2}k(\Delta x)^2\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Spring properties</p>
+      <div class="row">
+        <span class="row-desc">Sign</span>
+        <span class="row-val">\(U_s \geq 0\) always,depends on \((\Delta x)^2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Stretch vs. compression</span>
+        <span class="row-val">same \(|\Delta x|\) either way stores equal \(U_s\)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Mechanical energy ── -->
+  <div class="section">
+    <p class="section-label">Mechanical energy</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Pendulum released from rest</span>
+      </div>
+      <canvas id="energy-pendulum-canvas" width="600" height="320"></canvas>
+      <div class="graph-caption"><span id="energy-pendulum-caption"></span></div>
+    </div>
+
+    <p class="prose">
+      <strong>Mechanical energy</strong> is the sum of a system's total kinetic and potential energy:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[E_{\text{mech}} = K_{\text{tot}} + U_{\text{tot}}\]
+    </p>
+
+    <p class="prose">
+      If only conservative forces act, mechanical energy is <strong>conserved</strong>: kinetic and potential energy trade off, but the total stays fixed. Nonconservative forces like friction have no associated potential energy, the negative work they do is dissipated and lost from the system instead.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Applying conservation</p>
+      <div class="row">
+        <span class="row-desc">Only conservative forces act</span>
+        <span class="row-val"><span class="badge teal">\(\Delta E_{\text{mech}} = 0\)</span></span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Nonconservative forces act</span>
+        <span class="row-val"><span class="badge coral">\(\Delta E_{\text{mech}} = W_{\text{nc}}\)</span></span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Work done by conservative forces is also <strong>path-independent</strong>, it depends only on the initial and final configuration, not the route taken. Work done by nonconservative forces like friction is path-dependent.
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">Kinetic energy</span>
+        <span class="row-val">\(K = \frac{1}{2}mv^2\), scalar, always \(\geq 0\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Work by a force</span>
+        <span class="row-val">\(W = Fd\cos\theta\), scalar, can be \(+\), \(-\), or \(0\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Work-energy theorem</span>
+        <span class="row-val">\(W_{\text{net}} = \Delta K\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Perpendicular forces</span>
+        <span class="row-val">do zero work,change direction, not speed</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Constant force assumption</span>
+        <span class="row-val">if force varies, use calculus or a \(F\) vs. \(d\) graph</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Conservative forces</span>
+        <span class="row-val">store removed kinetic energy as potential energy, recoverable</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Mechanical energy</span>
+        <span class="row-val">\(E_{\text{mech}} = K + U\), conserved if only conservative forces act</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../notes.js"></script>
+<script>
+(function () {
+  var canvas = document.getElementById('work-angle-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption span');
+
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.52);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var vals = { angle: 30, F: 100, d: 5 };
+
+  function drawArrow(sx, sy, dx, dy, color, hl) {
+    hl = hl || 7;
+    var a = Math.atan2(dy, dx);
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(sx + dx, sy + dy);
+    ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+    ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+    ctx.closePath(); ctx.fill();
+  }
+
+  function drawRocket(cx, cy, size) {
+    // Rocket pointing right (along displacement)
+    var bw = size, bh = size * 0.4;
+    ctx.fillStyle = css('--hint');
+    ctx.strokeStyle = css('--muted');
+    ctx.lineWidth = 1.5;
+
+    ctx.beginPath();
+    // nose (right)
+    ctx.moveTo(cx + bw / 2 + size * 0.25, cy);
+    ctx.quadraticCurveTo(cx + bw / 2, cy - bh / 2, cx, cy - bh / 2);
+    // top edge
+    ctx.lineTo(cx - bw / 2, cy - bh / 2);
+    // top fin
+    ctx.lineTo(cx - bw / 2 - size * 0.18, cy - bh / 2 - size * 0.12);
+    ctx.lineTo(cx - bw / 2 + size * 0.05, cy - bh / 2);
+    // bottom fin
+    ctx.lineTo(cx - bw / 2 + size * 0.05, cy + bh / 2);
+    ctx.lineTo(cx - bw / 2 - size * 0.18, cy + bh / 2 + size * 0.12);
+    ctx.lineTo(cx - bw / 2, cy + bh / 2);
+    // bottom edge
+    ctx.lineTo(cx, cy + bh / 2);
+    ctx.quadraticCurveTo(cx + bw / 2, cy + bh / 2, cx + bw / 2 + size * 0.25, cy);
+    ctx.closePath();
+    ctx.globalAlpha = 0.15;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.stroke();
+
+    // window
+    ctx.beginPath();
+    ctx.arc(cx + size * 0.12, cy, size * 0.09, 0, Math.PI * 2);
+    ctx.fillStyle = css('--accent-teal') || '#0f6e56';
+    ctx.globalAlpha = 0.3;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = css('--muted');
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    // grid
+    var gs = 25;
+    ctx.strokeStyle = css('--border') || 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    // stars
+    var starSeed = [0.12,0.08, 0.85,0.15, 0.07,0.75, 0.92,0.82, 0.45,0.05, 0.78,0.45, 0.18,0.42, 0.62,0.88, 0.35,0.72, 0.88,0.28];
+    ctx.fillStyle = css('--hint');
+    for (var s = 0; s < starSeed.length; s += 2) {
+      ctx.globalAlpha = 0.2 + (s % 4) * 0.05;
+      ctx.beginPath();
+      ctx.arc(starSeed[s] * w, starSeed[s+1] * h, 1.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    var theta = vals.angle;
+    var rad = theta * Math.PI / 180;
+    var cosT = Math.cos(rad);
+
+    var teal = css('--accent-teal') || '#0f6e56';
+    var coral = css('--accent-coral') || '#993c1d';
+    var amber = css('--accent-amber') || '#854f0b';
+    var text = css('--text') || '#1a1a18';
+    var hint = css('--hint') || '#9e9e98';
+
+    var cx = w * 0.38;
+    var cy = h * 0.72;
+    var rocketSize = 64;
+
+    // Rocket
+    drawRocket(cx, cy, rocketSize);
+
+    // Displacement arrow (rightward from rocket)
+    var dStart = cx + rocketSize * 0.4 + 18;
+    var dFrac = (vals.d - 1) / 19;
+    var dLen = 80 + dFrac * (w * 0.38 - 80);
+    drawArrow(dStart, cy, dLen, 0, text, 10);
+    ctx.font = '600 13px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = text;
+    ctx.fillText('d', dStart + dLen / 2, cy + 22);
+
+    // Thrust force arrow at angle theta from displacement
+    var fFrac = (vals.F - 10) / 490;
+    var fLen = 70 + fFrac * (w * 0.3 - 70);
+    var forceColor = cosT > 0.01 ? teal : cosT < -0.01 ? coral : amber;
+    var fdx = Math.cos(-rad) * fLen;
+    var fdy = Math.sin(-rad) * fLen;
+    drawArrow(cx, cy, fdx, fdy, forceColor, 10);
+
+    // Label F
+    var lDist = fLen + 16;
+    ctx.fillStyle = forceColor;
+    ctx.font = '600 13px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('F', cx + Math.cos(-rad) * lDist, cy + Math.sin(-rad) * lDist);
+
+    // Angle arc
+    if (theta > 2 && theta < 178) {
+      var arcR = 44;
+      ctx.beginPath();
+      ctx.arc(cx, cy, arcR, -rad, 0, false);
+      ctx.strokeStyle = hint; ctx.lineWidth = 1; ctx.stroke();
+
+      var midA = -rad / 2;
+      ctx.font = '10px "DM Mono", monospace';
+      ctx.fillStyle = hint;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('θ', cx + Math.cos(midA) * (arcR + 14), cy + Math.sin(midA) * (arcR + 14));
+    }
+
+    // Component projection (dashed)
+    var projLen = Math.cos(rad) * fLen;
+    if (Math.abs(projLen) > 3 && theta > 2 && theta < 178) {
+      ctx.save();
+      ctx.setLineDash([4, 3]);
+      ctx.strokeStyle = forceColor; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.45;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + projLen, cy); ctx.stroke();
+      ctx.restore();
+
+      ctx.save();
+      ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = hint; ctx.lineWidth = 1; ctx.globalAlpha = 0.3;
+      ctx.beginPath(); ctx.moveTo(cx + fdx, cy + fdy); ctx.lineTo(cx + projLen, cy); ctx.stroke();
+      ctx.restore();
+
+      ctx.font = '11px "DM Mono", monospace';
+      ctx.fillStyle = forceColor; ctx.globalAlpha = 0.6;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('F cos θ', cx + projLen / 2, cy + (theta <= 90 ? 22 : -18));
+      ctx.globalAlpha = 1;
+    }
+
+    // Readout (top-right corner, like other examples)
+    var W_joules = vals.F * vals.d * cosT;
+    var lx = w - 12;
+    var ly = 14;
+
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = hint;
+    ctx.fillText('F = ' + vals.F + ' N,  d = ' + vals.d + ' m,  θ = ' + theta + '°', lx, ly);
+    ly += 16;
+    ctx.fillStyle = Math.abs(cosT) < 0.01 ? amber : cosT > 0 ? teal : coral;
+    var wJ = Math.abs(W_joules).toFixed(1);
+    ctx.fillText('W = Fd cos θ = ' + (W_joules >= 0.05 ? '' : W_joules <= -0.05 ? '−' : '') + wJ + ' J', lx, ly);
+
+    // Caption
+    if (cap) {
+      if (theta === 0) cap.textContent = 'Thrust aligned with motion: W = Fd, max positive work';
+      else if (theta < 90) cap.textContent = 'Thrust partially along motion: positive work, spacecraft speeds up';
+      else if (theta === 90) cap.textContent = 'Thrust perpendicular to motion: zero work, speed unchanged';
+      else if (theta < 180) cap.textContent = 'Thrust partially opposing motion: negative work, spacecraft slows';
+      else cap.textContent = 'Thrust opposing motion: W = −Fd, max negative work';
+    }
+  }
+
+  // Controls (built programmatically like other notes)
+  var cd = document.createElement('div'); cd.className = 'fbd-controls';
+
+  function addSlider(id, label, unit, min, max, val, step) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = val;
+    var dp = step < 1 ? ('' + step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+val).toFixed(dp) + ' ' + unit;
+    inp.addEventListener('input', function () {
+      vals[id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + unit;
+      render();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+  }
+
+  addSlider('angle', 'Angle θ', '°', 0, 180, 30, 1);
+  addSlider('F', 'Force', 'N', 10, 500, 100, 10);
+  addSlider('d', 'Displacement', 'm', 1, 20, 5, 1);
+  wrap.appendChild(cd);
+
+  // Randomize button in caption
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.angle = Math.round(Math.random() * 180);
+      vals.F = 10 + Math.round(Math.random() * 49) * 10;
+      vals.d = 1 + Math.round(Math.random() * 19);
+      var ctrls = cd.querySelectorAll('input[type="range"]');
+      var spans = cd.querySelectorAll('.fbd-control-val');
+      if (ctrls[0]) { ctrls[0].value = vals.angle; spans[0].textContent = vals.angle + '°'; }
+      if (ctrls[1]) { ctrls[1].value = vals.F; spans[1].textContent = vals.F + ' N'; }
+      if (ctrls[2]) { ctrls[2].value = vals.d; spans[2].textContent = vals.d + ' m'; }
+      render();
+    });
+    cap.parentElement.appendChild(rb);
+  }
+
+  render();
+  document.addEventListener('themechange', render);
+  var observer = new MutationObserver(function () { render(); });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+<script>
+(function () {
+  var canvas = document.getElementById('fd-graph-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption span');
+
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.48);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var vals = { F1: 100, F2: -50, d: 10 };
+  var MAX_F = 200;
+  var D_MAX = 15;
+
+  var pLeft = 58, pRight = w - 22, pTop = 20, pBottom = h - 42;
+  var zeroY = (pTop + pBottom) / 2;
+  function px(x) { return pLeft + (x / D_MAX) * (pRight - pLeft); }
+  function py(f) { return zeroY - (f / MAX_F) * (pBottom - pTop) / 2; }
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    var gs = 25;
+    ctx.strokeStyle = css('--border');
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    var teal   = css('--accent-teal')   || '#0d9488';
+    var coral  = css('--accent-coral')  || '#e25555';
+    var hint   = css('--hint')          || '#9e9e98';
+    var border = css('--border-strong') || 'rgba(0,0,0,0.14)';
+
+    // Y axis tick labels (force, signed)
+    ctx.font = '10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = hint; ctx.strokeStyle = hint; ctx.lineWidth = 1;
+    for (var f = -MAX_F; f <= MAX_F; f += 100) {
+      var yp = py(f);
+      ctx.fillText(f, pLeft - 7, yp);
+      ctx.beginPath(); ctx.moveTo(pLeft - 3, yp); ctx.lineTo(pLeft, yp); ctx.stroke();
+    }
+
+    // X axis tick labels (displacement), drawn under the plot frame
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillStyle = hint;
+    for (var xv = 0; xv <= D_MAX; xv += 5) {
+      var xp = px(xv);
+      ctx.fillText(xv, xp, pBottom + 6);
+      ctx.beginPath(); ctx.moveTo(xp, pBottom); ctx.lineTo(xp, pBottom + 3); ctx.stroke();
+    }
+
+    // Frame (F axis on the left, bottom border)
+    ctx.strokeStyle = border; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(pLeft, pTop); ctx.lineTo(pLeft, pBottom); ctx.lineTo(pRight, pBottom); ctx.stroke();
+
+    // F = 0 reference line (the actual d-axis, can sit mid-plot when force goes negative)
+    ctx.strokeStyle = border; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(pLeft, zeroY); ctx.lineTo(pRight, zeroY); ctx.stroke();
+
+    // Axis labels
+    ctx.save();
+    ctx.translate(13, (pTop + pBottom) / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = hint; ctx.font = '10px "DM Mono", monospace';
+    ctx.fillText('F (N)', 0, 0);
+    ctx.restore();
+    ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+    ctx.fillStyle = hint; ctx.font = '10px "DM Mono", monospace';
+    ctx.fillText('d (m)', (pLeft + pRight) / 2, h - 5);
+
+    var F1 = vals.F1, F2 = vals.F2, d = vals.d;
+    var hasCrossing = (F1 * F2 < 0);
+    var xc = hasCrossing ? d * F1 / (F1 - F2) : null;
+
+    var regions = hasCrossing
+      ? [{ x0: 0, x1: xc, f0: F1, f1: 0 }, { x0: xc, x1: d, f0: 0, f1: F2 }]
+      : [{ x0: 0, x1: d, f0: F1, f1: F2 }];
+
+    regions.forEach(function (r) {
+      var color = (r.f0 + r.f1) >= 0 ? teal : coral;
+      var rx0 = px(r.x0), rx1 = px(r.x1), ry0 = py(r.f0), ry1 = py(r.f1), rzero = py(0);
+      ctx.beginPath();
+      ctx.moveTo(rx0, rzero);
+      ctx.lineTo(rx0, ry0);
+      ctx.lineTo(rx1, ry1);
+      ctx.lineTo(rx1, rzero);
+      ctx.closePath();
+      ctx.fillStyle = color; ctx.globalAlpha = 0.16; ctx.fill(); ctx.globalAlpha = 1;
+      ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(rx0, ry0); ctx.lineTo(rx1, ry1); ctx.stroke();
+    });
+
+    // Marker at the zero-crossing point, if force changes sign
+    if (hasCrossing) {
+      var xcPx = px(xc), zPx = py(0);
+      ctx.fillStyle = hint;
+      ctx.beginPath(); ctx.arc(xcPx, zPx, 3, 0, Math.PI * 2); ctx.fill();
+      ctx.font = '10px "DM Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = zPx > zeroY ? 'top' : 'bottom';
+      ctx.fillText('d=' + xc.toFixed(1), xcPx, zPx + (zPx > zeroY ? 6 : -6));
+    }
+
+    // Dashed projection lines to F axis for F1 and F2
+    var x0 = px(0), xd = px(d), yf1 = py(F1), yf2 = py(F2);
+    var color1 = F1 >= 0 ? teal : coral, color2 = F2 >= 0 ? teal : coral;
+    ctx.save(); ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.globalAlpha = 0.4;
+    if (Math.abs(F1) > 5) { ctx.strokeStyle = color1; ctx.beginPath(); ctx.moveTo(pLeft, yf1); ctx.lineTo(x0, yf1); ctx.stroke(); }
+    if (Math.abs(F2) > 5 && Math.abs(F2 - F1) > 8) { ctx.strokeStyle = color2; ctx.beginPath(); ctx.moveTo(pLeft, yf2); ctx.lineTo(xd, yf2); ctx.stroke(); }
+    ctx.restore();
+
+    // F1 / F2 value labels on the F axis
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    if (F1 % 100 !== 0) { ctx.fillStyle = color1; ctx.fillText(F1, pLeft - 7, yf1); }
+    if (F2 % 100 !== 0 && Math.abs(F2 - F1) > 14) { ctx.fillStyle = color2; ctx.fillText(F2, pLeft - 7, yf2); }
+
+    // Readout (top right)
+    var W = 0.5 * (F1 + F2) * d;
+    var workColor = W > 0 ? teal : (W < 0 ? coral : hint);
+    var lx = w - 12, ly = 12;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = hint;
+    ctx.fillText('F₁ = ' + F1 + ' N,  F₂ = ' + F2 + ' N,  d = ' + d + ' m', lx, ly);
+    ly += 17;
+    ctx.fillStyle = workColor;
+    if (F1 === F2) {
+      ctx.fillText('W = F·d = ' + W.toFixed(1) + ' J', lx, ly);
+    } else {
+      ctx.fillText('W = ½(F₁+F₂)·d = ' + W.toFixed(1) + ' J', lx, ly);
+    }
+
+    // Caption
+    if (cap) {
+      var Ws = W.toFixed(1);
+      if (hasCrossing) {
+        cap.textContent = 'Force crosses zero at d = ' + xc.toFixed(1) + ' m: positive area (teal) and negative area (coral) partly cancel, net W = ' + Ws + ' J';
+      } else if (F1 === F2) {
+        cap.textContent = (F1 >= 0 ? 'Constant positive force' : 'Constant negative force') + ': W = F·d = ' + Ws + ' J';
+      } else if (F2 === 0) {
+        cap.textContent = 'Force drops to zero: W = ½F₁·d = ' + Ws + ' J, triangular area';
+      } else if (F1 === 0) {
+        cap.textContent = 'Force builds from zero: W = ½F₂·d = ' + Ws + ' J, triangular area';
+      } else {
+        cap.textContent = 'Variable force: W = ½(F₁+F₂)·d = ' + Ws + ' J';
+      }
+    }
+  }
+
+  // Controls
+  var cd = document.createElement('div'); cd.className = 'fbd-controls';
+  function addSlider(id, label, unit, min, max, val, step) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = val;
+    var dp = step < 1 ? ('' + step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+val).toFixed(dp) + ' ' + unit;
+    inp.addEventListener('input', function () {
+      vals[id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + unit;
+      render();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+  }
+  addSlider('F1', 'F at start', 'N', -200, 200, 100, 5);
+  addSlider('F2', 'F at end',   'N', -200, 200, -50, 5);
+  addSlider('d',  'Displacement', 'm', 5, 15, 10, 1);
+  wrap.appendChild(cd);
+
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.F1 = (Math.round(Math.random() * 80) - 40) * 5;
+      vals.F2 = (Math.round(Math.random() * 80) - 40) * 5;
+      vals.d  = 5 + Math.round(Math.random() * 10);
+      var ctrls = cd.querySelectorAll('input[type="range"]');
+      var spans = cd.querySelectorAll('.fbd-control-val');
+      if (ctrls[0]) { ctrls[0].value = vals.F1; spans[0].textContent = vals.F1 + ' N'; }
+      if (ctrls[1]) { ctrls[1].value = vals.F2; spans[1].textContent = vals.F2 + ' N'; }
+      if (ctrls[2]) { ctrls[2].value = vals.d;  spans[2].textContent = vals.d  + ' m'; }
+      render();
+    });
+    cap.parentElement.appendChild(rb);
+  }
+
+  render();
+  document.addEventListener('themechange', render);
+  new MutationObserver(function () { render(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+<script>
+(function () {
+  var canvas = document.getElementById('energy-pendulum-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption span');
+
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.52);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var vals = { amp: 35, L: 1.2, m: 2 };
+  var G = 9.8;
+  var idx = 0, paused = false, animId = null, lastTs = null, scrubbing = false;
+
+  // Simulate one full period of the exact pendulum ODE (no small-angle approximation),
+  // so energy conservation in the display reflects real dynamics, not an assumed formula.
+  function buildTable(ampDeg, L) {
+    var thetaMax = ampDeg * Math.PI / 180;
+    var dt = 0.0008;
+    var theta = thetaMax, omega = 0;
+    var thetas = [theta], omegas = [omega];
+    var alpha = -(G / L) * Math.sin(theta);
+    omega += alpha * dt; theta += omega * dt;
+    thetas.push(theta); omegas.push(omega);
+    var prevOmega = omega, turningPoints = 0;
+    var maxSteps = 20000;
+    for (var i = 1; i < maxSteps; i++) {
+      alpha = -(G / L) * Math.sin(theta);
+      omega += alpha * dt; theta += omega * dt;
+      thetas.push(theta); omegas.push(omega);
+      if ((prevOmega < 0 && omega >= 0) || (prevOmega > 0 && omega <= 0)) {
+        turningPoints++;
+        if (turningPoints >= 2) break;
+      }
+      prevOmega = omega;
+    }
+    return { dt: dt, theta: thetas, omega: omegas, thetaMax: thetaMax };
+  }
+
+  var table = buildTable(vals.amp, vals.L);
+
+  var AMP_MAX = 75, LEN_MAX = 2;
+  var usableTop = h * 0.08, usableBottom = h * 0.92;
+  var usableHeight = usableBottom - usableTop;
+  var cx = w / 2;
+
+  // Scale pixels-per-meter so the pendulum fills the available card area at
+  // any slider setting (max length, max swing angle) without clipping.
+  var margin = w * 0.08;
+  var halfWidth = w / 2 - margin;
+  var scaleV = (usableHeight * 0.95) / LEN_MAX;
+  var scaleH = (halfWidth * 0.95) / (LEN_MAX * Math.sin(AMP_MAX * Math.PI / 180));
+  var baseScale = Math.min(scaleV, scaleH);
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    var gs = 25;
+    ctx.strokeStyle = css('--border');
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    var teal = css('--accent-teal') || '#0f6e56';
+    var coral = css('--accent-coral') || '#993c1d';
+    var hint = css('--hint') || '#9e9e98';
+    var text = css('--text') || '#1a1a18';
+
+    var theta = table.theta[idx], omega = table.omega[idx];
+    var thetaMax = table.thetaMax;
+    var Lpx = baseScale * vals.L;
+    var pivotY = usableTop + (usableHeight - Lpx) / 2;
+    var K = 0.5 * vals.m * Math.pow(vals.L * omega, 2);
+    var U = vals.m * G * vals.L * (1 - Math.cos(theta));
+    var E = vals.m * G * vals.L * (1 - Math.cos(thetaMax));
+
+    // extreme-angle envelope (dashed)
+    ctx.save();
+    ctx.setLineDash([3, 3]);
+    ctx.strokeStyle = hint; ctx.lineWidth = 1; ctx.globalAlpha = 0.4;
+    [thetaMax, -thetaMax].forEach(function (a) {
+      ctx.beginPath(); ctx.moveTo(cx, pivotY); ctx.lineTo(cx + Lpx * Math.sin(a), pivotY + Lpx * Math.cos(a)); ctx.stroke();
+    });
+    ctx.restore();
+
+    // vertical reference
+    ctx.save();
+    ctx.setLineDash([2, 4]);
+    ctx.strokeStyle = hint; ctx.lineWidth = 1; ctx.globalAlpha = 0.5;
+    ctx.beginPath(); ctx.moveTo(cx, pivotY); ctx.lineTo(cx, pivotY + Lpx); ctx.stroke();
+    ctx.restore();
+
+    // angle arc
+    if (Math.abs(theta) > 0.05) {
+      var arcR = 26;
+      ctx.beginPath();
+      ctx.arc(cx, pivotY, arcR, Math.PI / 2, Math.PI / 2 - theta, theta > 0);
+      ctx.strokeStyle = hint; ctx.lineWidth = 1; ctx.globalAlpha = 0.7; ctx.stroke(); ctx.globalAlpha = 1;
+    }
+
+    // string + bob
+    var bobX = cx + Lpx * Math.sin(theta), bobY = pivotY + Lpx * Math.cos(theta);
+    ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(cx, pivotY); ctx.lineTo(bobX, bobY); ctx.stroke();
+
+    ctx.fillStyle = hint;
+    ctx.beginPath(); ctx.arc(cx, pivotY, 3, 0, Math.PI * 2); ctx.fill();
+
+    var bobR = Math.min(w * 0.026, h * 0.05, w * 0.012 + vals.m * 0.8);
+    ctx.fillStyle = css('--bg'); ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(bobX, bobY, bobR, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+    // readout
+    var lx = w - 12, ly = 14;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = hint;
+    ctx.fillText('θ_max = ' + vals.amp + '°,  L = ' + vals.L.toFixed(1) + ' m,  m = ' + vals.m + ' kg', lx, ly);
+    ly += 16;
+    ctx.fillStyle = teal;
+    ctx.fillText('K = ' + K.toFixed(1) + ' J', lx, ly);
+    ly += 14;
+    ctx.fillStyle = coral;
+    ctx.fillText('U = ' + U.toFixed(1) + ' J', lx, ly);
+    ly += 14;
+    ctx.fillStyle = text;
+    ctx.fillText('E = ' + E.toFixed(1) + ' J', lx, ly);
+
+    // compact K/U split bar, tucked under the readout (not a standalone card)
+    ly += 12;
+    var miniW = Math.min(100, w * 0.15), miniH = 5;
+    var miniX = lx - miniW;
+    var fracK = E > 0 ? Math.max(0, Math.min(1, K / E)) : 0;
+    var splitX = miniX + miniW * fracK;
+    ctx.fillStyle = teal; ctx.globalAlpha = 0.8;
+    ctx.fillRect(miniX, ly, splitX - miniX, miniH);
+    ctx.fillStyle = coral;
+    ctx.fillRect(splitX, ly, miniX + miniW - splitX, miniH);
+    ctx.globalAlpha = 1;
+
+    // caption
+    if (cap) {
+      var frac = Math.abs(theta) / thetaMax;
+      if (frac > 0.92) cap.textContent = 'Near the peak: momentarily at rest, almost all potential energy';
+      else if (frac < 0.08) cap.textContent = 'Passing the bottom: maximum speed, almost all kinetic energy';
+      else cap.textContent = 'Swinging: kinetic and potential energy trade off, but K + U = ' + E.toFixed(1) + ' J stays fixed';
+    }
+  }
+
+  var PLAYBACK_SPEED = 0.5;
+  function tick(ts) {
+    if (paused) { animId = null; return; }
+    if (lastTs == null) lastTs = ts;
+    var dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+    var steps = Math.max(1, Math.round((dt * PLAYBACK_SPEED) / table.dt));
+    idx = (idx + steps) % table.theta.length;
+    if (!scrubbing) tScrub.value = Math.round((idx / (table.theta.length - 1)) * 1000);
+    render();
+    animId = requestAnimationFrame(tick);
+  }
+
+  // Controls
+  var cd = document.createElement('div'); cd.className = 'fbd-controls';
+  function addSlider(id, label, unit, min, max, val, step) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = val;
+    var dp = step < 1 ? ('' + step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+val).toFixed(dp) + ' ' + unit;
+    inp.addEventListener('input', function () {
+      vals[id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + unit;
+      if (id === 'amp' || id === 'L') { table = buildTable(vals.amp, vals.L); idx = 0; }
+      render();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+  }
+  addSlider('amp', 'Amplitude', '°', 10, AMP_MAX, 35, 1);
+  addSlider('L', 'Length', 'm', 0.5, LEN_MAX, 1.2, 0.1);
+  addSlider('m', 'Mass', 'kg', 1, 10, 2, 1);
+  wrap.appendChild(cd);
+
+  // scrub bar
+  var tScrub = document.createElement('input');
+  tScrub.type = 'range'; tScrub.min = 0; tScrub.max = 1000; tScrub.value = 0; tScrub.step = 1;
+  tScrub.id = 'energy-pendulum-scrub';
+  tScrub.style.cssText = 'width:100%;height:3px;margin:0;padding:0;display:block;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none;background:var(--border-strong);border-radius:2px;transition:opacity 0.2s;';
+  var scStyle = document.createElement('style');
+  scStyle.textContent = '#energy-pendulum-scrub::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent-purple);cursor:pointer;}#energy-pendulum-scrub::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent-purple);border:none;cursor:pointer;}';
+  document.head.appendChild(scStyle);
+  canvas.after(tScrub);
+
+  var cardWrap = canvas.closest('.graph-card');
+  cardWrap.addEventListener('mouseenter', function () { tScrub.style.opacity = '0.5'; });
+  cardWrap.addEventListener('mouseleave', function () { if (!scrubbing) tScrub.style.opacity = '0'; });
+
+  var playBtn = null;
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.amp = 10 + Math.round(Math.random() * 65);
+      vals.L = +(0.5 + Math.random() * 1.5).toFixed(1);
+      vals.m = 1 + Math.round(Math.random() * 9);
+      var ctrls = cd.querySelectorAll('input[type="range"]');
+      var spans = cd.querySelectorAll('.fbd-control-val');
+      if (ctrls[0]) { ctrls[0].value = vals.amp; spans[0].textContent = vals.amp + '°'; }
+      if (ctrls[1]) { ctrls[1].value = vals.L; spans[1].textContent = vals.L.toFixed(1) + ' m'; }
+      if (ctrls[2]) { ctrls[2].value = vals.m; spans[2].textContent = vals.m + ' kg'; }
+      table = buildTable(vals.amp, vals.L); idx = 0;
+      render();
+    });
+    cap.parentElement.appendChild(rb);
+
+    playBtn = document.createElement('button');
+    playBtn.className = 'fbd-pause'; playBtn.type = 'button';
+    playBtn.textContent = 'play'; playBtn.style.display = 'none';
+    playBtn.addEventListener('click', function () {
+      paused = false; lastTs = null; playBtn.style.display = 'none'; tick();
+    });
+    cap.parentElement.appendChild(playBtn);
+  }
+
+  tScrub.addEventListener('input', function () {
+    idx = Math.floor((parseFloat(tScrub.value) / 1000) * (table.theta.length - 1));
+    scrubbing = true; paused = true;
+    if (playBtn) playBtn.style.display = '';
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    render();
+  });
+  tScrub.addEventListener('mouseup', function () { scrubbing = false; });
+
+  render();
+  animId = requestAnimationFrame(tick);
+  document.addEventListener('themechange', render);
+  new MutationObserver(function () { render(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+</body>
+</html>

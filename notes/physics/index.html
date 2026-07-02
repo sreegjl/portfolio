@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes</title>
+    <title>Physics - Notes</title>
 
     <link rel="icon" href="/files/favicon/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Bebas+Neue&family=Konkhmer+Sleokchher&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../../styles.css">
     <script src="/theme.js"></script>
 </head>
 <body>
@@ -22,7 +22,7 @@
         <a href="/" class="logo">@sreegjl</a>
         <div class="nav-right">
             <div class="nav-links">
-                <a href="notes.html" class="nav-link active">NOTES</a>
+                <a href="../../notes.html" class="nav-link active">NOTES</a>
             </div>
             <span class="nav-divider"></span>
             <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
@@ -31,23 +31,54 @@
 
     <section class="notes-section">
         <div class="notes-content">
-            <div class="courses-header">
-                <h1 class="courses-title">Courses</h1>
-                <p class="courses-subtitle">Self-study notes, practice problems, and tools</p>
+            <div class="syllabus-header">
+                <div class="syllabus-header-left">
+                    <a href="../../notes.html" class="syllabus-back">← All courses</a>
+                    <h1 class="syllabus-title">Physics</h1>
+                    <p class="syllabus-subtitle" id="syllabusSubtitle"></p>
+                </div>
+                <a href="#" class="syllabus-continue-btn" id="continueBtn">Continue learning →</a>
             </div>
 
-            <div class="courses-grid">
-                <a href="notes/physics/" class="course-card">
-                    <div class="course-card-top">
-                        <span class="course-card-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                        </span>
-                        <span class="course-card-arrow">→</span>
+            <div class="syllabus-layout">
+                <div class="syllabus-main">
+                    <div id="topicsList" data-base="../">
+                        <div id="htmlLoading" class="loading"><p>Loading topics...</p></div>
                     </div>
-                    <h2 class="course-card-title">Intro to Physics</h2>
-                    <p class="course-card-desc">Kinematics, dynamics, forces, and circular motion</p>
-                    <span class="course-card-meta" id="physicsCourseMeta"></span>
-                </a>
+                </div>
+
+                <aside class="syllabus-sidebar">
+                    <div class="sidebar-card">
+                        <div class="sidebar-card-header">Your tracking</div>
+                        <div class="sidebar-stat">
+                            <span class="sidebar-stat-num" id="studiedCount">0</span>
+                            <span class="sidebar-stat-label">of <span id="totalLessons">8</span> lessons studied</span>
+                        </div>
+                        <div class="sidebar-progress-bar">
+                            <div class="sidebar-progress-fill" id="sidebarProgressFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card" id="upNextCard">
+                        <div class="sidebar-card-header">Up next</div>
+                        <p class="sidebar-upnext-topic" id="upNextTopic">—</p>
+                        <a class="sidebar-resume-btn" id="upNextLink" href="#">Resume →</a>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <div class="sidebar-card-header">Resources & tools</div>
+                        <div class="sidebar-resource-list">
+                            <a href="../equations/" class="sidebar-resource-link">
+                                <span>Equation sheet</span>
+                                <span class="sidebar-resource-arrow">→</span>
+                            </a>
+                            <a href="../../tools/fbd.html" class="sidebar-resource-link">
+                                <span>FBD builder</span>
+                                <span class="sidebar-resource-arrow">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </aside>
             </div>
         </div>
     </section>
@@ -77,10 +108,8 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="script.js"></script>
+    <script src="../../script.js"></script>
 </body>
 </html>

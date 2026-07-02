@@ -632,6 +632,106 @@ nav {
     color: var(--muted);
 }
 
+/* ── Course listing ── */
+.courses-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    padding-top: 0.5rem;
+    border-bottom: 1px solid var(--border-08);
+}
+
+.courses-title {
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+    font-size: 1.75rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+}
+
+.courses-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--hint);
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.75rem;
+}
+
+.course-card {
+    background: var(--surface);
+    border: 1px solid var(--border-08);
+    border-radius: 10px;
+    padding: 1.25rem;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.course-card:hover {
+    border-color: var(--border-14);
+    box-shadow: 0 2px 8px var(--border-06);
+}
+
+.course-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.85rem;
+}
+
+.course-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--border-06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+}
+
+.course-card-arrow {
+    font-size: 1rem;
+    color: var(--hint);
+    transition: transform 0.2s, color 0.2s;
+}
+
+.course-card:hover .course-card-arrow {
+    transform: translateX(3px);
+    color: var(--text);
+}
+
+.course-card-title {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+}
+
+.course-card-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--hint);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    flex: 1;
+}
+
+.course-card-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--hint);
+}
+
 /* ── Syllabus layout ── */
 .syllabus-header {
     display: flex;
@@ -644,6 +744,18 @@ nav {
     border-bottom: 1px solid var(--border-08);
     flex-wrap: wrap;
 }
+
+.syllabus-back {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--hint);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: inline-block;
+    margin-bottom: 0.4rem;
+}
+
+.syllabus-back:hover { color: var(--text); }
 
 .syllabus-title {
     font-family: 'DM Mono', monospace;

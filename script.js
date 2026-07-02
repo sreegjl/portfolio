@@ -534,6 +534,25 @@ if (document.getElementById('markdown-content')) {
 }
 
 // ===== NOTES TABLE PAGE - Load and display notes list =====
+// Populate course card meta on the course listing page
+(function () {
+    var meta = document.getElementById('physicsCourseMeta');
+    if (!meta) return;
+    var topics = 5, lessons = 9;
+    fetch('notes-manifest.json').then(function (r) { return r.json(); }).then(function (m) {
+        var html = m.htmlNotes || [];
+        var noteCount = html.length;
+        var topicSet = new Set();
+        html.forEach(function (n) {
+            var folder = n.path.split('/')[0];
+            if (!/^quiz-/.test(folder)) topicSet.add(folder);
+        });
+        meta.textContent = topicSet.size + ' topics · ' + noteCount + ' lessons';
+    }).catch(function () {
+        meta.textContent = topics + ' topics · ' + lessons + ' lessons';
+    });
+})();
+
 if (document.getElementById('notesTableBody') || document.getElementById('htmlNotesTableBody') || document.getElementById('topicsList')) {
     console.log('Notes table page detected');
     
@@ -810,33 +829,39 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                 num: 1, title: 'Kinematics',
                 lessons: [
                     { type: 'note', name: 'Kinematics', desc: 'Graph relations, kinematic equations, and projectile motion', path: 'kinematics/' },
-                    { type: 'practice', name: 'Practice: Kinematics', desc: 'Test your understanding of motion and kinematics', path: 'quiz-1a/' }
+                    { type: 'practice', name: 'Kinematics Practice', desc: 'Test your understanding of motion and kinematics', path: 'quiz-1a/' }
                 ]
             },
             {
-                num: 2, title: 'Force & Translational Dynamics',
+                num: 2, title: 'Dynamics',
                 lessons: [
-                    { type: 'note', name: 'Force & Translational Dynamics', desc: "Newton's laws, free-body diagrams, and center of mass", path: 'force-dynamics/' },
-                    { type: 'practice', name: 'Practice: Forces & Dynamics', desc: "Apply Newton's laws and analyze forces in 2D", path: 'quiz-2a/' }
+                    { type: 'note', name: 'Dynamics', desc: "Newton's laws, free-body diagrams, and center of mass", path: 'force-dynamics/' },
+                    { type: 'practice', name: 'Dynamics Practice', desc: "Apply Newton's laws and analyze forces in 2D", path: 'quiz-2a/' }
                 ]
             },
             {
-                num: 3, title: 'Contact Forces & Gravity',
+                num: 3, title: 'Forces',
                 lessons: [
-                    { type: 'note', name: 'Contact Forces & Gravity', desc: 'Gravity, inclines, friction, and spring force', path: 'forces/' },
-                    { type: 'practice', name: 'Practice: Contact Forces', desc: 'Solve problems with gravity, friction, and springs', path: 'quiz-3a/' }
+                    { type: 'note', name: 'Forces', desc: 'Gravity, inclines, friction, and spring force', path: 'forces/' },
+                    { type: 'practice', name: 'Forces Practice', desc: 'Solve problems with gravity, friction, and springs', path: 'quiz-3a/' }
                 ]
             },
             {
-                num: 4, title: 'Circular Motion & Orbits',
+                num: 4, title: 'Circular Motion',
                 lessons: [
-                    { type: 'note', name: 'Circular Motion & Orbits', desc: "Centripetal acceleration, vertical circles, and Kepler's law", path: 'circular-motion/' },
-                    { type: 'practice', name: 'Practice: Circular Motion', desc: 'Practice circular motion and orbital mechanics', path: 'quiz-4a/' }
+                    { type: 'note', name: 'Circular Motion', desc: "Centripetal acceleration, vertical circles, and Kepler's law", path: 'circular-motion/' },
+                    { type: 'practice', name: 'Circular Motion Practice', desc: 'Practice circular motion and orbital mechanics', path: 'quiz-4a/' }
+                ]
+            },
+            {
+                num: 5, title: 'Work & Energy',
+                lessons: [
+                    { type: 'note', name: 'Work & Energy', desc: 'Kinetic energy, work, and the work-energy theorem', path: 'work-energy/' }
                 ]
             }
         ];
 
-        var base = 'notes/';
+        var base = topicsList.getAttribute('data-base') || 'notes/';
         var checkSvg = '<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
         var studied = {};

@@ -280,7 +280,7 @@
         ctx.font = '600 10px "DM Mono", monospace';
         ctx.fillStyle = css('--accent-coral') || css('--fbd-weight');
         ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-        ctx.fillText('v < v_min — ball falls!', orbCx, orbCy + orbR + 10);
+        ctx.fillText('v < v_min, ball falls!', orbCx, orbCy + orbR + 10);
       } else {
         cx = orbCx + orbR * Math.cos(orbPosRad);
         cy = orbCy - orbR * Math.sin(orbPosRad);
