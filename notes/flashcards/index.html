@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+body { display: flex; flex-direction: column; min-height: 100dvh; }
+
+.fc-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Top bar */
+.fc-topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.fc-back-link {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+  color: var(--hint);
+  text-decoration: none;
+  transition: color 0.18s;
+  white-space: nowrap;
+}
+.fc-back-link:hover { color: var(--accent-teal); }
+
+.fc-topic-label {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex: 1;
+  text-align: center;
+}
+
+.fc-counter {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  color: var(--hint);
+  white-space: nowrap;
+}
+
+/* Filter toggle */
+.fc-filter {
+  display: flex;
+  gap: 0.35rem;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.fc-filter-btn {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  padding: 0.32rem 0.85rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-strong);
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.fc-filter-btn:hover { color: var(--text); border-color: var(--muted); }
+.fc-filter-btn.active {
+  background: var(--accent-teal);
+  border-color: var(--accent-teal);
+  color: #fff;
+}
+[data-theme="dark"] .fc-filter-btn.active { color: var(--bg); }
+
+/* Progress bar */
+.fc-progress {
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+.fc-progress-fill {
+  height: 100%;
+  background: var(--accent-teal);
+  border-radius: 1px;
+  transition: width 0.32s ease;
+}
+
+/* 3D card scene */
+.fc-scene {
+  perspective: 1200px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.fc-card {
+  width: 100%;
+  height: clamp(300px, 44vh, 420px);
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.44s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.fc-card.flipped { transform: rotateY(180deg); }
+
+.fc-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2.75rem 2.25rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.fc-face-back { transform: rotateY(180deg); }
+
+.fc-face-label {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hint);
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+}
+
+.fc-card-counter {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  color: var(--hint);
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+}
+
+.fc-concept {
+  font-family: var(--sans);
+  font-size: clamp(1.15rem, 3.5vw, 1.45rem);
+  font-weight: 500;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.fc-formula {
+  font-size: 1.05rem;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.7;
+}
+
+.fc-desc {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--hint);
+  text-align: center;
+  margin: 0.85rem 0 0;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+/* Bottom controls */
+.fc-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+
+.fc-hint {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: var(--hint);
+  margin: 0;
+  flex: 1;
+}
+
+.fc-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.fc-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, color 0.15s;
+}
+.fc-btn:hover:not(:disabled) { border-color: var(--accent-teal); color: var(--accent-teal); }
+.fc-btn:disabled { opacity: 0.22; cursor: default; }
+.fc-shuffle-btn.active { border-color: var(--accent-purple); color: var(--accent-purple); }
+
+.fc-empty {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 2rem 0;
+}
+
+@media (max-width: 600px) {
+  .fc-wrap {
+    padding: 1.5rem 1.1rem 2.5rem;
+  }
+  .fc-scene {
+    min-height: 260px;
+  }
+  .fc-card {
+    height: clamp(260px, 50vh, 380px);
+  }
+  .fc-face {
+    padding: 2.5rem 1.75rem 1.75rem;
+    border-radius: 12px;
+  }
+  .fc-btn {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+  .fc-bottom {
+    margin-top: 1.25rem;
+  }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="fc-wrap">
+  <div class="fc-topbar">
+    <a class="fc-back-link" id="fcBackLink" href="#">&#8592; back</a>
+    <span class="fc-topic-label" id="fcTopicLabel">flashcards</span>
+    <span class="fc-counter" id="fcCounter">1 / 1</span>
+  </div>
+
+  <div class="fc-filter">
+    <button class="fc-filter-btn active" data-mode="both">Both</button>
+    <button class="fc-filter-btn" data-mode="formula">Formulas</button>
+    <button class="fc-filter-btn" data-mode="tf">True / False</button>
+  </div>
+
+  <div class="fc-progress">
+    <div class="fc-progress-fill" id="fcFill" style="width: 0%"></div>
+  </div>
+
+  <div class="fc-scene">
+    <div class="fc-card" id="fcCard">
+      <div class="fc-face fc-face-front">
+        <span class="fc-face-label" id="fcFrontLabel">concept</span>
+        <span class="fc-card-counter" id="fcCardCounter"></span>
+        <p class="fc-concept" id="fcFront"></p>
+      </div>
+      <div class="fc-face fc-face-back">
+        <span class="fc-face-label" id="fcBackLabel">formula</span>
+        <span class="fc-card-counter" id="fcCardCounterBack"></span>
+        <div class="fc-formula" id="fcBack"></div>
+        <p class="fc-desc" id="fcDesc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc-bottom">
+    <p class="fc-hint" id="fcHint">tap card to reveal</p>
+    <div class="fc-nav">
+      <button class="fc-btn" id="fcPrev" title="Previous (&#8592;)">&#8592;</button>
+      <button class="fc-btn" id="fcNext" title="Next (&#8594;)">&#8594;</button>
+      <button class="fc-btn fc-shuffle-btn" id="fcShuffle" title="Shuffle"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"/><path d="m19 15 3 3-3 3"/><path d="M2 6h1.9c1.5 0 2.9.9 3.5 2.2"/><path d="M22 6h-5.9c-1.3 0-2.5.6-3.3 1.7l-.5.8"/><path d="m19 3 3 3-3 3"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var DECKS = {
+    'kinematics': {
+      title: 'Kinematics',
+      back: '../kinematics/',
+      cards: [
+        { q: 'Average velocity',                              a: '\\[v = \\dfrac{\\Delta x}{\\Delta t}\\]',
+          desc: '\\(\\Delta x\\) = displacement &nbsp;·&nbsp; \\(\\Delta t\\) = elapsed time' },
+        { q: 'Average acceleration',                          a: '\\[a = \\dfrac{\\Delta v}{\\Delta t}\\]',
+          desc: '\\(\\Delta v\\) = change in velocity &nbsp;·&nbsp; \\(\\Delta t\\) = elapsed time' },
+        { q: 'Kinematic eq. &#x2014; missing \\(x\\)',        a: '\\[v = v_0 + at\\]',
+          desc: '\\(v_0\\) = initial velocity &nbsp;·&nbsp; \\(a\\) = acceleration &nbsp;·&nbsp; \\(t\\) = time' },
+        { q: 'Kinematic eq. &#x2014; missing \\(v\\)',        a: '\\[x = x_0 + v_0 t + \\tfrac{1}{2}at^2\\]',
+          desc: '\\(x_0\\) = initial position &nbsp;·&nbsp; \\(v_0\\) = initial velocity' },
+        { q: 'Kinematic eq. &#x2014; missing \\(t\\)',        a: '\\[v^2 = v_0^2 + 2a(x - x_0)\\]',
+          desc: 'use when time is unknown' },
+        { q: 'Kinematic eq. &#x2014; missing \\(a\\)',        a: '\\[x - x_0 = \\tfrac{1}{2}(v_0 + v)\\,t\\]',
+          desc: 'average velocity \\(\\times\\) time; use when acceleration is unknown' },
+        { q: 'Vector components',                             a: '\\[v_x = v\\cos\\theta \\qquad v_y = v\\sin\\theta\\]',
+          desc: '\\(\\theta\\) = angle from the positive x-axis' },
+        { q: 'Resultant magnitude and angle',                 a: '\\[v = \\sqrt{v_x^2 + v_y^2} \\qquad \\theta = \\tan^{-1}\\!\\left(\\dfrac{v_y}{v_x}\\right)\\]',
+          desc: 'Pythagorean theorem for magnitude; \\(\\theta\\) is direction angle' },
+        { q: 'Projectile motion: horizontal',                 a: '\\[v_x = v_{x0} \\qquad x = x_0 + v_{x0}\\,t\\]',
+          desc: '\\(v_{x0}\\) = initial horizontal velocity; horizontal speed is constant' },
+        { q: 'Projectile motion: vertical',                   a: '\\[v_y = v_{y0} - gt \\qquad y = y_0 + v_{y0}\\,t - \\tfrac{1}{2}gt^2\\]',
+          desc: '\\(g \\approx 9.8\\) m/s² downward &nbsp;·&nbsp; \\(v_{y0}\\) = initial vertical velocity' },
+        { type: 'tf', q: 'An object with zero acceleration must be at rest.',
+          a: 'False. Zero acceleration means constant velocity, which can be any value including nonzero.' },
+        { type: 'tf', q: 'The slope of a velocity-time graph gives acceleration.',
+          a: 'True. \\(a = \\Delta v / \\Delta t\\) is the rise-over-run of the \\(v\\)-\\(t\\) graph.' },
+        { type: 'tf', q: 'A projectile at its highest point has zero acceleration.',
+          a: 'False. Vertical velocity is zero at the peak, but acceleration is still \\(g\\) downward throughout the flight.' },
+        { type: 'tf', q: 'An object can have velocity and acceleration pointing in opposite directions.',
+          a: 'True. This simply means the object is slowing down (e.g., a ball thrown upward on the way up).' },
+        { q: 'Vertical kinematic eq. &#x2014; missing \\(t\\)',  a: '\\[v_y^2 = v_{y0}^2 - 2g\\,\\Delta y\\]',
+          desc: '\\(v_{y0}\\) = initial vertical velocity &nbsp;·&nbsp; \\(\\Delta y\\) = vertical displacement; use when time is unknown' },
+        { type: 'tf', q: 'The displacement of an object always equals the total distance it travels.',
+          a: 'False. Distance is total path length (scalar); displacement is the net change in position (vector). They match only when motion is in one direction without backtracking.' },
+        { type: 'tf', q: 'The area under a velocity–time graph equals the object\'s displacement.',
+          a: 'True. By definition \\(\\Delta x = \\int v\\,dt\\), which is the area under the \\(v\\)-\\(t\\) curve.' },
+        { type: 'tf', q: 'For a projectile launched horizontally, the time of flight depends on the launch speed.',
+          a: 'False. Hang time depends only on vertical free fall: \\(h = \\tfrac{1}{2}gt^2\\). Horizontal speed affects range, not flight time.' },
+        { type: 'tf', q: 'At the peak of a projectile\'s trajectory, only the vertical component of velocity is zero.',
+          a: 'True. \\(v_y = 0\\) at the peak, but horizontal velocity \\(v_x = v_{x0}\\) remains unchanged throughout.' },
+        { type: 'tf', q: 'The slope of a position–time graph at any point gives the instantaneous velocity at that moment.',
+          a: 'True. Instantaneous velocity is the derivative of position with respect to time, which equals the tangent slope of the \\(x\\)-\\(t\\) graph.' },
+        { type: 'tf', q: 'An object can have a constant speed while its velocity is changing.',
+          a: 'True. Velocity is a vector; if direction changes (e.g., circular motion), velocity changes even when speed stays constant.' },
+        { type: 'tf', q: 'In a vacuum, two objects of different masses dropped from the same height hit the ground at the same time.',
+          a: 'True. Free-fall acceleration \\(g\\) is independent of mass, so both experience the same \\(g\\) and fall identically.' },
+        { type: 'tf', q: 'If an object returns to its starting point, its displacement is zero but distance traveled may not be.',
+          a: 'True. Displacement is the net vector from start to finish — zero for a round trip. Distance is total path length, which is nonzero.' },
+      ]
+    },
+    'dynamics': {
+      title: 'Dynamics',
+      back: '../force-dynamics/',
+      cards: [
+        { q: "Newton's 1st law",                              a: '\\[\\textstyle\\sum \\vec{F} = 0 \\iff \\vec{a} = 0\\]',
+          desc: 'zero net force means zero acceleration (constant or zero velocity)' },
+        { q: "Newton's 2nd law",                              a: '\\[\\textstyle\\sum \\vec{F} = m\\vec{a}\\]',
+          desc: '\\(m\\) = mass (kg) &nbsp;·&nbsp; \\(\\vec{a}\\) = acceleration (m/s²)' },
+        { q: "Newton's 3rd law",                              a: '\\[\\vec{F}_{A \\to B} = -\\vec{F}_{B \\to A}\\]',
+          desc: 'action-reaction pairs are equal in magnitude, opposite in direction, on different objects' },
+        { q: 'Component form of the 2nd law',                 a: '\\[\\textstyle\\sum F_x = ma_x \\qquad \\sum F_y = ma_y\\]',
+          desc: 'apply independently along each axis' },
+        { q: 'Center of mass',                                a: '\\[x_{\\text{cm}} = \\dfrac{\\sum m_i\\, x_i}{\\sum m_i}\\]',
+          desc: '\\(m_i\\) = mass of particle \\(i\\) &nbsp;·&nbsp; \\(x_i\\) = its position' },
+        { type: 'tf', q: 'Two objects with the same net force always have the same acceleration.',
+          a: 'False. Acceleration also depends on mass: \\(a = F/m\\). Same force on a heavier object gives less acceleration.' },
+        { type: 'tf', q: 'An object moving at constant velocity has zero net force acting on it.',
+          a: "True. Newton's 1st law: constant velocity (including constant zero) requires \\(\\sum \\vec{F} = 0\\)." },
+        { type: 'tf', q: "Newton's 3rd law force pairs act on the same object.",
+          a: 'False. They always act on two different objects: if A pulls B, B pulls A with equal force in the opposite direction.' },
+        { q: 'Two-body center of mass',                         a: '\\[x_{\\text{cm}} = \\dfrac{m_1 x_1 + m_2 x_2}{m_1 + m_2}\\]',
+          desc: '\\(m_1, m_2\\) = masses &nbsp;·&nbsp; \\(x_1, x_2\\) = positions; cm is always closer to the heavier mass' },
+        { type: 'tf', q: 'The center of mass of two unequal masses lies at the geometric midpoint between them.',
+          a: 'False. The center of mass is closer to the heavier mass. It is at the midpoint only when the masses are equal.' },
+        { type: 'tf', q: 'An object in translational equilibrium must be at rest.',
+          a: 'False. Equilibrium means zero net force, which means zero acceleration. An object moving at constant velocity is also in equilibrium.' },
+        { type: 'tf', q: 'If the net force on an object is zero, every individual force acting on it must be zero.',
+          a: 'False. Multiple nonzero forces can sum to zero net force. A book on a table has nonzero gravity and normal force that cancel each other.' },
+        { type: 'tf', q: 'Doubling the net force on an object while keeping its mass constant doubles its acceleration.',
+          a: 'True. \\(a = F/m\\), so acceleration is directly proportional to net force when mass is constant.' },
+        { type: 'tf', q: 'Internal forces within a system can change the total momentum of the system.',
+          a: 'False. Internal forces come in action–reaction pairs that cancel. Only external forces change a system\'s total momentum.' },
+        { type: 'tf', q: 'A person in an elevator accelerating upward feels heavier because the normal force exceeds their weight.',
+          a: 'True. Newton\'s 2nd law gives \\(N - mg = ma\\), so \\(N = m(g+a) > mg\\). The scale reads more than actual weight.' },
+        { type: 'tf', q: 'Net force equals mass times velocity.',
+          a: 'False. \\(\\sum \\vec{F} = m\\vec{a}\\) — net force equals mass times acceleration, not velocity.' },
+        { type: 'tf', q: 'Newton\'s 3rd law applies regardless of the masses of the two objects involved.',
+          a: 'True. The law is absolute: \\(\\vec{F}_{A \\to B} = -\\vec{F}_{B \\to A}\\) for any pair, whether a planet and a pebble or two equal masses.' },
+      ]
+    },
+    'forces': {
+      title: 'Forces',
+      back: '../forces/',
+      cards: [
+        { q: "Newton's law of universal gravitation",         a: '\\[\\left|\\vec{F}_g\\right| = G\\dfrac{m_1 m_2}{r^2}\\]',
+          desc: '\\(G = 6.674\\times10^{-11}\\) N m² kg⁻² &nbsp;·&nbsp; \\(r\\) = center-to-center distance' },
+        { q: 'Gravitational field',                           a: '\\[\\vec{g} = -G\\dfrac{M}{r^2}\\hat{r}\\]',
+          desc: '\\(M\\) = source mass &nbsp;·&nbsp; \\(r\\) = distance &nbsp;·&nbsp; \\(\\hat{r}\\) = outward unit vector' },
+        { q: "Weight near Earth's surface",                   a: '\\[F_g = mg \\quad (g \\approx 9.8\\,\\text{m/s}^2)\\]',
+          desc: '\\(m\\) = mass &nbsp;·&nbsp; valid only near Earth\'s surface where \\(g\\) is roughly constant' },
+        { q: 'Gravity components on an incline',              a: '\\[F_{g\\,\\parallel} = mg\\sin\\theta \\qquad F_{g\\,\\perp} = mg\\cos\\theta\\]',
+          desc: '\\(\\theta\\) = angle between incline and horizontal' },
+        { q: 'Acceleration on a frictionless incline',        a: '\\[a = g\\sin\\theta\\]',
+          desc: '\\(\\theta\\) = incline angle; follows from \\(F_{g\\parallel} = ma\\)' },
+        { q: 'Kinetic friction',                              a: '\\[F_{f,k} = \\mu_k F_n\\]',
+          desc: '\\(\\mu_k\\) = kinetic friction coefficient &nbsp;·&nbsp; \\(F_n\\) = normal force' },
+        { q: 'Maximum static friction',                       a: '\\[F_{f,s} \\leq \\mu_s F_n\\]',
+          desc: '\\(\\mu_s\\) = static friction coefficient; friction adjusts up to this maximum' },
+        { q: "Hooke's law",                                   a: '\\[\\vec{F}_s = -k\\,\\Delta\\vec{x}\\]',
+          desc: '\\(k\\) = spring constant (N/m) &nbsp;·&nbsp; \\(\\Delta x\\) = displacement from equilibrium' },
+        { type: 'tf', q: 'The normal force on an inclined surface equals \\(mg\\).',
+          a: 'False. On an incline at angle \\(\\theta\\), the normal force is \\(F_n = mg\\cos\\theta\\), which is less than \\(mg\\).' },
+        { type: 'tf', q: 'Halving the distance between two masses quadruples the gravitational force between them.',
+          a: 'True. \\(F_g \\propto 1/r^2\\), so halving \\(r\\) gives \\(1/(r/2)^2 = 4/r^2\\), multiplying the force by 4.' },
+        { type: 'tf', q: 'Static friction always equals \\(\\mu_s F_n\\).',
+          a: 'False. Static friction matches the applied force and can be anywhere from 0 up to the maximum \\(\\mu_s F_n\\).' },
+        { type: 'tf', q: 'A spring with a larger constant \\(k\\) is harder to stretch.',
+          a: 'True. A larger \\(k\\) means more force is required per unit of displacement: \\(F = k\\,\\Delta x\\).' },
+        { q: 'Normal force on an incline',                      a: '\\[F_n = mg\\cos\\theta\\]',
+          desc: '\\(\\theta\\) = incline angle &nbsp;·&nbsp; \\(F_n < mg\\) for any nonzero angle' },
+        { q: 'Acceleration down incline with friction',         a: '\\[a = g(\\sin\\theta - \\mu_k\\cos\\theta)\\]',
+          desc: '\\(\\theta\\) = incline angle &nbsp;·&nbsp; \\(\\mu_k\\) = kinetic friction coefficient' },
+        { type: 'tf', q: 'The normal force on an object always equals its weight.',
+          a: 'False. On an incline \\(F_n = mg\\cos\\theta < mg\\). On a horizontal non-accelerating surface it equals weight, but that is a special case.' },
+        { type: 'tf', q: 'Kinetic friction depends on how fast the surfaces slide against each other.',
+          a: 'False. In the standard model \\(F_{f,k} = \\mu_k F_n\\) is independent of sliding speed. The coefficient \\(\\mu_k\\) is treated as constant.' },
+        { type: 'tf', q: 'The component of gravity parallel to an incline increases as the angle increases.',
+          a: 'True. \\(F_{g\\parallel} = mg\\sin\\theta\\) increases with \\(\\theta\\) from 0 at \\(0°\\) to the full weight \\(mg\\) at \\(90°\\).' },
+        { type: 'tf', q: 'Stretching a spring twice as far stores twice the elastic potential energy.',
+          a: 'False. \\(U_s = \\tfrac{1}{2}k(\\Delta x)^2\\); doubling \\(\\Delta x\\) quadruples the stored energy.' },
+        { type: 'tf', q: 'Gravitational field strength decreases as you move farther from Earth.',
+          a: 'True. \\(g = GM/r^2\\) decreases with distance. At twice the radius, \\(g\\) is one-quarter as strong.' },
+        { type: 'tf', q: 'The maximum static friction force is always greater than the kinetic friction force for the same surfaces.',
+          a: 'True. Typically \\(\\mu_s > \\mu_k\\), so \\(\\mu_s F_n > \\mu_k F_n\\). It takes more force to start sliding than to keep sliding.' },
+        { type: 'tf', q: 'Friction on an incline always acts down the slope.',
+          a: 'False. Friction opposes relative motion or tendency of motion. If the object tends to slide down, friction acts up; if pushed up the slope, friction acts down.' },
+      ]
+    },
+    'circular-motion': {
+      title: 'Circular Motion',
+      back: '../circular-motion/',
+      cards: [
+        { q: 'Centripetal acceleration',                      a: '\\[a_c = \\dfrac{v^2}{r}\\]',
+          desc: '\\(v\\) = speed &nbsp;·&nbsp; \\(r\\) = radius; always directed inward' },
+        { q: 'Net centripetal force',                         a: '\\[\\textstyle\\sum F_{\\text{rad}} = \\dfrac{mv^2}{r}\\]',
+          desc: '\\(m\\) = mass &nbsp;·&nbsp; net inward component of all forces present' },
+        { q: 'Period of circular motion',                     a: '\\[T = \\dfrac{2\\pi r}{v}\\]',
+          desc: '\\(T\\) = time for one full revolution &nbsp;·&nbsp; \\(v\\) = speed' },
+        { q: 'Frequency',                                     a: '\\[f = \\dfrac{1}{T}\\]',
+          desc: '\\(f\\) = cycles per second (Hz) &nbsp;·&nbsp; \\(T\\) = period (s)' },
+        { q: 'Orbital speed',                                 a: '\\[v^2 = \\dfrac{GM}{r}\\]',
+          desc: '\\(G\\) = gravitational constant &nbsp;·&nbsp; \\(M\\) = central mass &nbsp;·&nbsp; \\(r\\) = orbital radius' },
+        { q: "Kepler's 3rd law",                              a: '\\[T^2 = \\dfrac{4\\pi^2}{GM}\\,r^3\\]',
+          desc: '\\(T\\) = period &nbsp;·&nbsp; \\(r\\) = orbital radius &nbsp;·&nbsp; \\(M\\) = central mass' },
+        { type: 'tf', q: 'Centripetal force is a new fundamental force of nature, separate from gravity and tension.',
+          a: 'False. "Centripetal force" is just the net inward component of forces already present (gravity, tension, normal force, etc.).' },
+        { type: 'tf', q: 'An object in uniform circular motion has constant velocity.',
+          a: 'False. Speed is constant, but the direction of velocity continuously changes, so velocity is not constant.' },
+        { type: 'tf', q: 'If the orbital radius of a satellite doubles, its orbital period doubles.',
+          a: 'False. By Kepler\'s 3rd law \\(T^2 \\propto r^3\\), so doubling \\(r\\) multiplies \\(T\\) by \\(2^{3/2} \\approx 2.83\\).' },
+        { q: 'Centripetal acceleration in terms of period',     a: '\\[a_c = \\dfrac{4\\pi^2 r}{T^2}\\]',
+          desc: 'substitute \\(v = 2\\pi r/T\\) into \\(a_c = v^2/r\\); useful when period is known' },
+        { q: 'Minimum speed at top of a vertical loop',         a: '\\[v_{\\min} = \\sqrt{gr}\\]',
+          desc: 'at this speed, gravity alone provides the centripetal force &nbsp;·&nbsp; \\(r\\) = loop radius' },
+        { type: 'tf', q: 'A satellite in a stable circular orbit is constantly accelerating.',
+          a: 'True. Gravity continuously deflects the satellite toward Earth. It "falls around" the planet — constant speed but changing direction means nonzero acceleration.' },
+        { type: 'tf', q: 'Planets farther from the Sun have longer orbital periods.',
+          a: 'True. Kepler\'s 3rd law: \\(T^2 \\propto r^3\\), so larger orbital radius gives a longer period.' },
+        { type: 'tf', q: 'Doubling the radius of a circular path at constant speed doubles the centripetal acceleration.',
+          a: 'False. \\(a_c = v^2/r\\); doubling \\(r\\) at constant \\(v\\) halves the centripetal acceleration.' },
+        { type: 'tf', q: 'The orbital period of a satellite depends on its mass.',
+          a: 'False. \\(T^2 = (4\\pi^2/GM)r^3\\) depends only on the central mass \\(M\\) and orbital radius \\(r\\), not the satellite\'s mass.' },
+        { type: 'tf', q: 'A string is most likely to break at the bottom of a vertical circle, not the top.',
+          a: 'True. At the bottom, tension must support the weight and provide centripetal force: \\(T = mv^2/r + mg\\). At the top, \\(T = mv^2/r - mg\\), which is smaller.' },
+        { type: 'tf', q: 'Orbital speed increases as a satellite moves to a higher orbit.',
+          a: 'False. \\(v = \\sqrt{GM/r}\\); larger \\(r\\) gives smaller \\(v\\). Higher orbits are slower.' },
+        { type: 'tf', q: 'An object in uniform circular motion has constant speed but nonzero acceleration.',
+          a: 'True. Speed is constant, but velocity direction continuously changes, so \\(\\vec{a} = \\Delta\\vec{v}/\\Delta t \\neq 0\\). Acceleration points toward the center.' },
+      ]
+    },
+    'work-energy': {
+      title: 'Work & Energy',
+      back: '../work-energy/',
+      cards: [
+        { q: 'Kinetic energy',                                a: '\\[K = \\dfrac{1}{2}mv^2\\]',
+          desc: '\\(m\\) = mass &nbsp;·&nbsp; \\(v\\) = speed; always non-negative' },
+        { q: 'Work-energy theorem',                           a: '\\[W_{\\text{net}} = \\Delta K\\]',
+          desc: 'net work done on an object equals its change in kinetic energy' },
+        { q: 'Gravitational potential energy change',         a: '\\[\\Delta U_g = mg\\Delta y\\]',
+          desc: '\\(\\Delta y\\) = height change (positive upward) &nbsp;·&nbsp; \\(g \\approx 9.8\\) m/s²' },
+        { q: 'Spring potential energy',                       a: '\\[U_s = \\dfrac{1}{2}k(\\Delta x)^2\\]',
+          desc: '\\(k\\) = spring constant &nbsp;·&nbsp; \\(\\Delta x\\) = stretch or compression' },
+        { q: 'Mechanical energy',                             a: '\\[E_{\\text{mech}} = K + U\\]',
+          desc: 'total of kinetic and potential energy' },
+        { q: 'Conservation of energy (no external work or friction)',
+                                                              a: '\\[\\Delta E_{\\text{mech}} = 0\\]',
+          desc: 'holds when only conservative forces do work' },
+        { q: 'Energy with friction or external work',         a: '\\[W_{\\text{ext}} = \\Delta E_{\\text{mech}} + \\Delta E_{\\text{th}}\\]',
+          desc: '\\(W_\\text{ext}\\) = external work &nbsp;·&nbsp; \\(\\Delta E_\\text{th}\\) = thermal energy generated by friction' },
+        { type: 'tf', q: 'A force perpendicular to an object\'s motion does zero work on it.',
+          a: 'True. Work \\(= F\\,d\\cos\\theta\\). When \\(\\theta = 90°\\), \\(\\cos 90° = 0\\), so work is zero.' },
+        { type: 'tf', q: 'If the net work done on an object is zero, the object must be at rest.',
+          a: 'False. Zero net work means zero change in kinetic energy. The object can still be moving at constant speed.' },
+        { type: 'tf', q: 'Potential energy can be negative.',
+          a: 'True. PE depends on the chosen reference point. Gravitational PE \\(\\Delta U = mg\\Delta y\\) is negative below the reference, and the exact formula \\(U_g = -Gm_1m_2/r\\) is always negative.' },
+        { q: 'Work done by a constant force',                   a: '\\[W = Fd\\cos\\theta\\]',
+          desc: '\\(F\\) = force magnitude &nbsp;·&nbsp; \\(d\\) = displacement &nbsp;·&nbsp; \\(\\theta\\) = angle between \\(\\vec{F}\\) and \\(\\vec{d}\\)' },
+        { q: 'Nonconservative work theorem',                    a: '\\[W_{\\text{nc}} = \\Delta E_{\\text{mech}}\\]',
+          desc: 'nonconservative forces (friction, applied force) change mechanical energy &nbsp;·&nbsp; \\(W_\\text{nc} < 0\\) when friction does work' },
+        { type: 'tf', q: 'The work done by gravity depends only on height change, not on the path taken.',
+          a: 'True. Gravity is a conservative force. Work = \\(-mg\\Delta y\\), which depends only on vertical displacement.' },
+        { type: 'tf', q: 'Doubling an object\'s kinetic energy doubles its speed.',
+          a: 'False. \\(K = \\frac{1}{2}mv^2\\), so \\(v = \\sqrt{2K/m}\\). Doubling \\(K\\) multiplies speed by \\(\\sqrt{2} \\approx 1.41\\).' },
+        { type: 'tf', q: 'A force applied perpendicular to an object\'s velocity can do no work.',
+          a: 'True. Work \\(= \\vec{F}\\cdot\\vec{d} = Fd\\cos\\theta\\). At \\(\\theta = 90°\\), \\(W = 0\\). Normal force and centripetal force are examples.' },
+        { type: 'tf', q: 'The work-energy theorem applies even when non-conservative forces act.',
+          a: 'True. \\(W_{\\text{net}} = \\Delta K\\) always holds — it accounts for all forces, conservative or not.' },
+        { type: 'tf', q: 'Friction violates conservation of energy.',
+          a: 'False. Friction converts mechanical energy to thermal energy. Total energy is conserved; only mechanical energy decreases.' },
+        { type: 'tf', q: 'A spring compressed by 2 cm stores four times the potential energy of one compressed by 1 cm.',
+          a: 'True. \\(U_s = \\frac{1}{2}k(\\Delta x)^2\\). Doubling \\(\\Delta x\\) quadruples \\(U_s\\).' },
+        { type: 'tf', q: 'Work done on an object can be negative.',
+          a: 'True. If the force component along the displacement is opposite to the motion, \\(\\cos\\theta < 0\\) and work is negative (e.g., friction, drag).' },
+      ]
+    }
+  };
+
+  var params  = new URLSearchParams(window.location.search);
+  var key     = params.get('topic') || 'kinematics';
+  var deck    = DECKS[key] || DECKS['kinematics'];
+  var allCards = deck.cards;
+
+  document.title = deck.title + ' Flashcards';
+  var backLink = document.getElementById('fcBackLink');
+  backLink.href = deck.back;
+  backLink.innerHTML = '&#8592; ' + deck.title;
+
+  var cardEl      = document.getElementById('fcCard');
+  var frontEl     = document.getElementById('fcFront');
+  var backEl      = document.getElementById('fcBack');
+  var descEl      = document.getElementById('fcDesc');
+  var frontLabel  = document.getElementById('fcFrontLabel');
+  var backLabel   = document.getElementById('fcBackLabel');
+  var counter     = document.getElementById('fcCounter');
+  var cardCounter = document.getElementById('fcCardCounter');
+  var cardCounterBack = document.getElementById('fcCardCounterBack');
+  var fill       = document.getElementById('fcFill');
+  var hint       = document.getElementById('fcHint');
+  var prevBtn    = document.getElementById('fcPrev');
+  var nextBtn    = document.getElementById('fcNext');
+  var scene      = document.querySelector('.fc-scene');
+
+  var filterMode    = 'both';
+  var shuffleMode   = false;
+  var filteredCards = [];
+  var idx     = 0;
+  var flipped = false;
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+  }
+
+  function buildDeck() {
+    filteredCards = allCards.filter(function (c) {
+      if (filterMode === 'formula') return !c.type || c.type === 'formula';
+      if (filterMode === 'tf')      return c.type === 'tf';
+      return true;
+    });
+    if (shuffleMode) shuffle(filteredCards);
+    idx = 0;
+  }
+
+  function goTo(i) {
+    idx = i;
+    flipped = false;
+    cardEl.classList.remove('flipped');
+    hint.textContent = 'tap card to reveal';
+
+    var card = filteredCards[idx];
+    var isTf = card.type === 'tf';
+
+    frontLabel.textContent = isTf ? 'true or false' : 'concept';
+    backLabel.textContent  = isTf ? 'answer' : 'formula';
+
+    var counterText = (idx + 1) + ' / ' + filteredCards.length;
+    counter.textContent = counterText;
+    if (cardCounter) cardCounter.textContent = counterText;
+    if (cardCounterBack) cardCounterBack.textContent = counterText;
+    fill.style.width = ((idx + 1) / filteredCards.length * 100) + '%';
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === filteredCards.length - 1;
+
+    frontEl.innerHTML = card.q;
+    backEl.innerHTML  = card.a;
+    if (descEl) descEl.innerHTML = (!isTf && card.desc) ? card.desc : '';
+
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetClear([frontEl, backEl, descEl]);
+      MathJax.typesetPromise([frontEl, backEl, descEl]).catch(function () {});
+    }
+  }
+
+  function showEmpty() {
+    scene.innerHTML = '<p class="fc-empty">No cards match this filter.</p>';
+    counter.textContent = '0 / 0';
+    fill.style.width = '0%';
+    prevBtn.disabled = true;
+    nextBtn.disabled = true;
+    hint.textContent = '';
+  }
+
+  function applyFilter(mode) {
+    filterMode = mode;
+    buildDeck();
+    if (filteredCards.length === 0) {
+      showEmpty();
+    } else {
+      if (!document.getElementById('fcCard')) {
+        scene.innerHTML = '<div class="fc-card" id="fcCard"><div class="fc-face fc-face-front"><span class="fc-face-label" id="fcFrontLabel">concept</span><span class="fc-card-counter" id="fcCardCounter"></span><p class="fc-concept" id="fcFront"></p></div><div class="fc-face fc-face-back"><span class="fc-face-label" id="fcBackLabel">formula</span><span class="fc-card-counter" id="fcCardCounterBack"></span><div class="fc-formula" id="fcBack"></div><p class="fc-desc" id="fcDesc"></p></div></div>';
+        cardEl          = document.getElementById('fcCard');
+        frontEl         = document.getElementById('fcFront');
+        backEl          = document.getElementById('fcBack');
+        descEl          = document.getElementById('fcDesc');
+        frontLabel      = document.getElementById('fcFrontLabel');
+        backLabel       = document.getElementById('fcBackLabel');
+        cardCounter     = document.getElementById('fcCardCounter');
+        cardCounterBack = document.getElementById('fcCardCounterBack');
+        cardEl.addEventListener('click', flipCard);
+      }
+      goTo(0);
+    }
+  }
+
+  function flipCard() {
+    flipped = !flipped;
+    cardEl.classList.toggle('flipped', flipped);
+    hint.textContent = flipped ? 'tap card to flip back' : 'tap card to reveal';
+  }
+
+  cardEl.addEventListener('click', flipCard);
+
+  prevBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (idx > 0) goTo(idx - 1);
+  });
+
+  nextBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (idx < filteredCards.length - 1) goTo(idx + 1);
+  });
+
+  var shuffleBtn = document.getElementById('fcShuffle');
+  shuffleBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    shuffleMode = !shuffleMode;
+    shuffleBtn.classList.toggle('active', shuffleMode);
+    buildDeck();
+    if (filteredCards.length === 0) showEmpty();
+    else goTo(0);
+  });
+
+  document.querySelectorAll('.fc-filter-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.fc-filter-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      applyFilter(btn.getAttribute('data-mode'));
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft'  && idx > 0)                       goTo(idx - 1);
+    if (e.key === 'ArrowRight' && idx < filteredCards.length - 1) goTo(idx + 1);
+    if ((e.key === ' ' || e.key === 'Enter')
+        && document.activeElement !== prevBtn
+        && document.activeElement !== nextBtn) {
+      e.preventDefault();
+      var card = document.getElementById('fcCard');
+      if (card) card.click();
+    }
+  });
+
+  buildDeck();
+  goTo(0);
+})();
+</script>
+</body>
+</html>

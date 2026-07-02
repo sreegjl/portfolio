@@ -16,7 +16,8 @@
 <script src="/theme.js"></script>
 <script>
   window.MathJax = {
-    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
     options: { skipHtmlTags: ['script','noscript','style','textarea'] }
   };
 </script>
@@ -125,7 +126,7 @@
   </div>
 
   <!-- ── Kinetic energy ── -->
-  <div class="section">
+  <div class="section" id="sec-kinetic">
     <p class="section-label">Kinetic energy</p>
 
     <p class="prose">
@@ -133,7 +134,7 @@
     </p>
 
     <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
-      \[K = \dfrac{1}{2}mv^2\]
+      \[\class{var-k}{K} = \dfrac{1}{2}mv^2\]
     </p>
 
     <div class="card">
@@ -157,7 +158,7 @@
     </p>
 
     <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
-      \[W_{\text{net}} = \sum_{i} W_i = \Delta K = K_f - K_i\]
+      \[W_{\text{net}} = \sum_{i} W_i = \Delta \class{var-k}{K} = \class{var-k}{K_f} - \class{var-k}{K_i}\]
     </p>
 
     <div class="card">
@@ -186,7 +187,7 @@
   </div>
 
   <!-- ── Potential energy ── -->
-  <div class="section">
+  <div class="section" id="sec-potential">
     <p class="section-label">Potential energy</p>
 
     <p class="prose">
@@ -214,7 +215,7 @@
     </p>
 
     <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
-      \[U_g = -G\dfrac{m_1 m_2}{r}\]
+      \[\class{var-u}{U_g} = -G\dfrac{m_1 m_2}{r}\]
     </p>
 
     <div class="card">
@@ -238,7 +239,7 @@
     </p>
 
     <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
-      \[\Delta U_g = mg\Delta y\]
+      \[\Delta \class{var-u}{U_g} = mg\Delta y\]
     </p>
 
     <p class="prose">
@@ -250,7 +251,7 @@
     </p>
 
     <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
-      \[U_s = \dfrac{1}{2}k(\Delta x)^2\]
+      \[\class{var-u}{U_s} = \dfrac{1}{2}k(\Delta x)^2\]
     </p>
 
     <div class="card">
@@ -267,7 +268,7 @@
   </div>
 
   <!-- ── Mechanical energy ── -->
-  <div class="section">
+  <div class="section" id="sec-mechanical">
     <p class="section-label">Mechanical energy</p>
 
     <div class="graph-card" style="margin-bottom: 0.75rem;">
@@ -283,7 +284,7 @@
     </p>
 
     <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
-      \[E_{\text{mech}} = K_{\text{tot}} + U_{\text{tot}}\]
+      \[\class{var-emech}{E_{\text{mech}}} = \class{var-k}{K_{\text{tot}}} + \class{var-u}{U_{\text{tot}}}\]
     </p>
 
     <p class="prose">
@@ -294,16 +295,53 @@
       <p class="card-title">Applying conservation</p>
       <div class="row">
         <span class="row-desc">Only conservative forces act</span>
-        <span class="row-val"><span class="badge teal">\(\Delta E_{\text{mech}} = 0\)</span></span>
+        <span class="row-val"><span class="badge teal">\(\Delta \class{var-emech}{E_{\text{mech}}} = 0\)</span></span>
       </div>
       <div class="row">
         <span class="row-desc">Nonconservative forces act</span>
-        <span class="row-val"><span class="badge coral">\(\Delta E_{\text{mech}} = W_{\text{nc}}\)</span></span>
+        <span class="row-val"><span class="badge coral">\(\Delta \class{var-emech}{E_{\text{mech}}} = W_{\text{nc}}\)</span></span>
       </div>
     </div>
 
     <p class="prose">
       Work done by conservative forces is also <strong>path-independent</strong>, it depends only on the initial and final configuration, not the route taken. Work done by nonconservative forces like friction is path-dependent.
+    </p>
+  </div>
+
+  <!-- ── Conservation of energy ── -->
+  <div class="section">
+    <p class="section-label">Conservation of energy</p>
+
+    <p class="prose">
+      Energy cannot be created or destroyed. The total energy of a closed system stays fixed: it can shift between kinetic, potential, and thermal forms, but the sum never changes. When a system is not closed, external forces can transfer energy in or out:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[W_{\text{ext}} = \Delta \class{var-emech}{E_{\text{mech}}} + \Delta E_{\text{th}}\]
+    </p>
+
+    <p class="prose">
+      \(\Delta E_{\text{th}}\) is the thermal energy generated inside the system by nonconservative forces like friction. It is always positive (heat only flows out of mechanical energy, never back in), so friction always reduces \(E_{\text{mech}}\). The special case \(\Delta \class{var-emech}{E_{\text{mech}}} = 0\) from the previous section is just this equation with \(W_{\text{ext}} = 0\) and \(\Delta E_{\text{th}} = 0\).
+    </p>
+
+    <div class="card">
+      <p class="card-title">Applying the general form</p>
+      <div class="row">
+        <span class="row-desc">No external work, no friction inside</span>
+        <span class="row-val">\(\Delta \class{var-emech}{E_{\text{mech}}} = 0\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">No external work, friction inside</span>
+        <span class="row-val">\(\Delta \class{var-emech}{E_{\text{mech}}} = -\Delta E_{\text{th}}\), mechanical energy lost to heat</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">External work done on system</span>
+        <span class="row-val">\(W_{\text{ext}} > 0\) adds energy, \(W_{\text{ext}} < 0\) removes it</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      The system boundary you choose changes which terms appear. Including the spring and Earth <em>inside</em> lets you account for their forces as \(\Delta U\). Placing them <em>outside</em> means their forces show up as \(W_{\text{ext}}\) instead. Either framing is valid: the same energy is being tracked, just partitioned differently.
     </p>
   </div>
 
@@ -315,7 +353,7 @@
       <p class="card-title">Summary</p>
       <div class="row">
         <span class="row-desc">Kinetic energy</span>
-        <span class="row-val">\(K = \frac{1}{2}mv^2\), scalar, always \(\geq 0\)</span>
+        <span class="row-val">\(\class{var-k}{K} = \frac{1}{2}mv^2\), scalar, always \(\geq 0\)</span>
       </div>
       <div class="row">
         <span class="row-desc">Work by a force</span>
@@ -323,7 +361,7 @@
       </div>
       <div class="row">
         <span class="row-desc">Work-energy theorem</span>
-        <span class="row-val">\(W_{\text{net}} = \Delta K\)</span>
+        <span class="row-val">\(W_{\text{net}} = \Delta \class{var-k}{K}\)</span>
       </div>
       <div class="row">
         <span class="row-desc">Perpendicular forces</span>
@@ -339,7 +377,11 @@
       </div>
       <div class="row">
         <span class="row-desc">Mechanical energy</span>
-        <span class="row-val">\(E_{\text{mech}} = K + U\), conserved if only conservative forces act</span>
+        <span class="row-val">\(\class{var-emech}{E_{\text{mech}}} = \class{var-k}{K} + \class{var-u}{U}\), conserved if only conservative forces act</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">General conservation</span>
+        <span class="row-val">\(W_{\text{ext}} = \Delta \class{var-emech}{E_{\text{mech}}} + \Delta E_{\text{th}}\), energy is never created or destroyed</span>
       </div>
     </div>
   </div>

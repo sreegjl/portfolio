@@ -140,7 +140,7 @@
     var gridSpacing = 25;
     var gox = s.gridOffset ? ((s.gridOffset.x % gridSpacing) + gridSpacing) % gridSpacing : 0;
     var goy = s.gridOffset ? ((s.gridOffset.y % gridSpacing) + gridSpacing) % gridSpacing : 0;
-    ctx.strokeStyle = css('--border-08') || 'rgba(0,0,0,0.06)';
+    ctx.strokeStyle = css('--border') || 'rgba(0,0,0,0.08)';
     ctx.lineWidth = 1;
     for (var x = gox; x < w; x += gridSpacing) {
       ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
@@ -228,7 +228,7 @@
         ctx.setLineDash([4, 4]);
         ctx.strokeStyle = css('--hint');
         ctx.lineWidth = 1;
-        var eqY = anchorY + restLen + hh;
+        var eqY = cy;
         ctx.beginPath(); ctx.moveTo(cx - 40, eqY); ctx.lineTo(cx + 40, eqY); ctx.stroke();
         ctx.restore();
         ctx.font = '10px "DM Mono", monospace';
@@ -309,6 +309,18 @@
       var gnx = -Math.sin(rot), gny = Math.cos(rot);
       var gcx = cx + gnx * hh, gcy = cy + gny * hh;
       var ghl = w * 0.7;
+
+      // Shaded fill below the ground line
+      var fillDepth = Math.max(w, h) * 2;
+      ctx.beginPath();
+      ctx.moveTo(gcx - gdx * ghl, gcy - gdy * ghl);
+      ctx.lineTo(gcx + gdx * ghl, gcy + gdy * ghl);
+      ctx.lineTo(gcx + gdx * ghl + gnx * fillDepth, gcy + gdy * ghl + gny * fillDepth);
+      ctx.lineTo(gcx - gdx * ghl + gnx * fillDepth, gcy - gdy * ghl + gny * fillDepth);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(0,0,0,0.12)';
+      ctx.fill();
+
       ctx.strokeStyle = css('--border-14') || 'rgba(0,0,0,0.12)';
       ctx.lineWidth = 1.5;
       ctx.beginPath();
@@ -325,7 +337,7 @@
     }
 
     ctx.fillStyle = css('--bg');
-    ctx.strokeStyle = css('--border-14') || 'rgba(0,0,0,0.12)';
+    ctx.strokeStyle = css('--border-strong') || 'rgba(0,0,0,0.14)';
     ctx.lineWidth = 1.5;
     ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot);
     if (hw === 0) {

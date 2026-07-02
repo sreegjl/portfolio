@@ -828,35 +828,40 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
             {
                 num: 1, title: 'Kinematics',
                 lessons: [
-                    { type: 'note', name: 'Kinematics', desc: 'Graph relations, kinematic equations, and projectile motion', path: 'kinematics/' },
-                    { type: 'practice', name: 'Kinematics Practice', desc: 'Test your understanding of motion and kinematics', path: 'quiz-1a/' }
+                    { type: 'note',      name: 'Kinematics',            desc: 'Graph relations, kinematic equations, and projectile motion', path: 'kinematics/' },
+                    { type: 'flashcard', name: 'Kinematics Flashcards', desc: 'Formula cards for quick review',                             path: 'flashcards/?topic=kinematics' },
+                    { type: 'practice',  name: 'Kinematics Practice',   desc: 'Test your understanding of motion and kinematics',           path: 'quiz-1a/' }
                 ]
             },
             {
                 num: 2, title: 'Dynamics',
                 lessons: [
-                    { type: 'note', name: 'Dynamics', desc: "Newton's laws, free-body diagrams, and center of mass", path: 'force-dynamics/' },
-                    { type: 'practice', name: 'Dynamics Practice', desc: "Apply Newton's laws and analyze forces in 2D", path: 'quiz-2a/' }
+                    { type: 'note',      name: 'Dynamics',            desc: "Newton's laws, free-body diagrams, and center of mass", path: 'force-dynamics/' },
+                    { type: 'flashcard', name: 'Dynamics Flashcards', desc: 'Formula cards for quick review',                        path: 'flashcards/?topic=dynamics' },
+                    { type: 'practice',  name: 'Dynamics Practice',   desc: "Apply Newton's laws and analyze forces in 2D",          path: 'quiz-2a/' }
                 ]
             },
             {
                 num: 3, title: 'Forces',
                 lessons: [
-                    { type: 'note', name: 'Forces', desc: 'Gravity, inclines, friction, and spring force', path: 'forces/' },
-                    { type: 'practice', name: 'Forces Practice', desc: 'Solve problems with gravity, friction, and springs', path: 'quiz-3a/' }
+                    { type: 'note',      name: 'Forces',            desc: 'Gravity, inclines, friction, and spring force',         path: 'forces/' },
+                    { type: 'flashcard', name: 'Forces Flashcards', desc: 'Formula cards for quick review',                       path: 'flashcards/?topic=forces' },
+                    { type: 'practice',  name: 'Forces Practice',   desc: 'Solve problems with gravity, friction, and springs',    path: 'quiz-3a/' }
                 ]
             },
             {
                 num: 4, title: 'Circular Motion',
                 lessons: [
-                    { type: 'note', name: 'Circular Motion', desc: "Centripetal acceleration, vertical circles, and Kepler's law", path: 'circular-motion/' },
-                    { type: 'practice', name: 'Circular Motion Practice', desc: 'Practice circular motion and orbital mechanics', path: 'quiz-4a/' }
+                    { type: 'note',      name: 'Circular Motion',            desc: "Centripetal acceleration, vertical circles, and Kepler's law", path: 'circular-motion/' },
+                    { type: 'flashcard', name: 'Circular Motion Flashcards', desc: 'Formula cards for quick review',                              path: 'flashcards/?topic=circular-motion' },
+                    { type: 'practice',  name: 'Circular Motion Practice',   desc: 'Practice circular motion and orbital mechanics',              path: 'quiz-4a/' }
                 ]
             },
             {
                 num: 5, title: 'Work & Energy',
                 lessons: [
-                    { type: 'note', name: 'Work & Energy', desc: 'Kinetic energy, work, and the work-energy theorem', path: 'work-energy/' }
+                    { type: 'note',      name: 'Work & Energy',            desc: 'Kinetic energy, work, and the work-energy theorem', path: 'work-energy/' },
+                    { type: 'flashcard', name: 'Work & Energy Flashcards', desc: 'Formula cards for quick review',                   path: 'flashcards/?topic=work-energy' }
                 ]
             }
         ];
@@ -899,8 +904,12 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
             t.lessons.forEach(function (l) {
                 var key = base + l.path;
                 var isChecked = !!studied[key];
-                var iconClass = l.type === 'note' ? 'lesson-icon-note' : 'lesson-icon-practice';
-                var iconSymbol = l.type === 'note' ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+                var iconClass = l.type === 'note' ? 'lesson-icon-note' : l.type === 'practice' ? 'lesson-icon-practice' : 'lesson-icon-flashcard';
+                var iconSymbol = l.type === 'note'
+                    ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>'
+                    : l.type === 'practice'
+                    ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>'
+                    : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>';
                 lessonsHTML += '<div class="lesson-row">' +
                     '<a href="' + base + l.path + '" class="lesson-icon ' + iconClass + '">' + iconSymbol + '</a>' +
                     '<a href="' + base + l.path + '" class="lesson-info">' +

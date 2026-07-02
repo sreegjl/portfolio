@@ -26,8 +26,8 @@
 
 [data-theme="dark"] {
     --bg: #171717;
-    --surface: #1f1f1f;
-    --surface-hover: #272727;
+    --surface: #111111;
+    --surface-hover: #181818;
     --text: #f1f0ea;
     --text-secondary: #cdcbc4;
     --muted: #a3a39c;
@@ -928,6 +928,16 @@ a.lesson-info {
     color: #e8b366;
 }
 
+.lesson-icon-flashcard {
+    background: rgba(83, 74, 183, 0.10);
+    color: #534ab7;
+}
+
+[data-theme="dark"] .lesson-icon-flashcard {
+    background: rgba(169, 156, 245, 0.14);
+    color: #a99cf5;
+}
+
 .lesson-info {
     flex: 1;
     min-width: 0;
@@ -1146,6 +1156,7 @@ a.lesson-info {
 @media (max-width: 820px) {
     .syllabus-layout {
         flex-direction: column;
+        align-items: stretch;
     }
 
     .syllabus-sidebar {
@@ -1153,6 +1164,7 @@ a.lesson-info {
         position: static;
         flex-direction: row;
         flex-wrap: wrap;
+        order: -1;
     }
 
     .syllabus-sidebar .sidebar-card {
