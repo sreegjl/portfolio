@@ -861,7 +861,8 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                 num: 5, title: 'Work & Energy',
                 lessons: [
                     { type: 'note',      name: 'Work & Energy',            desc: 'Kinetic energy, work, and the work-energy theorem', path: 'work-energy/' },
-                    { type: 'flashcard', name: 'Work & Energy Flashcards', desc: 'Formula cards for quick review',                   path: 'flashcards/?topic=work-energy' }
+                    { type: 'flashcard', name: 'Work & Energy Flashcards', desc: 'Formula cards for quick review',                   path: 'flashcards/?topic=work-energy' },
+                    { type: 'practice',  name: 'Practice: Work & Energy',  desc: 'Randomized problems with step-by-step solutions',   path: 'quiz-5a/' }
                 ]
             }
         ];

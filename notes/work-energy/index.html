@@ -42,7 +42,7 @@
     <a href="../physics/" class="syllabus-back">← Physics</a>
     <div>
       <h1>work &amp; energy</h1>
-      <span>kinetic energy, work, the work-energy theorem, and potential energy</span>
+      <span>kinetic energy, work, the work-energy theorem, potential energy, and power</span>
     </div>
     <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
       <span class="study-toggle-label">study mode</span>
@@ -345,6 +345,81 @@
     </p>
   </div>
 
+  <!-- ── Power ── -->
+  <div class="section" id="sec-power">
+    <p class="section-label">Power</p>
+
+    <p class="prose">
+      <strong>Power</strong> is the rate at which energy is transferred or work is done. Average power over a time interval is:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[P_{\text{avg}} = \dfrac{W}{\Delta t}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(P\)</span>
+          <span class="row-val">power (W)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(W\)</span>
+          <span class="row-val">work done (J)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\Delta t\)</span>
+          <span class="row-val">time interval (s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Units</span>
+          <span class="row-val">watts \((\text{W}) = \text{J/s} = \text{kg}\cdot\text{m}^2/\text{s}^3\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Sign</p>
+        <div class="row">
+          <span class="row-desc">\(P > 0\)</span>
+          <span class="row-val">energy added to the system</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(P < 0\)</span>
+          <span class="row-val">energy removed from the system</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(P = 0\)</span>
+          <span class="row-val">no net energy transfer</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      When a constant force \(\vec{F}\) acts on an object moving at velocity \(\vec{v}\), instantaneous power is:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[P = Fv\cos\theta\]
+    </p>
+
+    <p class="prose">
+      Here \(\theta\) is the angle between the force and velocity vectors. When they are parallel, \(P = Fv\). This form is useful when speed and force are known rather than work and time: a car engine applying 4000 N of drive force at 30 m/s delivers \(P = 120{,}000\) W \(= 120\) kW regardless of how far it has traveled.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Common conversions</p>
+      <div class="row">
+        <span class="row-desc">1 horsepower</span>
+        <span class="row-val">\(\approx 746\) W</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">1 kilowatt-hour (kWh)</span>
+        <span class="row-val">\(= 3.6 \times 10^6\) J,energy unit (power \(\times\) time)</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ── Key takeaways ── -->
   <div class="section">
     <p class="section-label">Key takeaways</p>
@@ -382,6 +457,14 @@
       <div class="row">
         <span class="row-desc">General conservation</span>
         <span class="row-val">\(W_{\text{ext}} = \Delta \class{var-emech}{E_{\text{mech}}} + \Delta E_{\text{th}}\), energy is never created or destroyed</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Average power</span>
+        <span class="row-val">\(P_{\text{avg}} = W / \Delta t\), units of watts (W \(=\) J/s)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Instantaneous power</span>
+        <span class="row-val">\(P = Fv\cos\theta\), zero when force is perpendicular to velocity</span>
       </div>
     </div>
   </div>

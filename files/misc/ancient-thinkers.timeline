@@ -1,0 +1,1690 @@
+{
+  "file": {
+    "id": "ancient-thinkers-timeline",
+    "type": "timeline",
+    "title": "Ancient Thinkers",
+    "appVersion": "0.5.0-alpha.3",
+    "start": -650,
+    "end": -330,
+    "detailLevel": 0.3,
+    "theme": "parchment_v2",
+    "layout": "Horizontal",
+    "branchOrdering": "later-first",
+    "groups": [
+      {
+        "id": "g-main",
+        "title": "Western Philosophy",
+        "order": 1,
+        "stack": 2,
+        "hideBand": true,
+        "visible": true,
+        "locked": false,
+        "bgColor": "#ff9c7a",
+        "belowLine": false
+      },
+      {
+        "id": "g-5",
+        "title": "Near Eastern Philosophy",
+        "order": 0,
+        "stack": 3,
+        "hideBand": true,
+        "visible": true,
+        "locked": false,
+        "bgColor": "#fda863",
+        "belowLine": false
+      },
+      {
+        "id": "g-3",
+        "title": "South Asian Philosophy",
+        "order": 2,
+        "stack": 1,
+        "hideBand": true,
+        "visible": true,
+        "locked": false,
+        "belowLine": true,
+        "bgColor": "#f0ca60"
+      },
+      {
+        "id": "g-4",
+        "title": "East Asian Philosophy",
+        "order": 3,
+        "stack": 0,
+        "hideBand": true,
+        "visible": true,
+        "locked": false,
+        "belowLine": true,
+        "bgColor": "#f0ae51"
+      }
+    ],
+    "negID": "BCE",
+    "posID": "CE",
+    "hideSpanConnectors": false,
+    "showPopularTags": true,
+    "useSecondaryBg": false,
+    "tickDensity": 0.3,
+    "showGrid": true,
+    "useSpreadsheet": true,
+    "eventFontSize": 8,
+    "eventWidth": 135,
+    "disableGroups": true
+  },
+  "elements": [
+    {
+      "id": "span-000661495223",
+      "type": "span",
+      "title": "Thales of Miletus",
+      "start": -624,
+      "end": -546,
+      "groupId": "g-main",
+      "color": "#af6e6e",
+      "hideYears": true,
+      "description": "Natural Philosopher, Water as Fundamental Substance, Rational Explanation of Nature, Early Geometric Reasoning"
+    },
+    {
+      "id": "span-002557391709",
+      "type": "span",
+      "title": "Anaximander",
+      "start": -610,
+      "end": -546,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Natural Philosopher, Apeiron as Fundamental Substance, Earliest Known Cosmological Model"
+    },
+    {
+      "id": "span-002418980362",
+      "type": "span",
+      "title": "Anaximenes",
+      "start": -586,
+      "end": -526,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Natural Philosopher, Air as Fundamental Substance, Condensation and Rarefaction as Mechanisms of Change"
+    },
+    {
+      "id": "span-003584325760",
+      "type": "span",
+      "title": "Pythagoras",
+      "start": -580,
+      "end": -500,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Mathematician and Mystic, Number as Fundamental Reality, Mathematical Harmony of the Cosmos"
+    },
+    {
+      "id": "span-002564851347",
+      "type": "span",
+      "title": "Heraclitus",
+      "start": -535,
+      "end": -475,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Natural Philosopher, Emphasized Flux and Change as Fundamental Reality, the Logos as Unifying Principle"
+    },
+    {
+      "id": "span-003443583506",
+      "type": "span",
+      "title": "Parmenides",
+      "start": -515,
+      "end": -450,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Natural Philosopher, Being as Eternal and Unchanging, Reason Over Sense Perception, Foundational Monism"
+    },
+    {
+      "id": "span-000764562105",
+      "type": "span",
+      "title": "Empedocles",
+      "start": -495,
+      "end": -435,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Natural Philosopher, Four Roots as Fundamental Elements, Love and Strife as Cosmic Forces, Pluralist Cosmology"
+    },
+    {
+      "id": "span-003989503454",
+      "type": "span",
+      "title": "Socrates",
+      "start": -470,
+      "end": -399,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true,
+      "description": "Philosopher and Teacher, Virtue Ethics and Self-Knowledge, Dialectic as Path to Truth"
+    },
+    {
+      "id": "span-001194097587",
+      "type": "span",
+      "title": "Democritus",
+      "start": -450,
+      "end": -370,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Natural Philosopher, Atoms and Void as Fundamental Reality, Materialist Explanation of All Phenomena, Cheerfulness as Highest Good"
+    },
+    {
+      "id": "span-001463754053",
+      "type": "span",
+      "title": "Plato",
+      "start": -427,
+      "end": -347,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true,
+      "description": "Philosopher, Theory of Forms, Philosopher-Kingship, Immortality of the Soul"
+    },
+    {
+      "id": "span-003960500024",
+      "type": "span",
+      "title": "Aristotle",
+      "start": -384,
+      "end": -322,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true
+    },
+    {
+      "id": "span-003516888365",
+      "type": "span",
+      "title": "Pyrrho of Elis",
+      "start": -360,
+      "end": -270,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-002076762781",
+      "type": "span",
+      "title": "Epicurus",
+      "start": -341,
+      "end": -270,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-001195868454",
+      "type": "span",
+      "title": "Zeno of Citium",
+      "start": -334,
+      "end": -262,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-000138123021",
+      "type": "span",
+      "title": "Chrysippus",
+      "start": -279,
+      "end": -206,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-004175702931",
+      "type": "span",
+      "title": "Arcesilaus",
+      "start": -280,
+      "end": -210,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-003506281164",
+      "type": "span",
+      "title": "Carneades",
+      "start": -214,
+      "end": -129,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-001316099995",
+      "type": "span",
+      "title": "Cicero",
+      "start": -106,
+      "end": -43,
+      "groupId": "g-main",
+      "color": "#b76262",
+      "hideYears": true
+    },
+    {
+      "id": "span-002196069764",
+      "type": "span",
+      "title": "Lucreitius",
+      "start": -99,
+      "end": -55,
+      "groupId": "g-main",
+      "color": "#b76262",
+      "hideYears": true
+    },
+    {
+      "id": "span-003913168372",
+      "type": "span",
+      "title": "Philo of Alexandria",
+      "start": -13,
+      "end": 54,
+      "groupId": "g-main",
+      "color": "#b76262",
+      "hideYears": true
+    },
+    {
+      "id": "span-000032041021",
+      "type": "span",
+      "title": "Seneca the Younger",
+      "start": -4,
+      "end": 65,
+      "groupId": "g-main",
+      "color": "#b76262",
+      "hideYears": true
+    },
+    {
+      "id": "span-001485230877",
+      "type": "span",
+      "title": "Plutarch",
+      "start": 46,
+      "end": 120,
+      "groupId": "g-main",
+      "color": "#b76262",
+      "hideYears": true
+    },
+    {
+      "id": "span-002038098594",
+      "type": "span",
+      "title": "Epictetus",
+      "start": 50,
+      "end": 135,
+      "groupId": "g-main",
+      "color": "#b76262",
+      "hideYears": true
+    },
+    {
+      "id": "span-000066026099",
+      "type": "span",
+      "title": "Marcus Aurelius",
+      "start": 121,
+      "end": 180,
+      "groupId": "g-main",
+      "color": "#b76262",
+      "hideYears": true
+    },
+    {
+      "id": "span-003710719384",
+      "type": "span",
+      "title": "Jeremiah",
+      "start": -650,
+      "end": -570,
+      "groupId": "g-5",
+      "color": "#779c85",
+      "description": "Prophet of the Hebrew Bible, Emphasized Personal Responsibility, Inner Faith",
+      "hideYears": true
+    },
+    {
+      "id": "span-004042134390",
+      "type": "span",
+      "title": "Ezekiel",
+      "start": -620,
+      "end": -570,
+      "groupId": "g-5",
+      "color": "#779c85",
+      "description": "Abrahamic Prophet, Israelite Priest, Explored Symbolic Visions & Divine Presence",
+      "hideYears": true
+    },
+    {
+      "id": "span-004073201186",
+      "type": "span",
+      "title": "Deutero-Isaiah",
+      "start": -550,
+      "end": -500,
+      "groupId": "g-5",
+      "color": "#779c85",
+      "hideYears": true,
+      "description": "Prophet and Theologian, Philosophical Monotheism, Universal Scope of Divine Justice"
+    },
+    {
+      "id": "span-000750429680",
+      "type": "span",
+      "title": "Kapila",
+      "start": -550,
+      "end": -450,
+      "groupId": "g-3",
+      "color": "#d28b51",
+      "description": "Founder of the Samkhya School of Hinduism, Explored Dualism, Prakrti (Nature) and Purusa (Spirit)",
+      "hideYears": true
+    },
+    {
+      "id": "span-002660651430",
+      "type": "span",
+      "title": "Mahavira",
+      "start": -600,
+      "end": -527,
+      "groupId": "g-3",
+      "color": "#e3a572",
+      "description": "Indian Spiritual Leader, Reformed Jainism, Emphasized Non-Violence, Asceticism, and Pluralism",
+      "hideYears": true
+    },
+    {
+      "id": "span-003438425113",
+      "type": "span",
+      "title": "Siddhartha Gautama",
+      "start": -563,
+      "end": -483,
+      "groupId": "g-3",
+      "color": "#d28b51",
+      "description": "Founder of Buddhism, Taught The Four Noble Truths, Eightfold Path, Meditation",
+      "hideYears": true
+    },
+    {
+      "id": "span-001852225609",
+      "type": "span",
+      "title": "Valmiki",
+      "start": -520,
+      "end": -440,
+      "groupId": "g-3",
+      "color": "#d28b51",
+      "description": "Author of \"Ramayana\", Poet, Sage, Foundational Sanskrit Literary Form, Dharma as Organizing Principle",
+      "hideYears": true
+    },
+    {
+      "id": "span-001085806482",
+      "type": "span",
+      "title": "Panini",
+      "start": -590,
+      "end": -530,
+      "groupId": "g-3",
+      "color": "#d28b51",
+      "description": "Sanskrit Linguist, Formally Codified Classical Sanskrit",
+      "hideYears": true
+    },
+    {
+      "id": "span-003979638983",
+      "type": "span",
+      "title": "Zeno of Elea",
+      "start": -490,
+      "end": -430,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Philosopher and Logician, Paradoxes of Motion and Plurality, Foundations of Dialectical Argument"
+    },
+    {
+      "id": "span-002954748057",
+      "type": "span",
+      "title": "Gorgias",
+      "start": -483,
+      "end": -375,
+      "groupId": "g-main",
+      "color": "#ab5f96",
+      "hideYears": true,
+      "description": "Sophist and Rhetorician, Rhetoric as Autonomous Art, Radical Skepticism About Knowledge and Being, Relativity of Persuasion"
+    },
+    {
+      "id": "span-003428628382",
+      "type": "span",
+      "title": "Critias",
+      "start": -460,
+      "end": -413,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true,
+      "description": "Politician and Writer, Emphasized Atheistic Origins of Religion, Sophistic Rhetoric"
+    },
+    {
+      "id": "span-001713941670",
+      "type": "span",
+      "title": "Prodicus",
+      "start": -465,
+      "end": -395,
+      "groupId": "g-main",
+      "color": "#ab5f96",
+      "hideYears": true,
+      "description": "Sophist and Linguist, Precise Distinction Between Synonyms, Secular Origins of Religion"
+    },
+    {
+      "id": "span-001976560998",
+      "type": "span",
+      "title": "Antisthenes",
+      "start": -444,
+      "end": -365,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true,
+      "description": "Philosopher, Virtue as Sole Good, Rejection of Pleasure and Convention, Founder of Cynicism"
+    },
+    {
+      "id": "span-003436284662",
+      "type": "span",
+      "title": "Pherecydes of Syros",
+      "start": -620,
+      "end": -550,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Cosmologist and Mythographer, Early Theogonic Cosmology"
+    },
+    {
+      "id": "span-001361566043",
+      "type": "span",
+      "title": "Xenophanes",
+      "start": -570,
+      "end": -485,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Poet and Philosopher, Emphasized Critique of Anthropomorphic Religion, Monotheistic Tendencies"
+    },
+    {
+      "id": "span-002066393083",
+      "type": "span",
+      "title": "Epicharmus",
+      "start": -530,
+      "end": -450,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Comic Playwright and Philosopher, Comic Drama as Vehicle for Philosophy"
+    },
+    {
+      "id": "span-000689099575",
+      "type": "span",
+      "title": "Anaxagoras",
+      "start": -500,
+      "end": -428,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Natural Philosopher, Nous (Mind) as Cosmic Organizing Principle, Infinite Divisibility of Matter, Rational Explanation of Celestial Phenomena"
+    },
+    {
+      "id": "span-003812620881",
+      "type": "span",
+      "title": "Protagoras",
+      "start": -481,
+      "end": -420,
+      "groupId": "g-main",
+      "color": "#ab5f96",
+      "hideYears": true,
+      "description": "Sophist and Educator, Man as Measure of All Things, Moral and Epistemic Relativism, Practical Virtue Over Truth"
+    },
+    {
+      "id": "span-003215498280",
+      "type": "span",
+      "title": "Melissus",
+      "start": -470,
+      "end": -430,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Philosopher and Admiral, Infinite and Eternal Being"
+    },
+    {
+      "id": "span-000628873887",
+      "type": "span",
+      "title": "Aristippus",
+      "start": -440,
+      "end": -366,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true,
+      "description": "Philosopher, Pleasure as Highest Good, Present Moment Hedonism, Founder of Cyrenaicism"
+    },
+    {
+      "id": "span-002178295182",
+      "type": "span",
+      "title": "Xenophon",
+      "start": -427,
+      "end": -355,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true,
+      "description": "Historian and Soldier, Practical Socratic Ethics, Military Leadership, Historical Documentation of Classical Athens"
+    },
+    {
+      "id": "span-002720768472",
+      "type": "span",
+      "title": "Diogenes of Apollonia",
+      "start": -425,
+      "end": -350,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true,
+      "description": "Natural Philosopher, Air as Divine Fundamental Substance, Teleological Cosmology"
+    },
+    {
+      "id": "span-000037849174",
+      "type": "span",
+      "title": "Diogenes of Sinope",
+      "start": -404,
+      "end": -323,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true,
+      "description": "Philosopher, Radical Asceticism and Self-Sufficiency, Rejection of Social Convention, Cosmopolitanism"
+    },
+    {
+      "id": "span-003878344071",
+      "type": "span",
+      "title": "Speusippus",
+      "start": -408,
+      "end": -339,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true,
+      "description": "Philosopher, Mathematical Platonism, Rejection of the Good as First Principle, Early Academy Leadership"
+    },
+    {
+      "id": "span-001312463791",
+      "type": "span",
+      "title": "Eudoxus",
+      "start": -408,
+      "end": -355,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true,
+      "description": "Mathematician and Astronomer, Geometric Models of Planetary Motion, Theory of Proportion, Spherical Astronomy"
+    },
+    {
+      "id": "span-001743249753",
+      "type": "span",
+      "title": "Xenocrates",
+      "start": -396,
+      "end": -314,
+      "groupId": "g-main",
+      "color": "#c98c36",
+      "hideYears": true
+    },
+    {
+      "id": "span-003554237509",
+      "type": "span",
+      "title": "Theophrastus",
+      "start": -371,
+      "end": -287,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-002041287857",
+      "type": "span",
+      "title": "Strato of Lampascus",
+      "start": -340,
+      "end": -268,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-002416890109",
+      "type": "span",
+      "title": "Aristarchus",
+      "start": -310,
+      "end": -230,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-001100018597",
+      "type": "span",
+      "title": "Euclid",
+      "start": -300,
+      "end": -250,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-003392541707",
+      "type": "span",
+      "title": "Archimedes",
+      "start": -287,
+      "end": -212,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-000703591072",
+      "type": "span",
+      "title": "Eratosthenes",
+      "start": -276,
+      "end": -195,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-002860490616",
+      "type": "span",
+      "title": "Hipparchus",
+      "start": -190,
+      "end": -120,
+      "groupId": "g-main",
+      "color": "#6f7fa5",
+      "hideYears": true
+    },
+    {
+      "id": "span-002763309199",
+      "type": "span",
+      "title": "Jesus of Nazareth",
+      "start": -6,
+      "end": 30,
+      "groupId": "g-main",
+      "color": "#b76262",
+      "hideYears": true
+    },
+    {
+      "id": "span-001424409578",
+      "type": "span",
+      "title": "Hero of Alexandria",
+      "start": 10,
+      "end": 75,
+      "groupId": "g-main",
+      "color": "#b76262",
+      "hideYears": true
+    },
+    {
+      "id": "span-000984880755",
+      "type": "span",
+      "title": "Quintillian",
+      "start": 35,
+      "end": 100,
+      "groupId": "g-main",
+      "color": "#b76262",
+      "hideYears": true
+    },
+    {
+      "id": "span-002524047486",
+      "type": "span",
+      "title": "Confucius",
+      "start": -551,
+      "end": -479,
+      "groupId": "g-4",
+      "color": "#7899a1",
+      "description": "Founder of Confucianism, Explored Ideas of Morality, Social Relationships, Responsibilities",
+      "hideYears": true
+    },
+    {
+      "id": "span-003457184607",
+      "type": "span",
+      "title": "Sun Tzu",
+      "start": -544,
+      "end": -496,
+      "groupId": "g-4",
+      "color": "#7899a1",
+      "description": "Wrote \"Art of War\", Military General, Strategist",
+      "hideYears": true
+    },
+    {
+      "id": "span-002356925595",
+      "type": "span",
+      "title": "Guan Zhong",
+      "start": -720,
+      "end": -645,
+      "groupId": "g-4",
+      "color": "#7899a1",
+      "description": "Politician and Philosopher, State of Qi",
+      "hideYears": true
+    },
+    {
+      "id": "span-003655370285",
+      "type": "span",
+      "title": "Laozi",
+      "start": -570,
+      "end": -481,
+      "groupId": "g-4",
+      "color": "#7899a1",
+      "description": "Founder of Taoism, Composed Dao De Jing, Explored Ideas of Free Will, Natural Balance, Harmony",
+      "hideYears": true
+    },
+    {
+      "id": "span-001197897565",
+      "type": "span",
+      "title": "Mozi",
+      "start": -470,
+      "end": -390,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Founder of Mohism, Argued Against Confucianism and Taoism, Emphasized Universal Love, Utilitarianism",
+      "hideYears": true
+    },
+    {
+      "id": "span-001405338249",
+      "type": "span",
+      "title": "Liezi",
+      "start": -440,
+      "end": -360,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Author of Foundational Taoist Text \"Liezi\", Emphasized Fatalism, Relativity of Experience",
+      "hideYears": true
+    },
+    {
+      "id": "span-001646719790",
+      "type": "span",
+      "title": "Mencius",
+      "start": -372,
+      "end": -289,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Confucian Philosopher, Emphasized Innate Goodness, Environmental Factors Corrupting Human Will",
+      "hideYears": true
+    },
+    {
+      "id": "span-003444145674",
+      "type": "span",
+      "title": "Hui Shi",
+      "start": -370,
+      "end": -310,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Philosopher, Famous for Paradoxes About the Relativity of Time and Space",
+      "hideYears": true
+    },
+    {
+      "id": "span-000640836495",
+      "type": "span",
+      "title": "Shang Yang",
+      "start": -390,
+      "end": -338,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Qin Legalist Reformer, Emphasized Rigid, Impersonal Law, Anti-Intellectual",
+      "hideYears": true
+    },
+    {
+      "id": "span-001047467113",
+      "type": "span",
+      "title": "Gongsun Long",
+      "start": -320,
+      "end": -250,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Philosopher and Writer, Famous for Logical Paradoxes",
+      "hideYears": true
+    },
+    {
+      "id": "span-000726853820",
+      "type": "span",
+      "title": "Shen Dao",
+      "start": -350,
+      "end": -275,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Philosopher, Drew From Both Taoism and Legalism",
+      "hideYears": true
+    },
+    {
+      "id": "span-003303672567",
+      "type": "span",
+      "title": "Yang Zhu",
+      "start": -370,
+      "end": -319,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Founder of Yangism, Emphasized Ethical Egoism",
+      "hideYears": true
+    },
+    {
+      "id": "span-000798113894",
+      "type": "span",
+      "title": "Zhuang Zhou",
+      "start": -360,
+      "end": -286,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Author of Foundational Taoist Text \"Zhuangzi\", Emphasized Spontaneity, Skeptical About Dichotomies",
+      "hideYears": true
+    },
+    {
+      "id": "span-003737730832",
+      "type": "span",
+      "title": "Xunzi",
+      "start": -310,
+      "end": -237,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Confucian Philosopher, Emphasized Ethical Norms, Education, Ritual",
+      "hideYears": true
+    },
+    {
+      "id": "span-003988092450",
+      "type": "span",
+      "title": "Zou Yan",
+      "start": -305,
+      "end": -240,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Founder of The School of Naturalists, Synthesized Yin-Yang and Five Elements Concepts",
+      "hideYears": true
+    },
+    {
+      "id": "span-004060311006",
+      "type": "span",
+      "title": "Han Feizi",
+      "start": -280,
+      "end": -233,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Legalist Philosopher, Emphasized Administrative Technique, Autocracy",
+      "hideYears": true
+    },
+    {
+      "id": "span-003204877835",
+      "type": "span",
+      "title": "Dong Zhongshu",
+      "start": -176,
+      "end": -104,
+      "groupId": "g-4",
+      "color": "#b67bcc",
+      "description": "Confucian Philosopher, Politician, Emphasized Heaven Worship, Promoted Confucianism as Official State Ideology",
+      "hideYears": true
+    },
+    {
+      "id": "span-004067076795",
+      "type": "span",
+      "title": "Liu An",
+      "start": -179,
+      "end": -122,
+      "groupId": "g-4",
+      "color": "#b67bcc",
+      "description": "Han Dynasty Monarch, Philosopher, Edited The Huainanzi, Invented Tofu",
+      "hideYears": true
+    },
+    {
+      "id": "span-002095783913",
+      "type": "span",
+      "title": "Wang Chong",
+      "start": 27,
+      "end": 97,
+      "groupId": "g-4",
+      "color": "#b67bcc",
+      "description": "Author of The Lunheng, Astronomer, Naturalist, Philosopher",
+      "hideYears": true
+    },
+    {
+      "id": "span-000019595857",
+      "type": "span",
+      "title": "Aruni",
+      "start": -750,
+      "end": -650,
+      "groupId": "g-3",
+      "color": "#90849f",
+      "description": "Upanishadic Teacher, Explored Concepts of Atman and Brahman, \"Tat Tvan Asi\" (That Art Thou)",
+      "sources": [
+        {
+          "title": "Wiki",
+          "url": "https://en.wikipedia.org/wiki/Udd%C4%81laka_%C4%80ru%E1%B9%87i",
+          "description": ""
+        }
+      ],
+      "hideDetails": false,
+      "hideYears": true
+    },
+    {
+      "id": "span-002397660579",
+      "type": "span",
+      "title": "Yajnavalkya",
+      "start": -700,
+      "end": -601,
+      "groupId": "g-3",
+      "color": "#90849f",
+      "description": "Upanishadic Teacher, Explored Ideas of Karma and Rebirth, \"Neti Neti\" (Not This, Not This) Doctrine",
+      "hideYears": true
+    },
+    {
+      "id": "span-003584652812",
+      "type": "span",
+      "title": "Badarayana",
+      "start": -310,
+      "end": -250,
+      "groupId": "g-3",
+      "color": "#85b97e",
+      "description": "Author of The Brahma Sutras, Criticized Samkhya Dualism",
+      "hideDetails": false,
+      "hideYears": true
+    },
+    {
+      "id": "span-001146855913",
+      "type": "span",
+      "title": "Chanakya",
+      "start": -350,
+      "end": -275,
+      "groupId": "g-3",
+      "color": "#85b97e",
+      "description": "Mauryan Statesman and Philosopher, Emphasized Strategic Use of Power",
+      "hideYears": true
+    },
+    {
+      "id": "span-001576115698",
+      "type": "span",
+      "title": "Jaimini",
+      "start": -260,
+      "end": -200,
+      "groupId": "g-3",
+      "color": "#85b97e",
+      "description": "Founder of the Mimamsa School of Hinduism, Emphasized Ritual",
+      "hideYears": true
+    },
+    {
+      "id": "span-001114230064",
+      "type": "span",
+      "title": "Aksapada Gautama",
+      "start": -200,
+      "end": -130,
+      "groupId": "g-3",
+      "color": "#85b97e",
+      "description": "Founder of the Nyaya School of Hinduism, Explored Logic, Epistemology, and Metaphysics",
+      "hideYears": true
+    },
+    {
+      "id": "span-000124429560",
+      "type": "span",
+      "title": "Kanada",
+      "start": -600,
+      "end": -530,
+      "groupId": "g-3",
+      "color": "#d28b51",
+      "description": "Natural Scientist, Developed Foundations of Atomistic Philosophy, Systematic Realist Ontology",
+      "hideYears": true
+    },
+    {
+      "id": "span-004287159352",
+      "type": "span",
+      "title": "Pingala",
+      "start": -300,
+      "end": -230,
+      "groupId": "g-3",
+      "color": "#85b97e",
+      "description": "Poet and Mathematician, Author of The Chandahsastra",
+      "hideYears": true
+    },
+    {
+      "id": "span-002395787140",
+      "type": "span",
+      "title": "Patanjali",
+      "start": -150,
+      "end": -80,
+      "groupId": "g-3",
+      "color": "#e1d060",
+      "description": "Author of the Yoga Sutras, Philosopher, Mystic, Drew From Samkhya and Buddhist Traditions",
+      "hideYears": true
+    },
+    {
+      "id": "span-004070174149",
+      "type": "span",
+      "title": "Thiruvalluvar",
+      "start": -30,
+      "end": 50,
+      "groupId": "g-3",
+      "color": "#e1d060",
+      "description": "Poet and Philosopher, Explored Ethics, Politics, and Love",
+      "hideYears": true
+    },
+    {
+      "id": "span-002233394096",
+      "type": "span",
+      "title": "Nagarjuna",
+      "start": 150,
+      "end": 250,
+      "groupId": "g-3",
+      "color": "#e1d060",
+      "description": "Founder of Madhyamaka Buddhism (Middle Way; Centrism)",
+      "hideYears": true
+    },
+    {
+      "id": "span-003179375510",
+      "type": "span",
+      "title": "Kundakunda",
+      "start": 150,
+      "end": 220,
+      "groupId": "g-3",
+      "color": "#e1d060",
+      "description": "Jain Author(s) of Influential Digambara Texts, Explored Concept of Atman",
+      "hideYears": true
+    },
+    {
+      "id": "span-003779615856",
+      "type": "span",
+      "title": "Umasvati",
+      "start": 150,
+      "end": 220,
+      "groupId": "g-3",
+      "color": "#e1d060",
+      "description": "Jain Scholar, Authored Tattvartha Sutra",
+      "hideYears": true
+    },
+    {
+      "id": "span-000897555683",
+      "type": "span",
+      "title": "Makkhali Gosala",
+      "start": -484,
+      "end": -388,
+      "groupId": "g-3",
+      "color": "#e3a572",
+      "description": "Founder of Ajivika School, Proponent of Fatalism, Extreme Determanism",
+      "hideYears": true
+    },
+    {
+      "id": "span-002297373002",
+      "type": "span",
+      "title": "Ajita Kesakambali",
+      "start": -500,
+      "end": -430,
+      "groupId": "g-3",
+      "color": "#e3a572",
+      "description": "Philosopher, Proponent of Indian Materialism",
+      "hideYears": true
+    },
+    {
+      "id": "span-003287050500",
+      "type": "span",
+      "title": "Pakudha Kaccayana",
+      "start": -500,
+      "end": -430,
+      "groupId": "g-3",
+      "color": "#e3a572",
+      "description": "Philosopher, Proponent of Eternalism, Categoricalism",
+      "hideYears": true
+    },
+    {
+      "id": "span-003689234665",
+      "type": "span",
+      "title": "Purana Kassapa",
+      "start": -500,
+      "end": -430,
+      "groupId": "g-3",
+      "color": "#e3a572",
+      "description": "Philosopher, Proponent of Amoralism",
+      "hideYears": true
+    },
+    {
+      "id": "span-000207647193",
+      "type": "span",
+      "title": "Sanjaya Belatthiputta",
+      "start": -500,
+      "end": -430,
+      "groupId": "g-3",
+      "color": "#e3a572",
+      "description": "Philosopher, Proponent of Agnosticism",
+      "hideYears": true
+    },
+    {
+      "id": "span-004005311738",
+      "type": "span",
+      "title": "Yaska",
+      "start": -600,
+      "end": -540,
+      "groupId": "g-3",
+      "color": "#d28b51",
+      "description": "Sanskrit Etymologist, Earliest Systematic Linguistics in India",
+      "hideYears": true
+    },
+    {
+      "id": "span-003894886953",
+      "type": "span",
+      "title": "Asvaghosa",
+      "start": 80,
+      "end": 149,
+      "groupId": "g-3",
+      "color": "#e1d060",
+      "description": "Buddhist Philosopher, Poet, Known for Dramas and Epics",
+      "hideYears": true
+    },
+    {
+      "id": "span-004058646460",
+      "type": "span",
+      "title": "Charaka",
+      "start": 0,
+      "end": 90,
+      "groupId": "g-3",
+      "color": "#e1d060",
+      "description": "Ayurvedic Physician, Contributed to Charaka Samhita Texts",
+      "hideYears": true
+    },
+    {
+      "id": "span-001439255689",
+      "type": "span",
+      "title": "Sushruta",
+      "start": -100,
+      "end": -20,
+      "groupId": "g-3",
+      "color": "#e1d060",
+      "description": "Ayurvedic Physician, Contributed to Field of Plastic Surgery and Cataract Surgery",
+      "hideYears": true
+    },
+    {
+      "id": "span-002969675564",
+      "type": "span",
+      "title": "Tolkappiyam",
+      "start": -300,
+      "end": -230,
+      "groupId": "g-3",
+      "color": "#85b97e",
+      "description": "Grammarian, Linguist, Earliest Surviving Tamil Literary Theory",
+      "hideYears": true
+    },
+    {
+      "id": "span-003091667091",
+      "type": "span",
+      "title": "Shen Buhai",
+      "start": -400,
+      "end": -337,
+      "groupId": "g-4",
+      "color": "#7bccc2",
+      "description": "Han Statesman, Reformer, Emphasized Shu Technique",
+      "hideYears": true
+    },
+    {
+      "id": "span-003193770529",
+      "type": "span",
+      "title": "Sima Qian",
+      "start": -145,
+      "end": -86,
+      "groupId": "g-4",
+      "color": "#b67bcc",
+      "description": "Han Dynasty Historian, Considered the Father of Chinese Historiography",
+      "hideYears": true
+    },
+    {
+      "id": "span-003846321476",
+      "type": "span",
+      "title": "Pittacus of Mytilene",
+      "start": -640,
+      "end": -568,
+      "groupId": "g-main",
+      "color": "#af6e6e",
+      "hideYears": true,
+      "description": "Statesman and Sage, Emphasized Practical Wisdom, Self-Restraint, Governance Through Moderation"
+    },
+    {
+      "id": "span-002088013681",
+      "type": "span",
+      "title": "Bias of Priene",
+      "start": -600,
+      "end": -530,
+      "groupId": "g-main",
+      "color": "#af6e6e",
+      "hideYears": true,
+      "description": "Statesman and Sage, Emphasized Justice and Practical Wisdom, Character Over Material Wealth"
+    },
+    {
+      "id": "span-004061971909",
+      "type": "span",
+      "title": "Solon of Athens",
+      "start": -638,
+      "end": -558,
+      "groupId": "g-main",
+      "color": "#af6e6e",
+      "hideYears": true,
+      "description": "Athenian Statesman and Poet, Emphasized Legal Reform, Constitutional Balance, Justice as Foundations of the Polis"
+    },
+    {
+      "id": "span-002897713879",
+      "type": "span",
+      "title": "Chilon of Sparta",
+      "start": -610,
+      "end": -550,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Statesman and Sage, Emphasized Laconic Wisdom and Self-Knowledge, \"Know Thyself\""
+    },
+    {
+      "id": "span-003663123946",
+      "type": "span",
+      "title": "Zarathustra",
+      "start": -700,
+      "end": -620,
+      "groupId": "g-5",
+      "color": "#c29956",
+      "description": "Founding Prophet of Zoroastrianism, Emphasized Cosmic Dualism, Free Will, Moral Choice",
+      "hideYears": true
+    },
+    {
+      "id": "span-001423194648",
+      "type": "span",
+      "title": "Cyrus the Great",
+      "start": -600,
+      "end": -530,
+      "groupId": "g-5",
+      "color": "#c29956",
+      "description": "Emperor, Emphasized Religious Tolerance, Pluralism, Early Articulation of Human Rights",
+      "hideYears": true
+    },
+    {
+      "id": "span-001027473782",
+      "type": "span",
+      "title": "Zichan",
+      "start": -580,
+      "end": -522,
+      "groupId": "g-4",
+      "color": "#7899a1",
+      "description": "Zheng Statesman, Rule of Law Over Aristocratic Decision",
+      "hideYears": true
+    },
+    {
+      "id": "event-002166710071",
+      "type": "event",
+      "title": "Anaximander -- On Nature",
+      "date": -570,
+      "groupId": "g-main",
+      "parents": [
+        "span-002557391709"
+      ],
+      "eventLineStyle": "dotted",
+      "eventBorderStyle": "dotted",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-000380867079",
+      "type": "event",
+      "title": "Solon -- Elegies",
+      "date": -590,
+      "groupId": "g-main",
+      "parents": [
+        "span-004061971909"
+      ],
+      "eventLineStyle": "dotted",
+      "eventBorderStyle": "dotted",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-002132147039",
+      "type": "event",
+      "title": "Heraclitus -- On Nature",
+      "date": -500,
+      "groupId": "g-main",
+      "parents": [
+        "span-002564851347"
+      ],
+      "eventLineStyle": "dotted",
+      "eventBorderStyle": "dotted",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-001518979163",
+      "type": "event",
+      "title": "Parmenides -- On Nature ",
+      "date": -480,
+      "groupId": "g-main",
+      "parents": [
+        "span-003443583506"
+      ],
+      "eventLineStyle": "dotted",
+      "eventBorderStyle": "dotted",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-002375588116",
+      "type": "event",
+      "title": "Zeno of Elea -- Epicheirémata",
+      "date": -460,
+      "groupId": "g-main",
+      "parents": [
+        "span-003979638983"
+      ],
+      "eventLineStyle": "dotted",
+      "eventBorderStyle": "dotted",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-002856580616",
+      "type": "event",
+      "title": "Protagoras -- On Truth",
+      "date": -440,
+      "groupId": "g-main",
+      "parents": [
+        "span-003812620881"
+      ],
+      "eventLineStyle": "dotted",
+      "eventBorderStyle": "dotted",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "span-003341631402",
+      "type": "span",
+      "title": "Herodotus",
+      "start": -484,
+      "end": -425,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Historian, Father of Historical Narrative, Origins of the Greco-Persian Wars"
+    },
+    {
+      "id": "span-000901169270",
+      "type": "span",
+      "title": "Thucydides",
+      "start": -460,
+      "end": -400,
+      "groupId": "g-main",
+      "color": "#996666",
+      "hideYears": true,
+      "description": "Historian, Rigorous Political and Military History, Power and Human Nature as Historical Forces"
+    },
+    {
+      "id": "event-000706942231",
+      "type": "event",
+      "title": "Herodotus -- Histories",
+      "date": -430,
+      "groupId": "g-main",
+      "parents": [
+        "span-003341631402"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-001706113149",
+      "type": "event",
+      "title": "Thucydides -- History of the Peloponnesian War",
+      "date": -410,
+      "groupId": "g-main",
+      "parents": [
+        "span-000901169270"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-000301840236",
+      "type": "event",
+      "title": "Xenophon -- Anabasis",
+      "date": -370,
+      "groupId": "g-main",
+      "parents": [
+        "span-002178295182"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-001828394904",
+      "type": "event",
+      "title": "Plato -- Apology",
+      "date": -399,
+      "groupId": "g-main",
+      "parents": [
+        "span-001463754053"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-001009059425",
+      "type": "event",
+      "title": "Xenophon -- Memorabilia",
+      "date": -371,
+      "groupId": "g-main",
+      "parents": [
+        "span-002178295182"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-002087467870",
+      "type": "event",
+      "title": "Plato -- Meno",
+      "date": -385,
+      "groupId": "g-main",
+      "parents": [
+        "span-001463754053"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-002658678916",
+      "type": "event",
+      "title": "Plato -- Republic",
+      "date": -375,
+      "groupId": "g-main",
+      "parents": [
+        "span-001463754053"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-001252691429",
+      "type": "event",
+      "title": "Empedocles -- On Nature",
+      "date": -450,
+      "groupId": "g-main",
+      "parents": [
+        "span-000764562105"
+      ],
+      "eventLineStyle": "dotted",
+      "eventBorderStyle": "dotted",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-000618288629",
+      "type": "event",
+      "title": "Anaxagoras -- On Nature",
+      "date": -450,
+      "groupId": "g-main",
+      "parents": [
+        "span-000689099575"
+      ],
+      "eventLineStyle": "dotted",
+      "eventBorderStyle": "dotted",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-001141722074",
+      "type": "event",
+      "title": "Gorgias -- On Non-Being",
+      "date": -430,
+      "groupId": "g-main",
+      "parents": [
+        "span-002954748057"
+      ],
+      "eventLineStyle": "dotted",
+      "eventBorderStyle": "dotted",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-002018876934",
+      "type": "event",
+      "title": "Plato -- Phaedo",
+      "date": -380,
+      "groupId": "g-main",
+      "parents": [
+        "span-001463754053"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-001366836691",
+      "type": "event",
+      "title": "Plato -- Symposium",
+      "date": -385,
+      "groupId": "g-main",
+      "parents": [
+        "span-001463754053"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-000051918260",
+      "type": "event",
+      "title": "Plato -- Timaeus",
+      "date": -360,
+      "groupId": "g-main",
+      "parents": [
+        "span-001463754053"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-000491564379",
+      "type": "event",
+      "title": "Plato -- Parmenides",
+      "date": -360,
+      "groupId": "g-main",
+      "parents": [
+        "span-001463754053"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-000095036875",
+      "type": "event",
+      "title": "Cyrus Cylinder",
+      "date": -539,
+      "groupId": "g-5",
+      "parents": [
+        "span-001423194648"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-002637307681",
+      "type": "event",
+      "title": "Hebrew Bible -- Isaiah 40-55",
+      "date": -525,
+      "groupId": "g-5",
+      "parents": [
+        "span-004073201186"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-003856315947",
+      "type": "event",
+      "title": "Hebrew Bible -- Ezekiel",
+      "date": -580,
+      "groupId": "g-5",
+      "parents": [
+        "span-004042134390"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-002675070923",
+      "type": "event",
+      "title": "Laozi -- Dao De Jing",
+      "date": -500,
+      "groupId": "g-4",
+      "parents": [
+        "span-003655370285"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-000222331347",
+      "type": "event",
+      "title": "Confucius -- Analects",
+      "date": -480,
+      "groupId": "g-4",
+      "parents": [
+        "span-002524047486"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-000112568051",
+      "type": "event",
+      "title": "Sun Tzu - Art of War",
+      "date": -510,
+      "groupId": "g-4",
+      "parents": [
+        "span-003457184607"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-000115123439",
+      "type": "event",
+      "title": "Valmiki -- Ramayana",
+      "date": -450,
+      "groupId": "g-3",
+      "parents": [
+        "span-001852225609"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-000809463152",
+      "type": "event",
+      "title": "Panini -- Ashtadhyayi",
+      "date": -550,
+      "groupId": "g-3",
+      "parents": [
+        "span-001085806482"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-002517178316",
+      "type": "event",
+      "title": "Yaska -- Nirukta",
+      "date": -560,
+      "groupId": "g-3",
+      "parents": [
+        "span-004005311738"
+      ],
+      "eventLineStyle": "solid",
+      "eventBorderStyle": "solid",
+      "icon": "BookMarked"
+    },
+    {
+      "id": "event-004062190183",
+      "type": "event",
+      "title": "Mahavira -- Agamas",
+      "date": -530,
+      "groupId": "g-3",
+      "parents": [
+        "span-002660651430"
+      ],
+      "eventLineStyle": "dotted",
+      "eventBorderStyle": "dotted",
+      "icon": "BookMarked"
+    }
+  ]
+}

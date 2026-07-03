@@ -19,7 +19,8 @@
     { "path": "quiz-3a/index.html", "title": "Practice: Contact Forces & Gravity" },
     { "path": "circular-motion/index.html", "title": "Circular Motion & Orbits" },
     { "path": "quiz-4a/index.html", "title": "Practice: Circular Motion & Orbits" },
-    { "path": "work-energy/index.html", "title": "Work & Energy" }
+    { "path": "work-energy/index.html", "title": "Work & Energy" },
+    { "path": "quiz-5a/index.html", "title": "Practice: Work & Energy" }
   ],
   "htmlNotesBase": "notes/"
 }

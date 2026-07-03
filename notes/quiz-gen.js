@@ -394,6 +394,157 @@ var QuizGen = (function () {
       renderQ(el, text, makeOpts(correct, wrongs), explain, '');
     },
 
+    kineticEnergy: function (el) {
+      var m = rand(1, 12, 1);
+      var v = rand(2, 15, 1);
+      var K = +(0.5 * m * v * v).toFixed(1);
+      var text = 'A \\(' + m + '\\text{ kg}\\) object moves at \\(' + v + '\\text{ m/s}\\). What is its kinetic energy?';
+      var wrongs = [+(m * v).toFixed(1), +(m * v * v).toFixed(1), +(0.5 * m * v).toFixed(1)];
+      var explain = steps(
+        '\\(K = \\dfrac{1}{2}mv^2\\)',
+        '\\(= \\dfrac{1}{2}(' + m + ')(' + v + ')^2 = \\dfrac{1}{2}(' + m + ')(' + (v*v) + ')\\)',
+        '\\(= ' + K + '\\text{ J}\\)'
+      );
+      renderQ(el, text, makeOpts(K, wrongs), explain, '\\text{ J}');
+    },
+
+    workByForce: function (el) {
+      var F = rand(20, 120, 10);
+      var d = rand(3, 15, 1);
+      var angle = [0, 30, 45, 60][Math.floor(Math.random() * 4)];
+      var W = +(F * d * Math.cos(angle * Math.PI / 180)).toFixed(1);
+      var cosStr = angle === 0 ? '1' : angle === 30 ? '\\tfrac{\\sqrt{3}}{2}' : angle === 45 ? '\\tfrac{\\sqrt{2}}{2}' : '\\tfrac{1}{2}';
+      var text = 'A force of \\(' + F + '\\text{ N}\\) acts on a crate at \\(' + angle + '°\\) above the horizontal, moving it \\(' + d + '\\text{ m}\\) horizontally. How much work is done?';
+      var wrongs = [+(F * d).toFixed(1), +(F * d * Math.sin(angle * Math.PI / 180)).toFixed(1), +(F * d * Math.cos(angle * Math.PI / 180) * 0.5).toFixed(1)];
+      var explain = steps(
+        '\\(W = Fd\\cos\\theta\\)',
+        '\\(= ' + F + ' \\times ' + d + ' \\times \\cos' + angle + '°\\)',
+        '\\(= ' + F + ' \\times ' + d + ' \\times ' + cosStr + '\\)',
+        '\\(= ' + W + '\\text{ J}\\)'
+      );
+      renderQ(el, text, makeOpts(W, wrongs), explain, '\\text{ J}');
+    },
+
+    workEnergyFinalSpeed: function (el) {
+      var m = rand(2, 10, 1);
+      var v0 = rand(0, 6, 1);
+      var Wnet = rand(20, 150, 10);
+      var Kf = 0.5 * m * v0 * v0 + Wnet;
+      var vf = +(Math.sqrt(2 * Kf / m)).toFixed(1);
+      var text = 'A \\(' + m + '\\text{ kg}\\) object' + (v0 > 0 ? ' moving at \\(' + v0 + '\\text{ m/s}\\)' : ' initially at rest') + ' has \\(' + Wnet + '\\text{ J}\\) of net work done on it. What is its final speed?';
+      var wrongs = [+(Math.sqrt(2 * Wnet / m)).toFixed(1), +(v0 + Wnet / m).toFixed(1), +(Math.sqrt(Kf / m)).toFixed(1)];
+      var K0 = +(0.5 * m * v0 * v0).toFixed(1);
+      var Kff = +Kf.toFixed(1);
+      var explain = v0 > 0 ? steps(
+        'Work-energy theorem: \\(W_{net} = \\Delta K = K_f - K_i\\)',
+        '\\(K_i = \\tfrac{1}{2}(' + m + ')(' + v0 + ')^2 = ' + K0 + '\\text{ J}\\)',
+        '\\(K_f = K_i + W_{net} = ' + K0 + ' + ' + Wnet + ' = ' + Kff + '\\text{ J}\\)',
+        '\\(v_f = \\sqrt{\\dfrac{2K_f}{m}} = \\sqrt{\\dfrac{2(' + Kff + ')}{' + m + '}} = ' + vf + '\\text{ m/s}\\)'
+      ) : steps(
+        'Work-energy theorem: \\(W_{net} = \\Delta K\\)',
+        '\\(K_i = 0\\), so \\(K_f = W_{net} = ' + Wnet + '\\text{ J}\\)',
+        '\\(v_f = \\sqrt{\\dfrac{2K_f}{m}} = \\sqrt{\\dfrac{2(' + Wnet + ')}{' + m + '}}\\)',
+        '\\(= ' + vf + '\\text{ m/s}\\)'
+      );
+      renderQ(el, text, makeOpts(vf, wrongs), explain, '\\text{ m/s}');
+    },
+
+    springPE: function (el) {
+      var k = rand(100, 600, 50);
+      var dx = rand(0.05, 0.40, 0.05);
+      var Us = +(0.5 * k * dx * dx).toFixed(2);
+      var text = 'A spring (\\(k = ' + k + '\\text{ N/m}\\)) is compressed \\(' + dx + '\\text{ m}\\). How much elastic potential energy is stored?';
+      var wrongs = [+(k * dx).toFixed(2), +(k * dx * dx).toFixed(2), +(0.5 * k * dx).toFixed(2)];
+      var explain = steps(
+        '\\(U_s = \\dfrac{1}{2}k(\\Delta x)^2\\)',
+        '\\(= \\dfrac{1}{2}(' + k + ')(' + dx + ')^2 = \\dfrac{1}{2}(' + k + ')(' + (dx*dx).toFixed(4) + ')\\)',
+        '\\(= ' + Us + '\\text{ J}\\)'
+      );
+      renderQ(el, text, makeOpts(Us, wrongs), explain, '\\text{ J}');
+    },
+
+    energyConservationSpeed: function (el) {
+      var h = rand(2, 20, 1);
+      var v0 = 0;
+      var vf = +(Math.sqrt(2 * 9.8 * h)).toFixed(1);
+      var text = 'A ball is released from rest at a height of \\(' + h + '\\text{ m}\\). Ignoring air resistance, how fast is it moving just before hitting the ground?';
+      var wrongs = [+(Math.sqrt(9.8 * h)).toFixed(1), +(9.8 * h).toFixed(1), +(Math.sqrt(2 * 9.8 * h) * 0.5).toFixed(1)];
+      var explain = steps(
+        'No friction: mechanical energy is conserved. \\(K_i + U_i = K_f + U_f\\)',
+        'Released from rest: \\(K_i = 0\\). Set ground as \\(U = 0\\) reference.',
+        '\\(mgh = \\dfrac{1}{2}mv_f^2\\)',
+        'Cancel \\(m\\): \\(v_f = \\sqrt{2gh} = \\sqrt{2(9.8)(' + h + ')}\\)',
+        '\\(= ' + vf + '\\text{ m/s}\\)'
+      );
+      renderQ(el, text, makeOpts(vf, wrongs), explain, '\\text{ m/s}');
+    },
+
+    energyConservationHeight: function (el) {
+      var m = rand(1, 8, 1);
+      var v0 = rand(4, 14, 1);
+      var hMax = +(v0 * v0 / (2 * 9.8)).toFixed(1);
+      var text = 'A \\(' + m + '\\text{ kg}\\) ball is thrown straight up at \\(' + v0 + '\\text{ m/s}\\). How high does it rise (ignoring air resistance)?';
+      var wrongs = [+(v0 / 9.8).toFixed(1), +(v0 * v0 / 9.8).toFixed(1), +(v0 / (2 * 9.8)).toFixed(2)];
+      var explain = steps(
+        'At the peak, \\(v = 0\\) so \\(K_f = 0\\). Energy conserved.',
+        '\\(\\dfrac{1}{2}mv_0^2 = mgh_{\\max}\\)',
+        'Cancel \\(m\\): \\(h_{\\max} = \\dfrac{v_0^2}{2g}\\)',
+        '\\(= \\dfrac{' + v0 + '^2}{2(9.8)} = \\dfrac{' + (v0*v0) + '}{19.6}\\)',
+        '\\(= ' + hMax + '\\text{ m}\\)'
+      );
+      renderQ(el, text, makeOpts(hMax, wrongs), explain, '\\text{ m}');
+    },
+
+    averagePower: function (el) {
+      var F = rand(50, 400, 50);
+      var d = rand(10, 80, 10);
+      var t = rand(4, 20, 2);
+      var W = F * d;
+      var P = +(W / t).toFixed(1);
+      var text = 'A motor applies \\(' + F + '\\text{ N}\\) to push a cart \\(' + d + '\\text{ m}\\) in \\(' + t + '\\text{ s}\\). What is the average power delivered?';
+      var wrongs = [+(F * t / d).toFixed(1), +(W).toFixed(0), +(F / t).toFixed(1)];
+      var explain = steps(
+        'First find the work done: \\(W = Fd = ' + F + ' \\times ' + d + ' = ' + W + '\\text{ J}\\)',
+        'Average power: \\(P_{avg} = \\dfrac{W}{\\Delta t}\\)',
+        '\\(= \\dfrac{' + W + '}{' + t + '} = ' + P + '\\text{ W}\\)'
+      );
+      renderQ(el, text, makeOpts(P, wrongs), explain, '\\text{ W}');
+    },
+
+    frictionEnergyLoss: function (el) {
+      var m = rand(2, 10, 1);
+      var v0 = rand(4, 12, 1);
+      var muk = +(0.2 + Math.random() * 0.3).toFixed(1);
+      var d = rand(3, 12, 1);
+      var Wf = +(muk * m * 9.8 * d).toFixed(1);
+      var K0 = +(0.5 * m * v0 * v0).toFixed(1);
+      var Kf = +(Math.max(0, K0 - Wf)).toFixed(1);
+      var vf = +(Math.sqrt(2 * Math.max(0, +Kf) / m)).toFixed(1);
+      var text = 'A \\(' + m + '\\text{ kg}\\) block moves at \\(' + v0 + '\\text{ m/s}\\) on a surface with \\(\\mu_k = ' + muk + '\\). After sliding \\(' + d + '\\text{ m}\\), what is its speed?';
+      var wrongs = [+(v0 - muk * 9.8 * d / v0).toFixed(1), +(v0 * (1 - muk)).toFixed(1), +(Math.sqrt(2 * K0 / m) * (1 - muk)).toFixed(1)];
+      var explain = steps(
+        '\\(K_i = \\tfrac{1}{2}(' + m + ')(' + v0 + ')^2 = ' + K0 + '\\text{ J}\\)',
+        'Work by friction: \\(W_f = -\\mu_k mg d = -' + muk + '(' + m + ')(9.8)(' + d + ') = -' + Wf + '\\text{ J}\\)',
+        '\\(K_f = K_i + W_f = ' + K0 + ' - ' + Wf + ' = ' + Kf + '\\text{ J}\\)',
+        '\\(v_f = \\sqrt{\\dfrac{2K_f}{m}} = \\sqrt{\\dfrac{2(' + Kf + ')}{' + m + '}} = ' + vf + '\\text{ m/s}\\)'
+      );
+      renderQ(el, text, makeOpts(vf, wrongs), explain, '\\text{ m/s}');
+    },
+
+    deriveWorkEnergyTheorem: function (el) {
+      var text = 'A constant net force \\(F_{net}\\) acts on mass \\(m\\) over displacement \\(d\\) from rest. Derive an expression for the final speed \\(v_f\\).';
+      var correct = '\\sqrt{\\dfrac{2F_{net}\\,d}{m}}';
+      var wrongs = ['\\dfrac{F_{net}\\,d}{m}', '\\sqrt{\\dfrac{F_{net}\\,d}{m}}', '\\dfrac{2F_{net}\\,d}{m}'];
+      var explain = steps(
+        'Net work done: \\(W_{net} = F_{net}\\,d\\)',
+        'Work-energy theorem: \\(W_{net} = \\Delta K = \\tfrac{1}{2}mv_f^2 - 0\\)',
+        '\\(F_{net}\\,d = \\tfrac{1}{2}mv_f^2\\)',
+        'Solve: \\(v_f^2 = \\dfrac{2F_{net}\\,d}{m}\\)',
+        '\\(v_f = \\sqrt{\\dfrac{2F_{net}\\,d}{m}}\\)'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
     keplerPeriod: function (el) {
       var r1 = 1;
       var r2 = rand(2, 5, 1);

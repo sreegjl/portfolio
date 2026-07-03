@@ -135,7 +135,7 @@ if (studyToggle && page) {
     'force-dynamics':  { fc: 'dynamics',        practice: '/notes/quiz-2a/' },
     'forces':          { fc: 'forces',          practice: '/notes/quiz-3a/' },
     'circular-motion': { fc: 'circular-motion', practice: '/notes/quiz-4a/' },
-    'work-energy':     { fc: 'work-energy',     practice: null }
+    'work-energy':     { fc: 'work-energy',     practice: '/notes/quiz-5a/' }
   };
 
   // Maps practice page paths to the note folder they belong to
@@ -143,7 +143,8 @@ if (studyToggle && page) {
     '/notes/quiz-1a/': 'kinematics',
     '/notes/quiz-2a/': 'force-dynamics',
     '/notes/quiz-3a/': 'forces',
-    '/notes/quiz-4a/': 'circular-motion'
+    '/notes/quiz-4a/': 'circular-motion',
+    '/notes/quiz-5a/': 'work-energy'
   };
 
   fetch('/notes-manifest.json')
