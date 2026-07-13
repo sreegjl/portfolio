@@ -562,20 +562,28 @@ canvas { display: block; width: 100%; }
 .study-mode .badge.coral.revealed  { background: var(--accent-coral-bg) !important; color: var(--accent-coral) !important; }
 .study-mode .row-val.revealed      { background: transparent !important; color: var(--text) !important; }
 
-/* Variable color coding — K teal, U coral, E_mech amber */
+/* Variable color coding — K teal, U coral, E_mech amber, p purple, J teal */
 .var-k     { color: var(--accent-teal)   !important; }
 .var-u     { color: var(--accent-coral)  !important; }
 .var-emech { color: var(--accent-amber)  !important; }
+.var-p     { color: var(--accent-purple) !important; }
+.var-j     { color: var(--accent-teal)   !important; }
 
 .study-mode .formula:not(.revealed)  .var-k,
 .study-mode .formula:not(.revealed)  .var-u,
 .study-mode .formula:not(.revealed)  .var-emech,
+.study-mode .formula:not(.revealed)  .var-p,
+.study-mode .formula:not(.revealed)  .var-j,
 .study-mode .row-val:not(.revealed)  .var-k,
 .study-mode .row-val:not(.revealed)  .var-u,
 .study-mode .row-val:not(.revealed)  .var-emech,
+.study-mode .row-val:not(.revealed)  .var-p,
+.study-mode .row-val:not(.revealed)  .var-j,
 .study-mode .badge:not(.revealed)    .var-k,
 .study-mode .badge:not(.revealed)    .var-u,
-.study-mode .badge:not(.revealed)    .var-emech { color: transparent !important; }
+.study-mode .badge:not(.revealed)    .var-emech,
+.study-mode .badge:not(.revealed)    .var-p,
+.study-mode .badge:not(.revealed)    .var-j { color: transparent !important; }
 
 .study-mode .graph-caption span {
   color: transparent;

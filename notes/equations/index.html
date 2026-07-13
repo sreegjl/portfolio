@@ -22,6 +22,72 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+/* Wider layout for the equation sheet */
+.page { max-width: 980px; }
+
+/* Section heading with a flashcards link on the right */
+.eq-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.eq-section-head .section-label { margin-bottom: 0.6rem; }
+
+.eq-fc-btn {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  color: var(--hint);
+  text-decoration: none;
+  padding: 0.22rem 0.6rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+.eq-fc-btn:hover { color: var(--accent-teal); border-color: var(--accent-teal); }
+
+/* Study-all banner at the top */
+.eq-all-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.95rem 1.125rem;
+  text-decoration: none;
+  transition: border-color 0.18s;
+}
+.eq-all-card:hover { border-color: var(--accent-teal); }
+.eq-all-card:hover .eq-all-arrow { color: var(--accent-teal); transform: translateX(3px); }
+
+.eq-all-title {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 0.2rem;
+}
+.eq-all-desc {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  color: var(--hint);
+  margin: 0;
+}
+.eq-all-arrow {
+  font-size: 1rem;
+  color: var(--muted);
+  transition: color 0.15s, transform 0.15s;
+}
+</style>
 </head>
 <body>
 <nav>
@@ -46,7 +112,20 @@
   </header>
 
   <div class="section">
-    <p class="section-label">Kinematics</p>
+    <a class="eq-all-card" href="../flashcards/?topic=all">
+      <div>
+        <p class="eq-all-title">Study all equations</p>
+        <p class="eq-all-desc">flip through flashcards for every unit in one combined deck</p>
+      </div>
+      <span class="eq-all-arrow">&#8594;</span>
+    </a>
+  </div>
+
+  <div class="section">
+    <div class="eq-section-head">
+      <p class="section-label">Kinematics</p>
+      <a class="eq-fc-btn" href="../flashcards/?topic=kinematics">flashcards &#8594;</a>
+    </div>
     <div class="card">
       <div class="row">
         <span class="row-desc">Velocity</span>
@@ -84,7 +163,10 @@
   </div>
 
   <div class="section">
-    <p class="section-label">Force &amp; Dynamics</p>
+    <div class="eq-section-head">
+      <p class="section-label">Force &amp; Dynamics</p>
+      <a class="eq-fc-btn" href="../flashcards/?topic=dynamics">flashcards &#8594;</a>
+    </div>
     <div class="card">
       <div class="row">
         <span class="row-desc">Newton's 2nd law</span>
@@ -110,7 +192,10 @@
   </div>
 
   <div class="section">
-    <p class="section-label">Contact Forces &amp; Gravity</p>
+    <div class="eq-section-head">
+      <p class="section-label">Contact Forces &amp; Gravity</p>
+      <a class="eq-fc-btn" href="../flashcards/?topic=forces">flashcards &#8594;</a>
+    </div>
     <div class="card">
       <div class="row">
         <span class="row-desc">Gravity parallel (incline)</span>
@@ -152,7 +237,10 @@
   </div>
 
   <div class="section">
-    <p class="section-label">Circular Motion &amp; Orbits</p>
+    <div class="eq-section-head">
+      <p class="section-label">Circular Motion &amp; Orbits</p>
+      <a class="eq-fc-btn" href="../flashcards/?topic=circular-motion">flashcards &#8594;</a>
+    </div>
     <div class="card">
       <div class="row">
         <span class="row-desc">Centripetal acceleration</span>
@@ -189,6 +277,108 @@
       <div class="row">
         <span class="row-desc">Kepler's 3rd law</span>
         <span class="row-val">\(T^2 = \dfrac{4\pi^2}{GM}\,r^3\)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="eq-section-head">
+      <p class="section-label">Work &amp; Energy</p>
+      <a class="eq-fc-btn" href="../flashcards/?topic=work-energy">flashcards &#8594;</a>
+    </div>
+    <div class="card">
+      <div class="row">
+        <span class="row-desc">Work</span>
+        <span class="row-val">\(W = Fd\cos\theta\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Kinetic energy</span>
+        <span class="row-val">\(K = \tfrac{1}{2}mv^2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Work-energy theorem</span>
+        <span class="row-val">\(W_{\text{net}} = \Delta K\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Gravitational PE (near Earth)</span>
+        <span class="row-val">\(\Delta U_g = mg\Delta y\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Gravitational PE (general)</span>
+        <span class="row-val">\(U_g = -G\dfrac{m_1 m_2}{r}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Elastic PE</span>
+        <span class="row-val">\(U_s = \tfrac{1}{2}k(\Delta x)^2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Mechanical energy</span>
+        <span class="row-val">\(E_{\text{mech}} = K + U\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Energy conservation</span>
+        <span class="row-val">\(W_{\text{ext}} = \Delta E_{\text{mech}} + \Delta E_{\text{th}}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Average power</span>
+        <span class="row-val">\(P_{\text{avg}} = \dfrac{W}{\Delta t}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Instantaneous power</span>
+        <span class="row-val">\(P = Fv\cos\theta\)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="eq-section-head">
+      <p class="section-label">Impulse &amp; Momentum</p>
+      <a class="eq-fc-btn" href="../flashcards/?topic=momentum">flashcards &#8594;</a>
+    </div>
+    <div class="card">
+      <div class="row">
+        <span class="row-desc">Momentum</span>
+        <span class="row-val">\(\vec{p} = m\vec{v}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Newton's 2nd law (momentum form)</span>
+        <span class="row-val">\(\vec{F}_{\text{net}} = \dfrac{\Delta \vec{p}}{\Delta t}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Impulse</span>
+        <span class="row-val">\(\vec{J} = \vec{F}\,\Delta t\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Impulse-momentum theorem</span>
+        <span class="row-val">\(\vec{J}_{\text{net}} = \Delta \vec{p}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Impulse from \(F\) vs. \(t\) graph</span>
+        <span class="row-val">\(J = \text{area under the curve} = \Delta p\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Average force</span>
+        <span class="row-val">\(F_{\text{avg}} = \dfrac{\Delta p}{\Delta t}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Conservation of momentum</span>
+        <span class="row-val">\(\sum \vec{p}_i = \sum \vec{p}_f\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Open system (momentum transfer)</span>
+        <span class="row-val">\(\vec{F}_{\text{ext,net}}\,\Delta t = \Delta \vec{p}_{\text{sys}}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Perfectly inelastic collision</span>
+        <span class="row-val">\(\vec{v}_f = \dfrac{m_1\vec{v}_{1i} + m_2\vec{v}_{2i}}{m_1 + m_2}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Elastic 1D (target at rest)</span>
+        <span class="row-val">\(v_{1f} = \dfrac{m_1 - m_2}{m_1 + m_2}v_{1i}\), \(\ v_{2f} = \dfrac{2m_1}{m_1 + m_2}v_{1i}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Center of mass velocity</span>
+        <span class="row-val">\(\vec{v}_{\text{cm}} = \dfrac{\vec{p}_{\text{tot}}}{M}\)</span>
       </div>
     </div>
   </div>

@@ -864,6 +864,13 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                     { type: 'flashcard', name: 'Work & Energy Flashcards', desc: 'Formula cards for quick review',                   path: 'flashcards/?topic=work-energy' },
                     { type: 'practice',  name: 'Practice: Work & Energy',  desc: 'Randomized problems with step-by-step solutions',   path: 'quiz-5a/' }
                 ]
+            },
+            {
+                num: 6, title: 'Impulse & Momentum',
+                lessons: [
+                    { type: 'note',      name: 'Impulse & Momentum',            desc: 'Momentum, impulse, conservation, collisions, and center of mass', path: 'momentum/' },
+                    { type: 'flashcard', name: 'Impulse & Momentum Flashcards', desc: 'Formula cards for quick review',                                   path: 'flashcards/?topic=momentum' }
+                ]
             }
         ];
 

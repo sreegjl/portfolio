@@ -20,7 +20,8 @@
     { "path": "circular-motion/index.html", "title": "Circular Motion & Orbits" },
     { "path": "quiz-4a/index.html", "title": "Practice: Circular Motion & Orbits" },
     { "path": "work-energy/index.html", "title": "Work & Energy" },
-    { "path": "quiz-5a/index.html", "title": "Practice: Work & Energy" }
+    { "path": "quiz-5a/index.html", "title": "Practice: Work & Energy" },
+    { "path": "momentum/index.html", "title": "Impulse & Momentum" }
   ],
   "htmlNotesBase": "notes/"
 }

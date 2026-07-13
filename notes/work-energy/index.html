@@ -63,7 +63,7 @@
     </div>
 
     <p class="prose">
-      The energy transferred to or from an object by a force is called <strong>work</strong>. The work done by an individual force on an object during a displacement is:
+      <strong>Work</strong> is energy transferred to or from an object by a force. For an individual force during a displacement:
     </p>
 
     <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
@@ -109,11 +109,11 @@
     </div>
 
     <p class="prose">
-      Work is a <strong>scalar</strong>: only the component of force along the displacement direction does work, \(\cos\theta\) extracts it. A force perpendicular to displacement, like gravity on a satellite in circular orbit, does <strong>zero work</strong>. Try the angle slider above to see how tilting the thrust changes it.
+      Work is a <strong>scalar</strong>: \(\cos\theta\) extracts the force component along the displacement. A force perpendicular to displacement, like gravity on an orbiting satellite, does <strong>zero work</strong>. Try the angle slider above.
     </p>
 
     <p class="prose">
-      Since \(W = Fd\) for a constant force, work is just the <strong>area between the force curve and the d-axis</strong>: a rectangle when force is constant, a trapezoid when it varies linearly. Try the sliders below.
+      Work is also the <strong>area between the force curve and the d-axis</strong>: a rectangle for constant force, a trapezoid when it varies linearly. Try the sliders below.
     </p>
 
     <div class="graph-card" style="margin-bottom: 0.75rem;">
@@ -130,7 +130,7 @@
     <p class="section-label">Kinetic energy</p>
 
     <p class="prose">
-      When an object is in translational motion, modeled as a single point at its center of mass, it has <strong>translational kinetic energy</strong> depending on its mass and speed:
+      An object in translational motion, modeled as a point at its center of mass, has <strong>translational kinetic energy</strong>:
     </p>
 
     <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
@@ -207,11 +207,11 @@
     </div>
 
     <p class="prose">
-      <strong>Potential energy</strong> \((U)\) is energy associated with the configuration, the relative positions, of objects in a system that interact via a conservative force.
+      <strong>Potential energy</strong> \((U)\) is energy stored in the configuration, the relative positions, of objects interacting via a conservative force.
     </p>
 
     <p class="prose">
-      Gravity requires a system of two interacting masses, modeled by <strong>Newton's law of universal gravitation</strong>, \(F_g = G\frac{m_1 m_2}{r^2}\). The system's gravitational potential energy is:
+      For two masses interacting via <strong>Newton's law of universal gravitation</strong>, \(F_g = G\frac{m_1 m_2}{r^2}\), the system's gravitational potential energy is:
     </p>
 
     <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
@@ -247,7 +247,7 @@
     </p>
 
     <p class="prose">
-      The other common conservative force is the spring force. A spring stretched or compressed by \(\Delta x\) from its relaxed length exerts a restoring force, \(F_s = k\Delta x\) (<strong>Hooke's law</strong>). The elastic potential energy stored is:
+      A spring stretched or compressed by \(\Delta x\) exerts a restoring force \(F_s = k\Delta x\) (<strong>Hooke's law</strong>) and stores elastic potential energy:
     </p>
 
     <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
@@ -288,7 +288,7 @@
     </p>
 
     <p class="prose">
-      If only conservative forces act, mechanical energy is <strong>conserved</strong>: kinetic and potential energy trade off, but the total stays fixed. Nonconservative forces like friction have no associated potential energy, the negative work they do is dissipated and lost from the system instead.
+      If only conservative forces act, mechanical energy is <strong>conserved</strong>: \(K\) and \(U\) trade off but the total stays fixed. Nonconservative forces like friction dissipate the negative work they do instead.
     </p>
 
     <div class="card">
@@ -304,7 +304,7 @@
     </div>
 
     <p class="prose">
-      Work done by conservative forces is also <strong>path-independent</strong>, it depends only on the initial and final configuration, not the route taken. Work done by nonconservative forces like friction is path-dependent.
+      Conservative work is also <strong>path-independent</strong>: only the initial and final configuration matter. Friction's work is path-dependent.
     </p>
   </div>
 
@@ -313,7 +313,7 @@
     <p class="section-label">Conservation of energy</p>
 
     <p class="prose">
-      Energy cannot be created or destroyed. The total energy of a closed system stays fixed: it can shift between kinetic, potential, and thermal forms, but the sum never changes. When a system is not closed, external forces can transfer energy in or out:
+      Energy cannot be created or destroyed: a closed system's total shifts between kinetic, potential, and thermal forms, but the sum never changes. When the system is not closed, external forces transfer energy in or out:
     </p>
 
     <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
@@ -321,7 +321,7 @@
     </p>
 
     <p class="prose">
-      \(\Delta E_{\text{th}}\) is the thermal energy generated inside the system by nonconservative forces like friction. It is always positive (heat only flows out of mechanical energy, never back in), so friction always reduces \(E_{\text{mech}}\). The special case \(\Delta \class{var-emech}{E_{\text{mech}}} = 0\) from the previous section is just this equation with \(W_{\text{ext}} = 0\) and \(\Delta E_{\text{th}} = 0\).
+      \(\Delta E_{\text{th}}\) is thermal energy generated by friction inside the system. It is always positive, so friction always reduces \(E_{\text{mech}}\). The special case \(\Delta \class{var-emech}{E_{\text{mech}}} = 0\) above is this equation with \(W_{\text{ext}} = 0\) and \(\Delta E_{\text{th}} = 0\).
     </p>
 
     <div class="card">
@@ -341,7 +341,7 @@
     </div>
 
     <p class="prose">
-      The system boundary you choose changes which terms appear. Including the spring and Earth <em>inside</em> lets you account for their forces as \(\Delta U\). Placing them <em>outside</em> means their forces show up as \(W_{\text{ext}}\) instead. Either framing is valid: the same energy is being tracked, just partitioned differently.
+      The system boundary changes which terms appear: spring and Earth <em>inside</em> means their forces count as \(\Delta U\), <em>outside</em> means \(W_{\text{ext}}\). Either framing tracks the same energy, just partitioned differently.
     </p>
   </div>
 
@@ -404,7 +404,7 @@
     </p>
 
     <p class="prose">
-      Here \(\theta\) is the angle between the force and velocity vectors. When they are parallel, \(P = Fv\). This form is useful when speed and force are known rather than work and time: a car engine applying 4000 N of drive force at 30 m/s delivers \(P = 120{,}000\) W \(= 120\) kW regardless of how far it has traveled.
+      \(\theta\) is the angle between force and velocity; when parallel, \(P = Fv\). Useful when speed and force are known rather than work and time: an engine applying 4000 N at 30 m/s delivers 120 kW regardless of distance traveled.
     </p>
 
     <div class="card">

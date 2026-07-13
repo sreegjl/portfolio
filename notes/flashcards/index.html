@@ -580,12 +580,68 @@ body { display: flex; flex-direction: column; min-height: 100dvh; }
         { type: 'tf', q: 'Two machines that do the same total work always have the same power.',
           a: 'False. Power depends on how quickly the work is done: \\(P = W/\\Delta t\\). The same work done in half the time requires twice the power.' },
       ]
+    },
+    'momentum': {
+      title: 'Impulse & Momentum',
+      back: '../momentum/',
+      cards: [
+        { q: 'Linear momentum',                               a: '\\[\\vec{p} = m\\vec{v}\\]',
+          desc: '\\(m\\) = mass (kg) &nbsp;·&nbsp; \\(\\vec{v}\\) = velocity; vector, units kg·m/s' },
+        { q: "Newton's 2nd law (momentum form)",              a: '\\[\\vec{F}_{\\text{net}} = \\dfrac{\\Delta \\vec{p}}{\\Delta t}\\]',
+          desc: 'net force equals the rate of change of momentum; reduces to \\(F = ma\\) for constant mass' },
+        { q: 'Impulse',                                       a: '\\[\\vec{J} = \\vec{F}\\,\\Delta t\\]',
+          desc: '\\(\\vec{F}\\) = (average) force &nbsp;·&nbsp; \\(\\Delta t\\) = contact time; area under the \\(F\\)-\\(t\\) curve' },
+        { q: 'Impulse-momentum theorem',                      a: '\\[\\vec{J}_{\\text{net}} = \\Delta \\vec{p} = m\\vec{v}_f - m\\vec{v}_i\\]',
+          desc: 'impulse from the net force equals the change in momentum' },
+        { q: 'Conservation of momentum',                      a: '\\[\\textstyle\\sum \\vec{p}_i = \\sum \\vec{p}_f\\]',
+          desc: 'holds when \\(\\vec{F}_{\\text{ext,net}} = 0\\); each component conserved separately' },
+        { q: 'Two-body momentum conservation',                a: '\\[m_1\\vec{v}_{1i} + m_2\\vec{v}_{2i} = m_1\\vec{v}_{1f} + m_2\\vec{v}_{2f}\\]',
+          desc: 'total momentum before equals total momentum after the interaction' },
+        { q: 'Perfectly inelastic collision',                 a: '\\[\\vec{v}_f = \\dfrac{m_1\\vec{v}_{1i} + m_2\\vec{v}_{2i}}{m_1 + m_2}\\]',
+          desc: 'objects stick together and share one final velocity; maximum kinetic energy loss' },
+        { q: 'Elastic 1D collision (target at rest)',         a: '\\[v_{1f} = \\dfrac{m_1 - m_2}{m_1 + m_2}v_{1i} \\qquad v_{2f} = \\dfrac{2m_1}{m_1 + m_2}v_{1i}\\]',
+          desc: 'both momentum and kinetic energy conserved' },
+        { q: 'Center of mass velocity',                       a: '\\[\\vec{v}_{\\text{cm}} = \\dfrac{\\vec{p}_{\\text{tot}}}{M}\\]',
+          desc: '\\(M\\) = total mass; constant when no net external force acts' },
+        { q: 'Kinetic energy from momentum',                  a: '\\[K = \\dfrac{p^2}{2m}\\]',
+          desc: 'links the two quantities; same \\(p\\), smaller \\(m\\) means more \\(K\\)' },
+        { type: 'tf', q: 'Momentum is conserved in every type of collision, as long as no net external force acts.',
+          a: 'True. Elastic, inelastic, and perfectly inelastic collisions all conserve total momentum. Only kinetic energy distinguishes them.' },
+        { type: 'tf', q: 'Kinetic energy is conserved in all collisions.',
+          a: 'False. Only elastic collisions conserve kinetic energy. Inelastic collisions convert some of it to heat, sound, and deformation.' },
+        { type: 'tf', q: 'A truck and a bicycle with the same momentum have the same kinetic energy.',
+          a: 'False. \\(K = p^2/2m\\), so for equal momentum the lighter object has more kinetic energy.' },
+        { type: 'tf', q: 'Increasing the contact time of a collision reduces the average force for the same momentum change.',
+          a: 'True. \\(F_{\\text{avg}} = \\Delta p / \\Delta t\\). This is why airbags and crumple zones work.' },
+        { type: 'tf', q: 'Impulse and momentum have the same units.',
+          a: 'True. \\(1\\,\\text{N·s} = 1\\,\\text{kg·m/s}\\), consistent with \\(\\vec{J} = \\Delta \\vec{p}\\).' },
+        { type: 'tf', q: "An object's momentum can change even if its speed stays constant.",
+          a: 'True. Momentum is a vector. In uniform circular motion the speed is constant but the direction, and therefore \\(\\vec{p}\\), continuously changes.' },
+        { type: 'tf', q: "Internal forces can change a system's total momentum.",
+          a: 'False. Internal forces come in action-reaction pairs whose impulses cancel. Only a net external force changes total momentum.' },
+        { type: 'tf', q: 'Two objects that explode apart from rest have equal and opposite momenta.',
+          a: 'True. Total momentum starts at zero and must stay zero, so \\(\\vec{p}_1 = -\\vec{p}_2\\).' },
+        { type: 'tf', q: 'In an elastic collision between equal masses where one is at rest, the objects exchange velocities.',
+          a: 'True. With \\(m_1 = m_2\\), the formulas give \\(v_{1f} = 0\\) and \\(v_{2f} = v_{1i}\\), like billiard balls.' },
+        { type: 'tf', q: 'The center of mass of a system can be accelerated by internal forces.',
+          a: 'False. \\(\\vec{F}_{\\text{ext,net}} = M\\vec{a}_{\\text{cm}}\\). Internal forces cancel in pairs and never move the center of mass.' },
+        { type: 'tf', q: 'Momentum is a scalar quantity.',
+          a: 'False. Momentum is a vector, \\(\\vec{p} = m\\vec{v}\\), with direction along the velocity. Components are conserved independently.' },
+        { type: 'tf', q: 'If two colliding objects separate more slowly than they approached, the collision was inelastic.',
+          a: 'True. Elastic collisions preserve relative speed: \\(v_{1i} - v_{2i} = -(v_{1f} - v_{2f})\\). A slower separation means kinetic energy was lost.' },
+      ]
     }
   };
 
   var params  = new URLSearchParams(window.location.search);
   var key     = params.get('topic') || 'kinematics';
-  var deck    = DECKS[key] || DECKS['kinematics'];
+  var deck;
+  if (key === 'all') {
+    deck = { title: 'All Equations', back: '../equations/', cards: [] };
+    Object.keys(DECKS).forEach(function (k) { deck.cards = deck.cards.concat(DECKS[k].cards); });
+  } else {
+    deck = DECKS[key] || DECKS['kinematics'];
+  }
   var allCards = deck.cards;
 
   var starredKey = 'fc-stars-' + key;
