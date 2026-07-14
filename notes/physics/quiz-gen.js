@@ -558,6 +558,263 @@ var QuizGen = (function () {
         '\\(T_B = ' + r2 + '^{1.5} = ' + T2 + '\\text{ yr}\\)'
       );
       renderQ(el, text, makeOpts(T2, wrongs), explain, '\\text{ yr}');
+    },
+
+    momentumOf: function (el) {
+      var m = rand(2, 12, 1);
+      var v = rand(3, 15, 1);
+      var p = +(m * v).toFixed(1);
+      var text = 'A \\(' + m + '\\text{ kg}\\) object moves at \\(' + v + '\\text{ m/s}\\). What is the magnitude of its momentum?';
+      var wrongs = [+(0.5 * m * v * v).toFixed(1), +(m * v * v).toFixed(1), +(0.5 * m * v).toFixed(1)];
+      var explain = steps(
+        '\\(p = mv\\)',
+        '\\(= ' + m + ' \\times ' + v + ' = ' + p + '\\text{ kg·m/s}\\)',
+        'Momentum is a vector: it points along the velocity'
+      );
+      renderQ(el, text, makeOpts(p, wrongs), explain, '\\text{ kg·m/s}');
+    },
+
+    impulseFromForce: function (el) {
+      var F = rand(20, 120, 10);
+      var t = rand(0.5, 3, 0.5);
+      var J = +(F * t).toFixed(1);
+      var text = 'A net force of \\(' + F + '\\text{ N}\\) acts on a cart for \\(' + t + '\\text{ s}\\). What is the change in the cart\'s momentum?';
+      var wrongs = [+(F / t).toFixed(1), +F.toFixed(1), +(0.5 * F * t).toFixed(1)];
+      var explain = steps(
+        'Impulse: \\(J = F\\Delta t = ' + F + ' \\times ' + t + ' = ' + J + '\\text{ N·s}\\)',
+        'Impulse-momentum theorem: \\(J_{net} = \\Delta p\\)',
+        '\\(\\Delta p = ' + J + '\\text{ kg·m/s}\\) (N·s and kg·m/s are the same unit)'
+      );
+      renderQ(el, text, makeOpts(J, wrongs), explain, '\\text{ kg·m/s}');
+    },
+
+    impulseFinalSpeed: function (el) {
+      var m = rand(2, 8, 1);
+      var v0 = rand(0, 5, 1);
+      var F = rand(10, 60, 5);
+      var t = rand(2, 6, 1);
+      var vf = +(v0 + F * t / m).toFixed(1);
+      var J = +(F * t).toFixed(0);
+      var text = 'A \\(' + m + '\\text{ kg}\\) cart' + (v0 > 0 ? ' moving at \\(' + v0 + '\\text{ m/s}\\)' : ' at rest') + ' is pushed by a \\(' + F + '\\text{ N}\\) net force for \\(' + t + '\\text{ s}\\). What is its final speed?';
+      var explain = steps(
+        'Impulse: \\(J = F\\Delta t = ' + F + ' \\times ' + t + ' = ' + J + '\\text{ N·s}\\)',
+        'Impulse-momentum theorem: \\(J = \\Delta p = m(v_f - v_0)\\)',
+        'Solve: \\(v_f = v_0 + \\dfrac{J}{m} = ' + v0 + ' + \\dfrac{' + J + '}{' + m + '}\\)',
+        '\\(= ' + vf + '\\text{ m/s}\\)'
+      );
+      renderInput(el, text, vf, 0.2, explain);
+    },
+
+    ftGraphImpulse: function (el) {
+      var F = rand(40, 200, 20);
+      var t = rand(2, 10, 2);
+      var J = +(0.5 * F * t).toFixed(1);
+      var text = 'The net force on an object rises linearly from \\(0\\) to \\(' + F + '\\text{ N}\\) over \\(' + t + '\\text{ s}\\). From the force vs. time graph, what impulse is delivered?';
+      var wrongs = [+(F * t).toFixed(1), +(2 * F * t).toFixed(1), +(F / t).toFixed(1)];
+      var explain = steps(
+        'Impulse = area under the \\(F\\) vs. \\(t\\) curve',
+        'The graph is a triangle: area \\(= \\tfrac{1}{2} \\times \\text{base} \\times \\text{height}\\)',
+        '\\(J = \\tfrac{1}{2}(' + t + ')(' + F + ') = ' + J + '\\text{ N·s}\\)',
+        'This also equals \\(\\Delta p\\) by the impulse-momentum theorem'
+      );
+      renderQ(el, text, makeOpts(J, wrongs), explain, '\\text{ N·s}');
+    },
+
+    recoilSpeed: function (el) {
+      var m1 = rand(2, 8, 1);
+      var v1 = rand(20, 80, 10);
+      var m2 = rand(200, 1000, 100);
+      var v2 = +(m1 * v1 / m2).toFixed(2);
+      var text = 'A \\(' + m2 + '\\text{ kg}\\) cannon at rest fires a \\(' + m1 + '\\text{ kg}\\) shell horizontally at \\(' + v1 + '\\text{ m/s}\\). What is the cannon\'s recoil speed?';
+      var wrongs = [+(m1 * v1 / (m1 + m2)).toFixed(2), +(v1 * m2 / (m1 * 1000)).toFixed(2), +(v1 / m1).toFixed(2)];
+      var explain = steps(
+        'Total momentum starts at zero and must stay zero',
+        '\\(0 = m_1 v_1 + m_2 v_2 \\implies m_2|v_2| = m_1 v_1\\)',
+        '\\(|v_2| = \\dfrac{m_1 v_1}{m_2} = \\dfrac{' + m1 + ' \\times ' + v1 + '}{' + m2 + '}\\)',
+        '\\(= ' + v2 + '\\text{ m/s}\\), opposite the shell'
+      );
+      renderQ(el, text, makeOpts(v2, wrongs), explain, '\\text{ m/s}');
+    },
+
+    comVelocity: function (el) {
+      var m1 = rand(2, 6, 1);
+      var v1 = rand(4, 10, 1);
+      var m2 = rand(2, 6, 1);
+      var v2 = rand(1, 4, 1);
+      var vcm = +((m1 * v1 + m2 * v2) / (m1 + m2)).toFixed(1);
+      var text = 'Two carts move in the same direction: \\(' + m1 + '\\text{ kg}\\) at \\(' + v1 + '\\text{ m/s}\\) and \\(' + m2 + '\\text{ kg}\\) at \\(' + v2 + '\\text{ m/s}\\). What is the velocity of the system\'s center of mass?';
+      var wrongs = [+((v1 + v2) / 2).toFixed(1), +(v1 + v2).toFixed(1), +((m1 * v1 + m2 * v2) / 2).toFixed(1)];
+      var explain = steps(
+        '\\(v_{cm} = \\dfrac{p_{tot}}{M} = \\dfrac{m_1 v_1 + m_2 v_2}{m_1 + m_2}\\)',
+        '\\(p_{tot} = ' + m1 + '(' + v1 + ') + ' + m2 + '(' + v2 + ') = ' + (m1 * v1 + m2 * v2) + '\\text{ kg·m/s}\\)',
+        '\\(v_{cm} = \\dfrac{' + (m1 * v1 + m2 * v2) + '}{' + (m1 + m2) + '} = ' + vcm + '\\text{ m/s}\\)',
+        'The simple average of the velocities is only right when the masses are equal'
+      );
+      renderQ(el, text, makeOpts(vcm, wrongs), explain, '\\text{ m/s}');
+    },
+
+    comPosition: function (el) {
+      var m1 = rand(2, 6, 1);
+      var m2 = m1 + rand(2, 6, 1);
+      var x1 = rand(0, 4, 1);
+      var x2 = x1 + rand(2, 6, 1);
+      var xcm = +((m1 * x1 + m2 * x2) / (m1 + m2)).toFixed(2);
+      var text = 'A \\(' + m1 + '\\text{ kg}\\) object sits at \\(x = ' + x1 + '\\text{ m}\\) and a \\(' + m2 + '\\text{ kg}\\) object sits at \\(x = ' + x2 + '\\text{ m}\\). Where is the center of mass of the system?';
+      var wrongs = [+((x1 + x2) / 2).toFixed(2), +((m1 * x2 + m2 * x1) / (m1 + m2)).toFixed(2), +((m1 * x1 + m2 * x2) / 2).toFixed(2)];
+      var explain = steps(
+        '\\(x_{cm} = \\dfrac{m_1 x_1 + m_2 x_2}{m_1 + m_2}\\)',
+        '\\(= \\dfrac{' + m1 + '(' + x1 + ') + ' + m2 + '(' + x2 + ')}{' + (m1 + m2) + '} = \\dfrac{' + (m1 * x1 + m2 * x2) + '}{' + (m1 + m2) + '}\\)',
+        '\\(= ' + xcm + '\\text{ m}\\)',
+        'It sits closer to the ' + m2 + '\\(\\text{ kg}\\) mass; the midpoint is only right for equal masses'
+      );
+      renderQ(el, text, makeOpts(xcm, wrongs), explain, '\\text{ m}');
+    },
+
+    comPushOff: function (el) {
+      var v = rand(1, 3, 1);
+      var t1 = rand(2, 4, 1);
+      var dt = rand(2, 3, 1);
+      var t2 = t1 + dt;
+      var xcm = v * t2;
+      var xc = v * t1 + (v + rand(1, 3, 1)) * dt;
+      var xm = +((3 * xcm - xc) / 2).toFixed(1);
+      var text = 'Two astronauts drift together through space at \\(' + v + '\\text{ m/s}\\), starting from the origin. At \\(t = ' + t1 + '\\text{ s}\\) they push apart. At \\(t = ' + t2 + '\\text{ s}\\) the lighter astronaut is at \\(x = ' + xc + '\\text{ m}\\). The other astronaut is twice as massive. Where is the heavier astronaut at \\(t = ' + t2 + '\\text{ s}\\)?';
+      var explain = steps(
+        'The push is internal, so \\(v_{cm}\\) stays \\(' + v + '\\text{ m/s}\\): \\(x_{cm} = ' + v + '(' + t2 + ') = ' + xcm + '\\text{ m}\\)',
+        'With masses \\(2m\\) and \\(m\\): \\(x_{cm} = \\dfrac{2m\\,x_{heavy} + m\\,x_{light}}{3m}\\)',
+        '\\(' + xcm + ' = \\dfrac{2x_{heavy} + ' + xc + '}{3}\\)',
+        '\\(x_{heavy} = \\dfrac{3(' + xcm + ') - ' + xc + '}{2} = ' + xm + '\\text{ m}\\)'
+      );
+      renderInput(el, text, xm, 0.2, explain);
+    },
+
+    deriveReboundForce: function (el) {
+      var text = 'A ball of mass \\(m\\) hits a wall at speed \\(v\\) and rebounds at the same speed. The contact lasts \\(\\Delta t\\). Derive the magnitude of the average force on the ball.';
+      var correct = '\\dfrac{2mv}{\\Delta t}';
+      var wrongs = ['\\dfrac{mv}{\\Delta t}', '\\dfrac{mv}{2\\Delta t}', '2mv\\,\\Delta t'];
+      var explain = steps(
+        'Take toward the wall as positive: \\(p_i = mv\\), \\(p_f = -mv\\)',
+        '\\(\\Delta p = -mv - mv = -2mv\\) (the sign flip doubles the change)',
+        'Impulse-momentum theorem: \\(F_{avg} = \\dfrac{|\\Delta p|}{\\Delta t}\\)',
+        '\\(F_{avg} = \\dfrac{2mv}{\\Delta t}\\)'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    perfectlyInelasticVf: function (el) {
+      var m1 = rand(2, 8, 1);
+      var v1 = rand(6, 12, 1);
+      var m2 = rand(2, 8, 1);
+      var v2 = rand(0, 4, 1);
+      var vf = +((m1 * v1 + m2 * v2) / (m1 + m2)).toFixed(1);
+      var text = 'A \\(' + m1 + '\\text{ kg}\\) cart moving at \\(' + v1 + '\\text{ m/s}\\) catches up to a \\(' + m2 + '\\text{ kg}\\) cart ' + (v2 > 0 ? 'moving at \\(' + v2 + '\\text{ m/s}\\) in the same direction' : 'at rest') + ', and they couple together. What is their common final velocity?';
+      var wrongs = [+((v1 + v2) / 2).toFixed(1), +(m1 * v1 / (m1 + m2)).toFixed(1), +(v1 - v2).toFixed(1)];
+      var explain = steps(
+        'Perfectly inelastic: the carts share one final velocity',
+        'Conservation: \\(m_1 v_1 + m_2 v_2 = (m_1 + m_2)v_f\\)',
+        '\\(p_{tot} = ' + m1 + '(' + v1 + ') + ' + m2 + '(' + v2 + ') = ' + (m1 * v1 + m2 * v2) + '\\text{ kg·m/s}\\)',
+        '\\(v_f = \\dfrac{' + (m1 * v1 + m2 * v2) + '}{' + (m1 + m2) + '} = ' + vf + '\\text{ m/s}\\)'
+      );
+      renderQ(el, text, makeOpts(vf, wrongs), explain, '\\text{ m/s}');
+    },
+
+    elasticEqualMass: function (el) {
+      var v = rand(2, 10, 1);
+      var text = 'Cart A moving at \\(' + v + '\\text{ m/s}\\) collides <strong>elastically</strong> with an identical cart B at rest. What are the final velocities?';
+      var correct = 'v_{A} = 0,\\;\\; v_{B} = ' + v + '\\text{ m/s}';
+      var wrongs = [
+        'v_{A} = v_{B} = ' + +(v / 2).toFixed(1) + '\\text{ m/s}',
+        'v_{A} = -' + v + '\\text{ m/s},\\;\\; v_{B} = 0',
+        'v_{A} = v_{B} = ' + v + '\\text{ m/s}'
+      ];
+      var explain = steps(
+        'Equal masses in an elastic collision swap velocities (like billiard balls)',
+        'Check momentum: \\(m(' + v + ') + 0 = 0 + m(' + v + ')\\) ✓',
+        'Check kinetic energy: \\(\\tfrac{1}{2}m(' + v + ')^2 = \\tfrac{1}{2}m(' + v + ')^2\\) ✓',
+        'Both moving at \\(' + +(v / 2).toFixed(1) + '\\text{ m/s}\\) conserves momentum but loses \\(K\\): that\'s the perfectly inelastic outcome'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    collisionFindV2f: function (el) {
+      var m1 = rand(1, 4, 1);
+      var v1i = rand(4, 10, 1);
+      var m2 = rand(4, 10, 1);
+      var v1f = rand(1, 3, 1);
+      var v2f = +((m1 * (v1i + v1f)) / m2).toFixed(2);
+      var text = 'A \\(' + m1 + '\\text{ kg}\\) ball moving at \\(' + v1i + '\\text{ m/s}\\) hits a \\(' + m2 + '\\text{ kg}\\) ball at rest and rebounds backward at \\(' + v1f + '\\text{ m/s}\\). What is the final speed of the \\(' + m2 + '\\text{ kg}\\) ball?';
+      var explain = steps(
+        'Conservation: \\(m_1 v_{1i} + 0 = m_1 v_{1f} + m_2 v_{2f}\\)',
+        'Rebounding means \\(v_{1f} = -' + v1f + '\\text{ m/s}\\)',
+        '\\(' + m1 + '(' + v1i + ') = ' + m1 + '(-' + v1f + ') + ' + m2 + 'v_{2f}\\)',
+        '\\(v_{2f} = \\dfrac{' + m1 + '(' + v1i + ' + ' + v1f + ')}{' + m2 + '} = ' + v2f + '\\text{ m/s}\\)'
+      );
+      renderInput(el, text, v2f, 0.1, explain);
+    },
+
+    kineticEnergyLostStick: function (el) {
+      var m1 = rand(2, 6, 1);
+      var v1 = rand(6, 12, 1);
+      var m2 = rand(2, 6, 1);
+      var vf = m1 * v1 / (m1 + m2);
+      var Ki = +(0.5 * m1 * v1 * v1).toFixed(1);
+      var Kf = +(0.5 * (m1 + m2) * vf * vf).toFixed(1);
+      var lost = +(Ki - Kf).toFixed(1);
+      var text = 'A \\(' + m1 + '\\text{ kg}\\) lump of clay moving at \\(' + v1 + '\\text{ m/s}\\) sticks to a \\(' + m2 + '\\text{ kg}\\) block at rest. How much kinetic energy is converted to internal energy?';
+      var wrongs = [Ki, Kf, +(Ki / 2).toFixed(1)];
+      var explain = steps(
+        'Momentum first: \\(v_f = \\dfrac{m_1 v_1}{m_1 + m_2} = \\dfrac{' + (m1 * v1) + '}{' + (m1 + m2) + '} = ' + +vf.toFixed(2) + '\\text{ m/s}\\)',
+        '\\(K_i = \\tfrac{1}{2}(' + m1 + ')(' + v1 + ')^2 = ' + Ki + '\\text{ J}\\)',
+        '\\(K_f = \\tfrac{1}{2}(' + (m1 + m2) + ')(' + +vf.toFixed(2) + ')^2 = ' + Kf + '\\text{ J}\\)',
+        'Converted: \\(K_i - K_f = ' + Ki + ' - ' + Kf + ' = ' + lost + '\\text{ J}\\)',
+        'Momentum is conserved, but kinetic energy is not'
+      );
+      renderQ(el, text, makeOpts(lost, wrongs), explain, '\\text{ J}');
+    },
+
+    missingMomentum: function (el) {
+      var triples = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [9, 12, 15], [8, 15, 17], [12, 16, 20], [7, 24, 25]];
+      var tr = triples[Math.floor(Math.random() * triples.length)];
+      var a = tr[0], b = tr[1], c = tr[2];
+      var text = 'Before a particle collision, the total momentum transverse to the beam is zero. Detectors measure two particles with transverse momenta \\(\\langle -' + a + ',\\, 0\\rangle\\) and \\(\\langle 0,\\, -' + b + '\\rangle\\) \\(\\text{GeV}/c\\). What is the magnitude of the missing momentum?';
+      var wrongs = [a + b, Math.max(b - a, 1), b];
+      var explain = steps(
+        'Total transverse momentum must still be zero after the collision',
+        'Detected total: \\(\\langle -' + a + ',\\, -' + b + '\\rangle\\)',
+        'Missing momentum balances it: \\(\\langle ' + a + ',\\, ' + b + '\\rangle\\)',
+        'Magnitude: \\(\\sqrt{' + a + '^2 + ' + b + '^2} = \\sqrt{' + (a * a + b * b) + '} = ' + c + '\\text{ GeV}/c\\)',
+        'An undetected particle, such as a neutrino, carried this momentum away'
+      );
+      renderQ(el, text, makeOpts(c, wrongs), explain, '\\text{ GeV}/c');
+    },
+
+    lorentzFactor: function (el) {
+      var betas = [0.5, 0.6, 0.8, 0.9];
+      var b = betas[Math.floor(Math.random() * betas.length)];
+      var g = +(1 / Math.sqrt(1 - b * b)).toFixed(2);
+      var text = 'A proton moves at \\(v = ' + b + 'c\\). What is its Lorentz factor \\(\\gamma\\)?';
+      var wrongs = [+Math.sqrt(1 - b * b).toFixed(2), +(1 - b * b).toFixed(2), +(1 / (1 - b * b)).toFixed(2)];
+      var explain = steps(
+        '\\(\\gamma = \\dfrac{1}{\\sqrt{1 - v^2/c^2}}\\)',
+        '\\(v^2/c^2 = ' + b + '^2 = ' + +(b * b).toFixed(2) + '\\)',
+        '\\(\\gamma = \\dfrac{1}{\\sqrt{1 - ' + +(b * b).toFixed(2) + '}} = \\dfrac{1}{\\sqrt{' + +(1 - b * b).toFixed(2) + '}} = ' + g + '\\)',
+        'Then \\(\\vec{p} = \\gamma m \\vec{v}\\): the faster the particle, the more \\(\\gamma\\) matters'
+      );
+      renderQ(el, text, makeOpts(g, wrongs), explain, '');
+    },
+
+    derivePhotonMomentum: function (el) {
+      var text = 'Starting from the relativistic energy equation \\(E^2 = p^2c^2 + m^2c^4\\), derive the momentum of a photon with energy \\(E\\).';
+      var correct = '\\dfrac{E}{c}';
+      var wrongs = ['Ec', '\\dfrac{E}{c^2}', '\\dfrac{c}{E}'];
+      var explain = steps(
+        'Photons are massless: set \\(m = 0\\)',
+        '\\(E^2 = p^2c^2\\)',
+        'Take the square root: \\(E = pc\\)',
+        'Solve: \\(p = \\dfrac{E}{c}\\)',
+        'Massless particles still carry momentum and energy'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
     }
   };
 })();

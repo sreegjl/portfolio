@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collisions</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Physics</a>
+    <div>
+      <h1>collisions</h1>
+      <span>elastic and inelastic collisions, the LHC, missing momentum, and relativistic momentum and energy</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Types of collisions ── -->
+  <div class="section" id="sec-collisions">
+    <p class="section-label">Types of collisions</p>
+
+    <p class="prose">
+      Collisions are classified by what happens to kinetic energy, which can be converted to heat, sound, and deformation. Total momentum is conserved in <strong>every</strong> type:
+    </p>
+
+    <div class="card">
+      <p class="card-title">Types of collisions</p>
+      <div class="row">
+        <span class="row-desc">Elastic</span>
+        <span class="row-val"><span class="badge teal">\(K\) conserved</span> objects bounce apart, no energy lost</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Inelastic</span>
+        <span class="row-val"><span class="badge amber">\(K\) decreases</span> objects bounce apart, some energy dissipated</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Perfectly inelastic</span>
+        <span class="row-val"><span class="badge coral">max \(K\) lost</span> objects stick together and share one final velocity</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Explosion / separation</span>
+        <span class="row-val">reverse of perfectly inelastic, \(K\) increases from stored energy, \(\vec{p}\) still conserved</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      In a <strong>perfectly inelastic</strong> collision the objects move off together, so conservation of momentum alone fixes the final velocity:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\vec{v}_f = \dfrac{m_1\vec{v}_{1i} + m_2\vec{v}_{2i}}{m_1 + m_2}\]
+    </p>
+
+    <p class="prose">
+      In a <strong>1D elastic</strong> collision, both momentum and kinetic energy are conserved, which pins down both final velocities:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[v_{1f} = \dfrac{m_1 - m_2}{m_1 + m_2}v_{1i} \qquad v_{2f} = \dfrac{2m_1}{m_1 + m_2}v_{1i}\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Elastic collision limits (target at rest)</p>
+      <div class="row">
+        <span class="row-desc">\(m_1 = m_2\)</span>
+        <span class="row-val">objects swap velocities: \(v_{1f} = 0\), \(v_{2f} = v_{1i}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(m_1 \gg m_2\)</span>
+        <span class="row-val">heavy object barely slows, light one flies off at \(\approx 2v_{1i}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(m_1 \ll m_2\)</span>
+        <span class="row-val">light object bounces back at \(\approx -v_{1i}\), heavy one barely moves</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Try the sliders below: set the masses, initial velocities, and elasticity, then watch the collision. Total momentum is identical before and after in every case, but kinetic energy survives only when the collision is elastic.
+    </p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Two carts colliding on a track</span>
+      </div>
+      <canvas id="collide-canvas" width="600" height="240"></canvas>
+      <div class="graph-caption"><span id="collide-caption"></span></div>
+    </div>
+
+    <p class="prose">
+      A quick elastic test: relative speed of approach equals relative speed of separation, \(v_{1i} - v_{2i} = -(v_{1f} - v_{2f})\). Separating slower than approaching means the collision was inelastic.
+    </p>
+  </div>
+
+  <!-- ── Particle accelerators ── -->
+  <div class="section" id="sec-accelerators">
+    <p class="section-label">Particle accelerators</p>
+
+    <p class="prose">
+      Collisions between high-speed particles reveal the fundamental building blocks of the universe. To produce them, physicists build <strong>particle accelerators</strong>, the largest of which is the <strong>Large Hadron Collider (LHC)</strong> at CERN, a \(27\,\text{km}\) loop buried under the border of France and Switzerland.
+    </p>
+
+    <div class="card">
+      <p class="card-title">The Large Hadron Collider</p>
+      <div class="row">
+        <span class="row-desc">Beams</span>
+        <span class="row-val">two proton beams travel in opposite directions in parallel pipes</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Speed</span>
+        <span class="row-val">accelerated to nearly the speed of light over many laps</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Guidance</span>
+        <span class="row-val">magnetic fields steer the protons, electric fields accelerate them</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Collisions</span>
+        <span class="row-val">the beams cross at set locations, giving protons a chance to collide</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Detectors</span>
+        <span class="row-val">layered instruments like the CMS record the directions and energies of what emerges</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      The collisions themselves are far too small to see. Physicists reconstruct them from detector data using the same two tools that govern macroscopic collisions: conservation of momentum and conservation of energy.
+    </p>
+  </div>
+
+  <!-- ── Missing momentum ── -->
+  <div class="section" id="sec-missing">
+    <p class="section-label">Missing momentum</p>
+
+    <p class="prose">
+      Conservation of momentum applies to particle collisions exactly as it does to colliding carts: with no unbalanced external force, the system's total momentum is constant, in each dimension separately:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-p}{\vec{p}}_{\,\text{total,i}} = \class{var-p}{\vec{p}}_{\,\text{total,f}}\]
+    </p>
+
+    <p class="prose">
+      Before an LHC collision, both protons travel straight along the beam line, so the total momentum in the plane perpendicular to the beam is zero. After the collision it must still be zero.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Reading a collision event</p>
+      <div class="row">
+        <span class="row-desc">Detected particles</span>
+        <span class="row-val">charged-particle tracks and energy deposits in the detector layers</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Balance check</span>
+        <span class="row-val">detected momenta should sum to zero in the transverse plane</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Missing momentum</span>
+        <span class="row-val"><span class="badge coral">imbalance</span> points to one or more particles that escaped undetected</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Likely culprit</span>
+        <span class="row-val"><span class="badge teal">neutrinos</span> no charge, very little mass, barely interact with matter</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Try the sliders below: aim the two detected particles and see what it takes to balance the event. Whenever the detected momenta do not sum to zero, something invisible carried away the difference.
+    </p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Balancing a detector event</span>
+      </div>
+      <canvas id="event-canvas" width="600" height="300"></canvas>
+      <div class="graph-caption"><span id="event-caption"></span></div>
+    </div>
+
+    <p class="prose">
+      Neutrinos pass through the detectors without leaving a trace, but they cannot hide completely: the momentum they carry away shows up as the missing piece of the balance.
+    </p>
+  </div>
+
+  <!-- ── Relativistic momentum ── -->
+  <div class="section" id="sec-rel-momentum">
+    <p class="section-label">Relativistic momentum</p>
+
+    <p class="prose">
+      LHC particles move at nearly the speed of light, so special relativity is needed to describe them. Many relativistic quantities involve the <strong>Lorentz factor</strong>:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\gamma = \dfrac{1}{\sqrt{1 - v^2/c^2}}\]
+    </p>
+
+    <p class="prose">
+      The <strong>relativistic momentum</strong> of a particle is:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-p}{\vec{p}} = \gamma m\vec{v}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(\gamma\)</span>
+          <span class="row-val">Lorentz factor, dimensionless, \(\geq 1\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(v\)</span>
+          <span class="row-val">particle speed (m/s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(c\)</span>
+          <span class="row-val">speed of light, \(3.00 \times 10^8\) m/s</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(m\)</span>
+          <span class="row-val">particle mass (kg)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Limits</p>
+        <div class="row">
+          <span class="row-desc">\(v \ll c\)</span>
+          <span class="row-val"><span class="badge teal">\(\gamma \approx 1\)</span> reduces to the familiar \(\vec{p} = m\vec{v}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(v \to c\)</span>
+          <span class="row-val"><span class="badge coral">\(\gamma\) grows without bound</span> full equation required</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Either case</span>
+          <span class="row-val">momentum is still a conserved, vector quantity</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      The familiar \(\vec{p} = m\vec{v}\) is just the slow-speed limit of the relativistic definition: when \(v \ll c\), the ratio \(v^2/c^2 \approx 0\) and \(\gamma \approx 1\).
+    </p>
+  </div>
+
+  <!-- ── Relativistic energy ── -->
+  <div class="section" id="sec-rel-energy">
+    <p class="section-label">Relativistic energy</p>
+
+    <p class="prose">
+      Total energy is also conserved in particle collisions. The <strong>relativistic energy</strong> of a particle depends on both its momentum and its mass:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[E^2 = p^2c^2 + m^2c^4\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(E\)</span>
+          <span class="row-val">total relativistic energy (J)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(p\)</span>
+          <span class="row-val">magnitude of the particle's momentum (kg·m/s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(m\)</span>
+          <span class="row-val">particle mass (kg)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(c\)</span>
+          <span class="row-val">speed of light (m/s)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Two contributions</p>
+        <div class="row">
+          <span class="row-desc">\(p^2c^2\)</span>
+          <span class="row-val">energy from the particle's motion</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(m^2c^4\)</span>
+          <span class="row-val">energy from the particle's mass</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">At rest \((p = 0)\)</span>
+          <span class="row-val">\(E = mc^2\), pure mass energy</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Massless \((m = 0)\)</span>
+          <span class="row-val">\(E = pc\), so \(p = E/c\)</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Setting \(p = 0\) gives the famous <strong>mass energy</strong> equation, the energy an object has at rest purely due to its mass:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[E = mc^2\]
+    </p>
+
+    <p class="prose">
+      Setting \(m = 0\) instead describes <strong>massless particles</strong> like photons:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[E = pc\]
+    </p>
+
+    <p class="prose">
+      Photons have no mass, yet they still carry both energy and momentum, so they participate fully in both conservation laws. The relativistic equations hold for slow macroscopic objects too, but there \(\vec{p} = m\vec{v}\) and \(K = \frac{1}{2}mv^2\) are simpler and accurate enough.
+    </p>
+  </div>
+
+  <!-- ── Creating new particles ── -->
+  <div class="section" id="sec-new-particles">
+    <p class="section-label">Creating new particles</p>
+
+    <p class="prose">
+      In a macroscopic inelastic collision, lost kinetic energy becomes disorganized internal energy of the objects' particles, and the total mass is the same before and after. In particle physics the accounting is more dramatic: <strong>mass is not conserved</strong>. Only the total relativistic energy \(E\) is.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Macroscopic vs. particle collisions</p>
+      <div class="row">
+        <span class="row-desc">Momentum</span>
+        <span class="row-val"><span class="badge teal">conserved</span> in both, vector sum never changes</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Total energy</span>
+        <span class="row-val"><span class="badge teal">conserved</span> in both, only its form changes</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Mass</span>
+        <span class="row-val">constant for macroscopic objects, <span class="badge coral">not conserved</span> in particle collisions</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">"Lost" kinetic energy</span>
+        <span class="row-val">becomes heat, sound, and deformation, or the mass energy of new particles</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      This is why the protons must move so fast: only when the system carries enough energy of motion can some of it convert into the rest mass of new, heavier particles. That conversion is how the LHC produces particles that do not exist in everyday matter.
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">All collisions</span>
+        <span class="row-val">conserve momentum, only elastic ones conserve kinetic energy</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Perfectly inelastic</span>
+        <span class="row-val">objects stick, \(\vec{v}_f = (m_1\vec{v}_{1i} + m_2\vec{v}_{2i})/(m_1 + m_2)\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Elastic test</span>
+        <span class="row-val">relative speed of approach equals relative speed of separation</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Conservation of momentum</span>
+        <span class="row-val">\(\class{var-p}{\vec{p}}_{\,\text{total,i}} = \class{var-p}{\vec{p}}_{\,\text{total,f}}\), holds in particle collisions, each component separately</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Missing momentum</span>
+        <span class="row-val">an unbalanced event reveals undetected particles, like neutrinos</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Lorentz factor</span>
+        <span class="row-val">\(\gamma = 1/\sqrt{1 - v^2/c^2}\), \(\approx 1\) when \(v \ll c\), grows as \(v \to c\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Relativistic momentum</span>
+        <span class="row-val">\(\class{var-p}{\vec{p}} = \gamma m\vec{v}\), reduces to \(m\vec{v}\) at low speed</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Relativistic energy</span>
+        <span class="row-val">\(E^2 = p^2c^2 + m^2c^4\), motion term plus mass term</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Mass energy</span>
+        <span class="row-val">\(E = mc^2\) for a particle at rest</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Massless particles</span>
+        <span class="row-val">\(E = pc\), photons carry energy and momentum without mass</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Mass vs. energy</span>
+        <span class="row-val">mass is not conserved in particle physics, total energy always is</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../notes.js"></script>
+<script>
+(function () {
+  var canvas = document.getElementById('collide-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption span');
+
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.4);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var vals = { m1: 1.0, v1: 2.0, m2: 2.0, v2: -1.0, e: 100 };
+  var WORLD = 10, LOOP_S = 6;
+  var simT = 0, paused = false, animId = null;
+
+  function model() {
+    var m1 = vals.m1, m2 = vals.m2, v1 = vals.v1, v2 = vals.v2, M = m1 + m2;
+    var pxPerM = (w - 32) / WORLD;
+    var cw1 = 44, cw2 = 44;
+    var hw1 = cw1 / 2 / pxPerM, hw2 = cw2 / 2 / pxPerM;
+    var x10 = 2.0, x20 = 8.0;
+    var gap = (x20 - hw2) - (x10 + hw1);
+    var tc = gap / (v1 - v2);
+    var e01 = vals.e / 100;
+    var vc = (m1 * v1 + m2 * v2) / M;
+    var v1f = vc + e01 * m2 * (v2 - v1) / M;
+    var v2f = vc + e01 * m1 * (v1 - v2) / M;
+    // end the loop when a cart leaves the world, at most 2.5 s after impact
+    var tPost = 2.5;
+    var x1c = x10 + v1 * tc, x2c = x20 + v2 * tc;
+    if (v1f < 0) tPost = Math.min(tPost, (-1 - x1c) / v1f);
+    if (v1f > 0) tPost = Math.min(tPost, (WORLD + 1 - x1c) / v1f);
+    if (v2f > 0) tPost = Math.min(tPost, (WORLD + 1 - x2c) / v2f);
+    if (v2f < 0) tPost = Math.min(tPost, (-1 - x2c) / v2f);
+    tPost = Math.max(tPost, 0.6);
+    return { pxPerM: pxPerM, cw1: cw1, cw2: cw2, x10: x10, x20: x20, tc: tc,
+             v1f: v1f, v2f: v2f, T: tc + tPost,
+             pI: m1 * v1 + m2 * v2, kI: 0.5 * m1 * v1 * v1 + 0.5 * m2 * v2 * v2,
+             kF: 0.5 * m1 * v1f * v1f + 0.5 * m2 * v2f * v2f };
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    var gs = 25;
+    ctx.strokeStyle = css('--border');
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    var teal   = css('--accent-teal')   || '#0d9488';
+    var coral  = css('--accent-coral')  || '#e25555';
+    var purple = css('--accent-purple') || '#7c5cbf';
+    var amber  = css('--accent-amber')  || '#b8860b';
+    var hint   = css('--hint')          || '#9e9e98';
+    var muted  = css('--muted')         || '#6f6f68';
+    var bg     = css('--bg')            || '#faf9f5';
+    var border = css('--border-strong') || 'rgba(0,0,0,0.14)';
+
+    var md = model();
+    var t = simT, tc = md.tc;
+    var x1 = t < tc ? md.x10 + vals.v1 * t : md.x10 + vals.v1 * tc + md.v1f * (t - tc);
+    var x2 = t < tc ? md.x20 + vals.v2 * t : md.x20 + vals.v2 * tc + md.v2f * (t - tc);
+    var u1 = t < tc ? vals.v1 : md.v1f;
+    var u2 = t < tc ? vals.v2 : md.v2f;
+
+    var trackY = h * 0.66, ch = h * 0.15;
+    function X(xm) { return 16 + xm * md.pxPerM; }
+
+    // ground
+    ctx.strokeStyle = border; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, trackY); ctx.lineTo(w, trackY); ctx.stroke();
+    ctx.strokeStyle = css('--border'); ctx.lineWidth = 1;
+    for (var hx = 10; hx < w + 7; hx += 14) {
+      ctx.beginPath(); ctx.moveTo(hx, trackY); ctx.lineTo(hx - 7, trackY + 7); ctx.stroke();
+    }
+
+    function cart(xc, cw, label) {
+      var xl = X(xc) - cw / 2;
+      ctx.fillStyle = bg; ctx.strokeStyle = muted; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.rect(xl, trackY - ch - 8, cw, ch); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.arc(xl + cw * 0.25, trackY - 4.5, 4, 0, Math.PI * 2);
+      ctx.moveTo(xl + cw * 0.75 + 4, trackY - 4.5);
+      ctx.arc(xl + cw * 0.75, trackY - 4.5, 4, 0, Math.PI * 2);
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = hint; ctx.font = '10px "DM Mono", monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(label, xl + cw / 2, trackY - 8 - ch / 2);
+    }
+    cart(x1, md.cw1, vals.m1.toFixed(1) + ' kg');
+    cart(x2, md.cw2, vals.m2.toFixed(1) + ' kg');
+
+    function arrow(x0, y0, x1p, y1p, color) {
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1p, y1p); ctx.stroke();
+      var a = Math.atan2(y1p - y0, x1p - x0);
+      ctx.beginPath();
+      ctx.moveTo(x1p, y1p);
+      ctx.lineTo(x1p - 8 * Math.cos(a - 0.45), y1p - 8 * Math.sin(a - 0.45));
+      ctx.lineTo(x1p - 8 * Math.cos(a + 0.45), y1p - 8 * Math.sin(a + 0.45));
+      ctx.closePath(); ctx.fill();
+    }
+    var ay = trackY - ch - 22;
+    if (Math.abs(u1) > 0.03) arrow(X(x1), ay, X(x1) + Math.sign(u1) * (10 + Math.abs(u1) * 12), ay, u1 >= 0 ? teal : coral);
+    if (Math.abs(u2) > 0.03) arrow(X(x2), ay, X(x2) + Math.sign(u2) * (10 + Math.abs(u2) * 12), ay, u2 >= 0 ? teal : coral);
+
+    // readout (top right): live values at the current instant
+    var kLostPct = md.kI > 0 ? (1 - md.kF / md.kI) * 100 : 0;
+    var pNow = vals.m1 * u1 + vals.m2 * u2;
+    var kNow = 0.5 * vals.m1 * u1 * u1 + 0.5 * vals.m2 * u2 * u2;
+    var lx = w - 12, ly = 10;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = purple;
+    ctx.fillText('p = ' + pNow.toFixed(2) + ' kg·m/s', lx, ly); ly += 15;
+    ctx.fillStyle = amber;
+    ctx.fillText('K = ' + kNow.toFixed(2) + ' J', lx, ly); ly += 15;
+    if (t >= tc) {
+      ctx.fillStyle = kLostPct > 0.5 ? coral : teal;
+      ctx.fillText(kLostPct > 0.5 ? 'K lost: ' + kLostPct.toFixed(0) + '%' : 'K conserved', lx, ly);
+    }
+
+    // phase label (top left)
+    ctx.fillStyle = hint; ctx.textAlign = 'left';
+    ctx.fillText(t < tc ? 'before collision' : 'after collision', 12, 10);
+
+    if (cap) {
+      if (vals.e === 100) {
+        cap.textContent = 'Elastic collision: the carts bounce apart with all ' + md.kI.toFixed(2) + ' J of kinetic energy intact, and total momentum is unchanged';
+      } else if (vals.e === 0) {
+        cap.textContent = 'Perfectly inelastic collision: the carts stick together and ' + kLostPct.toFixed(0) + '% of the kinetic energy becomes internal energy, the most possible while conserving momentum';
+      } else {
+        cap.textContent = 'Inelastic collision at ' + vals.e + '% elasticity: the carts separate more slowly than they approached, losing ' + kLostPct.toFixed(0) + '% of the kinetic energy while momentum stays fixed';
+      }
+    }
+  }
+
+  // Controls
+  var cd = document.createElement('div'); cd.className = 'fbd-controls';
+  function addSlider(id, label, unit, min, max, val, step) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = val;
+    var dp = step < 1 ? ('' + step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+val).toFixed(dp) + ' ' + unit;
+    inp.addEventListener('input', function () {
+      vals[id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + unit;
+      simT = 0;
+      render();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+  }
+  addSlider('m1', 'Cart 1 mass',  'kg',  0.5, 5, 1.0, 0.1);
+  addSlider('v1', 'Cart 1 vel.',  'm/s', 0.5, 3, 2.0, 0.1);
+  addSlider('m2', 'Cart 2 mass',  'kg',  0.5, 5, 2.0, 0.1);
+  addSlider('v2', 'Cart 2 vel.',  'm/s', -3, 0, -1.0, 0.1);
+  addSlider('e',  'Elasticity',   '%',   0, 100, 100, 5);
+  wrap.appendChild(cd);
+
+  // scrub bar
+  var tScrub = document.createElement('input');
+  tScrub.type = 'range'; tScrub.min = 0; tScrub.max = 1000; tScrub.value = 0; tScrub.step = 1;
+  tScrub.id = 'collide-scrub';
+  tScrub.style.cssText = 'width:100%;height:3px;margin:0;padding:0;display:block;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none;background:var(--border-strong);border-radius:2px;transition:opacity 0.2s;';
+  var scStyle = document.createElement('style');
+  scStyle.textContent = '#collide-scrub::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent-purple);cursor:pointer;}#collide-scrub::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent-purple);border:none;cursor:pointer;}';
+  document.head.appendChild(scStyle);
+  canvas.after(tScrub);
+
+  var cardWrap = canvas.closest('.graph-card');
+  var scrubbing = false;
+  cardWrap.addEventListener('mouseenter', function () { tScrub.style.opacity = '0.5'; });
+  cardWrap.addEventListener('mouseleave', function () { if (!scrubbing) tScrub.style.opacity = '0'; });
+
+  var playBtn = null;
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.m1 = +(0.5 + Math.random() * 4.5).toFixed(1);
+      vals.v1 = +(0.5 + Math.random() * 2.5).toFixed(1);
+      vals.m2 = +(0.5 + Math.random() * 4.5).toFixed(1);
+      vals.v2 = +(-3 + Math.random() * 3).toFixed(1);
+      vals.e  = Math.round(Math.random() * 20) * 5;
+      var ctrls = cd.querySelectorAll('input[type="range"]');
+      var spans = cd.querySelectorAll('.fbd-control-val');
+      if (ctrls[0]) { ctrls[0].value = vals.m1; spans[0].textContent = vals.m1.toFixed(1) + ' kg'; }
+      if (ctrls[1]) { ctrls[1].value = vals.v1; spans[1].textContent = vals.v1.toFixed(1) + ' m/s'; }
+      if (ctrls[2]) { ctrls[2].value = vals.m2; spans[2].textContent = vals.m2.toFixed(1) + ' kg'; }
+      if (ctrls[3]) { ctrls[3].value = vals.v2; spans[3].textContent = vals.v2.toFixed(1) + ' m/s'; }
+      if (ctrls[4]) { ctrls[4].value = vals.e;  spans[4].textContent = vals.e + ' %'; }
+      simT = 0;
+      render();
+    });
+    cap.parentElement.appendChild(rb);
+
+    playBtn = document.createElement('button');
+    playBtn.className = 'fbd-pause'; playBtn.type = 'button';
+    playBtn.textContent = 'play'; playBtn.style.display = 'none';
+    playBtn.addEventListener('click', function () {
+      paused = false; playBtn.style.display = 'none'; tick();
+    });
+    cap.parentElement.appendChild(playBtn);
+  }
+
+  tScrub.addEventListener('input', function () {
+    simT = (parseFloat(tScrub.value) / 1000) * model().T;
+    scrubbing = true; paused = true;
+    if (playBtn) playBtn.style.display = '';
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    render();
+  });
+  tScrub.addEventListener('mouseup', function () { scrubbing = false; });
+
+  cardWrap.addEventListener('keydown', function (e) {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      if (paused) { paused = false; if (playBtn) playBtn.style.display = 'none'; tick(); }
+      else { paused = true; if (playBtn) playBtn.style.display = ''; if (animId) { cancelAnimationFrame(animId); animId = null; } }
+    }
+  });
+  cardWrap.setAttribute('tabindex', '0');
+
+  function tick() {
+    if (paused) { animId = null; return; }
+    var T = model().T;
+    simT = (simT + T / (LOOP_S * 60)) % T;
+    if (!scrubbing) tScrub.value = Math.round(simT / T * 1000);
+    render();
+    animId = requestAnimationFrame(tick);
+  }
+
+  render(); tick();
+  document.addEventListener('themechange', render);
+  new MutationObserver(function () { render(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+<script>
+(function () {
+  var canvas = document.getElementById('event-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption span');
+
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.5);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var vals = { p1: 45, a1: 215, p2: 30, a2: 250 };
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    var gs = 25;
+    ctx.strokeStyle = css('--border');
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    var teal   = css('--accent-teal')   || '#0d9488';
+    var purple = css('--accent-purple') || '#7c5cbf';
+    var amber  = css('--accent-amber')  || '#b8860b';
+    var hint   = css('--hint')          || '#9e9e98';
+    var muted  = css('--muted')         || '#6f6f68';
+    var border = css('--border-strong') || 'rgba(0,0,0,0.14)';
+
+    var cx = w / 2, cy = h / 2, maxR = h * 0.44;
+
+    // detector rings
+    [1, 0.76, 0.52].forEach(function (f, i) {
+      ctx.strokeStyle = i === 0 ? border : css('--border');
+      ctx.lineWidth = i === 0 ? 1.5 : 1;
+      ctx.beginPath(); ctx.arc(cx, cy, maxR * f, 0, Math.PI * 2); ctx.stroke();
+    });
+
+    // beam axis marker (into the screen)
+    ctx.strokeStyle = muted; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx - 3.2, cy - 3.2); ctx.lineTo(cx + 3.2, cy + 3.2);
+    ctx.moveTo(cx + 3.2, cy - 3.2); ctx.lineTo(cx - 3.2, cy + 3.2);
+    ctx.stroke();
+
+    function comp(p, aDeg) {
+      var a = aDeg * Math.PI / 180;
+      return { x: p * Math.cos(a), y: p * Math.sin(a) };
+    }
+    var c1 = comp(vals.p1, vals.a1), c2 = comp(vals.p2, vals.a2);
+    var mx = -(c1.x + c2.x), my = -(c1.y + c2.y);
+    var pMiss = Math.sqrt(mx * mx + my * my);
+    var pxScale = maxR * 0.92 / 60;
+
+    function arrow(vx, vy, color, dashed, label) {
+      var x1 = cx + vx * pxScale, y1 = cy - vy * pxScale;
+      ctx.save();
+      if (dashed) ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x1, y1); ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = color;
+      var a = Math.atan2(y1 - cy, x1 - cx);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x1 - 8 * Math.cos(a - 0.45), y1 - 8 * Math.sin(a - 0.45));
+      ctx.lineTo(x1 - 8 * Math.cos(a + 0.45), y1 - 8 * Math.sin(a + 0.45));
+      ctx.closePath(); ctx.fill();
+      if (label) {
+        ctx.font = '600 10px "DM Mono", monospace';
+        ctx.textAlign = x1 >= cx ? 'left' : 'right';
+        ctx.textBaseline = y1 >= cy ? 'top' : 'bottom';
+        ctx.fillText(label, x1 + (x1 >= cx ? 6 : -6), y1 + (y1 >= cy ? 4 : -4));
+      }
+    }
+    arrow(c1.x, c1.y, amber, false, 'p₁');
+    arrow(c2.x, c2.y, amber, false, 'p₂');
+    if (pMiss > 2) {
+      // clamp the drawn arrow to the outer ring; the readout keeps the true value
+      var drawScale = Math.min(1, maxR / (pMiss * pxScale));
+      arrow(mx * drawScale, my * drawScale, purple, true, 'missing');
+    }
+
+    // readout (top right)
+    var lx = w - 12, ly = 10;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = amber;
+    ctx.fillText('detected: Σpx = ' + (c1.x + c2.x).toFixed(0) + ',  Σpy = ' + (c1.y + c2.y).toFixed(0) + '  GeV/c', lx, ly); ly += 15;
+    ctx.fillStyle = pMiss > 2 ? purple : teal;
+    ctx.fillText(pMiss > 2 ? 'missing p = ' + pMiss.toFixed(0) + ' GeV/c' : 'event balanced', lx, ly);
+
+    // beam label (bottom left)
+    ctx.fillStyle = hint; ctx.font = '10px "DM Mono", monospace';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+    ctx.fillText('⊗ beam axis (into screen), viewed head-on', 12, h - 8);
+
+    if (cap) {
+      if (pMiss <= 2) {
+        cap.textContent = 'The detected momenta balance: every particle from this collision was measured, no invisible particles needed';
+      } else {
+        cap.textContent = 'The detected momenta leave ' + pMiss.toFixed(0) + ' GeV/c unaccounted for, so an undetected particle, such as a neutrino, must have carried it off along the dashed direction';
+      }
+    }
+  }
+
+  // Controls
+  var cd = document.createElement('div'); cd.className = 'fbd-controls';
+  function addSlider(id, label, unit, min, max, val, step) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = val;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = val + ' ' + unit;
+    inp.addEventListener('input', function () {
+      vals[id] = parseFloat(inp.value);
+      vs.textContent = inp.value + ' ' + unit;
+      render();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+  }
+  addSlider('p1', 'p₁ magnitude', 'GeV/c', 10, 60, 45, 1);
+  addSlider('a1', 'p₁ direction', '°', 0, 360, 215, 5);
+  addSlider('p2', 'p₂ magnitude', 'GeV/c', 10, 60, 30, 1);
+  addSlider('a2', 'p₂ direction', '°', 0, 360, 250, 5);
+  wrap.appendChild(cd);
+
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.p1 = 10 + Math.round(Math.random() * 50);
+      vals.a1 = Math.round(Math.random() * 72) * 5;
+      vals.p2 = 10 + Math.round(Math.random() * 50);
+      vals.a2 = Math.round(Math.random() * 72) * 5;
+      var ctrls = cd.querySelectorAll('input[type="range"]');
+      var spans = cd.querySelectorAll('.fbd-control-val');
+      if (ctrls[0]) { ctrls[0].value = vals.p1; spans[0].textContent = vals.p1 + ' GeV/c'; }
+      if (ctrls[1]) { ctrls[1].value = vals.a1; spans[1].textContent = vals.a1 + ' °'; }
+      if (ctrls[2]) { ctrls[2].value = vals.p2; spans[2].textContent = vals.p2 + ' GeV/c'; }
+      if (ctrls[3]) { ctrls[3].value = vals.a2; spans[3].textContent = vals.a2 + ' °'; }
+      render();
+    });
+    cap.parentElement.appendChild(rb);
+  }
+
+  render();
+  document.addEventListener('themechange', render);
+  new MutationObserver(function () { render(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+</body>
+</html>

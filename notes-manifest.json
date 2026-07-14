@@ -11,17 +11,20 @@
     "Von Neumann Architecture.md"
   ],
   "htmlNotes": [
-    { "path": "kinematics/index.html", "title": "Kinematics" },
-    { "path": "quiz-1a/index.html", "title": "Practice: Kinematics" },
-    { "path": "force-dynamics/index.html", "title": "Force & Translational Dynamics" },
-    { "path": "quiz-2a/index.html", "title": "Practice: Forces & Dynamics" },
-    { "path": "forces/index.html", "title": "Contact Forces & Gravity" },
-    { "path": "quiz-3a/index.html", "title": "Practice: Contact Forces & Gravity" },
-    { "path": "circular-motion/index.html", "title": "Circular Motion & Orbits" },
-    { "path": "quiz-4a/index.html", "title": "Practice: Circular Motion & Orbits" },
-    { "path": "work-energy/index.html", "title": "Work & Energy" },
-    { "path": "quiz-5a/index.html", "title": "Practice: Work & Energy" },
-    { "path": "momentum/index.html", "title": "Impulse & Momentum" }
+    { "path": "physics/kinematics/index.html", "title": "Kinematics" },
+    { "path": "physics/kinematics/quiz/index.html", "title": "Practice: Kinematics" },
+    { "path": "physics/force-dynamics/index.html", "title": "Force & Translational Dynamics" },
+    { "path": "physics/force-dynamics/quiz/index.html", "title": "Practice: Forces & Dynamics" },
+    { "path": "physics/forces/index.html", "title": "Contact Forces & Gravity" },
+    { "path": "physics/forces/quiz/index.html", "title": "Practice: Contact Forces & Gravity" },
+    { "path": "physics/circular-motion/index.html", "title": "Circular Motion & Orbits" },
+    { "path": "physics/circular-motion/quiz/index.html", "title": "Practice: Circular Motion & Orbits" },
+    { "path": "physics/work-energy/index.html", "title": "Work & Energy" },
+    { "path": "physics/work-energy/quiz/index.html", "title": "Practice: Work & Energy" },
+    { "path": "physics/momentum/index.html", "title": "Impulse & Momentum" },
+    { "path": "physics/momentum/quiz/index.html", "title": "Practice: Impulse & Momentum" },
+    { "path": "physics/collisions/index.html", "title": "Collisions" },
+    { "path": "physics/collisions/quiz/index.html", "title": "Practice: Collisions" }
   ],
   "htmlNotesBase": "notes/"
 }

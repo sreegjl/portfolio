@@ -544,8 +544,9 @@ if (document.getElementById('markdown-content')) {
         var noteCount = html.length;
         var topicSet = new Set();
         html.forEach(function (n) {
-            var folder = n.path.split('/')[0];
-            if (!/^quiz-/.test(folder)) topicSet.add(folder);
+            if (n.path.indexOf('/quiz/') !== -1) return;
+            var parts = n.path.split('/');
+            topicSet.add(parts.length > 1 ? parts[1] : parts[0]);
         });
         meta.textContent = topicSet.size + ' topics · ' + noteCount + ' lessons';
     }).catch(function () {
@@ -829,47 +830,56 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                 num: 1, title: 'Kinematics',
                 lessons: [
                     { type: 'note',      name: 'Kinematics',            desc: 'Graph relations, kinematic equations, and projectile motion', path: 'kinematics/' },
-                    { type: 'flashcard', name: 'Kinematics Flashcards', desc: 'Formula cards for quick review',                             path: 'flashcards/?topic=kinematics' },
-                    { type: 'practice',  name: 'Kinematics Practice',   desc: 'Test your understanding of motion and kinematics',           path: 'quiz-1a/' }
+                    { type: 'flashcard', name: 'Kinematics Flashcards', desc: 'Formula cards for quick review',                             path: 'kinematics/flashcards/' },
+                    { type: 'practice',  name: 'Kinematics Practice',   desc: 'Test your understanding of motion and kinematics',           path: 'kinematics/quiz/' }
                 ]
             },
             {
                 num: 2, title: 'Dynamics',
                 lessons: [
                     { type: 'note',      name: 'Dynamics',            desc: "Newton's laws, free-body diagrams, and center of mass", path: 'force-dynamics/' },
-                    { type: 'flashcard', name: 'Dynamics Flashcards', desc: 'Formula cards for quick review',                        path: 'flashcards/?topic=dynamics' },
-                    { type: 'practice',  name: 'Dynamics Practice',   desc: "Apply Newton's laws and analyze forces in 2D",          path: 'quiz-2a/' }
+                    { type: 'flashcard', name: 'Dynamics Flashcards', desc: 'Formula cards for quick review',                        path: 'force-dynamics/flashcards/' },
+                    { type: 'practice',  name: 'Dynamics Practice',   desc: "Apply Newton's laws and analyze forces in 2D",          path: 'force-dynamics/quiz/' }
                 ]
             },
             {
                 num: 3, title: 'Forces',
                 lessons: [
                     { type: 'note',      name: 'Forces',            desc: 'Gravity, inclines, friction, and spring force',         path: 'forces/' },
-                    { type: 'flashcard', name: 'Forces Flashcards', desc: 'Formula cards for quick review',                       path: 'flashcards/?topic=forces' },
-                    { type: 'practice',  name: 'Forces Practice',   desc: 'Solve problems with gravity, friction, and springs',    path: 'quiz-3a/' }
+                    { type: 'flashcard', name: 'Forces Flashcards', desc: 'Formula cards for quick review',                       path: 'forces/flashcards/' },
+                    { type: 'practice',  name: 'Forces Practice',   desc: 'Solve problems with gravity, friction, and springs',    path: 'forces/quiz/' }
                 ]
             },
             {
                 num: 4, title: 'Circular Motion',
                 lessons: [
                     { type: 'note',      name: 'Circular Motion',            desc: "Centripetal acceleration, vertical circles, and Kepler's law", path: 'circular-motion/' },
-                    { type: 'flashcard', name: 'Circular Motion Flashcards', desc: 'Formula cards for quick review',                              path: 'flashcards/?topic=circular-motion' },
-                    { type: 'practice',  name: 'Circular Motion Practice',   desc: 'Practice circular motion and orbital mechanics',              path: 'quiz-4a/' }
+                    { type: 'flashcard', name: 'Circular Motion Flashcards', desc: 'Formula cards for quick review',                              path: 'circular-motion/flashcards/' },
+                    { type: 'practice',  name: 'Circular Motion Practice',   desc: 'Practice circular motion and orbital mechanics',              path: 'circular-motion/quiz/' }
                 ]
             },
             {
                 num: 5, title: 'Work & Energy',
                 lessons: [
                     { type: 'note',      name: 'Work & Energy',            desc: 'Kinetic energy, work, and the work-energy theorem', path: 'work-energy/' },
-                    { type: 'flashcard', name: 'Work & Energy Flashcards', desc: 'Formula cards for quick review',                   path: 'flashcards/?topic=work-energy' },
-                    { type: 'practice',  name: 'Practice: Work & Energy',  desc: 'Randomized problems with step-by-step solutions',   path: 'quiz-5a/' }
+                    { type: 'flashcard', name: 'Work & Energy Flashcards', desc: 'Formula cards for quick review',                   path: 'work-energy/flashcards/' },
+                    { type: 'practice',  name: 'Work & Energy Practice',   desc: 'Randomized problems with step-by-step solutions',   path: 'work-energy/quiz/' }
                 ]
             },
             {
                 num: 6, title: 'Impulse & Momentum',
                 lessons: [
-                    { type: 'note',      name: 'Impulse & Momentum',            desc: 'Momentum, impulse, conservation, collisions, and center of mass', path: 'momentum/' },
-                    { type: 'flashcard', name: 'Impulse & Momentum Flashcards', desc: 'Formula cards for quick review',                                   path: 'flashcards/?topic=momentum' }
+                    { type: 'note',      name: 'Impulse & Momentum',            desc: 'Momentum, impulse, conservation, and center of mass',             path: 'momentum/' },
+                    { type: 'flashcard', name: 'Impulse & Momentum Flashcards', desc: 'Formula cards for quick review',                                   path: 'momentum/flashcards/' },
+                    { type: 'practice',  name: 'Impulse & Momentum Practice',   desc: 'Solve impulse and conservation of momentum problems',              path: 'momentum/quiz/' }
+                ]
+            },
+            {
+                num: 7, title: 'Collisions',
+                lessons: [
+                    { type: 'note',      name: 'Collisions',            desc: 'Elastic and inelastic collisions, the LHC, and relativistic momentum and energy', path: 'collisions/' },
+                    { type: 'flashcard', name: 'Collisions Flashcards', desc: 'Formula cards for quick review',                                                  path: 'collisions/flashcards/' },
+                    { type: 'practice',  name: 'Collisions Practice',   desc: 'Practice collisions from carts to particle physics',                              path: 'collisions/quiz/' }
                 ]
             }
         ];
@@ -879,6 +889,36 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
 
         var studied = {};
         try { studied = JSON.parse(localStorage.getItem('notesStudied') || '{}'); } catch(e) {}
+
+        // One-time migration of studied keys from the pre-notes/physics layout
+        var legacyKeys = {
+            '../kinematics/': './kinematics/',
+            '../quiz-1a/': './kinematics/quiz/',
+            '../flashcards/?topic=kinematics': './kinematics/flashcards/',
+            '../force-dynamics/': './force-dynamics/',
+            '../quiz-2a/': './force-dynamics/quiz/',
+            '../flashcards/?topic=dynamics': './force-dynamics/flashcards/',
+            '../forces/': './forces/',
+            '../quiz-3a/': './forces/quiz/',
+            '../flashcards/?topic=forces': './forces/flashcards/',
+            '../circular-motion/': './circular-motion/',
+            '../quiz-4a/': './circular-motion/quiz/',
+            '../flashcards/?topic=circular-motion': './circular-motion/flashcards/',
+            '../work-energy/': './work-energy/',
+            '../quiz-5a/': './work-energy/quiz/',
+            '../flashcards/?topic=work-energy': './work-energy/flashcards/',
+            '../momentum/': './momentum/',
+            '../quiz-6a/': './momentum/quiz/',
+            '../flashcards/?topic=momentum': './momentum/flashcards/',
+            '../collisions/': './collisions/',
+            '../quiz-7a/': './collisions/quiz/',
+            '../flashcards/?topic=collisions': './collisions/flashcards/'
+        };
+        var migrated = false;
+        Object.keys(legacyKeys).forEach(function (k) {
+            if (studied[k]) { studied[legacyKeys[k]] = true; delete studied[k]; migrated = true; }
+        });
+        if (migrated) { try { localStorage.setItem('notesStudied', JSON.stringify(studied)); } catch(e) {} }
 
         if (!topicsList) return;
         htmlLoading.style.display = 'none';
