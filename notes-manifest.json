@@ -24,7 +24,9 @@
     { "path": "physics/momentum/index.html", "title": "Impulse & Momentum" },
     { "path": "physics/momentum/quiz/index.html", "title": "Practice: Impulse & Momentum" },
     { "path": "physics/collisions/index.html", "title": "Collisions" },
-    { "path": "physics/collisions/quiz/index.html", "title": "Practice: Collisions" }
+    { "path": "physics/collisions/quiz/index.html", "title": "Practice: Collisions" },
+    { "path": "physics/rotational-kinematics/index.html", "title": "Rotational Kinematics" },
+    { "path": "physics/rotational-kinematics/quiz/index.html", "title": "Practice: Rotational Kinematics" }
   ],
   "htmlNotesBase": "notes/"
 }

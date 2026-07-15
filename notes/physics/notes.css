@@ -568,22 +568,34 @@ canvas { display: block; width: 100%; }
 .var-emech { color: var(--accent-amber)  !important; }
 .var-p     { color: var(--accent-purple) !important; }
 .var-j     { color: var(--accent-teal)   !important; }
+.var-omega { color: var(--accent-teal)   !important; }
+.var-alpha { color: var(--accent-coral)  !important; }
+.var-theta { color: var(--accent-purple) !important; }
 
 .study-mode .formula:not(.revealed)  .var-k,
 .study-mode .formula:not(.revealed)  .var-u,
 .study-mode .formula:not(.revealed)  .var-emech,
 .study-mode .formula:not(.revealed)  .var-p,
 .study-mode .formula:not(.revealed)  .var-j,
+.study-mode .formula:not(.revealed)  .var-omega,
+.study-mode .formula:not(.revealed)  .var-alpha,
+.study-mode .formula:not(.revealed)  .var-theta,
 .study-mode .row-val:not(.revealed)  .var-k,
 .study-mode .row-val:not(.revealed)  .var-u,
 .study-mode .row-val:not(.revealed)  .var-emech,
 .study-mode .row-val:not(.revealed)  .var-p,
 .study-mode .row-val:not(.revealed)  .var-j,
+.study-mode .row-val:not(.revealed)  .var-omega,
+.study-mode .row-val:not(.revealed)  .var-alpha,
+.study-mode .row-val:not(.revealed)  .var-theta,
 .study-mode .badge:not(.revealed)    .var-k,
 .study-mode .badge:not(.revealed)    .var-u,
 .study-mode .badge:not(.revealed)    .var-emech,
 .study-mode .badge:not(.revealed)    .var-p,
-.study-mode .badge:not(.revealed)    .var-j { color: transparent !important; }
+.study-mode .badge:not(.revealed)    .var-j,
+.study-mode .badge:not(.revealed)    .var-omega,
+.study-mode .badge:not(.revealed)    .var-alpha,
+.study-mode .badge:not(.revealed)    .var-theta { color: transparent !important; }
 
 .study-mode .graph-caption span {
   color: transparent;

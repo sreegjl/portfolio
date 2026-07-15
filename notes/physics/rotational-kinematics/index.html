@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rotational Kinematics</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Physics</a>
+    <div>
+      <h1>rotational kinematics</h1>
+      <span>rigid systems, angular displacement, angular velocity, radians, and the rotational kinematic equations</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Rotation of a rigid system ── -->
+  <div class="section" id="sec-rigid">
+    <p class="section-label">Rotation of a rigid system</p>
+
+    <p class="prose">
+      A system is in <strong>translational motion</strong> when every part moves together in the same direction, and in <strong>rotational motion</strong> when it turns around an <strong>axis of rotation</strong>. Many objects do both at once: a skateboard wheel translates down the street while spinning about its axle.
+    </p>
+
+    <p class="prose">
+      Picture a playground merry-go-round. Its axis of rotation runs through the center, perpendicular to the deck, and it is a <strong>rigid system</strong>: it holds its shape while it spins. A rider at the rim races along a big circle while a rider near the center creeps along a small one, yet in any time interval both sweep through the same angle. That shared angle is what the angular quantities track.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Linear vs. angular view of one spinning body</p>
+      <div class="row">
+        <span class="row-desc">Linear velocity \(\vec{v}\)</span>
+        <span class="row-val">tangent to the point's circle, so it differs from point to point</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Distance covered in \(\Delta t\)</span>
+        <span class="row-val"><span class="badge coral">depends on \(r\)</span> grows with distance from the axis</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Angle swept in \(\Delta t\)</span>
+        <span class="row-val"><span class="badge teal">same for every point</span> the whole body turns together</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Why "rigid" matters</span>
+        <span class="row-val">if points swept different angles, the body would stretch or bunch up</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Because every point has a different linear velocity, a rotating body cannot be modeled as a single point object. Angular quantities describe the one motion the whole system shares.
+    </p>
+  </div>
+
+  <!-- ── Angular velocity and acceleration ── -->
+  <div class="section" id="sec-angular">
+    <p class="section-label">Angular velocity and acceleration</p>
+
+    <p class="prose">
+      The angle a rotating body sweeps through is its <strong>angular displacement</strong> \(\Delta\class{var-theta}{\theta}\), with a direction given as clockwise or counterclockwise. The <strong>average angular velocity</strong> is the angular displacement divided by the time it takes:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-omega}{\omega_\text{avg}} = \dfrac{\Delta \class{var-theta}{\theta}}{\Delta t}\]
+    </p>
+
+    <p class="prose">
+      If the spin rate changes, the body has an <strong>angular acceleration</strong>, the rate at which angular velocity changes:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-alpha}{\alpha_\text{avg}} = \dfrac{\Delta \class{var-omega}{\omega}}{\Delta t}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(\Delta\theta\)</span>
+          <span class="row-val">angular displacement (rad)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\omega\)</span>
+          <span class="row-val">angular velocity (rad/s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\alpha\)</span>
+          <span class="row-val">angular acceleration (rad/s²)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\Delta t\)</span>
+          <span class="row-val">elapsed time (s)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Key properties</p>
+        <div class="row">
+          <span class="row-desc">Shared by all points</span>
+          <span class="row-val">every point on a rigid body has the same \(\omega\) and \(\alpha\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Sign convention</span>
+          <span class="row-val">counterclockwise <span class="badge teal">positive</span> clockwise <span class="badge coral">negative</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Constant spin rate</span>
+          <span class="row-val">\(\omega\) constant, \(\alpha = 0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Speeding up or slowing</span>
+          <span class="row-val">\(\alpha \neq 0\), same sign as \(\omega\) to speed up, opposite to slow down</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      These two definitions mirror \(v_\text{avg} = \Delta x / \Delta t\) and \(a_\text{avg} = \Delta v / \Delta t\) exactly. Rotational kinematics is translational kinematics with angles in place of positions.
+    </p>
+  </div>
+
+  <!-- ── Radians ── -->
+  <div class="section" id="sec-radians">
+    <p class="section-label">Radians</p>
+
+    <p class="prose">
+      Pick any point a distance \(r\) from the axis. One full turn carries it around a circumference \(2\pi r\), so the ratio of distance traveled to radius is \(2\pi\) no matter which point you pick. That radius-independent ratio is the <strong>radian</strong> measure of the angle:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-theta}{\theta} = \dfrac{s}{r} \qquad 1\ \text{revolution} = 360^\circ = 2\pi\ \text{rad}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Common conversions</p>
+        <div class="row">
+          <span class="row-desc">Quarter revolution</span>
+          <span class="row-val">\(\pi/2\ \text{rad} = 90^\circ\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Half revolution</span>
+          <span class="row-val">\(\pi\ \text{rad} = 180^\circ\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Full revolution</span>
+          <span class="row-val">\(2\pi\ \text{rad} \approx 6.28\ \text{rad}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(N\) revolutions</span>
+          <span class="row-val">\(2\pi N\ \text{rad}\), keep counting past \(2\pi\), don't reset</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Worked example: merry-go-round</p>
+        <div class="row">
+          <span class="row-desc">Given</span>
+          <span class="row-val">\(3.5\) counterclockwise revolutions in \(14\ \text{s}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Angular displacement</span>
+          <span class="row-val">\(\Delta\theta = 3.5 \times 2\pi = 7\pi \approx 22\ \text{rad}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Average angular velocity</span>
+          <span class="row-val">\(\omega_\text{avg} = \dfrac{7\pi}{14} = \dfrac{\pi}{2} \approx 1.6\ \text{rad/s}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Direction</span>
+          <span class="row-val">counterclockwise, so both are positive</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      A radian is a ratio of two lengths, so it is dimensionless. That is what lets it convert cleanly between angular and linear quantities in the next section.
+    </p>
+  </div>
+
+  <!-- ── Connecting linear and rotational motion ── -->
+  <div class="section" id="sec-connect">
+    <p class="section-label">Connecting linear and rotational motion</p>
+
+    <p class="prose">
+      Rearranging \(\theta = s/r\) gives the <strong>arc length</strong> a point travels during a rotation:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\Delta s = r\,\Delta\class{var-theta}{\theta}\]
+    </p>
+
+    <p class="prose">
+      Divide both sides by \(\Delta t\) and the same pattern links the rates:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[v = r\class{var-omega}{\omega} \qquad a_\text{tan} = r\class{var-alpha}{\alpha}\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Reading the r-scaling</p>
+      <div class="row">
+        <span class="row-desc">\(r\)</span>
+        <span class="row-val">distance from the axis of rotation (m)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(v = r\omega\)</span>
+        <span class="row-val">linear speed, tangent to the circle; angles must be in radians</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(a_\text{tan} = r\alpha\)</span>
+        <span class="row-val"><strong>tangential</strong> component only, from speeding up or slowing down</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Centripetal component</span>
+        <span class="row-val">\(a_c = v^2/r\) comes from turning, not from \(\alpha\); it exists even at constant \(\omega\)</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Every rider on the merry-go-round shares the same \(\omega\), but \(v = r\class{var-omega}{\omega}\) grows with radius. That is why the rim feels fast and the center feels calm: same spin, more meters of circle per radian.
+    </p>
+  </div>
+
+  <!-- ── Rotational kinematic equations ── -->
+  <div class="section" id="sec-equations">
+    <p class="section-label">Rotational kinematic equations</p>
+
+    <p class="prose">
+      For constant angular acceleration, the angular quantities obey the same algebra as the linear kinematic equations, with \(x \to \theta\), \(v \to \omega\), and \(a \to \alpha\):
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\begin{aligned}&\class{var-omega}{\omega} = \omega_0 + \class{var-alpha}{\alpha} t\\&\Delta\class{var-theta}{\theta} = \omega_0 t + \tfrac{1}{2}\class{var-alpha}{\alpha} t^2\\&\class{var-omega}{\omega}^2 = \omega_0^2 + 2\class{var-alpha}{\alpha}\,\Delta\class{var-theta}{\theta}\end{aligned}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Linear to rotational dictionary</p>
+        <div class="row">
+          <span class="row-desc">\(\Delta x \to \Delta\theta\)</span>
+          <span class="row-val">displacement becomes angle swept</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(v \to \omega\)</span>
+          <span class="row-val">velocity becomes angular velocity</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(a \to \alpha\)</span>
+          <span class="row-val">acceleration becomes angular acceleration</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Signs</span>
+          <span class="row-val">choose counterclockwise as positive and keep it consistent</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Worked example: ceiling fan</p>
+        <div class="row">
+          <span class="row-desc">Given</span>
+          <span class="row-val">spinning at \(\omega_0 = 12\ \text{rad/s}\), switched off, stops in \(8\ \text{s}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Angular acceleration</span>
+          <span class="row-val">\(0 = 12 + \alpha(8) \implies \alpha = -1.5\ \text{rad/s}^2\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Sign check</span>
+          <span class="row-val"><span class="badge coral">negative</span> \(\alpha\) opposes the positive spin, so it slows</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Angle before stopping</span>
+          <span class="row-val">\(\Delta\theta = 12(8) + \tfrac{1}{2}(-1.5)(8)^2 = 48\ \text{rad} \approx 7.6\ \text{rev}\)</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Every strategy from linear kinematics carries over: list the knowns, pick the equation missing the variable you don't need, and let the signs track direction.
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">Rigid system</span>
+        <span class="row-val">holds its shape; every point shares the same \(\Delta\theta\), \(\omega\), and \(\alpha\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Angular velocity</span>
+        <span class="row-val">\(\class{var-omega}{\omega_\text{avg}} = \Delta\class{var-theta}{\theta}/\Delta t\), in rad/s</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Angular acceleration</span>
+        <span class="row-val">\(\class{var-alpha}{\alpha_\text{avg}} = \Delta\class{var-omega}{\omega}/\Delta t\), in rad/s²</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Radians</span>
+        <span class="row-val">\(\theta = s/r\); 1 revolution \(= 360^\circ = 2\pi\) rad</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Linear connections</span>
+        <span class="row-val">\(\Delta s = r\Delta\class{var-theta}{\theta}\), \(v = r\class{var-omega}{\omega}\), \(a_\text{tan} = r\class{var-alpha}{\alpha}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Tangential vs. centripetal</span>
+        <span class="row-val">\(a_\text{tan} = r\alpha\) changes speed; \(a_c = v^2/r\) changes direction</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Kinematic equations</span>
+        <span class="row-val">same three as linear motion with \(\theta\), \(\omega\), \(\alpha\); counterclockwise positive</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../notes.js"></script>
+</body>
+</html>

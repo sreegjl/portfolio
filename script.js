@@ -881,6 +881,14 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                     { type: 'flashcard', name: 'Collisions Flashcards', desc: 'Formula cards for quick review',                                                  path: 'collisions/flashcards/' },
                     { type: 'practice',  name: 'Collisions Practice',   desc: 'Practice collisions from carts to particle physics',                              path: 'collisions/quiz/' }
                 ]
+            },
+            {
+                num: 8, title: 'Rotational Kinematics',
+                lessons: [
+                    { type: 'note',      name: 'Rotational Kinematics',            desc: 'Rigid systems, angular quantities, radians, and the rotational kinematic equations', path: 'rotational-kinematics/' },
+                    { type: 'flashcard', name: 'Rotational Kinematics Flashcards', desc: 'Formula cards for quick review',                                                      path: 'rotational-kinematics/flashcards/' },
+                    { type: 'practice',  name: 'Rotational Kinematics Practice',   desc: 'Solve angular displacement, velocity, and acceleration problems',                     path: 'rotational-kinematics/quiz/' }
+                ]
             }
         ];
 

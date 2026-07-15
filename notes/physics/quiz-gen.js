@@ -815,6 +815,136 @@ var QuizGen = (function () {
         'Massless particles still carry momentum and energy'
       );
       renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    angularDisplacementRevs: function (el) {
+      var rev = rand(1.5, 6, 0.5);
+      var dth = +(rev * 2 * Math.PI).toFixed(1);
+      var text = 'A potter\'s wheel completes \\(' + rev + '\\) counterclockwise revolutions. What is its total angular displacement?';
+      var wrongs = [+(rev * Math.PI).toFixed(1), +(rev * 4 * Math.PI).toFixed(1), +rev.toFixed(1)];
+      var explain = steps(
+        'One revolution is \\(2\\pi\\text{ rad}\\)',
+        '\\(\\Delta\\theta = ' + rev + ' \\times 2\\pi\\)',
+        '\\(= ' + dth + '\\text{ rad}\\), counterclockwise (positive)',
+        'Angular displacement keeps accumulating past \\(2\\pi\\); it does not reset each revolution'
+      );
+      renderQ(el, text, makeOpts(dth, wrongs), explain, '\\text{ rad}');
+    },
+
+    avgAngularVelocity: function (el) {
+      var rev = rand(2, 8, 1);
+      var t = rand(4, 16, 2);
+      var w = +(2 * Math.PI * rev / t).toFixed(2);
+      var text = 'A wind turbine blade completes \\(' + rev + '\\) revolutions in \\(' + t + '\\text{ s}\\). What is its average angular velocity?';
+      var wrongs = [+(rev / t).toFixed(2), +(Math.PI * rev / t).toFixed(2), +(2 * Math.PI * rev * t).toFixed(1)];
+      var explain = steps(
+        'Convert to radians: \\(\\Delta\\theta = ' + rev + ' \\times 2\\pi = ' + +(2 * Math.PI * rev).toFixed(1) + '\\text{ rad}\\)',
+        '\\(\\omega_{avg} = \\dfrac{\\Delta\\theta}{\\Delta t} = \\dfrac{' + +(2 * Math.PI * rev).toFixed(1) + '}{' + t + '}\\)',
+        '\\(= ' + w + '\\text{ rad/s}\\)'
+      );
+      renderQ(el, text, makeOpts(w, wrongs), explain, '\\text{ rad/s}');
+    },
+
+    linearSpeedFromOmega: function (el) {
+      var r = rand(1, 3, 0.5);
+      var w = rand(1, 4, 0.5);
+      var v = +(r * w).toFixed(2);
+      var text = 'A carousel spins at \\(' + w + '\\text{ rad/s}\\). A rider stands \\(' + r + '\\text{ m}\\) from the central axis. What is the rider\'s linear speed?';
+      var explain = steps(
+        'Linear speed of a rotating point: \\(v = r\\omega\\)',
+        '\\(v = ' + r + ' \\times ' + w + '\\)',
+        '\\(= ' + v + '\\text{ m/s}\\), tangent to the rider\'s circular path',
+        'Every rider shares the same \\(\\omega\\), but \\(v\\) grows with distance from the axis'
+      );
+      renderInput(el, text, v, 0.1, explain);
+    },
+
+    arcLengthFromAngle: function (el) {
+      var r = rand(2, 6, 1);
+      var th = rand(1.5, 6, 0.5);
+      var s = +(r * th).toFixed(1);
+      var text = 'A horse on a carousel is \\(' + r + '\\text{ m}\\) from the central axis. The carousel rotates through \\(' + th + '\\text{ rad}\\). How far does the horse travel along its circular path?';
+      var wrongs = [+(th / r).toFixed(2), +(2 * r * th).toFixed(1), +(r + th).toFixed(1)];
+      var explain = steps(
+        'Arc length: \\(\\Delta s = r\\,\\Delta\\theta\\) (angle in radians)',
+        '\\(\\Delta s = ' + r + ' \\times ' + th + '\\)',
+        '\\(= ' + s + '\\text{ m}\\)',
+        'A point twice as far from the axis would travel twice as far for the same angle'
+      );
+      renderQ(el, text, makeOpts(s, wrongs), explain, '\\text{ m}');
+    },
+
+    angularAccelStop: function (el) {
+      var w0 = rand(6, 20, 2);
+      var t = rand(2, 10, 1);
+      var a = +(w0 / t).toFixed(2);
+      var text = 'A table saw blade spins at \\(' + w0 + '\\text{ rad/s}\\) when it is switched off. It comes to rest in \\(' + t + '\\text{ s}\\). What is the magnitude of its constant angular acceleration?';
+      var wrongs = [+(w0 * t).toFixed(1), +(w0 / (2 * t)).toFixed(2), +(2 * w0 / t).toFixed(2)];
+      var explain = steps(
+        '\\(\\alpha_{avg} = \\dfrac{\\Delta\\omega}{\\Delta t} = \\dfrac{\\omega - \\omega_0}{\\Delta t}\\)',
+        '\\(= \\dfrac{0 - ' + w0 + '}{' + t + '} = -' + a + '\\text{ rad/s}^2\\)',
+        'Magnitude: \\(' + a + '\\text{ rad/s}^2\\)',
+        'The negative sign means \\(\\alpha\\) opposes the spin direction, slowing it down'
+      );
+      renderQ(el, text, makeOpts(a, wrongs), explain, '\\text{ rad/s}^2');
+    },
+
+    rotKinFinalOmega: function (el) {
+      var w0 = rand(2, 8, 1);
+      var a = rand(1, 4, 0.5);
+      var t = rand(2, 6, 1);
+      var w = +(w0 + a * t).toFixed(1);
+      var text = 'A drone rotor spinning at \\(' + w0 + '\\text{ rad/s}\\) speeds up with a constant angular acceleration of \\(' + a + '\\text{ rad/s}^2\\) for \\(' + t + '\\text{ s}\\). What is its final angular velocity?';
+      var wrongs = [+(a * t).toFixed(1), +(w0 + a).toFixed(1), +(w0 * a * t).toFixed(1)];
+      var explain = steps(
+        'Rotational kinematic equation: \\(\\omega = \\omega_0 + \\alpha t\\)',
+        '\\(\\omega = ' + w0 + ' + (' + a + ')(' + t + ')\\)',
+        '\\(= ' + w0 + ' + ' + +(a * t).toFixed(1) + ' = ' + w + '\\text{ rad/s}\\)'
+      );
+      renderQ(el, text, makeOpts(w, wrongs), explain, '\\text{ rad/s}');
+    },
+
+    rotKinAngleTurned: function (el) {
+      var a = rand(0.5, 3, 0.5);
+      var t = rand(2, 8, 1);
+      var dth = +(0.5 * a * t * t).toFixed(1);
+      var text = 'A lab centrifuge starts from rest and accelerates at a constant \\(' + a + '\\text{ rad/s}^2\\). Through what angle does it rotate during the first \\(' + t + '\\text{ s}\\)?';
+      var explain = steps(
+        'Starts from rest: \\(\\omega_0 = 0\\)',
+        '\\(\\Delta\\theta = \\omega_0 t + \\tfrac{1}{2}\\alpha t^2 = 0 + \\tfrac{1}{2}(' + a + ')(' + t + ')^2\\)',
+        '\\(= \\tfrac{1}{2}(' + a + ')(' + (t * t) + ') = ' + dth + '\\text{ rad}\\)',
+        'That is \\(' + +(dth / (2 * Math.PI)).toFixed(1) + '\\) revolutions'
+      );
+      renderInput(el, text, dth, 0.5, explain);
+    },
+
+    rotKinNoTime: function (el) {
+      var w0 = rand(1, 4, 1);
+      var a = rand(0.5, 2, 0.5);
+      var dth = rand(4, 12, 2);
+      var w = +(Math.sqrt(w0 * w0 + 2 * a * dth)).toFixed(1);
+      var text = 'A merry-go-round spinning at \\(' + w0 + '\\text{ rad/s}\\) is given a constant angular acceleration of \\(' + a + '\\text{ rad/s}^2\\) over an angular displacement of \\(' + dth + '\\text{ rad}\\). What is its final angular speed?';
+      var wrongs = [+(Math.sqrt(2 * a * dth)).toFixed(1), +(w0 + a * dth).toFixed(1), +(w0 * w0 + 2 * a * dth).toFixed(1)];
+      var explain = steps(
+        'No time given, so use \\(\\omega^2 = \\omega_0^2 + 2\\alpha\\,\\Delta\\theta\\)',
+        '\\(\\omega^2 = (' + w0 + ')^2 + 2(' + a + ')(' + dth + ') = ' + +(w0 * w0 + 2 * a * dth).toFixed(1) + '\\)',
+        '\\(\\omega = \\sqrt{' + +(w0 * w0 + 2 * a * dth).toFixed(1) + '} = ' + w + '\\text{ rad/s}\\)'
+      );
+      renderQ(el, text, makeOpts(w, wrongs), explain, '\\text{ rad/s}');
+    },
+
+    deriveStoppingAngle: function (el) {
+      var text = 'A turntable spins at angular speed \\(\\omega_0\\) when its motor is switched off. It slows with a constant angular acceleration of magnitude \\(\\alpha\\). Derive the angle it rotates through before coming to rest.';
+      var correct = '\\dfrac{\\omega_0^2}{2\\alpha}';
+      var wrongs = ['\\dfrac{\\omega_0^2}{\\alpha}', '\\dfrac{\\omega_0}{2\\alpha}', '\\dfrac{2\\omega_0^2}{\\alpha}'];
+      var explain = steps(
+        'Time is unknown, so use \\(\\omega^2 = \\omega_0^2 + 2\\alpha\\,\\Delta\\theta\\)',
+        'It comes to rest: \\(\\omega = 0\\), and the acceleration is \\(-\\alpha\\) (opposing the spin)',
+        '\\(0 = \\omega_0^2 - 2\\alpha\\,\\Delta\\theta\\)',
+        'Solve: \\(\\Delta\\theta = \\dfrac{\\omega_0^2}{2\\alpha}\\)',
+        'Doubling the initial spin rate quadruples the angle needed to stop'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
     }
   };
 })();
