@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Torque &amp; Rotational Dynamics</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Physics</a>
+    <div>
+      <h1>torque &amp; rotational dynamics</h1>
+      <span>torque, lever arm, force diagrams for rotation, rotational inertia, and Newton's second law in rotational form</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Torque ── -->
+  <div class="section" id="sec-torque">
+    <p class="section-label">Torque</p>
+
+    <p class="prose">
+      A force changes how an object moves; a <strong>torque</strong> changes how it rotates. Torque measures how effectively a force twists an object about an axis, and it depends on how much force you apply, how far from the axis you apply it, and at what angle:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-tau}{\tau} = rF\sin\class{var-theta}{\theta}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(\tau\)</span>
+          <span class="row-val">torque (N·m)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(r\)</span>
+          <span class="row-val">distance from the axis to where the force acts (m)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(F\)</span>
+          <span class="row-val">applied force (N)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\theta\)</span>
+          <span class="row-val">angle between \(\vec{r}\) and \(\vec{F}\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Worked example: stuck bolt</p>
+        <div class="row">
+          <span class="row-desc">Given</span>
+          <span class="row-val">\(80\ \text{N}\) on a \(0.25\ \text{m}\) wrench, perpendicular to the handle</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Torque</span>
+          <span class="row-val">\(\tau = (0.25)(80)\sin 90^\circ = 20\ \text{N·m}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Same push at \(30^\circ\)</span>
+          <span class="row-val">\(\tau = (0.25)(80)\sin 30^\circ = 10\ \text{N·m}\) <span class="badge coral">half as effective</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Fix</span>
+          <span class="row-val">push perpendicular, or use a longer wrench to grow \(r\)</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      The quantity \(r\sin\theta\) is the <strong>lever arm</strong>: the perpendicular distance from the axis to the force's line of action. A force pointed straight at the axis (\(\theta = 0\)) has zero lever arm and produces no torque, which is why pushing a door at its hinges gets you nowhere. Like angular velocity, torque carries a sign: counterclockwise <span class="badge teal">positive</span>, clockwise <span class="badge coral">negative</span>.
+    </p>
+  </div>
+
+  <!-- ── Force diagrams for rotation ── -->
+  <div class="section" id="sec-fbd">
+    <p class="section-label">Force diagrams for rotation</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Two kids on a seesaw</span>
+      </div>
+      <canvas id="seesaw-sim" width="600" height="300"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      A regular free-body diagram shrinks the object to a dot, but a dot cannot show <em>where</em> a force acts, and for torque, location is everything. Rotation problems use an <strong>extended free-body diagram</strong>: draw the object as a shape, mark the axis of rotation, and attach each force arrow at its actual point of application.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Building an extended free-body diagram</p>
+      <div class="row">
+        <span class="row-desc">1. Sketch the shape</span>
+        <span class="row-val">a bar, disk, or beam, not a point; mark the pivot or axis</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">2. Place each force</span>
+        <span class="row-val">draw it at the point where it acts, with its true direction</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Gravity</span>
+        <span class="row-val">acts at the <strong>center of mass</strong>; for a uniform beam, the midpoint</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Pivot forces</span>
+        <span class="row-val">act at the axis, so \(r = 0\) and they contribute <span class="badge amber">zero torque</span></span>
+      </div>
+      <div class="row">
+        <span class="row-desc">3. Sum the torques</span>
+        <span class="row-val">\(\tau_\text{net} = \sum \tau\), counterclockwise positive</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Picking the pivot as your axis is the classic trick: any unknown force acting there drops out of the torque equation. If \(\tau_\text{net} = 0\) the object is in <strong>rotational equilibrium</strong>, like a balanced seesaw where the child sitting closer to the pivot must weigh more for the twists to cancel.
+    </p>
+  </div>
+
+  <!-- ── Rotational inertia ── -->
+  <div class="section" id="sec-inertia">
+    <p class="section-label">Rotational inertia</p>
+
+    <p class="prose">
+      Mass measures resistance to being accelerated; <strong>rotational inertia</strong> (moment of inertia) measures resistance to being <em>spun up</em>. It depends not just on how much mass an object has but on how far that mass sits from the axis:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-inertia}{I} = \sum m r^2\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Common shapes (axis through center)</p>
+        <div class="row">
+          <span class="row-desc">Point mass, hoop</span>
+          <span class="row-val">\(I = MR^2\) <span class="badge coral">all mass far out</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Solid disk or cylinder</span>
+          <span class="row-val">\(I = \tfrac{1}{2}MR^2\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Solid sphere</span>
+          <span class="row-val">\(I = \tfrac{2}{5}MR^2\) <span class="badge teal">mass hugs the axis</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Thin rod, center / end</span>
+          <span class="row-val">\(I = \tfrac{1}{12}ML^2\) / \(I = \tfrac{1}{3}ML^2\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Key properties</p>
+        <div class="row">
+          <span class="row-desc">Grows with \(r^2\)</span>
+          <span class="row-val">doubling a mass's distance from the axis quadruples its contribution</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Depends on the axis</span>
+          <span class="row-val">the same rod is four times harder to spin about its end than its center</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Adds up</span>
+          <span class="row-val">total \(I\) is the sum over every piece of the system</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Units</span>
+          <span class="row-val">kg·m²</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      This is why a figure skater spins faster after pulling their arms in: bringing mass toward the axis shrinks \(I\), so the same rotation takes less effort to maintain. A hoop and a disk of equal mass and radius are not equal rotationally, since the hoop keeps all its mass at the rim.
+    </p>
+  </div>
+
+  <!-- ── Newton's second law for rotation ── -->
+  <div class="section" id="sec-second-law">
+    <p class="section-label">Newton's second law for rotation</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Top view: rope spins up a pottery wheel</span>
+      </div>
+      <canvas id="disk-sim" width="600" height="360"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      Put the pieces together and you get the rotational twin of \(F_\text{net} = ma\). A net torque produces an angular acceleration, and rotational inertia sets how much:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-tau}{\tau_\text{net}} = \class{var-inertia}{I}\class{var-alpha}{\alpha}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Translational to rotational dictionary</p>
+        <div class="row">
+          <span class="row-desc">\(F \to \tau\)</span>
+          <span class="row-val">force becomes torque</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(m \to I\)</span>
+          <span class="row-val">mass becomes rotational inertia</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(a \to \alpha\)</span>
+          <span class="row-val">acceleration becomes angular acceleration</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\tau_\text{net} = 0\)</span>
+          <span class="row-val">\(\alpha = 0\): constant \(\omega\), rotational equilibrium <span class="badge amber">balanced</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Worked example: pottery wheel</p>
+        <div class="row">
+          <span class="row-desc">Given</span>
+          <span class="row-val">solid disk, \(M = 4.0\ \text{kg}\), \(R = 0.5\ \text{m}\), rope pulls the rim tangentially with \(6.0\ \text{N}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Rotational inertia</span>
+          <span class="row-val">\(I = \tfrac{1}{2}MR^2 = \tfrac{1}{2}(4.0)(0.5)^2 = 0.50\ \text{kg·m}^2\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Torque</span>
+          <span class="row-val">\(\tau = rF\sin 90^\circ = (0.5)(6.0) = 3.0\ \text{N·m}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Angular acceleration</span>
+          <span class="row-val">\(\alpha = \tau_\text{net}/I = 3.0/0.50 = 6.0\ \text{rad/s}^2\)</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      The solving strategy mirrors force problems exactly: draw the extended free-body diagram, sum torques about a smart axis, compute \(I\) for the shape, then solve \(\tau_\text{net} = I\alpha\). Once you have \(\alpha\), the rotational kinematic equations take over to give angles and angular speeds.
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">Torque</span>
+        <span class="row-val">\(\class{var-tau}{\tau} = rF\sin\class{var-theta}{\theta}\), in N·m; counterclockwise positive</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Lever arm</span>
+        <span class="row-val">\(r\sin\theta\), perpendicular distance from axis to the force's line of action</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Extended free-body diagram</span>
+        <span class="row-val">draw the shape, attach forces where they act; gravity at the center of mass</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Forces at the pivot</span>
+        <span class="row-val">\(r = 0\), so they exert no torque; choose the pivot as the axis to eliminate them</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Rotational inertia</span>
+        <span class="row-val">\(\class{var-inertia}{I} = \sum mr^2\), in kg·m²; grows with mass far from the axis</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Newton's second law, rotational</span>
+        <span class="row-val">\(\class{var-tau}{\tau_\text{net}} = \class{var-inertia}{I}\class{var-alpha}{\alpha}\), the rotational twin of \(F_\text{net} = ma\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Rotational equilibrium</span>
+        <span class="row-val">\(\tau_\text{net} = 0 \implies \alpha = 0\); torques balance, \(\omega\) stays constant</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Seesaw torque balance ──
+(function () {
+  var canvas = document.getElementById('seesaw-sim');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.5);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var G = 9.8;
+  var vals = { m1: 30, r1: 1.5, m2: 25, r2: 2.0 };
+  var groundY = h - 26;
+  var cx = w / 2;
+  var pivotH = Math.min(60, h * 0.24);
+  var py = groundY - pivotH; // beam pivot point
+  var pxPerM = (w * 0.36) / 2.5;
+
+  function torques() {
+    var tccw = vals.m1 * G * vals.r1;  // left child tips the left end down
+    var tcw = vals.m2 * G * vals.r2;
+    return { ccw: tccw, cw: tcw, net: tccw - tcw };
+  }
+
+  function drawArrow(sx, sy, dx, dy, color, hl) {
+    hl = hl || 7;
+    var a = Math.atan2(dy, dx);
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(sx + dx, sy + dy);
+    ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+    ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+    ctx.closePath(); ctx.fill();
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    // grid
+    var gs = 25;
+    ctx.strokeStyle = css('--border') || 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    // ground with hatching
+    ctx.strokeStyle = css('--border-strong'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, groundY); ctx.lineTo(w, groundY); ctx.stroke();
+    ctx.strokeStyle = css('--border'); ctx.lineWidth = 1;
+    for (var hx = 7; hx < w; hx += 14) {
+      ctx.beginPath(); ctx.moveTo(hx, groundY); ctx.lineTo(hx - 7, groundY + 7); ctx.stroke();
+    }
+
+    var t = torques();
+    // beam tilt: the winning torque dips its side; clamp for display
+    var tilt = Math.max(-0.15, Math.min(0.15, -t.net * 0.0006));
+
+    // point at signed distance d (m) along the beam (negative = left)
+    function beamPt(d) {
+      return { x: cx + d * pxPerM * Math.cos(tilt), y: py + d * pxPerM * Math.sin(tilt) };
+    }
+
+    // pivot triangle
+    ctx.fillStyle = css('--bg');
+    ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cx, py);
+    ctx.lineTo(cx - 16, groundY);
+    ctx.lineTo(cx + 16, groundY);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+
+    // beam
+    var left = beamPt(-2.5), right = beamPt(2.5);
+    ctx.strokeStyle = css('--muted'); ctx.lineWidth = 5; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(left.x, left.y); ctx.lineTo(right.x, right.y); ctx.stroke();
+    ctx.lineCap = 'butt';
+
+    // pivot dot (axis of rotation)
+    ctx.fillStyle = css('--muted');
+    ctx.beginPath(); ctx.arc(cx, py, 3.5, 0, Math.PI * 2); ctx.fill();
+
+    // kids as boxes on the beam
+    function drawKid(d, m, label) {
+      var p = beamPt(d);
+      var s = 16 + m * 0.35;
+      ctx.fillStyle = css('--bg');
+      ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+      ctx.fillRect(p.x - s / 2, p.y - s - 3, s, s);
+      ctx.strokeRect(p.x - s / 2, p.y - s - 3, s, s);
+      ctx.fillStyle = css('--hint');
+      ctx.font = '600 9px "DM Mono", monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(label, p.x, p.y - s / 2 - 3);
+      return p;
+    }
+    var p1 = drawKid(-vals.r1, vals.m1, vals.m1 + ' kg');
+    var p2 = drawKid(vals.r2, vals.m2, vals.m2 + ' kg');
+
+    // weight arrows at the points of application, kept above the ground line
+    var fScale = 0.09;
+    var len1 = Math.min(Math.max(18, vals.m1 * G * fScale), groundY - p1.y - 4);
+    var len2 = Math.min(Math.max(18, vals.m2 * G * fScale), groundY - p2.y - 4);
+    drawArrow(p1.x, p1.y, 0, len1, css('--accent-teal'));
+    drawArrow(p2.x, p2.y, 0, len2, css('--accent-coral'));
+
+    // pivot force, applied at the axis: zero torque
+    var fp = (vals.m1 + vals.m2) * G * fScale * 0.6;
+    drawArrow(cx, py, 0, -Math.max(20, fp), css('--accent-purple'));
+    ctx.fillStyle = css('--accent-purple');
+    ctx.font = '600 9px "DM Mono", monospace';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('F pivot (r = 0)', cx + 8, py - Math.max(20, fp) - 6);
+
+    // readouts
+    var legX = w - 10, legY = 12;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = css('--accent-teal');
+    ctx.fillText('τ ccw = m₁gr₁ = ' + t.ccw.toFixed(0) + ' N·m', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--accent-coral');
+    ctx.fillText('τ cw = m₂gr₂ = ' + t.cw.toFixed(0) + ' N·m', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--accent-amber');
+    ctx.fillText('τ net = ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(0) + ' N·m', legX, legY);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var t = torques();
+    var txt;
+    if (Math.abs(t.net) < 10) {
+      txt = 'The torques nearly cancel: rotational equilibrium, the seesaw balances.';
+    } else if (t.net > 0) {
+      txt = 'The left child’s counterclockwise torque wins by ' + Math.abs(t.net).toFixed(0) + ' N·m, so the left side dips.';
+    } else {
+      txt = 'The right child’s clockwise torque wins by ' + Math.abs(t.net).toFixed(0) + ' N·m, so the right side dips.';
+    }
+    cap.querySelector('span').textContent = txt;
+  }
+
+  var cd = document.createElement('div');
+  cd.className = 'fbd-controls';
+
+  function addSlider(id, label, unit, min, max, val, step) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = val;
+    var dp = step < 1 ? ('' + step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+val).toFixed(dp) + ' ' + unit;
+    inp.addEventListener('input', function () {
+      vals[id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + unit;
+      render(); updateCaption();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+  }
+
+  addSlider('m1', 'Left mass', 'kg', 10, 50, 30, 1);
+  addSlider('r1', 'Left dist', 'm', 0.5, 2.5, 1.5, 0.1);
+  addSlider('m2', 'Right mass', 'kg', 10, 50, 25, 1);
+  addSlider('r2', 'Right dist', 'm', 0.5, 2.5, 2.0, 0.1);
+
+  wrap.appendChild(cd);
+
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.m1 = Math.round(10 + Math.random() * 40);
+      vals.r1 = +(0.5 + Math.random() * 2).toFixed(1);
+      vals.m2 = Math.round(10 + Math.random() * 40);
+      vals.r2 = +(0.5 + Math.random() * 2).toFixed(1);
+      var ctrls = cd.querySelectorAll('input[type="range"]');
+      var spans = cd.querySelectorAll('.fbd-control-val');
+      if (ctrls[0]) { ctrls[0].value = vals.m1; spans[0].textContent = vals.m1 + ' kg'; }
+      if (ctrls[1]) { ctrls[1].value = vals.r1; spans[1].textContent = vals.r1.toFixed(1) + ' m'; }
+      if (ctrls[2]) { ctrls[2].value = vals.m2; spans[2].textContent = vals.m2 + ' kg'; }
+      if (ctrls[3]) { ctrls[3].value = vals.r2; spans[3].textContent = vals.r2.toFixed(1) + ' m'; }
+      render(); updateCaption();
+    });
+    cap.appendChild(rb);
+  }
+
+  render(); updateCaption();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+
+// ── Pottery wheel: hold to pull the rope ──
+(function () {
+  var canvas = document.getElementById('disk-sim');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.6);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var B = 0.4; // wet clay drag coefficient (N·m per rad/s), keeps the top speed sane
+  var vals = { M: 4, R: 0.4, F: 3 };
+  var th = 0, om = 0;           // wheel state, never reset
+  var holdPull = false, latchPull = false;
+  var pullBtn = null;
+
+  var cx = w / 2, cy = h / 2;
+  var pxPerM = (Math.min(w, h) * 0.4) / 0.6;
+
+  function pulling() { return holdPull || latchPull; }
+  function inertia() { return 0.5 * vals.M * vals.R * vals.R; }
+  function tauRope() { return pulling() ? vals.R * vals.F : 0; }
+  function tauDrag() { return B * om; }
+  function tauNet() { return tauRope() - tauDrag(); }
+  function alpha() { var I = inertia(); return I > 0 ? tauNet() / I : 0; }
+
+  function drawArrow(sx, sy, dx, dy, color, hl) {
+    hl = hl || 7;
+    var a = Math.atan2(dy, dx);
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(sx + dx, sy + dy);
+    ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+    ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+    ctx.closePath(); ctx.fill();
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    // grid
+    var gs = 25;
+    ctx.strokeStyle = css('--border') || 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    var Rpx = vals.R * pxPerM;
+
+    // wheel with concentric clay rings
+    ctx.fillStyle = css('--bg');
+    ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, Rpx, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = css('--border-strong'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, Rpx * 0.62, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, Rpx * 0.3, 0, Math.PI * 2); ctx.stroke();
+
+    // one radial spoke plus a rim marker show the rotation without strobing
+    ctx.strokeStyle = css('--border-strong'); ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cx - Rpx * Math.cos(th), cy + Rpx * Math.sin(th));
+    ctx.lineTo(cx + Rpx * Math.cos(th), cy - Rpx * Math.sin(th));
+    ctx.stroke();
+    ctx.fillStyle = css('--accent-teal');
+    ctx.beginPath();
+    ctx.arc(cx + Rpx * Math.cos(th), cy - Rpx * Math.sin(th), 4.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // axle
+    ctx.fillStyle = css('--muted');
+    ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, Math.PI * 2); ctx.fill();
+
+    // rope leaves the rim tangentially at the bottom; taut only while pulling
+    var ropeY = cy + Rpx;
+    if (pulling()) {
+      ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(cx, ropeY); ctx.lineTo(w - 96, ropeY); ctx.stroke();
+      var fLen = Math.max(16, vals.F * 5);
+      drawArrow(w - 96, ropeY, fLen, 0, css('--accent-amber'));
+      ctx.fillStyle = css('--accent-amber');
+      ctx.font = '600 10px "DM Mono", monospace';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText('F = ' + vals.F.toFixed(1) + ' N', w - 96 + 4, ropeY - 12);
+
+      // torque direction arc at the center (counterclockwise)
+      ctx.strokeStyle = css('--accent-purple'); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(cx, cy, 16, 0.4 * Math.PI, -0.2 * Math.PI, true); ctx.stroke();
+      var ea = -0.2 * Math.PI;
+      var ex = cx + 16 * Math.cos(ea), ey = cy + 16 * Math.sin(ea);
+      drawArrow(ex, ey, 6 * Math.sin(ea), -6 * Math.cos(ea), css('--accent-purple'), 6);
+    } else if (om < 0.01) {
+      ctx.fillStyle = css('--hint');
+      ctx.font = '500 11px "DM Mono", monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('hold the wheel to pull the rope', cx, ropeY + 18);
+    }
+
+    // readouts
+    var legX = w - 10, legY = 12;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = css('--hint');
+    ctx.fillText('I = ½MR² = ' + inertia().toFixed(2) + ' kg·m²', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--accent-amber');
+    ctx.fillText('τ rope = ' + tauRope().toFixed(2) + ' N·m', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--accent-coral');
+    ctx.fillText('τ drag = -' + tauDrag().toFixed(2) + ' N·m', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--accent-purple');
+    ctx.fillText('α = τnet/I = ' + alpha().toFixed(2) + ' rad/s²', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--accent-teal');
+    ctx.fillText('ω = ' + om.toFixed(2) + ' rad/s', legX, legY);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+  var lastState = '';
+
+  function stateKey() {
+    if (pulling() && Math.abs(alpha()) < 0.08 && om > 0.1) return 'steady';
+    if (pulling()) return 'pull';
+    if (om > 0.05) return 'coast';
+    return 'rest';
+  }
+
+  function updateCaption(force) {
+    if (!cap) return;
+    var s = stateKey();
+    if (!force && s === lastState) return;
+    lastState = s;
+    var txt;
+    if (s === 'pull') {
+      txt = 'The rope torque beats the clay drag, so τ net > 0 and the wheel gains speed. Watch α start at τ/I and shrink as drag grows.';
+    } else if (s === 'steady') {
+      txt = 'Drag now cancels the rope torque: τ net = 0, so α = 0 and ω holds constant. Rotational equilibrium while spinning.';
+    } else if (s === 'coast') {
+      txt = 'Rope released: only the drag torque remains, so α is negative and the wheel coasts down toward rest.';
+    } else {
+      txt = 'Hold the wheel (or press pull) to apply the rope torque. A heavier or larger wheel has more I, so the same τ spins it up more slowly.';
+    }
+    cap.querySelector('span').textContent = txt;
+  }
+
+  var cd = document.createElement('div');
+  cd.className = 'fbd-controls';
+
+  function addSlider(id, label, unit, min, max, val, step) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = val;
+    var dp = step < 1 ? ('' + step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+val).toFixed(dp) + ' ' + unit;
+    inp.addEventListener('input', function () {
+      vals[id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + unit;
+      updateCaption(true);
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+  }
+
+  addSlider('M', 'Wheel mass', 'kg', 2, 10, 4, 0.5);
+  addSlider('R', 'Radius', 'm', 0.25, 0.6, 0.4, 0.05);
+  addSlider('F', 'Pull force', 'N', 1, 8, 3, 0.5);
+
+  wrap.appendChild(cd);
+
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.M = +(2 + Math.random() * 8).toFixed(1);
+      vals.R = +(0.25 + Math.random() * 0.35).toFixed(2);
+      vals.F = +(1 + Math.random() * 7).toFixed(1);
+      var ctrls = cd.querySelectorAll('input[type="range"]');
+      var spans = cd.querySelectorAll('.fbd-control-val');
+      if (ctrls[0]) { ctrls[0].value = vals.M; spans[0].textContent = vals.M.toFixed(1) + ' kg'; }
+      if (ctrls[1]) { ctrls[1].value = vals.R; spans[1].textContent = vals.R.toFixed(2) + ' m'; }
+      if (ctrls[2]) { ctrls[2].value = vals.F; spans[2].textContent = vals.F.toFixed(1) + ' N'; }
+      updateCaption(true);
+    });
+    cap.appendChild(rb);
+
+    pullBtn = document.createElement('button');
+    pullBtn.className = 'fbd-pause'; pullBtn.type = 'button';
+    pullBtn.textContent = 'pull rope';
+    pullBtn.addEventListener('click', function () {
+      latchPull = !latchPull;
+      pullBtn.textContent = latchPull ? 'release' : 'pull rope';
+    });
+    cap.appendChild(pullBtn);
+  }
+
+  // hold the canvas to pull, release anywhere to let go
+  canvas.style.cursor = 'grab';
+  canvas.style.touchAction = 'none';
+  canvas.addEventListener('pointerdown', function (e) {
+    e.preventDefault();
+    holdPull = true;
+    canvas.style.cursor = 'grabbing';
+  });
+  window.addEventListener('pointerup', function () { holdPull = false; canvas.style.cursor = 'grab'; });
+  window.addEventListener('pointercancel', function () { holdPull = false; canvas.style.cursor = 'grab'; });
+
+  // keyboard: hold or toggle with space
+  var cardWrap = canvas.closest('.graph-card');
+  cardWrap.setAttribute('tabindex', '0');
+  cardWrap.addEventListener('keydown', function (e) {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      latchPull = !latchPull;
+      if (pullBtn) pullBtn.textContent = latchPull ? 'release' : 'pull rope';
+    }
+  });
+
+  function tick() {
+    var dt = 1 / 60;
+    om += alpha() * dt;
+    if (!pulling() && om < 0.005) om = 0;
+    th += om * dt;
+    render();
+    updateCaption(false);
+    requestAnimationFrame(tick);
+  }
+
+  render(); updateCaption(true); tick();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../notes.js"></script>
+</body>
+</html>

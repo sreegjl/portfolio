@@ -217,6 +217,14 @@
   <div class="section" id="sec-connect">
     <p class="section-label">Connecting linear and rotational motion</p>
 
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Top view: two riders on a spinning merry-go-round</span>
+      </div>
+      <canvas id="mgr-sim" width="600" height="360"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
     <p class="prose">
       Rearranging \(\theta = s/r\) gives the <strong>arc length</strong> a point travels during a rotation:
     </p>
@@ -356,6 +364,219 @@
 
 </div>
 
+<script>
+// ── Merry-go-round rider simulator ──
+(function () {
+  var canvas = document.getElementById('mgr-sim');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var rect = canvas.getBoundingClientRect();
+  var w = rect.width, h = Math.round(w * 0.6);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var MAX_R = 3; // m, platform radius
+  var vals = { omega: 1.2, r1: 0.8, r2: 2.4 };
+  var angle = 0, paused = false, animId = null;
+  var cx = w / 2, cy = h / 2;
+  var pxPerM = (Math.min(w, h) * 0.44) / MAX_R;
+
+  function drawArrow(sx, sy, dx, dy, color, hl) {
+    hl = hl || 7;
+    var a = Math.atan2(dy, dx);
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(sx + dx, sy + dy);
+    ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+    ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+    ctx.closePath(); ctx.fill();
+  }
+
+  function riderPos(r) {
+    return { x: cx + r * pxPerM * Math.cos(angle), y: cy - r * pxPerM * Math.sin(angle) };
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = css('--surface');
+    ctx.fillRect(0, 0, w, h);
+
+    // grid
+    var gs = 25;
+    ctx.strokeStyle = css('--border') || 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+    for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+    // platform
+    var platR = MAX_R * pxPerM;
+    ctx.fillStyle = css('--bg');
+    ctx.strokeStyle = css('--muted');
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, platR, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+    // circular paths of the riders
+    ctx.save(); ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = css('--hint'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, vals.r1 * pxPerM, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, vals.r2 * pxPerM, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+
+    // spoke through both riders: same angle for every point
+    var rim = riderPos(MAX_R);
+    ctx.strokeStyle = css('--muted'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(rim.x, rim.y); ctx.stroke();
+
+    // center axle
+    ctx.fillStyle = css('--muted');
+    ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill();
+
+    // velocity arrows, tangent, length proportional to v = r·omega
+    var tanX = Math.cos(angle + Math.PI / 2), tanY = -Math.sin(angle + Math.PI / 2);
+    var vScale = 26; // px per (m/s), clamped to the platform below
+    var p1 = riderPos(vals.r1), p2 = riderPos(vals.r2);
+    var v1 = vals.r1 * vals.omega, v2 = vals.r2 * vals.omega;
+    var maxLen = platR * 0.85;
+    var len2 = Math.min(v2 * vScale, maxLen);
+    var len1 = v2 > 0 ? len2 * (v1 / v2) : 0;
+    drawArrow(p1.x, p1.y, tanX * len1, tanY * len1, css('--accent-teal'));
+    drawArrow(p2.x, p2.y, tanX * len2, tanY * len2, css('--accent-coral'));
+
+    // riders
+    ctx.fillStyle = css('--accent-teal');
+    ctx.beginPath(); ctx.arc(p1.x, p1.y, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = css('--accent-coral');
+    ctx.beginPath(); ctx.arc(p2.x, p2.y, 5, 0, Math.PI * 2); ctx.fill();
+
+    // readouts
+    var legX = w - 10, legY = 12;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = css('--hint');
+    ctx.fillText('ω = ' + vals.omega.toFixed(1) + ' rad/s (shared)', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--accent-teal');
+    ctx.fillText('v₁ = r₁ω = ' + v1.toFixed(1) + ' m/s', legX, legY);
+    legY += 14;
+    ctx.fillStyle = css('--accent-coral');
+    ctx.fillText('v₂ = r₂ω = ' + v2.toFixed(1) + ' m/s', legX, legY);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var ratio = vals.r1 > 0 ? (vals.r2 / vals.r1) : 0;
+    var txt = 'Both riders sweep the same angle every second, but the outer rider is ' +
+      ratio.toFixed(1) + '× as far out, so their path is ' + ratio.toFixed(1) + '× as fast.';
+    cap.querySelector('span').textContent = txt;
+  }
+
+  // controls
+  var cd = document.createElement('div');
+  cd.className = 'fbd-controls';
+
+  function addSlider(id, label, unit, min, max, val, step) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = val;
+    var dp = step < 1 ? ('' + step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+val).toFixed(dp) + ' ' + unit;
+    inp.addEventListener('input', function () {
+      vals[id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + unit;
+      render(); updateCaption();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+  }
+
+  addSlider('omega', 'ω', 'rad/s', 0.2, 3, 1.2, 0.1);
+  addSlider('r1', 'Rider 1', 'm', 0.3, 1.4, 0.8, 0.1);
+  addSlider('r2', 'Rider 2', 'm', 1.5, 3, 2.4, 0.1);
+
+  wrap.appendChild(cd);
+
+  // scrub bar
+  var tScrub = document.createElement('input');
+  tScrub.type = 'range'; tScrub.min = 0; tScrub.max = 1000; tScrub.value = 0; tScrub.step = 1;
+  tScrub.id = 'mgr-sim-scrub';
+  tScrub.style.cssText = 'width:100%;height:3px;margin:0;padding:0;display:block;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none;background:var(--border-strong);border-radius:2px;transition:opacity 0.2s;';
+  var scStyle = document.createElement('style');
+  scStyle.textContent = '#mgr-sim-scrub::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent-purple);cursor:pointer;}#mgr-sim-scrub::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent-purple);border:none;cursor:pointer;}';
+  document.head.appendChild(scStyle);
+  canvas.after(tScrub);
+
+  var cardWrap = canvas.closest('.graph-card');
+  var scrubbing = false;
+  cardWrap.addEventListener('mouseenter', function () { tScrub.style.opacity = '0.5'; });
+  cardWrap.addEventListener('mouseleave', function () { if (!scrubbing) tScrub.style.opacity = '0'; });
+
+  var playBtn = null;
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.omega = +(0.2 + Math.random() * 2.8).toFixed(1);
+      vals.r1 = +(0.3 + Math.random() * 1.1).toFixed(1);
+      vals.r2 = +(1.5 + Math.random() * 1.5).toFixed(1);
+      var ctrls = cd.querySelectorAll('input[type="range"]');
+      var spans = cd.querySelectorAll('.fbd-control-val');
+      if (ctrls[0]) { ctrls[0].value = vals.omega; spans[0].textContent = vals.omega.toFixed(1) + ' rad/s'; }
+      if (ctrls[1]) { ctrls[1].value = vals.r1; spans[1].textContent = vals.r1.toFixed(1) + ' m'; }
+      if (ctrls[2]) { ctrls[2].value = vals.r2; spans[2].textContent = vals.r2.toFixed(1) + ' m'; }
+      render(); updateCaption();
+    });
+    cap.appendChild(rb);
+
+    playBtn = document.createElement('button');
+    playBtn.className = 'fbd-pause'; playBtn.type = 'button';
+    playBtn.textContent = 'play'; playBtn.style.display = 'none';
+    playBtn.addEventListener('click', function () {
+      paused = false; playBtn.style.display = 'none'; tick();
+    });
+    cap.appendChild(playBtn);
+  }
+
+  tScrub.addEventListener('input', function () {
+    angle = (parseFloat(tScrub.value) / 1000) * Math.PI * 2;
+    scrubbing = true; paused = true;
+    if (playBtn) playBtn.style.display = '';
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    render();
+  });
+  tScrub.addEventListener('mouseup', function () { scrubbing = false; });
+
+  cardWrap.addEventListener('keydown', function (e) {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      if (paused) { paused = false; if (playBtn) playBtn.style.display = 'none'; tick(); }
+      else { paused = true; if (playBtn) playBtn.style.display = ''; if (animId) { cancelAnimationFrame(animId); animId = null; } }
+    }
+  });
+  cardWrap.setAttribute('tabindex', '0');
+
+  function tick() {
+    if (paused) { animId = null; return; }
+    angle += vals.omega / 60;
+    if (!scrubbing) tScrub.value = Math.round(((angle % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2)) / (Math.PI * 2) * 1000);
+    render();
+    animId = requestAnimationFrame(tick);
+  }
+
+  render(); updateCaption(); tick();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="../notes.js"></script>
 </body>

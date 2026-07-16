@@ -889,6 +889,14 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                     { type: 'flashcard', name: 'Rotational Kinematics Flashcards', desc: 'Formula cards for quick review',                                                      path: 'rotational-kinematics/flashcards/' },
                     { type: 'practice',  name: 'Rotational Kinematics Practice',   desc: 'Solve angular displacement, velocity, and acceleration problems',                     path: 'rotational-kinematics/quiz/' }
                 ]
+            },
+            {
+                num: 9, title: 'Torque & Rotational Dynamics',
+                lessons: [
+                    { type: 'note',      name: 'Torque & Rotational Dynamics',            desc: "Torque, rotational free-body diagrams, rotational inertia, and Newton's second law for rotation", path: 'rotational-dynamics/' },
+                    { type: 'flashcard', name: 'Torque & Rotational Dynamics Flashcards', desc: 'Formula cards for quick review',                                                                  path: 'rotational-dynamics/flashcards/' },
+                    { type: 'practice',  name: 'Torque & Rotational Dynamics Practice',   desc: 'Solve torque, rotational inertia, and angular acceleration problems',                             path: 'rotational-dynamics/quiz/' }
+                ]
             }
         ];
 

@@ -945,6 +945,148 @@ var QuizGen = (function () {
         'Doubling the initial spin rate quadruples the angle needed to stop'
       );
       renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    torqueFromAngle: function (el) {
+      var r = rand(0.2, 0.5, 0.05);
+      var F = rand(40, 120, 10);
+      var angles = [30, 45, 60];
+      var ang = angles[Math.floor(Math.random() * angles.length)];
+      var tau = +(r * F * Math.sin(ang * Math.PI / 180)).toFixed(1);
+      var text = 'A cyclist pushes on a \\(' + r + '\\text{ m}\\) pedal crank with \\(' + F + '\\text{ N}\\) at an angle of \\(' + ang + '^\\circ\\) to the crank arm. What is the magnitude of the torque about the axle?';
+      var wrongs = [+(r * F).toFixed(1), +(r * F * Math.cos(ang * Math.PI / 180)).toFixed(1), +(F * Math.sin(ang * Math.PI / 180)).toFixed(1)];
+      var explain = steps(
+        'Torque: \\(\\tau = rF\\sin\\theta\\)',
+        '\\(\\tau = (' + r + ')(' + F + ')\\sin ' + ang + '^\\circ\\)',
+        '\\(= ' + tau + '\\text{ N·m}\\)',
+        'Only the force component perpendicular to the crank twists it; \\(rF\\) alone would overcount'
+      );
+      renderQ(el, text, makeOpts(tau, wrongs), explain, '\\text{ N·m}');
+    },
+
+    leverArmConcept: function (el) {
+      var F = rand(20, 60, 10);
+      var text = 'A force of \\(' + F + '\\text{ N}\\) is applied to a heavy door. Which application produces the largest torque about the hinges?';
+      var correct = '\\text{at the handle, perpendicular to the door}';
+      var wrongs = [
+        '\\text{at the handle, aimed at the hinges}',
+        '\\text{at the middle, perpendicular to the door}',
+        '\\text{at the hinges, perpendicular to the door}'
+      ];
+      var explain = steps(
+        '\\(\\tau = rF\\sin\\theta\\): torque grows with distance from the axis AND with the perpendicular component',
+        'The handle maximizes \\(r\\); pushing perpendicular makes \\(\\sin\\theta = 1\\)',
+        'A force aimed at the hinges has zero lever arm, so zero torque no matter how hard you push',
+        'Pushing at the hinges makes \\(r = 0\\), also zero torque'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    torquePerpendicular: function (el) {
+      var r = rand(0.2, 0.6, 0.1);
+      var F = rand(30, 90, 5);
+      var tau = +(r * F).toFixed(1);
+      var text = 'A plumber pulls perpendicular to the end of a \\(' + r + '\\text{ m}\\) pipe wrench with \\(' + F + '\\text{ N}\\). What torque does the pull exert on the fitting?';
+      var explain = steps(
+        'Perpendicular force: \\(\\theta = 90^\\circ\\), so \\(\\sin\\theta = 1\\)',
+        '\\(\\tau = rF = (' + r + ')(' + F + ')\\)',
+        '\\(= ' + tau + '\\text{ N·m}\\)',
+        'The full length of the wrench acts as the lever arm'
+      );
+      renderInput(el, text, tau, 0.2, explain);
+    },
+
+    seesawBalance: function (el) {
+      var m1 = rand(20, 40, 5);
+      var r1 = rand(1, 2, 0.5);
+      var r2 = rand(2.5, 4, 0.5);
+      var m2 = +((m1 * r1) / r2).toFixed(1);
+      var text = 'A \\(' + m1 + '\\text{ kg}\\) child sits \\(' + r1 + '\\text{ m}\\) from the pivot of a seesaw. What mass must a friend sitting \\(' + r2 + '\\text{ m}\\) on the other side have to balance it?';
+      var wrongs = [+((m1 * r2) / r1).toFixed(1), m1, +(m1 * r1).toFixed(1)];
+      var explain = steps(
+        'Balanced: \\(\\tau_{net} = 0\\), so the two torques about the pivot cancel',
+        '\\(m_1 g r_1 = m_2 g r_2\\); the \\(g\\) cancels',
+        '\\(m_2 = \\dfrac{m_1 r_1}{r_2} = \\dfrac{(' + m1 + ')(' + r1 + ')}{' + r2 + '}\\)',
+        '\\(= ' + m2 + '\\text{ kg}\\); sitting farther out, the friend needs less mass for the same torque'
+      );
+      renderQ(el, text, makeOpts(m2, wrongs), explain, '\\text{ kg}');
+    },
+
+    rotationalInertiaPoint: function (el) {
+      var m = rand(0.5, 3, 0.5);
+      var r = rand(1, 3, 0.5);
+      var I = +(m * r * r).toFixed(2);
+      var text = 'A \\(' + m + '\\text{ kg}\\) ball is swung on a light string in a circle of radius \\(' + r + '\\text{ m}\\). What is its rotational inertia about the center?';
+      var wrongs = [+(m * r).toFixed(2), +(0.5 * m * r * r).toFixed(2), +(m * m * r).toFixed(2)];
+      var explain = steps(
+        'Point mass: \\(I = mr^2\\)',
+        '\\(I = (' + m + ')(' + r + ')^2 = (' + m + ')(' + +(r * r).toFixed(2) + ')\\)',
+        '\\(= ' + I + '\\text{ kg·m}^2\\)',
+        'Doubling the radius would quadruple \\(I\\): distance from the axis counts twice'
+      );
+      renderQ(el, text, makeOpts(I, wrongs), explain, '\\text{ kg·m}^2');
+    },
+
+    inertiaShapeCompare: function (el) {
+      var text = 'A hoop, a solid disk, and a solid sphere have equal mass \\(M\\) and radius \\(R\\). Each spins about an axis through its center. Rank their rotational inertias from largest to smallest.';
+      var correct = '\\text{hoop} > \\text{disk} > \\text{sphere}';
+      var wrongs = [
+        '\\text{sphere} > \\text{disk} > \\text{hoop}',
+        '\\text{disk} > \\text{hoop} > \\text{sphere}',
+        '\\text{all equal, same } M \\text{ and } R'
+      ];
+      var explain = steps(
+        'Rotational inertia depends on where the mass sits, not just how much there is',
+        'Hoop: all mass at the rim, \\(I = MR^2\\)',
+        'Disk: mass spread inward, \\(I = \\tfrac{1}{2}MR^2\\); sphere: mass hugs the axis, \\(I = \\tfrac{2}{5}MR^2\\)',
+        'The farther the mass from the axis, the harder the object is to spin up'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    alphaFromTorque: function (el) {
+      var tau = rand(2, 12, 1);
+      var I = rand(0.5, 3, 0.5);
+      var a = +(tau / I).toFixed(2);
+      var text = 'A net torque of \\(' + tau + '\\text{ N·m}\\) acts on a flywheel with rotational inertia \\(' + I + '\\text{ kg·m}^2\\). What is its angular acceleration?';
+      var explain = steps(
+        'Newton\'s second law for rotation: \\(\\tau_{net} = I\\alpha\\)',
+        '\\(\\alpha = \\dfrac{\\tau_{net}}{I} = \\dfrac{' + tau + '}{' + I + '}\\)',
+        '\\(= ' + a + '\\text{ rad/s}^2\\)',
+        'Same torque on a larger \\(I\\) would spin up more slowly, exactly like \\(a = F/m\\)'
+      );
+      renderInput(el, text, a, 0.1, explain);
+    },
+
+    diskRimTorque: function (el) {
+      var M = rand(2, 8, 1);
+      var R = rand(0.2, 0.6, 0.1);
+      var F = rand(4, 12, 1);
+      var I = +(0.5 * M * R * R).toFixed(3);
+      var a = +((F * R) / I).toFixed(1);
+      var text = 'A rope wrapped around the rim of a solid disk (\\(M = ' + M + '\\text{ kg}\\), \\(R = ' + R + '\\text{ m}\\)) is pulled tangentially with \\(' + F + '\\text{ N}\\). What is the disk\'s angular acceleration?';
+      var wrongs = [+(F / (M * R)).toFixed(1), +(a / 2).toFixed(1), +(F * R / (M * R * R)).toFixed(1)];
+      var explain = steps(
+        'Torque from the rope: \\(\\tau = RF = (' + R + ')(' + F + ') = ' + +(R * F).toFixed(2) + '\\text{ N·m}\\)',
+        'Solid disk: \\(I = \\tfrac{1}{2}MR^2 = \\tfrac{1}{2}(' + M + ')(' + R + ')^2 = ' + I + '\\text{ kg·m}^2\\)',
+        '\\(\\alpha = \\dfrac{\\tau}{I} = \\dfrac{' + +(R * F).toFixed(2) + '}{' + I + '}\\)',
+        '\\(= ' + a + '\\text{ rad/s}^2\\)'
+      );
+      renderQ(el, text, makeOpts(a, wrongs), explain, '\\text{ rad/s}^2');
+    },
+
+    deriveAlphaRod: function (el) {
+      var text = 'A small ball of mass \\(m\\) sits at the end of a light rod of length \\(L\\) that pivots about its other end. A force \\(F\\) is applied to the ball, perpendicular to the rod. Derive the angular acceleration.';
+      var correct = '\\dfrac{F}{mL}';
+      var wrongs = ['\\dfrac{F}{mL^2}', '\\dfrac{FL}{m}', '\\dfrac{mF}{L}'];
+      var explain = steps(
+        'Torque about the pivot: \\(\\tau = LF\\) (perpendicular force, lever arm \\(L\\))',
+        'Rotational inertia of a point mass at distance \\(L\\): \\(I = mL^2\\)',
+        'Apply \\(\\tau_{net} = I\\alpha\\): \\(LF = mL^2\\alpha\\)',
+        'Solve: \\(\\alpha = \\dfrac{F}{mL}\\)',
+        'A longer rod means more torque but even more inertia, so \\(\\alpha\\) shrinks with \\(L\\)'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
     }
   };
 })();

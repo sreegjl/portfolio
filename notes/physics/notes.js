@@ -140,7 +140,8 @@ if (studyToggle && page) {
     'work-energy':     { fc: 'work-energy' },
     'momentum':        { fc: 'momentum' },
     'collisions':      { fc: 'collisions' },
-    'rotational-kinematics': { fc: 'rotational-kinematics' }
+    'rotational-kinematics': { fc: 'rotational-kinematics' },
+    'rotational-dynamics': { fc: 'rotational-dynamics' }
   };
 
   fetch('/notes-manifest.json')
