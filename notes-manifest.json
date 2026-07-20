@@ -28,7 +28,9 @@
     { "path": "physics/rotational-kinematics/index.html", "title": "Rotational Kinematics" },
     { "path": "physics/rotational-kinematics/quiz/index.html", "title": "Practice: Rotational Kinematics" },
     { "path": "physics/rotational-dynamics/index.html", "title": "Torque & Rotational Dynamics" },
-    { "path": "physics/rotational-dynamics/quiz/index.html", "title": "Practice: Torque & Rotational Dynamics" }
+    { "path": "physics/rotational-dynamics/quiz/index.html", "title": "Practice: Torque & Rotational Dynamics" },
+    { "path": "physics/rotational-energy/index.html", "title": "Rotational Energy" },
+    { "path": "physics/rotational-energy/quiz/index.html", "title": "Practice: Rotational Energy" }
   ],
   "htmlNotesBase": "notes/"
 }

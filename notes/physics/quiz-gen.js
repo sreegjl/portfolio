@@ -1087,6 +1087,143 @@ var QuizGen = (function () {
         'A longer rod means more torque but even more inertia, so \\(\\alpha\\) shrinks with \\(L\\)'
       );
       renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    rotationalKE: function (el) {
+      var I = rand(0.5, 3, 0.5);
+      var w = rand(4, 12, 1);
+      var K = +(0.5 * I * w * w).toFixed(1);
+      var text = 'A shop grinding wheel has rotational inertia \\(' + I + '\\text{ kg·m}^2\\) and spins at \\(' + w + '\\text{ rad/s}\\). What is its rotational kinetic energy?';
+      var wrongs = [+(I * w * w).toFixed(1), +(0.5 * I * w).toFixed(1), +(0.5 * I * I * w).toFixed(1)];
+      var explain = steps(
+        'Rotational kinetic energy: \\(K_{rot} = \\tfrac{1}{2}I\\omega^2\\)',
+        '\\(K_{rot} = \\tfrac{1}{2}(' + I + ')(' + w + ')^2 = \\tfrac{1}{2}(' + I + ')(' + (w * w) + ')\\)',
+        '\\(= ' + K + '\\text{ J}\\)',
+        'The rotational twin of \\(\\tfrac{1}{2}mv^2\\): \\(m \\to I\\), \\(v \\to \\omega\\)'
+      );
+      renderQ(el, text, makeOpts(K, wrongs), explain, '\\text{ J}');
+    },
+
+    rotKEScalarConcept: function (el) {
+      var text = 'Two identical drone rotors spin at the same rate, one clockwise and one counterclockwise. How do their rotational kinetic energies compare?';
+      var correct = '\\text{equal and positive: energy is a scalar}';
+      var wrongs = [
+        '\\text{equal magnitude, opposite sign}',
+        '\\text{they cancel, so the total is zero}',
+        '\\text{the counterclockwise rotor has more}'
+      ];
+      var explain = steps(
+        'Rotational kinetic energy is a scalar: it has magnitude but no direction',
+        '\\(K_{rot} = \\tfrac{1}{2}I\\omega^2\\) squares \\(\\omega\\), so the spin direction drops out',
+        'Same \\(I\\), same spin rate \\(\\Rightarrow\\) same \\(K_{rot}\\), and both are positive',
+        'Unlike angular velocity or angular momentum, kinetic energies never cancel; they add'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    totalKERolling: function (el) {
+      var M = rand(2, 8, 1);
+      var v = rand(1, 4, 0.5);
+      var K = +(0.75 * M * v * v).toFixed(1);
+      var text = 'A solid cylindrical log of mass \\(' + M + '\\text{ kg}\\) rolls without slipping across level ground with its center moving at \\(' + v + '\\text{ m/s}\\). What is its total kinetic energy?';
+      var explain = steps(
+        'Total KE = translational + rotational: \\(K = \\tfrac{1}{2}Mv_{cm}^2 + \\tfrac{1}{2}I\\omega^2\\)',
+        'Cylinder: \\(I = \\tfrac{1}{2}MR^2\\); rolling: \\(\\omega = v/R\\)',
+        '\\(K = \\tfrac{1}{2}Mv^2 + \\tfrac{1}{2}\\left(\\tfrac{1}{2}MR^2\\right)\\dfrac{v^2}{R^2} = \\tfrac{3}{4}Mv^2\\)',
+        '\\(= \\tfrac{3}{4}(' + M + ')(' + v + ')^2 = ' + K + '\\text{ J}\\)',
+        'A third of the total rides in the spin: \\(\\tfrac{1}{4}Mv^2\\) of rotation on top of \\(\\tfrac{1}{2}Mv^2\\)'
+      );
+      renderInput(el, text, K, 0.5, explain);
+    },
+
+    rollingConstraint: function (el) {
+      var R = rand(0.3, 0.5, 0.05);
+      var w = rand(10, 30, 5);
+      var v = +(R * w).toFixed(1);
+      var text = 'A bicycle wheel of radius \\(' + R + '\\text{ m}\\) rolls without slipping while spinning at \\(' + w + '\\text{ rad/s}\\). How fast is the bicycle moving?';
+      var wrongs = [+(w / R).toFixed(1), w, +(2 * R * w).toFixed(1)];
+      var explain = steps(
+        'Rolling without slipping locks translation to rotation: \\(v_{cm} = R\\omega\\)',
+        '\\(v_{cm} = (' + R + ')(' + w + ')\\)',
+        '\\(= ' + v + '\\text{ m/s}\\)',
+        'The contact point grips the road, so one wheel turn advances the bike one circumference'
+      );
+      renderQ(el, text, makeOpts(v, wrongs), explain, '\\text{ m/s}');
+    },
+
+    rollingPointSpeeds: function (el) {
+      var v = rand(10, 30, 5);
+      var text = 'A car drives at \\(' + v + '\\text{ m/s}\\) with tires rolling without slipping. What is the speed of the point at the very top of a tire?';
+      var top = +(2 * v).toFixed(0);
+      var wrongs = [v, 0, +(v / 2).toFixed(0)];
+      var explain = steps(
+        'Every point shares the center\'s velocity plus its own spin velocity \\(R\\omega = v\\)',
+        'Top of the tire: the two add, \\(v + R\\omega = 2v_{cm}\\)',
+        '\\(= 2(' + v + ') = ' + top + '\\text{ m/s}\\)',
+        'At the contact point they cancel to zero, which is why static friction can grip there'
+      );
+      renderQ(el, text, makeOpts(top, wrongs), explain, '\\text{ m/s}');
+    },
+
+    rollingRace: function (el) {
+      var text = 'A solid sphere, a solid disk, and a hoop are released from rest at the top of a ramp and roll without slipping. In what order do they reach the bottom?';
+      var correct = '\\text{sphere, then disk, then hoop}';
+      var wrongs = [
+        '\\text{hoop, then disk, then sphere}',
+        '\\text{all three tie}',
+        '\\text{the heaviest one wins}'
+      ];
+      var explain = steps(
+        'Each shares \\(Mgh\\) between translation and rotation; write \\(I = cMR^2\\)',
+        'Ramp speed: \\(v = \\sqrt{2gh/(1+c)}\\), and mass and radius cancel out',
+        'Sphere \\(c = \\tfrac{2}{5}\\), disk \\(c = \\tfrac{1}{2}\\), hoop \\(c = 1\\): smaller \\(c\\) keeps more energy in translation',
+        'So the sphere is fastest and the hoop, with all its mass at the rim, is last'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    rampSpeedRolling: function (el) {
+      var h = rand(0.7, 2.1, 0.1);
+      var v = +Math.sqrt((10 / 7) * 9.8 * h).toFixed(1);
+      var text = 'A billiard ball (solid sphere) rolls without slipping from rest down a ramp of height \\(' + h + '\\text{ m}\\). What is its speed at the bottom? (\\(g = 9.8\\text{ m/s}^2\\))';
+      var explain = steps(
+        'Static friction does no work, so energy is conserved: \\(Mgh = \\tfrac{1}{2}Mv^2 + \\tfrac{1}{2}I\\omega^2\\)',
+        'Sphere: \\(I = \\tfrac{2}{5}MR^2\\); rolling: \\(\\omega = v/R\\), so \\(Mgh = \\tfrac{7}{10}Mv^2\\)',
+        '\\(v = \\sqrt{\\tfrac{10}{7}gh} = \\sqrt{\\tfrac{10}{7}(9.8)(' + h + ')}\\)',
+        '\\(= ' + v + '\\text{ m/s}\\), slower than the \\(\\sqrt{2gh} = ' + +Math.sqrt(2 * 9.8 * h).toFixed(1) + '\\text{ m/s}\\) of a frictionless slider'
+      );
+      renderInput(el, text, v, 0.2, explain);
+    },
+
+    rollingFrictionWork: function (el) {
+      var text = 'A ball rolls without slipping down a hill. Why can mechanical energy still be conserved even though friction acts on the ball?';
+      var correct = '\\text{static friction acts on a point that is momentarily at rest, doing zero work}';
+      var wrongs = [
+        '\\text{there is no friction in rolling without slipping}',
+        '\\text{the friction work is canceled by the work of gravity}',
+        '\\text{rotational kinetic energy does not count as mechanical energy}'
+      ];
+      var explain = steps(
+        'Rolling without slipping means the contact point does not slide: the friction is static',
+        'The contact point is momentarily at rest, so the friction force acts through zero displacement',
+        'Zero displacement \\(\\Rightarrow\\) zero work: \\(Mgh\\) flows entirely into \\(\\tfrac{1}{2}Mv^2 + \\tfrac{1}{2}I\\omega^2\\)',
+        'A skidding ball is different: kinetic friction acts on a sliding surface and dissipates energy'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    deriveRampSpeed: function (el) {
+      var text = 'An object of mass \\(M\\), radius \\(R\\), and rotational inertia \\(I = cMR^2\\) rolls without slipping from rest down a ramp of height \\(h\\). Derive its speed at the bottom.';
+      var correct = '\\sqrt{\\dfrac{2gh}{1 + c}}';
+      var wrongs = ['\\sqrt{2gh}', '\\sqrt{\\dfrac{2gh}{c}}', '\\sqrt{\\dfrac{gh}{1 + c}}'];
+      var explain = steps(
+        'Energy conservation: \\(Mgh = \\tfrac{1}{2}Mv^2 + \\tfrac{1}{2}I\\omega^2\\)',
+        'Substitute \\(I = cMR^2\\) and the constraint \\(\\omega = v/R\\): the \\(R\\)\'s cancel',
+        '\\(Mgh = \\tfrac{1}{2}Mv^2(1 + c)\\); the \\(M\\)\'s cancel too',
+        'Solve: \\(v = \\sqrt{\\dfrac{2gh}{1 + c}}\\)',
+        'With \\(c = 0\\) (no rotation) this collapses to the familiar \\(\\sqrt{2gh}\\)'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
     }
   };
 })();

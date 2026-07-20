@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rotational Energy</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Physics</a>
+    <div>
+      <h1>rotational energy</h1>
+      <span>rotational kinetic energy, total kinetic energy of a rigid system, and rolling without slipping</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Rotational kinetic energy ── -->
+  <div class="section" id="sec-rot-ke">
+    <p class="section-label">Rotational kinetic energy</p>
+
+    <p class="prose">
+      A spinning object has kinetic energy even if it goes nowhere, because every piece of its mass is moving in a circle. Summing \(\tfrac{1}{2}mv^2\) over all those pieces gives the <strong>rotational kinetic energy</strong>, written in terms of the rigid system's rotational inertia and angular velocity:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-k}{K_\text{rot}} = \tfrac{1}{2}\class{var-inertia}{I}\class{var-omega}{\omega}^2\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(K_\text{rot}\)</span>
+          <span class="row-val">rotational kinetic energy (J)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(I\)</span>
+          <span class="row-val">rotational inertia about the axis (kg·m²)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\omega\)</span>
+          <span class="row-val">angular velocity (rad/s)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Key properties</p>
+        <div class="row">
+          <span class="row-desc">Scalar</span>
+          <span class="row-val">no direction; spin sense does not matter since \(\omega\) is squared <span class="badge amber">always ≥ 0</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Same currency</span>
+          <span class="row-val">measured in joules; trades freely with \(U_g\), \(U_s\), and translational \(K\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Grows with \(\omega^2\)</span>
+          <span class="row-val">doubling the spin rate quadruples the stored energy</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Mirrors \(\tfrac{1}{2}mv^2\)</span>
+          <span class="row-val">\(m \to I\), \(v \to \omega\): the usual rotational dictionary</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      This is not a new kind of energy, just ordinary kinetic energy tallied for circular motion. Grid-scale <strong>flywheels</strong> exploit the \(\omega^2\) growth: spin a heavy disk fast in a vacuum chamber and it banks megajoules that can be drawn back out as electricity seconds later.
+    </p>
+  </div>
+
+  <!-- ── Total kinetic energy ── -->
+  <div class="section" id="sec-total-ke">
+    <p class="section-label">Total kinetic energy</p>
+
+    <p class="prose">
+      A rigid system can translate and rotate at the same time, and its <strong>total kinetic energy</strong> splits cleanly into two pieces: translational kinetic energy from the linear motion of its center of mass, plus rotational kinetic energy from its rotation about the center of mass:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-k}{K_\text{total}} = \tfrac{1}{2}M\class{var-v}{v_\text{cm}}^2 + \tfrac{1}{2}\class{var-inertia}{I_\text{cm}}\class{var-omega}{\omega}^2\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">The two contributions</p>
+        <div class="row">
+          <span class="row-desc">\(\tfrac{1}{2}Mv_\text{cm}^2\)</span>
+          <span class="row-val">translational: total mass \(M\) moving at the center-of-mass speed</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\tfrac{1}{2}I_\text{cm}\omega^2\)</span>
+          <span class="row-val">rotational: spin about the center of mass, using \(I\) about that axis</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Three kinds of motion</p>
+        <div class="row">
+          <span class="row-desc">Pure translation</span>
+          <span class="row-val">\(\omega = 0\): a crate sliding on ice, only \(\tfrac{1}{2}Mv^2\) <span class="badge teal">translational</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Pure rotation</span>
+          <span class="row-val">\(v_\text{cm} = 0\): a ceiling fan, only \(\tfrac{1}{2}I\omega^2\) <span class="badge amber">rotational</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Both at once</span>
+          <span class="row-val">a rolling wheel or tumbling gymnast carries the sum <span class="badge coral">add them</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Picture a drone propeller that snaps off mid-flight: it sails across the yard while spinning furiously. Its center of mass follows an ordinary projectile path carrying \(\tfrac{1}{2}Mv_\text{cm}^2\), and the blur of rotation about that point carries \(\tfrac{1}{2}I_\text{cm}\omega^2\) on top.
+    </p>
+  </div>
+
+  <!-- ── Rolling without slipping ── -->
+  <div class="section" id="sec-rolling">
+    <p class="section-label">Rolling without slipping</p>
+
+    <p class="prose">
+      A wheel <strong>rolls without slipping</strong> when it turns without skidding or spinning in place: the contact point grips the ground, so each moment it is momentarily at rest. That grip locks the translation to the rotation:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-v}{v_\text{cm}} = R\class{var-omega}{\omega}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">The rolling constraint</p>
+        <div class="row">
+          <span class="row-desc">Links the two motions</span>
+          <span class="row-val">\(v_\text{cm} = R\omega\) and \(a_\text{cm} = R\alpha\); one unknown, not two</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Held by static friction</span>
+          <span class="row-val">the contact point does not slide, so it is <em>static</em> friction, not kinetic</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Friction does no work</span>
+          <span class="row-val">it acts on a point that is not moving <span class="badge teal">energy conserved</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Slipping breaks it</span>
+          <span class="row-val">a skidding tire has \(v_\text{cm} \neq R\omega\) and kinetic friction burns energy <span class="badge coral">energy lost</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Point speeds on a rolling wheel</p>
+        <div class="row">
+          <span class="row-desc">Top of the wheel</span>
+          <span class="row-val">\(2v_\text{cm}\): translation and spin add</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Center</span>
+          <span class="row-val">\(v_\text{cm}\): pure translation</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Contact point</span>
+          <span class="row-val">zero: translation and spin cancel <span class="badge amber">momentarily at rest</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      This is why the bottom of a rolling bike tire looks sharp in a photo while the top blurs: the top really is moving twice as fast as the bike. When a problem says "rolls without slipping," it is handing you the constraint \(v_\text{cm} = R\omega\) and permission to conserve energy.
+    </p>
+  </div>
+
+  <!-- ── Energy conservation with rolling ── -->
+  <div class="section" id="sec-rolling-energy">
+    <p class="section-label">Energy conservation with rolling</p>
+
+    <p class="prose">
+      Since static friction does no work, a ball rolling down a hill conserves mechanical energy. The potential energy it gives up must feed <em>both</em> kinetic terms, with the constraint \(\omega = v_\text{cm}/R\) tying them together:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[Mgh = \tfrac{1}{2}M\class{var-v}{v_\text{cm}}^2 + \tfrac{1}{2}\class{var-inertia}{I_\text{cm}}\class{var-omega}{\omega}^2\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Solving a rolling problem</p>
+        <div class="row">
+          <span class="row-desc">1. Write the energy bar</span>
+          <span class="row-val">\(U_g\) at the top \(=\) translational \(+\) rotational \(K\) at the bottom</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">2. Apply the constraint</span>
+          <span class="row-val">replace \(\omega\) with \(v_\text{cm}/R\); the \(R\)'s cancel</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">3. Use the shape</span>
+          <span class="row-val">write \(I = cMR^2\) (sphere \(c = \tfrac{2}{5}\), disk \(\tfrac{1}{2}\), hoop \(1\))</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">4. Solve</span>
+          <span class="row-val">\(v_\text{cm} = \sqrt{\dfrac{2gh}{1 + c}}\); mass and radius drop out</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Worked example: bowling ball ramp</p>
+        <div class="row">
+          <span class="row-desc">Given</span>
+          <span class="row-val">a \(6.0\ \text{kg}\) bowling ball (solid sphere) rolls from rest down a \(1.4\ \text{m}\) tall ramp</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Energy</span>
+          <span class="row-val">\(Mgh = \tfrac{1}{2}Mv^2 + \tfrac{1}{2}\left(\tfrac{2}{5}MR^2\right)\left(\tfrac{v}{R}\right)^2 = \tfrac{7}{10}Mv^2\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Speed</span>
+          <span class="row-val">\(v = \sqrt{\tfrac{10}{7}gh} = \sqrt{\tfrac{10}{7}(9.8)(1.4)} \approx 4.4\ \text{m/s}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Compare</span>
+          <span class="row-val">sliding friction-free it would hit \(\sqrt{2gh} \approx 5.2\ \text{m/s}\) <span class="badge coral">rolling is slower</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Race a hoop, a disk, and a sphere down the same ramp and the <strong>sphere wins, disk second, hoop last</strong>, no matter their masses or radii. The larger the shape factor \(c\), the bigger the slice of \(Mgh\) locked up in spin instead of forward motion. Nothing beats a frictionless sliding block, which puts every joule into translation.
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">Rotational kinetic energy</span>
+        <span class="row-val">\(\class{var-k}{K_\text{rot}} = \tfrac{1}{2}\class{var-inertia}{I}\class{var-omega}{\omega}^2\), a scalar in joules; never negative</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Total kinetic energy</span>
+        <span class="row-val">\(\class{var-k}{K} = \tfrac{1}{2}M\class{var-v}{v_\text{cm}}^2 + \tfrac{1}{2}\class{var-inertia}{I_\text{cm}}\class{var-omega}{\omega}^2\): center-of-mass translation plus rotation about it</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Rolling constraint</span>
+        <span class="row-val">rolling without slipping locks \(\class{var-v}{v_\text{cm}} = R\class{var-omega}{\omega}\) and \(a_\text{cm} = R\alpha\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Static friction in rolling</span>
+        <span class="row-val">acts at a momentarily-at-rest contact point, so it does no work; energy is conserved</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Ramp speed</span>
+        <span class="row-val">with \(I = cMR^2\), \(v_\text{cm} = \sqrt{2gh/(1+c)}\); mass and radius cancel</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Rolling race</span>
+        <span class="row-val">sphere beats disk beats hoop; a frictionless slider beats them all</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../notes.js"></script>
+</body>
+</html>

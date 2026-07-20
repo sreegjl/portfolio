@@ -897,6 +897,14 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                     { type: 'flashcard', name: 'Torque & Rotational Dynamics Flashcards', desc: 'Formula cards for quick review',                                                                  path: 'rotational-dynamics/flashcards/' },
                     { type: 'practice',  name: 'Torque & Rotational Dynamics Practice',   desc: 'Solve torque, rotational inertia, and angular acceleration problems',                             path: 'rotational-dynamics/quiz/' }
                 ]
+            },
+            {
+                num: 10, title: 'Rotational Energy',
+                lessons: [
+                    { type: 'note',      name: 'Rotational Energy',            desc: 'Rotational kinetic energy, total kinetic energy of a rigid system, and rolling without slipping', path: 'rotational-energy/' },
+                    { type: 'flashcard', name: 'Rotational Energy Flashcards', desc: 'Formula cards for quick review',                                                                  path: 'rotational-energy/flashcards/' },
+                    { type: 'practice',  name: 'Rotational Energy Practice',   desc: 'Solve rotational kinetic energy and rolling without slipping problems',                           path: 'rotational-energy/quiz/' }
+                ]
             }
         ];
 

@@ -141,7 +141,8 @@ if (studyToggle && page) {
     'momentum':        { fc: 'momentum' },
     'collisions':      { fc: 'collisions' },
     'rotational-kinematics': { fc: 'rotational-kinematics' },
-    'rotational-dynamics': { fc: 'rotational-dynamics' }
+    'rotational-dynamics': { fc: 'rotational-dynamics' },
+    'rotational-energy': { fc: 'rotational-energy' }
   };
 
   fetch('/notes-manifest.json')
