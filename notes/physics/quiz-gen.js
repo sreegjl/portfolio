@@ -1089,6 +1089,34 @@ var QuizGen = (function () {
       renderQ(el, text, makeOpts(correct, wrongs), explain, '');
     },
 
+    angularMomentumRigid: function (el) {
+      var I = rand(0.5, 4, 0.5);
+      var w = rand(2, 12, 1);
+      var L = +(I * w).toFixed(1);
+      var text = 'A laboratory flywheel has rotational inertia \\(' + I + '\\text{ kg·m}^2\\) about its axle and spins at \\(' + w + '\\text{ rad/s}\\). What is the magnitude of its angular momentum about that axis?';
+      var explain = steps(
+        'For a rigid system about a specified axis: \\(L = I\\omega\\)',
+        '\\(L = (' + I + ')(' + w + ')\\)',
+        '\\(= ' + L + '\\text{ kg·m}^2\\text{/s}\\)',
+        'The angular momentum points along the axle according to the right-hand rule'
+      );
+      renderInput(el, text, L, 0.1, explain);
+    },
+
+    angularImpulseChange: function (el) {
+      var tau = rand(2, 8, 1);
+      var t = rand(2, 6, 1);
+      var dL = -(tau * t);
+      var text = 'Counterclockwise is positive. A constant clockwise net torque of magnitude \\(' + tau + '\\text{ N·m}\\) acts on a rigid rotor for \\(' + t + '\\text{ s}\\). What is the signed change in its angular momentum?';
+      var explain = steps(
+        'Clockwise torque is negative: \\(\\tau_{net} = -' + tau + '\\text{ N·m}\\)',
+        'Angular impulse-momentum theorem: \\(\\Delta L = \\sum\\tau\\,\\Delta t\\)',
+        '\\(\\Delta L = (-' + tau + ')(' + t + ') = ' + dL + '\\text{ kg·m}^2\\text{/s}\\)',
+        'The negative result means the angular impulse and change in angular momentum point clockwise, with the torque'
+      );
+      renderInput(el, text, dL, 0.1, explain);
+    },
+
     rotationalKE: function (el) {
       var I = rand(0.5, 3, 0.5);
       var w = rand(4, 12, 1);

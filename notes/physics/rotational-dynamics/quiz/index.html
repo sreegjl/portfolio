@@ -41,7 +41,7 @@
     <a href="../../" class="syllabus-back">← Physics</a>
     <div>
       <h1>practice: torque &amp; rotational dynamics</h1>
-      <span>torque, lever arm, rotational inertia &amp; Newton's second law for rotation</span>
+      <span>torque, rotational inertia, angular momentum &amp; angular impulse</span>
     </div>
   </header>
 
@@ -63,6 +63,8 @@
       <div class="quiz-eq-row"><span class="quiz-eq-label">Rod (center / end)</span><span class="quiz-eq-val">\(I = \tfrac{1}{12}ML^2\ /\ \tfrac{1}{3}ML^2\)</span></div>
       <div class="quiz-eq-row"><span class="quiz-eq-label">Newton's 2nd law (rotation)</span><span class="quiz-eq-val">\(\tau_{net} = I\alpha\)</span></div>
       <div class="quiz-eq-row"><span class="quiz-eq-label">Rotational equilibrium</span><span class="quiz-eq-val">\(\tau_{net} = 0 \implies \alpha = 0\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Angular momentum</span><span class="quiz-eq-val">\(L = I\omega\)</span></div>
+      <div class="quiz-eq-row"><span class="quiz-eq-label">Angular impulse-momentum</span><span class="quiz-eq-val">\(\Delta\vec L = \sum\vec\tau\,\Delta t\)</span></div>
     </div>
   </div>
 
@@ -144,6 +146,28 @@
     <div class="quiz-explain"></div>
   </div>
 
+  <!-- Q10 (numeric input) -->
+  <div class="quiz-q" id="q10">
+    <p class="quiz-q-num">Question 10</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-input-wrap">
+      <input class="quiz-input" type="number" placeholder="answer in kg·m²/s">
+      <button class="quiz-submit" type="button">check</button>
+    </div>
+    <div class="quiz-explain"></div>
+  </div>
+
+  <!-- Q11 (signed numeric input) -->
+  <div class="quiz-q" id="q11">
+    <p class="quiz-q-num">Question 11</p>
+    <p class="quiz-q-text"></p>
+    <div class="quiz-input-wrap">
+      <input class="quiz-input" type="number" placeholder="signed answer in kg·m²/s">
+      <button class="quiz-submit" type="button">check</button>
+    </div>
+    <div class="quiz-explain"></div>
+  </div>
+
 </div>
 
 <script src="../../quiz-gen.js"></script>
@@ -159,6 +183,8 @@ function generateAll() {
   QuizGen.alphaFromTorque(document.getElementById('q7'));
   QuizGen.diskRimTorque(document.getElementById('q8'));
   QuizGen.deriveAlphaRod(document.getElementById('q9'));
+  QuizGen.angularMomentumRigid(document.getElementById('q10'));
+  QuizGen.angularImpulseChange(document.getElementById('q11'));
   document.querySelectorAll('.quiz-opt').forEach(function (o) {
     o.classList.remove('quiz-correct', 'quiz-wrong', 'quiz-locked');
   });

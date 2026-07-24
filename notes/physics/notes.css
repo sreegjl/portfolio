@@ -567,6 +567,7 @@ canvas { display: block; width: 100%; }
 .var-u     { color: var(--accent-coral)  !important; }
 .var-emech { color: var(--accent-amber)  !important; }
 .var-p     { color: var(--accent-purple) !important; }
+.var-l     { color: var(--accent-purple) !important; }
 .var-j     { color: var(--accent-teal)   !important; }
 .var-omega { color: var(--accent-teal)   !important; }
 .var-alpha { color: var(--accent-coral)  !important; }
@@ -579,6 +580,7 @@ canvas { display: block; width: 100%; }
 .study-mode .formula:not(.revealed)  .var-u,
 .study-mode .formula:not(.revealed)  .var-emech,
 .study-mode .formula:not(.revealed)  .var-p,
+.study-mode .formula:not(.revealed)  .var-l,
 .study-mode .formula:not(.revealed)  .var-j,
 .study-mode .formula:not(.revealed)  .var-omega,
 .study-mode .formula:not(.revealed)  .var-alpha,
@@ -590,6 +592,7 @@ canvas { display: block; width: 100%; }
 .study-mode .row-val:not(.revealed)  .var-u,
 .study-mode .row-val:not(.revealed)  .var-emech,
 .study-mode .row-val:not(.revealed)  .var-p,
+.study-mode .row-val:not(.revealed)  .var-l,
 .study-mode .row-val:not(.revealed)  .var-j,
 .study-mode .row-val:not(.revealed)  .var-omega,
 .study-mode .row-val:not(.revealed)  .var-alpha,
@@ -601,6 +604,7 @@ canvas { display: block; width: 100%; }
 .study-mode .badge:not(.revealed)    .var-u,
 .study-mode .badge:not(.revealed)    .var-emech,
 .study-mode .badge:not(.revealed)    .var-p,
+.study-mode .badge:not(.revealed)    .var-l,
 .study-mode .badge:not(.revealed)    .var-j,
 .study-mode .badge:not(.revealed)    .var-omega,
 .study-mode .badge:not(.revealed)    .var-alpha,

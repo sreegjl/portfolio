@@ -42,7 +42,7 @@
     <a href="../" class="syllabus-back">← Physics</a>
     <div>
       <h1>torque &amp; rotational dynamics</h1>
-      <span>torque, lever arm, force diagrams for rotation, rotational inertia, and Newton's second law in rotational form</span>
+      <span>torque, rotational inertia, rotational dynamics, angular momentum, and angular impulse</span>
     </div>
     <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
       <span class="study-toggle-label">study mode</span>
@@ -209,7 +209,7 @@
     </div>
 
     <p class="prose">
-      This is why a figure skater spins faster after pulling their arms in: bringing mass toward the axis shrinks \(I\), so the same rotation takes less effort to maintain. A hoop and a disk of equal mass and radius are not equal rotationally, since the hoop keeps all its mass at the rim.
+      A hoop and a disk of equal mass and radius are not equal rotationally, since the hoop keeps all its mass at the rim. Changing the mass distribution can also change a rigid system's spin, as angular momentum explains below.
     </p>
   </div>
 
@@ -280,6 +280,65 @@
     </p>
   </div>
 
+  <!-- Angular momentum and angular impulse -->
+  <div class="section" id="sec-angular-momentum">
+    <p class="section-label">Angular momentum and angular impulse</p>
+
+    <p class="prose">
+      The <strong>angular momentum</strong> of a rigid system about a chosen axis depends on its rotational inertia and angular velocity. Its direction lies along the axis and follows the right-hand rule:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-l}{L} = \class{var-inertia}{I}\class{var-omega}{\omega}\]
+    </p>
+
+    <p class="prose">
+      An <strong>angular impulse</strong> is the net torque multiplied by the time interval for which it acts. It points in the torque's direction and equals the rigid system's change in angular momentum:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-l}{\Delta\vec{L}} = \sum\class{var-tau}{\vec{\tau}}\,\Delta t\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(L\)</span>
+          <span class="row-val">angular momentum about the axis (kg·m²/s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\Delta L\)</span>
+          <span class="row-val">change in angular momentum (kg·m²/s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\Delta t\)</span>
+          <span class="row-val">time interval during which the net torque acts (s)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Direction and change</p>
+        <div class="row">
+          <span class="row-desc">Same direction</span>
+          <span class="row-val">angular impulse, \(\sum\vec{\tau}\), and \(\Delta\vec{L}\) align</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Torque with the spin</span>
+          <span class="row-val">increases the magnitude of \(L\) <span class="badge teal">speeds up</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Torque against the spin</span>
+          <span class="row-val">decreases the magnitude of \(L\) <span class="badge coral">slows down</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      With no net external torque, angular momentum stays constant. A skater who pulls mass toward the axis lowers \(I\), so \(\omega\) rises to keep \(L = I\omega\) unchanged.
+    </p>
+  </div>
+
   <!-- ── Key takeaways ── -->
   <div class="section">
     <p class="section-label">Key takeaways</p>
@@ -313,6 +372,14 @@
       <div class="row">
         <span class="row-desc">Rotational equilibrium</span>
         <span class="row-val">\(\tau_\text{net} = 0 \implies \alpha = 0\); torques balance, \(\omega\) stays constant</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Angular momentum</span>
+        <span class="row-val">\(\class{var-l}{L} = \class{var-inertia}{I}\class{var-omega}{\omega}\), about a specified axis; direction follows the right-hand rule</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Angular impulse-momentum</span>
+        <span class="row-val">\(\class{var-l}{\Delta\vec{L}} = \sum\class{var-tau}{\vec{\tau}}\,\Delta t\); angular impulse points with the net torque</span>
       </div>
     </div>
   </div>
