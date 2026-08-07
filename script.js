@@ -905,6 +905,22 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                     { type: 'flashcard', name: 'Rotational Energy Flashcards', desc: 'Formula cards for quick review',                                                                  path: 'rotational-energy/flashcards/' },
                     { type: 'practice',  name: 'Rotational Energy Practice',   desc: 'Solve rotational kinetic energy and rolling without slipping problems',                           path: 'rotational-energy/quiz/' }
                 ]
+            },
+            {
+                num: 11, title: 'Angular Momentum & Orbital Energy',
+                lessons: [
+                    { type: 'note',      name: 'Angular Momentum & Orbital Energy',            desc: 'Angular momentum of point objects, choice of axis, orbital angular momentum, orbital energy, and escape velocity', path: 'angular-momentum-orbits/' },
+                    { type: 'flashcard', name: 'Angular Momentum & Orbital Energy Flashcards', desc: 'Formula cards for quick review',                                                                                        path: 'angular-momentum-orbits/flashcards/' },
+                    { type: 'practice',  name: 'Angular Momentum & Orbital Energy Practice',   desc: 'Solve point-object angular momentum, orbital energy, and escape velocity problems',                                    path: 'angular-momentum-orbits/quiz/' }
+                ]
+            },
+            {
+                num: 12, title: 'Oscillations',
+                lessons: [
+                    { type: 'note',      name: 'Oscillations',            desc: 'Conditions for simple harmonic motion, spring-mass oscillators, motion as a function of time, oscillator energy, and simple pendulums', path: 'oscillations/' },
+                    { type: 'flashcard', name: 'Oscillations Flashcards', desc: 'Formula cards for quick review',                                                                                                        path: 'oscillations/flashcards/' },
+                    { type: 'practice',  name: 'Oscillations Practice',   desc: 'Solve spring-mass, pendulum, and oscillator energy problems',                                                                          path: 'oscillations/quiz/' }
+                ]
             }
         ];
 

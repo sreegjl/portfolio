@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angular Momentum &amp; Orbital Energy</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Physics</a>
+    <div>
+      <h1>angular momentum &amp; orbital energy</h1>
+      <span>angular momentum of point objects, choice of axis, orbital angular momentum, orbital energy, and escape velocity</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Angular momentum of a point object ── -->
+  <div class="section" id="sec-point-l">
+    <p class="section-label">Angular momentum of a point object</p>
+
+    <p class="prose">
+      A point object carries linear momentum \(\class{var-p}{p} = m\class{var-v}{v}\), and it also carries <strong>angular momentum</strong> about any reference point you choose, even when nothing is spinning. It is built from that linear momentum and how far off-center the motion passes:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-l}{L} = r\,m\class{var-v}{v}\sin\class{var-theta}{\theta}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(L\)</span>
+          <span class="row-val">angular momentum about the reference point (kg·m²/s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(r\)</span>
+          <span class="row-val">radial distance from the reference point to the object (m)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(m\), \(v\)</span>
+          <span class="row-val">mass (kg) and speed (m/s) of the object</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\theta\)</span>
+          <span class="row-val">angle between the radial direction \(\vec{r}\) and the velocity \(\vec{v}\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Reading the angle</p>
+        <div class="row">
+          <span class="row-desc">\(\theta = 90^\circ\)</span>
+          <span class="row-val">velocity perpendicular to \(\vec{r}\): \(L = rmv\) <span class="badge teal">maximum</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\theta = 0^\circ\) or \(180^\circ\)</span>
+          <span class="row-val">motion straight toward or away from the point: \(L = 0\) <span class="badge amber">no angular momentum</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Perpendicular distance</span>
+          <span class="row-val">\(r_\perp = r\sin\theta\), so \(L = r_\perp mv\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Sign</span>
+          <span class="row-val">counterclockwise about the point is positive, clockwise negative</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Only the piece of the velocity that curls <em>around</em> the reference point counts. A car driving straight at you head-on has plenty of momentum but zero angular momentum about you, because none of its motion sweeps around you.
+    </p>
+  </div>
+
+  <!-- ── Choosing the axis ── -->
+  <div class="section" id="sec-axis">
+    <p class="section-label">Choosing the axis</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Drone flying past a ground camera</span>
+      </div>
+      <canvas id="l-straight" width="600" height="300"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      Angular momentum is never a property of the object alone: it is a property of the object <em>and</em> the axis you measure it about. Move the reference point and \(r\) and \(\theta\) both change, so the same motion gets a different \(L\). The cleanest form uses the <strong>perpendicular distance</strong> from the axis to the line of motion:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-l}{L} = r_\perp m\class{var-v}{v}, \qquad r_\perp = r\sin\class{var-theta}{\theta}\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Same straight-line motion, different axes</p>
+      <div class="row">
+        <span class="row-desc">Axis on the line of motion</span>
+        <span class="row-val">\(r_\perp = 0\), so \(L = 0\) <span class="badge amber">zero</span></span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Axis off to the side</span>
+        <span class="row-val">\(L = r_\perp mv\), and it is <em>constant</em> as the object passes <span class="badge teal">conserved</span></span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Axis twice as far off</span>
+        <span class="row-val">\(r_\perp\) doubles, so \(L\) doubles</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Why it stays constant</span>
+        <span class="row-val">\(r\) grows while \(\sin\theta\) shrinks, and the product \(r\sin\theta\) never changes</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      So a question like "what is this object's angular momentum" is incomplete until an axis is named. Choose the axis deliberately: picking the point that the forces in your problem point toward is usually what makes \(L\) constant and the algebra short.
+    </p>
+  </div>
+
+  <!-- ── Angular momentum in orbit ── -->
+  <div class="section" id="sec-orbit-l">
+    <p class="section-label">Angular momentum in orbit</p>
+
+    <p class="prose">
+      Gravity on a satellite always points straight at the central object, so about that central object its lever arm is zero and it exerts <strong>no torque</strong>. With no net torque there is no angular impulse, so a satellite's angular momentum is constant in any orbit, circular or elliptical:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-l}{L} = r\,m\class{var-v}{v}\sin\class{var-theta}{\theta} = \text{constant} \qquad \Longrightarrow \qquad r_1\class{var-v}{v_1} = r_2\class{var-v}{v_2}\ \text{(at closest and farthest)}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Circular vs. elliptical</p>
+        <div class="row">
+          <span class="row-desc">Circular orbit</span>
+          <span class="row-val">\(r\), \(v\), and \(\theta = 90^\circ\) are each separately constant <span class="badge teal">\(L\) constant</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Elliptical orbit</span>
+          <span class="row-val">\(r\), \(v\), and \(\theta\) all change, but the product does not <span class="badge teal">\(L\) constant</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Closest approach</span>
+          <span class="row-val">smallest \(r\), so largest \(v\); \(\vec{v}\) is perpendicular to \(\vec{r}\) here</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Farthest point</span>
+          <span class="row-val">largest \(r\), so smallest \(v\); \(\vec{v}\) is perpendicular to \(\vec{r}\) here too</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Worked example: comet swing</p>
+        <div class="row">
+          <span class="row-desc">Given</span>
+          <span class="row-val">a comet passes closest to its star at \(r_1 = 8.0\times10^{10}\ \text{m}\) moving \(62\ \text{km/s}\), and reaches out to \(r_2 = 5.6\times10^{11}\ \text{m}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Both apsides use \(\theta = 90^\circ\)</span>
+          <span class="row-val">\(mr_1v_1 = mr_2v_2\); the mass cancels</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Solve</span>
+          <span class="row-val">\(v_2 = v_1\dfrac{r_1}{r_2} = 62\left(\dfrac{8.0\times10^{10}}{5.6\times10^{11}}\right) = \dfrac{62}{7}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Result</span>
+          <span class="row-val">\(v_2 \approx 8.9\ \text{km/s}\) <span class="badge amber">7× farther, 7× slower</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      This is why comets whip through their closest approach in weeks and then crawl through the outer half of the orbit for decades. It is also Kepler's second law in disguise: constant \(L\) is exactly the statement that the line from star to comet sweeps out equal areas in equal times.
+    </p>
+  </div>
+
+  <!-- ── Orbital energy ── -->
+  <div class="section" id="sec-orbit-energy">
+    <p class="section-label">Orbital energy</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Satellite on an elliptical orbit</span>
+      </div>
+      <canvas id="orbit-energy" width="600" height="372"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      Gravity is a conservative force, so the satellite-central-object system's <strong>total mechanical energy</strong> is also constant. It is the satellite's kinetic energy plus the system's gravitational potential energy, measured with the zero of \(U_g\) infinitely far away:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-emech}{E} = \class{var-k}{K} + \class{var-u}{U_g} = \tfrac{1}{2}m\class{var-v}{v}^2 - G\frac{mM}{r}\]
+    </p>
+
+    <p class="prose">
+      For a <em>circular</em> orbit gravity supplies the centripetal force, \(mv^2/r = GmM/r^2\), which pins \(K\) to exactly half the magnitude of \(U_g\). That collapses the total into a single term:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-emech}{E} = -\frac{GmM}{2r} = -\class{var-k}{K} = \tfrac{1}{2}\class{var-u}{U_g}\]
+    </p>
+
+    <div class="card">
+      <p class="card-title">Circular vs. elliptical energy</p>
+      <div class="row">
+        <span class="row-desc">Circular orbit</span>
+        <span class="row-val">\(K\) and \(U_g\) are each constant on their own <span class="badge teal">both fixed</span></span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Elliptical orbit</span>
+        <span class="row-val">\(K\) and \(U_g\) trade back and forth every revolution <span class="badge amber">sum fixed</span></span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Near the central object</span>
+        <span class="row-val">\(U_g\) is deeply negative and \(K\) is large</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Far from it</span>
+        <span class="row-val">\(U_g\) climbs toward zero and \(K\) falls by exactly as much: \(\Delta K = -\Delta U_g\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Bound orbit</span>
+        <span class="row-val">\(E &lt; 0\) always; the satellite can never reach infinity <span class="badge coral">trapped</span></span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Notice the strange bookkeeping of gravity: boosting a satellite to a higher circular orbit raises \(E\) toward zero but <em>lowers</em> its speed, because \(U_g\) climbs by twice as much as \(K\) falls. Mission planners burn fuel to slow a spacecraft down.
+    </p>
+  </div>
+
+  <!-- ── Escape velocity ── -->
+  <div class="section" id="sec-escape">
+    <p class="section-label">Escape velocity</p>
+
+    <p class="prose">
+      <strong>Escape velocity</strong> is the speed at which the satellite-central-object system's mechanical energy is exactly zero. Zero is the break-even case: the object still has just enough kinetic energy to climb infinitely far, arriving there with nothing left over. Set \(K + U_g = 0\) and solve for \(v\):
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\tfrac{1}{2}m\class{var-v}{v}^2 - G\frac{mM}{r} = 0 \qquad \Longrightarrow \qquad \class{var-v}{v_\text{esc}} = \sqrt{\frac{2GM}{r}}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">What the sign of \(E\) tells you</p>
+        <div class="row">
+          <span class="row-desc">\(E &lt; 0\)</span>
+          <span class="row-val">bound: a closed circular or elliptical orbit <span class="badge teal">stays</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(E = 0\)</span>
+          <span class="row-val">exactly escaping: \(v \to 0\) as \(r \to \infty\) <span class="badge amber">break-even</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(E &gt; 0\)</span>
+          <span class="row-val">unbound: leaves with speed to spare and never returns <span class="badge coral">gone</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Independent of \(m\)</span>
+          <span class="row-val">the satellite's mass cancels, and so does launch direction</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Worked example: breaking orbit</p>
+        <div class="row">
+          <span class="row-desc">Given</span>
+          <span class="row-val">a \(620\ \text{kg}\) satellite circling Earth at \(r = 8.0\times10^{6}\ \text{m}\) (\(GM = 3.98\times10^{14}\))</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Orbital speed</span>
+          <span class="row-val">\(v = \sqrt{GM/r} = \sqrt{4.98\times10^{7}} \approx 7.1\ \text{km/s}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Escape speed there</span>
+          <span class="row-val">\(v_\text{esc} = \sqrt{2GM/r} = \sqrt{2}\,v_\text{orbit} \approx 10.0\ \text{km/s}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Energy still needed</span>
+          <span class="row-val">lift \(E = -\dfrac{GmM}{2r} \approx -1.5\times10^{10}\ \text{J}\) up to \(0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">So</span>
+          <span class="row-val">\(\Delta E = 1.5\times10^{10}\ \text{J}\), exactly the orbit's kinetic energy <span class="badge amber">\(|E| = K\)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Escape velocity always beats orbital velocity at the same radius by a factor of \(\sqrt{2}\), and it falls off as you get farther out, which is why a departing probe is cheaper to send from a high orbit than from the launch pad. The word "velocity" is a historical misnomer: only the speed matters, since aiming sideways instead of straight up changes the path but not the energy.
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">Point-object angular momentum</span>
+        <span class="row-val">\(\class{var-l}{L} = rm\class{var-v}{v}\sin\class{var-theta}{\theta} = r_\perp mv\), in kg·m²/s; no spinning required</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Axis dependence</span>
+        <span class="row-val">\(L\) is meaningless without a stated axis; on the line of motion \(L = 0\), off to the side \(L = r_\perp mv\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Straight-line motion</span>
+        <span class="row-val">\(L\) about a fixed off-line point is constant, because \(r\sin\theta\) never changes</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Orbital angular momentum</span>
+        <span class="row-val">gravity exerts no torque about the central object, so \(L\) is constant; at the apsides \(r_1v_1 = r_2v_2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Orbital energy</span>
+        <span class="row-val">\(\class{var-emech}{E} = \tfrac{1}{2}m\class{var-v}{v}^2 - G\dfrac{mM}{r}\) is constant in circular and elliptical orbits alike</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Circular orbit shortcut</span>
+        <span class="row-val">\(\class{var-emech}{E} = -\dfrac{GmM}{2r} = -\class{var-k}{K} = \tfrac{1}{2}\class{var-u}{U_g}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Escape velocity</span>
+        <span class="row-val">\(\class{var-v}{v_\text{esc}} = \sqrt{\dfrac{2GM}{r}} = \sqrt{2}\,v_\text{orbit}\), the speed that makes \(E = 0\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Two conserved quantities</span>
+        <span class="row-val">\(L\) fixes the orbit's shape and sweep rate; \(E\) fixes its size and whether it is bound at all</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Shared canvas helpers ─────────────────────────────
+function amoCss(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+function amoArrow(ctx, sx, sy, dx, dy, color, hl, lw) {
+  hl = hl || 7;
+  var a = Math.atan2(dy, dx);
+  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = lw || 2;
+  ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(sx + dx, sy + dy);
+  ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+  ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+  ctx.closePath(); ctx.fill();
+}
+
+// compact form for in-canvas readouts, matching the orbital simulator on the circular motion page
+function amoSci(x, dp) {
+  if (!isFinite(x) || x === 0) return '0';
+  dp = dp == null ? 2 : dp;
+  var neg = x < 0; x = Math.abs(x);
+  var e = Math.floor(Math.log10(x));
+  return (neg ? '-' : '') + (x / Math.pow(10, e)).toFixed(dp) + 'e' + e;
+}
+
+// same number as LaTeX, for caption text
+function amoTex(x, dp) {
+  if (!isFinite(x) || x === 0) return '0';
+  dp = dp == null ? 2 : dp;
+  var neg = x < 0; x = Math.abs(x);
+  var e = Math.floor(Math.log10(x));
+  return (neg ? '-' : '') + (x / Math.pow(10, e)).toFixed(dp) + '\\times10^{' + e + '}';
+}
+
+// Measure and (re)size a canvas. Floors the width so the drawing layout can never invert
+// on a narrow pane; the browser scales the backing store down to fit.
+function amoFit(canvas, ratio, minW) {
+  var dpr = window.devicePixelRatio || 1;
+  var measured = Math.round(canvas.getBoundingClientRect().width);
+  var w = Math.max(minW, measured > 0 ? measured : minW);
+  var h = Math.round(w * ratio);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { w: w, h: h };
+}
+
+// Re-fit on resize so a narrowed window relays out instead of staying stuck at the load-time size.
+function amoOnResize(fn) {
+  var t = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(t);
+    t = setTimeout(fn, 120);
+  });
+}
+
+// Typeset a caption safely. window.MathJax exists from the moment the config object is set in
+// <head>, but typesetPromise only appears once MathJax has finished loading, and the
+// loader: ['[tex]/html'] component is fetched asynchronously. Calling it too early throws,
+// and an uncaught throw here would abort the rest of this script block.
+function amoTypeset(el) {
+  var MJ = window.MathJax;
+  if (!el || !MJ) return;
+  if (typeof MJ.typesetPromise === 'function') {
+    MJ.typesetPromise([el]).catch(function () {});
+  } else if (MJ.startup && MJ.startup.promise) {
+    MJ.startup.promise.then(function () {
+      if (typeof window.MathJax.typesetPromise === 'function') window.MathJax.typesetPromise([el]).catch(function () {});
+    }).catch(function () {});
+  }
+}
+
+function amoGrid(ctx, w, h) {
+  ctx.fillStyle = amoCss('--surface');
+  ctx.fillRect(0, 0, w, h);
+  var gs = 25;
+  ctx.strokeStyle = amoCss('--border') || 'rgba(0,0,0,0.06)';
+  ctx.lineWidth = 1;
+  for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+  for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+}
+
+// Hover playback scrub bar shared by both animated canvases
+function amoScrub(canvas, id, onScrub) {
+  var t = document.createElement('input');
+  t.type = 'range'; t.min = 0; t.max = 1000; t.value = 0; t.step = 1; t.id = id;
+  t.style.cssText = 'width:100%;height:3px;margin:0;padding:0;display:block;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none;background:var(--border-strong);border-radius:2px;transition:opacity 0.2s;';
+  var st = document.createElement('style');
+  st.textContent = '#' + id + '::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent-purple);cursor:pointer;}#' + id + '::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent-purple);border:none;cursor:pointer;}';
+  document.head.appendChild(st);
+  canvas.after(t);
+  var card = canvas.closest('.graph-card');
+  var state = { el: t, scrubbing: false };
+  card.addEventListener('mouseenter', function () { t.style.opacity = '0.5'; });
+  card.addEventListener('mouseleave', function () { if (!state.scrubbing) t.style.opacity = '0'; });
+  t.addEventListener('input', function () { state.scrubbing = true; onScrub(parseFloat(t.value) / 1000); });
+  t.addEventListener('mouseup', function () { state.scrubbing = false; });
+  t.addEventListener('touchend', function () { state.scrubbing = false; });
+  return state;
+}
+
+function amoSliders(wrap, vals, defs, onChange) {
+  var cd = document.createElement('div');
+  cd.className = 'fbd-controls';
+  var rows = [];
+  defs.forEach(function (d) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = d.label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = d.min; inp.max = d.max; inp.step = d.step; inp.value = vals[d.id];
+    var dp = d.step < 1 ? ('' + d.step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+vals[d.id]).toFixed(dp) + ' ' + d.unit;
+    inp.addEventListener('input', function () {
+      vals[d.id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + d.unit;
+      onChange();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+    rows.push({ def: d, input: inp, val: vs, dp: dp });
+  });
+  wrap.appendChild(cd);
+  return {
+    sync: function () {
+      rows.forEach(function (r) {
+        r.input.value = vals[r.def.id];
+        r.val.textContent = (+vals[r.def.id]).toFixed(r.dp) + ' ' + r.def.unit;
+      });
+    }
+  };
+}
+
+// ── Drone flying past a ground camera ─────────────────
+(function () {
+  var canvas = document.getElementById('l-straight');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  var vals = { m: 1.5, v: 12, d: 40 };
+  var MAX_D = 80, TIME_SCALE = 4;
+  var s = 0.06, paused = false, animId = null;
+
+  var w, h, groundY, pxPerM, spanM, camX;
+  function layout() {
+    var dim = amoFit(canvas, 0.5, 260);
+    w = dim.w; h = dim.h;
+    groundY = h - 26;
+    pxPerM = (groundY - 40) / MAX_D;
+    spanM = w / pxPerM;
+    camX = w * 0.5;
+  }
+  layout();
+
+  function state() {
+    var droneX = s * w;
+    var dPx = vals.d * pxPerM;
+    var droneY = groundY - dPx;
+    var xm = (droneX - camX) / pxPerM;
+    var r = Math.sqrt(xm * xm + vals.d * vals.d);
+    var th = Math.acos(Math.max(-1, Math.min(1, xm / r))) * 180 / Math.PI;
+    return { droneX: droneX, droneY: droneY, dPx: dPx, xm: xm, r: r, th: th, L: vals.m * vals.v * vals.d };
+  }
+
+  function render() {
+    var st = state();
+    ctx.clearRect(0, 0, w, h);
+    amoGrid(ctx, w, h);
+
+    // ground with hatching
+    ctx.strokeStyle = amoCss('--border-strong'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, groundY); ctx.lineTo(w, groundY); ctx.stroke();
+    ctx.strokeStyle = amoCss('--border'); ctx.lineWidth = 1;
+    for (var hx = 7; hx < w; hx += 14) {
+      ctx.beginPath(); ctx.moveTo(hx, groundY); ctx.lineTo(hx - 7, groundY + 7); ctx.stroke();
+    }
+
+    // flight path
+    ctx.save(); ctx.setLineDash([5, 5]);
+    ctx.strokeStyle = amoCss('--hint'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, st.droneY); ctx.lineTo(w, st.droneY); ctx.stroke();
+    ctx.restore();
+
+    // perpendicular distance from the axis up to the path
+    ctx.save(); ctx.setLineDash([3, 3]);
+    ctx.strokeStyle = amoCss('--accent-coral'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(camX, groundY); ctx.lineTo(camX, st.droneY); ctx.stroke();
+    ctx.restore();
+    ctx.fillStyle = amoCss('--accent-coral');
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('r⊥ = ' + vals.d.toFixed(0) + ' m', camX + 6, (groundY + st.droneY) / 2);
+
+    // radial vector from the axis to the drone
+    var rPx = Math.sqrt(Math.pow(st.droneX - camX, 2) + Math.pow(st.droneY - groundY, 2));
+    amoArrow(ctx, camX, groundY, st.droneX - camX, st.droneY - groundY, amoCss('--accent-teal'), 7, 1.5);
+    if (rPx > 46) {
+      ctx.fillStyle = amoCss('--accent-teal');
+      ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.fillText('r', (camX + st.droneX) / 2, (groundY + st.droneY) / 2 - 4);
+    }
+
+    // dashed extension of the radial ray, so the angle sits between two rays
+    if (rPx > 1) {
+      var ux = (st.droneX - camX) / rPx, uy = (st.droneY - groundY) / rPx;
+      ctx.save(); ctx.setLineDash([2, 3]); ctx.globalAlpha = 0.6;
+      ctx.strokeStyle = amoCss('--accent-teal'); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(st.droneX, st.droneY); ctx.lineTo(st.droneX + ux * 34, st.droneY + uy * 34); ctx.stroke();
+      ctx.restore();
+
+      // angle between the radial direction and the velocity
+      var angR = Math.atan2(uy, ux);
+      ctx.strokeStyle = amoCss('--muted'); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(st.droneX, st.droneY, 22, Math.min(angR, 0), Math.max(angR, 0)); ctx.stroke();
+      ctx.fillStyle = amoCss('--muted');
+      ctx.font = '600 10px "DM Mono", monospace';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText('θ', st.droneX + 26 * Math.cos(angR / 2) + 3, st.droneY + 26 * Math.sin(angR / 2));
+    }
+
+    // velocity arrow
+    var vLen = 16 + (vals.v / 30) * 48;
+    amoArrow(ctx, st.droneX, st.droneY, vLen, 0, amoCss('--accent-purple'), 7, 2);
+    ctx.fillStyle = amoCss('--accent-purple');
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+    ctx.fillText('v', st.droneX + vLen / 2, st.droneY - 6);
+
+    // drone body
+    var bw = 26, bh = 12;
+    ctx.fillStyle = amoCss('--bg');
+    ctx.strokeStyle = amoCss('--muted');
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(st.droneX - bw / 2, st.droneY - bh / 2, bw, bh, 3);
+    else ctx.rect(st.droneX - bw / 2, st.droneY - bh / 2, bw, bh);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = amoCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('m', st.droneX, st.droneY);
+
+    // the axis marker on the ground
+    ctx.fillStyle = amoCss('--bg');
+    ctx.strokeStyle = amoCss('--muted');
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(camX, groundY, 5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(camX - 8, groundY); ctx.lineTo(camX + 8, groundY); ctx.stroke();
+    ctx.fillStyle = amoCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+    ctx.fillText('camera (axis)', camX, groundY - 9);
+
+    // readouts
+    var lx = w - 10, ly = 12;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = amoCss('--hint');
+    ctx.fillText('r = ' + st.r.toFixed(1) + ' m', lx, ly); ly += 14;
+    ctx.fillText('θ = ' + st.th.toFixed(1) + '°', lx, ly); ly += 14;
+    ctx.fillStyle = amoCss('--accent-coral');
+    ctx.fillText('r sinθ = ' + (st.r * Math.sin(st.th * Math.PI / 180)).toFixed(1) + ' m', lx, ly); ly += 14;
+    ctx.fillStyle = amoCss('--accent-teal');
+    ctx.fillText('L = r m v sinθ = ' + st.L.toFixed(0), lx, ly); ly += 13;
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.fillStyle = amoCss('--hint');
+    ctx.fillText('kg·m²/s, unchanging', lx, ly);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var st = state();
+    var side = st.xm < -2 ? 'approaching' : (st.xm > 2 ? 'receding' : 'directly overhead');
+    var txt = 'The drone is ' + side + ' at \\(r = ' + st.r.toFixed(1) + '\\text{ m}\\) and \\(\\theta = ' + st.th.toFixed(1) + '°\\), yet \\(r\\sin\\theta\\) still equals the ' + vals.d.toFixed(0) + ' m offset, so \\(L = ' + st.L.toFixed(0) + '\\text{ kg·m}^2\\text{/s}\\) never budges.';
+    var sp = cap.querySelector('span');
+    sp.innerHTML = txt;
+    amoTypeset(sp);
+  }
+
+  var ui = amoSliders(wrap, vals, [
+    { id: 'm', label: 'Mass', unit: 'kg', min: 0.5, max: 5, step: 0.1 },
+    { id: 'v', label: 'Speed', unit: 'm/s', min: 4, max: 30, step: 1 },
+    { id: 'd', label: 'Path height', unit: 'm', min: 10, max: MAX_D, step: 5 }
+  ], function () { render(); updateCaption(); });
+
+  var scrub = amoScrub(canvas, 'l-straight-scrub', function (frac) {
+    s = frac;
+    paused = true;
+    if (playBtn) playBtn.style.display = '';
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    render(); updateCaption();
+  });
+
+  var playBtn = null;
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.m = +(0.5 + Math.random() * 4.5).toFixed(1);
+      vals.v = Math.round(4 + Math.random() * 26);
+      vals.d = Math.round((10 + Math.random() * 70) / 5) * 5;
+      ui.sync(); render(); updateCaption();
+    });
+    cap.appendChild(rb);
+
+    playBtn = document.createElement('button');
+    playBtn.className = 'fbd-pause'; playBtn.type = 'button';
+    playBtn.textContent = 'play'; playBtn.style.display = 'none';
+    playBtn.addEventListener('click', function () {
+      paused = false; playBtn.style.display = 'none'; tick();
+    });
+    cap.appendChild(playBtn);
+  }
+
+  function tick() {
+    if (paused) { animId = null; return; }
+    s += (vals.v * TIME_SCALE / 60) / spanM;
+    if (s > 1) s -= 1;
+    if (!scrub.scrubbing) scrub.el.value = Math.round(s * 1000);
+    render();
+    animId = requestAnimationFrame(tick);
+  }
+
+  var card = canvas.closest('.graph-card');
+  card.setAttribute('tabindex', '0');
+  card.addEventListener('keydown', function (e) {
+    if (e.code !== 'Space') return;
+    e.preventDefault();
+    if (paused) { paused = false; if (playBtn) playBtn.style.display = 'none'; tick(); }
+    else { paused = true; if (playBtn) playBtn.style.display = ''; if (animId) { cancelAnimationFrame(animId); animId = null; } }
+  });
+
+  render(); updateCaption(); tick();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  amoOnResize(function () { layout(); render(); });
+})();
+
+// ── Satellite on an elliptical orbit ──────────────────
+(function () {
+  var canvas = document.getElementById('orbit-energy');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  var w, h;
+  function layout() { var dim = amoFit(canvas, 0.62, 260); w = dim.w; h = dim.h; }
+  layout();
+
+  var GM = 3.986e14;
+  var vals = { a: 10, e: 0.5, m: 1000 };  // a in units of 10^6 m
+  var theta = 0, paused = false, animId = null;
+
+  function physics() {
+    var a = vals.a * 1e6, e = vals.e, m = vals.m;
+    var r = a * (1 - e * e) / (1 + e * Math.cos(theta));
+    var v = Math.sqrt(GM * (2 / r - 1 / a));
+    var E = -GM * m / (2 * a);
+    var U = -GM * m / r;
+    return {
+      a: a, e: e, m: m, r: r, v: v, E: E, U: U, K: E - U,
+      L: m * Math.sqrt(GM * a * (1 - e * e)),
+      rPeri: a * (1 - e), rApo: a * (1 + e),
+      T: 2 * Math.PI * Math.sqrt(a * a * a / GM)
+    };
+  }
+
+  function render() {
+    var p = physics();
+    ctx.clearRect(0, 0, w, h);
+    amoGrid(ctx, w, h);
+
+    // ── orbit ──
+    // reserve the right-hand column for the readouts and the three energy bars
+    var boxL = 12, boxR = w - Math.min(175, w * 0.26), boxT = 16, boxB = h - 16;
+    var b = p.a * Math.sqrt(1 - p.e * p.e);
+    // guard the half-extents: a canvas narrower than the bar column would otherwise invert
+    // these, and ctx.ellipse throws IndexSizeError on a negative radius, blanking the canvas
+    var halfW = Math.max(1, (boxR - boxL) / 2), halfH = Math.max(1, (boxB - boxT) / 2);
+    var scale = Math.max(1e-12, Math.min(halfW / p.a, halfH / b) * 0.9);
+    var cx = (boxL + boxR) / 2, cy = (boxT + boxB) / 2;
+    var fx = cx + p.a * p.e * scale, fy = cy;
+
+    ctx.save(); ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = amoCss('--hint'); ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, Math.max(0, p.a * scale), Math.max(0, b * scale), 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+
+    var satX = fx + p.r * Math.cos(theta) * scale;
+    var satY = fy - p.r * Math.sin(theta) * scale;
+
+    // radial line from the central object to the satellite
+    ctx.strokeStyle = amoCss('--border-strong'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(satX, satY); ctx.stroke();
+
+    // apsis labels, centred under each end and clamped inside the canvas
+    ctx.fillStyle = amoCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textBaseline = 'top'; ctx.textAlign = 'center';
+    function clampX(x) { return Math.max(boxL + 28, Math.min(w - 28, x)); }
+    ctx.fillText('periapsis', clampX(fx + p.rPeri * scale), fy + 8);
+    ctx.fillText('apoapsis', clampX(fx - p.rApo * scale), fy + 8);
+
+    // velocity arrow, tangent to the ellipse
+    var dxdt = -Math.sin(theta), dydt = p.e + Math.cos(theta);
+    var norm = Math.sqrt(dxdt * dxdt + dydt * dydt);
+    var vMax = Math.sqrt(GM * (2 / p.rPeri - 1 / p.a));
+    var vLen = 14 + (p.v / vMax) * 34;
+    amoArrow(ctx, satX, satY, (dxdt / norm) * vLen, -(dydt / norm) * vLen, amoCss('--accent-purple'), 6, 2);
+
+    // central object and satellite
+    ctx.fillStyle = amoCss('--accent-amber');
+    ctx.beginPath(); ctx.arc(fx, fy, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = amoCss('--accent-teal');
+    ctx.beginPath(); ctx.arc(satX, satY, 4.5, 0, Math.PI * 2); ctx.fill();
+
+    // ── readouts ──
+    var lx = w - 10, ly = 12;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = amoCss('--hint');
+    ctx.fillText('r = ' + amoSci(p.r) + ' m', lx, ly); ly += 14;
+    ctx.fillText('v = ' + (p.v / 1000).toFixed(2) + ' km/s', lx, ly); ly += 14;
+    ctx.fillStyle = amoCss('--accent-purple');
+    ctx.fillText('L = ' + amoSci(p.L) + ' kg·m²/s', lx, ly); ly += 14;
+    ctx.fillStyle = amoCss('--accent-teal');
+    ctx.fillText('K = ' + amoSci(p.K) + ' J', lx, ly); ly += 14;
+    ctx.fillStyle = amoCss('--accent-coral');
+    ctx.fillText('U = ' + amoSci(p.U) + ' J', lx, ly); ly += 14;
+    ctx.fillStyle = amoCss('--accent-amber');
+    ctx.fillText('E = ' + amoSci(p.E) + ' J', lx, ly);
+
+    // Three energy bars under the readout, in the compact style of the pendulum example on
+    // the work & energy page. They share one zero tick and one scale: K is positive so it
+    // runs right of the tick, U and E are negative so they run left. Colours match the
+    // readouts above. The amber E bar is the one that never moves.
+    ly += 14;
+    var barW = Math.min(150, w * 0.22), rowH = 5, rowGap = 4;
+    var halfW = barW / 2;
+    var trackL = lx - barW, x0 = lx - halfW;
+    var uMax = GM * p.m / p.rPeri;                 // largest magnitude this orbit reaches
+    var sc = halfW / uMax;
+    var rows = [
+      { key: 'K', val: p.K, col: '--accent-teal' },
+      { key: 'U', val: p.U, col: '--accent-coral' },
+      { key: 'E', val: p.E, col: '--accent-amber' }
+    ];
+    ctx.font = '9px "DM Mono", monospace';
+    rows.forEach(function (row, i) {
+      var y = ly + i * (rowH + rowGap);
+      ctx.fillStyle = amoCss('--border');
+      ctx.fillRect(trackL, y, barW, rowH);
+      var len = Math.min(halfW, Math.abs(row.val) * sc);
+      ctx.globalAlpha = 0.85;
+      ctx.fillStyle = amoCss(row.col);
+      ctx.fillRect(row.val >= 0 ? x0 : x0 - len, y, len, rowH);
+      ctx.globalAlpha = 1;
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      ctx.fillText(row.key, trackL - 5, y + rowH / 2);
+    });
+
+    var zTop = ly - 2, zBot = ly + rows.length * (rowH + rowGap) - rowGap + 2;
+    ctx.strokeStyle = amoCss('--border-strong'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x0, zTop); ctx.lineTo(x0, zBot); ctx.stroke();
+
+    ly = zBot + 10;
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = amoCss('--hint');
+    ctx.fillText('zero at the tick; U and E negative', lx, ly); ly += 11;
+    ctx.fillText('E never moves', lx, ly);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var p = physics();
+    var inbound = Math.sin(theta) < 0;
+    var near = Math.cos(theta) > 0;
+    var lead = near
+      ? (inbound ? 'Falling in toward periapsis: ' : 'Whipping back out from periapsis: ')
+      : (inbound ? 'Coasting up toward apoapsis: ' : 'Turning back in from apoapsis: ');
+    var txt = lead + (inbound ? 'the teal \\(K\\) bar stretches right while the coral \\(U_g\\) bar stretches left' : 'the teal \\(K\\) and coral \\(U_g\\) bars both pull back toward zero')
+      + ', while the amber \\(E\\) bar never moves: \\(E = ' + amoTex(p.E) + '\\text{ J}\\), and \\(L\\) is untouched too.';
+    var sp = cap.querySelector('span');
+    sp.innerHTML = txt;
+    amoTypeset(sp);
+  }
+
+  var ui = amoSliders(wrap, vals, [
+    { id: 'a', label: 'Semi-major axis', unit: '×10⁶ m', min: 7, max: 20, step: 0.5 },
+    { id: 'e', label: 'Eccentricity', unit: '', min: 0, max: 0.8, step: 0.05 },
+    { id: 'm', label: 'Satellite mass', unit: 'kg', min: 200, max: 2000, step: 50 }
+  ], function () { render(); updateCaption(); });
+
+  var scrub = amoScrub(canvas, 'orbit-energy-scrub', function (frac) {
+    theta = frac * Math.PI * 2;
+    paused = true;
+    if (playBtn) playBtn.style.display = '';
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    render(); updateCaption();
+  });
+
+  var playBtn = null;
+  if (cap) {
+    var rb = document.createElement('button');
+    rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+    rb.addEventListener('click', function () {
+      vals.a = +(7 + Math.random() * 13).toFixed(1);
+      vals.e = +(Math.random() * 0.8).toFixed(2);
+      vals.m = Math.round((200 + Math.random() * 1800) / 50) * 50;
+      ui.sync(); render(); updateCaption();
+    });
+    cap.appendChild(rb);
+
+    playBtn = document.createElement('button');
+    playBtn.className = 'fbd-pause'; playBtn.type = 'button';
+    playBtn.textContent = 'play'; playBtn.style.display = 'none';
+    playBtn.addEventListener('click', function () {
+      paused = false; playBtn.style.display = 'none'; tick();
+    });
+    cap.appendChild(playBtn);
+  }
+
+  var ORBIT_FRAMES = 540;   // one revolution takes about nine seconds
+  function tick() {
+    if (paused) { animId = null; return; }
+    var p = physics();
+    // angular momentum sets the sweep rate: dtheta/dt = L/(m r^2)
+    var dt = p.T / ORBIT_FRAMES;
+    theta += (p.L / (p.m * p.r * p.r)) * dt;
+    if (theta > Math.PI * 2) theta -= Math.PI * 2;
+    if (!scrub.scrubbing) scrub.el.value = Math.round(theta / (Math.PI * 2) * 1000);
+    render();
+    animId = requestAnimationFrame(tick);
+  }
+
+  var card = canvas.closest('.graph-card');
+  card.setAttribute('tabindex', '0');
+  card.addEventListener('keydown', function (e) {
+    if (e.code !== 'Space') return;
+    e.preventDefault();
+    if (paused) { paused = false; if (playBtn) playBtn.style.display = 'none'; tick(); }
+    else { paused = true; if (playBtn) playBtn.style.display = ''; if (animId) { cancelAnimationFrame(animId); animId = null; } }
+  });
+
+  render(); updateCaption(); tick();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  amoOnResize(function () { layout(); render(); });
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../notes.js"></script>
+</body>
+</html>

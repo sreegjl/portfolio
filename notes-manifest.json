@@ -30,7 +30,11 @@
     { "path": "physics/rotational-dynamics/index.html", "title": "Torque & Rotational Dynamics" },
     { "path": "physics/rotational-dynamics/quiz/index.html", "title": "Practice: Torque & Rotational Dynamics" },
     { "path": "physics/rotational-energy/index.html", "title": "Rotational Energy" },
-    { "path": "physics/rotational-energy/quiz/index.html", "title": "Practice: Rotational Energy" }
+    { "path": "physics/rotational-energy/quiz/index.html", "title": "Practice: Rotational Energy" },
+    { "path": "physics/angular-momentum-orbits/index.html", "title": "Angular Momentum & Orbital Energy" },
+    { "path": "physics/angular-momentum-orbits/quiz/index.html", "title": "Practice: Angular Momentum & Orbital Energy" },
+    { "path": "physics/oscillations/index.html", "title": "Oscillations" },
+    { "path": "physics/oscillations/quiz/index.html", "title": "Practice: Oscillations" }
   ],
   "htmlNotesBase": "notes/"
 }

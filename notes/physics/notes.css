@@ -575,6 +575,10 @@ canvas { display: block; width: 100%; }
 .var-tau     { color: var(--accent-amber)  !important; }
 .var-inertia { color: var(--accent-teal)   !important; }
 .var-v       { color: var(--accent-purple) !important; }
+.var-spring  { color: var(--accent-coral)  !important; }
+.var-amp     { color: var(--accent-teal)   !important; }
+.var-period  { color: var(--accent-amber)  !important; }
+.var-x       { color: var(--accent-purple) !important; }
 
 .study-mode .formula:not(.revealed)  .var-k,
 .study-mode .formula:not(.revealed)  .var-u,
@@ -588,6 +592,10 @@ canvas { display: block; width: 100%; }
 .study-mode .formula:not(.revealed)  .var-tau,
 .study-mode .formula:not(.revealed)  .var-inertia,
 .study-mode .formula:not(.revealed)  .var-v,
+.study-mode .formula:not(.revealed)  .var-spring,
+.study-mode .formula:not(.revealed)  .var-amp,
+.study-mode .formula:not(.revealed)  .var-period,
+.study-mode .formula:not(.revealed)  .var-x,
 .study-mode .row-val:not(.revealed)  .var-k,
 .study-mode .row-val:not(.revealed)  .var-u,
 .study-mode .row-val:not(.revealed)  .var-emech,
@@ -600,6 +608,10 @@ canvas { display: block; width: 100%; }
 .study-mode .row-val:not(.revealed)  .var-tau,
 .study-mode .row-val:not(.revealed)  .var-inertia,
 .study-mode .row-val:not(.revealed)  .var-v,
+.study-mode .row-val:not(.revealed)  .var-spring,
+.study-mode .row-val:not(.revealed)  .var-amp,
+.study-mode .row-val:not(.revealed)  .var-period,
+.study-mode .row-val:not(.revealed)  .var-x,
 .study-mode .badge:not(.revealed)    .var-k,
 .study-mode .badge:not(.revealed)    .var-u,
 .study-mode .badge:not(.revealed)    .var-emech,
@@ -611,7 +623,11 @@ canvas { display: block; width: 100%; }
 .study-mode .badge:not(.revealed)    .var-theta,
 .study-mode .badge:not(.revealed)    .var-tau,
 .study-mode .badge:not(.revealed)    .var-inertia,
-.study-mode .badge:not(.revealed)    .var-v { color: transparent !important; }
+.study-mode .badge:not(.revealed)    .var-v,
+.study-mode .badge:not(.revealed)    .var-spring,
+.study-mode .badge:not(.revealed)    .var-amp,
+.study-mode .badge:not(.revealed)    .var-period,
+.study-mode .badge:not(.revealed)    .var-x { color: transparent !important; }
 
 .study-mode .graph-caption span {
   color: transparent;

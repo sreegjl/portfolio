@@ -142,7 +142,9 @@ if (studyToggle && page) {
     'collisions':      { fc: 'collisions' },
     'rotational-kinematics': { fc: 'rotational-kinematics' },
     'rotational-dynamics': { fc: 'rotational-dynamics' },
-    'rotational-energy': { fc: 'rotational-energy' }
+    'rotational-energy': { fc: 'rotational-energy' },
+    'angular-momentum-orbits': { fc: 'angular-momentum-orbits' },
+    'oscillations':    { fc: 'oscillations' }
   };
 
   fetch('/notes-manifest.json')

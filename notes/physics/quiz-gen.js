@@ -1252,6 +1252,317 @@ var QuizGen = (function () {
         'With \\(c = 0\\) (no rotation) this collapses to the familiar \\(\\sqrt{2gh}\\)'
       );
       renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    pointAngularMomentum: function (el) {
+      var m = rand(2, 8, 1);
+      var v = rand(3, 12, 1);
+      var r = rand(2, 9, 1);
+      var angles = [30, 45, 60];
+      var th = angles[Math.floor(Math.random() * angles.length)];
+      var s = Math.sin(th * Math.PI / 180);
+      var L = +(r * m * v * s).toFixed(1);
+      var text = 'A \\(' + m + '\\text{ kg}\\) drone is \\(' + r + '\\text{ m}\\) from a ground marker and moving at \\(' + v + '\\text{ m/s}\\). The angle between the line from the marker to the drone and the drone\'s velocity is \\(' + th + '°\\). What is the drone\'s angular momentum about the marker?';
+      var wrongs = [
+        +(r * m * v).toFixed(1),
+        +(r * m * v * Math.cos(th * Math.PI / 180)).toFixed(1),
+        +(m * v).toFixed(1)
+      ];
+      var explain = steps(
+        'For a point object about a chosen reference point: \\(L = rmv\\sin\\theta\\)',
+        'Only the part of \\(\\vec{v}\\) perpendicular to \\(\\vec{r}\\) counts, and \\(\\sin' + th + '° = ' + s.toFixed(3) + '\\)',
+        '\\(L = (' + r + ')(' + m + ')(' + v + ')(' + s.toFixed(3) + ')\\)',
+        '\\(= ' + L + '\\text{ kg·m}^2\\text{/s}\\)',
+        'Nothing is spinning; a point object still carries angular momentum about an off-axis point'
+      );
+      renderQ(el, text, makeOpts(L, wrongs), explain, '\\text{ kg·m}^2\\text{/s}');
+    },
+
+    angularMomentumAxisConcept: function (el) {
+      var text = 'A hockey puck slides in a straight line at constant velocity across frictionless ice. Which statement about its angular momentum is correct?';
+      var correct = '\\text{nonzero and constant about any fixed point off its path}';
+      var wrongs = [
+        '\\text{zero about every point, since the puck is not rotating}',
+        '\\text{nonzero only about points on its line of motion}',
+        '\\text{it grows steadily as the puck moves farther away}'
+      ];
+      var explain = steps(
+        'Angular momentum is defined about a chosen axis, and a point object needs no spin to have it',
+        'About a point on the line of motion, \\(\\theta = 0°\\) or \\(180°\\), so \\(L = rmv\\sin\\theta = 0\\)',
+        'About a point off the line, \\(L = r_\\perp mv\\) with \\(r_\\perp\\) the perpendicular distance to the path',
+        'As the puck passes, \\(r\\) grows while \\(\\sin\\theta\\) shrinks and the product \\(r\\sin\\theta\\) stays fixed',
+        'So \\(L\\) is nonzero and unchanging: no net torque acts on the puck'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    straightLineAngularMomentum: function (el) {
+      var m = rand(2, 6, 1);
+      var v = rand(10, 30, 5);
+      var d = rand(20, 80, 10);
+      var L = +(m * v * d).toFixed(0);
+      var text = 'A \\(' + m + '\\text{ kg}\\) model rocket flies in a straight horizontal line at \\(' + v + '\\text{ m/s}\\). A tracking station sits \\(' + d + '\\text{ m}\\) from the flight path, measured perpendicular. What is the magnitude of the rocket\'s angular momentum about the station?';
+      var explain = steps(
+        'Use the perpendicular-distance form: \\(L = r_\\perp mv\\), with \\(r_\\perp = ' + d + '\\text{ m}\\)',
+        '\\(L = (' + d + ')(' + m + ')(' + v + ')\\)',
+        '\\(= ' + L + '\\text{ kg·m}^2\\text{/s}\\)',
+        'This value does not change as the rocket flies by, since \\(r\\sin\\theta = r_\\perp\\) is fixed',
+        'About a station directly on the flight path it would instead be zero'
+      );
+      renderInput(el, text, L, 1, explain);
+    },
+
+    apsidesSpeed: function (el) {
+      var r1 = rand(2, 6, 1);
+      var k = rand(3, 8, 1);
+      var v1 = rand(30, 70, 5);
+      var v2 = +(v1 / k).toFixed(1);
+      var text = 'A space probe orbits a distant star, reaching a closest approach of \\(' + r1 + '.0\\times10^{10}\\text{ m}\\) at a speed of \\(' + v1 + '\\text{ km/s}\\). Its farthest point is \\(' + k + '\\) times that distance. How fast is it moving there?';
+      var wrongs = [+(v1 * k).toFixed(1), v1, +(v1 / (k * k)).toFixed(1)];
+      var explain = steps(
+        'Gravity points straight at the star, so it exerts no torque and \\(L\\) is constant',
+        'At closest approach and at the farthest point \\(\\vec{v} \\perp \\vec{r}\\), so \\(\\sin\\theta = 1\\)',
+        '\\(mr_1v_1 = mr_2v_2\\); the probe\'s mass cancels, leaving \\(r_1v_1 = r_2v_2\\)',
+        '\\(v_2 = v_1\\dfrac{r_1}{r_2} = \\dfrac{' + v1 + '}{' + k + '}\\)',
+        '\\(= ' + v2 + '\\text{ km/s}\\): ' + k + '× farther means ' + k + '× slower'
+      );
+      renderQ(el, text, makeOpts(v2, wrongs), explain, '\\text{ km/s}');
+    },
+
+    orbitAngularMomentumConcept: function (el) {
+      var text = 'Why is a satellite\'s angular momentum about its central object constant throughout an elliptical orbit?';
+      var correct = '\\text{gravity points straight at the central object, so its torque about that point is zero}';
+      var wrongs = [
+        '\\text{the satellite\'s speed is constant}',
+        '\\text{the gravitational force has constant magnitude}',
+        '\\text{the satellite\'s kinetic energy is constant}'
+      ];
+      var explain = steps(
+        'Angular momentum changes only through angular impulse: \\(\\Delta L = \\sum\\tau\\,\\Delta t\\)',
+        'Torque about the central object is \\(\\tau = rF\\sin\\theta\\), with \\(\\theta\\) between \\(\\vec{r}\\) and \\(\\vec{F}\\)',
+        'Gravity is directed along \\(\\vec{r}\\), so \\(\\theta = 180°\\) and \\(\\sin\\theta = 0\\): zero torque',
+        'With no net torque there is no angular impulse, so \\(L\\) is constant',
+        'The other choices are simply false in an ellipse: \\(r\\), \\(v\\), \\(F\\), and \\(K\\) all change'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    ellipticalEnergyConcept: function (el) {
+      var text = 'A comet travels from its closest approach to its farthest point along an elliptical orbit. Which quantity stays constant?';
+      var correct = '\\text{the total mechanical energy of the comet-star system}';
+      var wrongs = [
+        '\\text{the comet\'s kinetic energy}',
+        '\\text{the system\'s gravitational potential energy}',
+        '\\text{the comet\'s speed}'
+      ];
+      var explain = steps(
+        'Gravity is a conservative force, so \\(E = K + U_g\\) is constant in any orbit',
+        'Moving outward, \\(r\\) grows and \\(U_g = -GmM/r\\) climbs toward zero',
+        'The comet slows to match, so \\(K = \\tfrac{1}{2}mv^2\\) falls by exactly that amount',
+        'Both pieces change every moment; only the sum holds fixed',
+        'In a circular orbit \\(r\\) never changes, so there \\(K\\) and \\(U_g\\) are separately constant too'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    escapeSpeedCalc: function (el) {
+      var r = rand(7, 13, 1);
+      var GM = 3.98e14;
+      var v = +(Math.sqrt(2 * GM / (r * 1e6)) / 1000).toFixed(1);
+      var vo = +(Math.sqrt(GM / (r * 1e6)) / 1000).toFixed(1);
+      var text = 'A probe sits \\(' + r + '.0\\times10^{6}\\text{ m}\\) from Earth\'s center. What speed must it be given to escape Earth entirely? (\\(GM = 3.98\\times10^{14}\\text{ m}^3\\text{/s}^2\\); answer in km/s)';
+      var explain = steps(
+        'Escaping means the system\'s mechanical energy is exactly zero: \\(\\tfrac{1}{2}mv^2 - \\dfrac{GmM}{r} = 0\\)',
+        'The probe\'s mass cancels: \\(v_{esc} = \\sqrt{\\dfrac{2GM}{r}}\\)',
+        '\\(v_{esc} = \\sqrt{\\dfrac{2(3.98\\times10^{14})}{' + r + '.0\\times10^{6}}}\\)',
+        '\\(= ' + v + '\\text{ km/s}\\)',
+        'That is \\(\\sqrt{2}\\) times the circular orbital speed there, \\(' + vo + '\\text{ km/s}\\)'
+      );
+      renderInput(el, text, v, 0.2, explain);
+    },
+
+    circularOrbitTotalEnergy: function (el) {
+      var K = rand(2, 9, 1);
+      var text = 'A satellite in a circular orbit around Earth has kinetic energy \\(' + K + '.0\\times10^{9}\\text{ J}\\). What is the total mechanical energy of the satellite-Earth system?';
+      var correct = '-' + K + '.0\\times10^{9}\\text{ J}';
+      var wrongs = [
+        '+' + K + '.0\\times10^{9}\\text{ J}',
+        '-' + (2 * K) + '.0\\times10^{9}\\text{ J}',
+        '0\\text{ J}'
+      ];
+      var explain = steps(
+        'For a circular orbit, gravity supplies the centripetal force: \\(\\dfrac{mv^2}{r} = \\dfrac{GmM}{r^2}\\)',
+        'That gives \\(K = \\tfrac{1}{2}mv^2 = \\dfrac{GmM}{2r}\\), exactly half the magnitude of \\(U_g = -\\dfrac{GmM}{r}\\)',
+        'So \\(U_g = -2K\\), and \\(E = K + U_g = K - 2K = -K\\)',
+        '\\(E = -' + K + '.0\\times10^{9}\\text{ J}\\)',
+        'The negative sign says the orbit is bound: it would take \\(' + K + '.0\\times10^{9}\\text{ J}\\) more to escape'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    deriveEscapeVelocity: function (el) {
+      var text = 'A satellite of mass \\(m\\) sits a distance \\(r\\) from the center of a planet of mass \\(M\\). Derive the speed it needs to escape the planet entirely.';
+      var correct = '\\sqrt{\\dfrac{2GM}{r}}';
+      var wrongs = ['\\sqrt{\\dfrac{GM}{r}}', '\\sqrt{\\dfrac{2GMm}{r}}', '\\dfrac{2GM}{r}'];
+      var explain = steps(
+        'Escape is the break-even case: the system\'s total mechanical energy is zero',
+        'Write it out: \\(E = K + U_g = \\tfrac{1}{2}mv^2 - \\dfrac{GmM}{r} = 0\\)',
+        'Rearrange: \\(\\tfrac{1}{2}mv^2 = \\dfrac{GmM}{r}\\); the satellite\'s mass \\(m\\) cancels',
+        '\\(v^2 = \\dfrac{2GM}{r} \\implies v_{esc} = \\sqrt{\\dfrac{2GM}{r}}\\)',
+        'Dropping the factor of 2 gives the circular orbital speed instead, so \\(v_{esc} = \\sqrt{2}\\,v_{orbit}\\)'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    shmRestoringForceConcept: function (el) {
+      var text = 'A cart is oscillating back and forth about an equilibrium point. What must be true of the net force on it for the motion to be simple harmonic?';
+      var correct = '\\text{it points back toward equilibrium and is proportional to the displacement}';
+      var wrongs = [
+        '\\text{it points back toward equilibrium and has constant magnitude}',
+        '\\text{it points back toward equilibrium and is proportional to the speed}',
+        '\\text{it is zero at the turning points and largest at equilibrium}'
+      ];
+      var explain = steps(
+        'Simple harmonic motion is defined by \\(F_{net} = -kx\\)',
+        'The minus sign makes the force restoring: it always points back toward \\(x = 0\\)',
+        'Proportionality to \\(x\\) is the extra requirement that makes the motion "simple"',
+        'A constant restoring force (a bouncing ball) still oscillates, but not sinusoidally',
+        'Since \\(F = ma\\), this also means \\(a = -(k/m)x\\): zero at equilibrium, largest at the turning points'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    springAccelAtMax: function (el) {
+      var m = rand(0.5, 3, 0.5);
+      var k = rand(40, 200, 20);
+      var A = rand(0.05, 0.25, 0.05);
+      var a = +(k * A / m).toFixed(2);
+      var text = 'A \\(' + m + '\\text{ kg}\\) block on a spring of stiffness \\(' + k + '\\text{ N/m}\\) is pulled \\(' + A + '\\text{ m}\\) from equilibrium and released. What is the magnitude of its acceleration at the instant of release?';
+      var wrongs = [+(k * A).toFixed(2), +(A * Math.sqrt(k / m)).toFixed(2), +(k / m).toFixed(2)];
+      var explain = steps(
+        'At release the block is at maximum displacement, \\(x = A\\), where the spring force is largest',
+        'Hooke\'s law: \\(F = kA = (' + k + ')(' + A + ') = ' + (+(k * A).toFixed(2)) + '\\text{ N}\\)',
+        'Newton\'s second law: \\(a = F/m = \\dfrac{kA}{m}\\)',
+        '\\(a = \\dfrac{(' + k + ')(' + A + ')}{' + m + '} = ' + a + '\\text{ m/s}^2\\), directed back toward equilibrium',
+        'This is the largest acceleration of the whole cycle; at \\(x = 0\\) the acceleration is zero'
+      );
+      renderQ(el, text, makeOpts(a, wrongs), explain, '\\text{ m/s}^2');
+    },
+
+    springPeriodInput: function (el) {
+      var m = rand(0.4, 2.4, 0.2);
+      var k = rand(30, 150, 10);
+      var T = +(2 * Math.PI * Math.sqrt(m / k)).toFixed(2);
+      var text = 'A \\(' + m.toFixed(1) + '\\text{ kg}\\) mass hangs from a spring of stiffness \\(' + k + '\\text{ N/m}\\) and is set oscillating. What is the period of the motion? (answer in seconds)';
+      var explain = steps(
+        'For a spring-mass oscillator, \\(T = 2\\pi\\sqrt{\\dfrac{m}{k}}\\)',
+        '\\(\\dfrac{m}{k} = \\dfrac{' + m.toFixed(1) + '}{' + k + '} = ' + (+(m / k).toFixed(5)) + '\\text{ s}^2\\)',
+        '\\(T = 2\\pi\\sqrt{' + (+(m / k).toFixed(5)) + '} = ' + T + '\\text{ s}\\)',
+        'Hanging the spring vertically does not change this: gravity only shifts where equilibrium sits',
+        'The amplitude does not appear, so pulling it down farther would not change the answer'
+      );
+      renderInput(el, text, T, 0.03, explain);
+    },
+
+    shmPeriodAmplitudeConcept: function (el) {
+      var text = 'A block on a spring oscillates with period \\(T\\). It is stopped, pulled out to three times its original amplitude, and released again. What is the new period?';
+      var correct = '\\text{still } T';
+      var wrongs = ['3T', '\\sqrt{3}\\,T', 'T/3'];
+      var explain = steps(
+        'The period is \\(T = 2\\pi\\sqrt{m/k}\\): only mass and stiffness appear',
+        'Tripling the amplitude triples the distance the block must cover each cycle',
+        'But at every displacement the spring force is also three times larger, so it moves three times faster',
+        'The two effects cancel exactly, which is why the motion is called isochronous',
+        'What does change: maximum speed triples and the total energy \\(E = \\tfrac{1}{2}kA^2\\) goes up ninefold'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    shmGraphPhaseConcept: function (el) {
+      var text = 'An oscillator is described by \\(x(t) = A\\cos(\\omega t)\\). At the moment its displacement is at its maximum positive value, what are its velocity and acceleration?';
+      var correct = 'v = 0 \\text{ and } a = -\\omega^2 A \\text{ (maximum, negative)}';
+      var wrongs = [
+        'v = A\\omega \\text{ (maximum) and } a = 0',
+        'v = 0 \\text{ and } a = 0',
+        'v = A\\omega \\text{ and } a = \\omega^2 A \\text{ (both maximum, positive)}'
+      ];
+      var explain = steps(
+        'Velocity is the slope of the position curve: \\(v(t) = -A\\omega\\sin(\\omega t)\\)',
+        'At a peak of \\(x\\) the curve is momentarily flat, so \\(v = 0\\): this is a turning point',
+        'Acceleration follows the rule \\(a = -\\omega^2 x\\) at every instant',
+        'With \\(x = +A\\), \\(a = -\\omega^2 A\\): largest in size and pointing back toward equilibrium',
+        'The reverse holds at \\(x = 0\\): there \\(|v| = A\\omega\\) is largest and \\(a = 0\\)'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    pendulumPeriodCalc: function (el) {
+      var L = rand(0.4, 2.4, 0.2);
+      var T = +(2 * Math.PI * Math.sqrt(L / 9.8)).toFixed(2);
+      var m = rand(0.5, 3, 0.5);
+      var text = 'A \\(' + m + '\\text{ kg}\\) lantern hangs from a \\(' + L.toFixed(1) + '\\text{ m}\\) cord and swings through a small angle. What is its period? (use \\(g = 9.8\\text{ m/s}^2\\))';
+      var wrongs = [
+        +(2 * Math.PI * Math.sqrt(9.8 / L)).toFixed(2),
+        +(2 * Math.PI * Math.sqrt(L / 9.8) * Math.sqrt(m)).toFixed(2),
+        +(Math.sqrt(L / 9.8)).toFixed(2)
+      ];
+      var explain = steps(
+        'For a simple pendulum at small angles, \\(T = 2\\pi\\sqrt{\\dfrac{L}{g}}\\)',
+        '\\(\\dfrac{L}{g} = \\dfrac{' + L.toFixed(1) + '}{9.8} = ' + (+(L / 9.8).toFixed(4)) + '\\text{ s}^2\\)',
+        '\\(T = 2\\pi\\sqrt{' + (+(L / 9.8).toFixed(4)) + '} = ' + T + '\\text{ s}\\)',
+        'The \\(' + m + '\\text{ kg}\\) mass is a distractor: it cancels out of the equation of motion',
+        'A heavier bob feels a proportionally larger restoring force but is proportionally harder to accelerate'
+      );
+      renderQ(el, text, makeOpts(T, wrongs), explain, '\\text{ s}');
+    },
+
+    springMaxSpeedInput: function (el) {
+      var m = rand(0.5, 3, 0.5);
+      var k = rand(50, 250, 25);
+      var A = rand(0.06, 0.24, 0.02);
+      var v = +(A * Math.sqrt(k / m)).toFixed(2);
+      var E = +(0.5 * k * A * A).toFixed(3);
+      var text = 'A \\(' + m + '\\text{ kg}\\) glider on a frictionless track is attached to a \\(' + k + '\\text{ N/m}\\) spring, pulled \\(' + A.toFixed(2) + '\\text{ m}\\) aside, and released from rest. How fast is it moving as it passes through equilibrium? (answer in m/s)';
+      var explain = steps(
+        'At release the energy is all elastic: \\(E = \\tfrac{1}{2}kA^2 = \\tfrac{1}{2}(' + k + ')(' + A.toFixed(2) + ')^2 = ' + E + '\\text{ J}\\)',
+        'At equilibrium \\(x = 0\\), so \\(U_s = 0\\) and all of that energy is kinetic',
+        'Set \\(\\tfrac{1}{2}mv_{max}^2 = \\tfrac{1}{2}kA^2\\); the \\(\\tfrac{1}{2}\\) cancels',
+        '\\(v_{max} = A\\sqrt{\\dfrac{k}{m}} = ' + A.toFixed(2) + '\\sqrt{\\dfrac{' + k + '}{' + m + '}}\\)',
+        '\\(= ' + v + '\\text{ m/s}\\), which is also \\(A\\omega\\)'
+      );
+      renderInput(el, text, v, 0.05, explain);
+    },
+
+    pendulumVariablesConcept: function (el) {
+      var text = 'A clock keeps time with a simple pendulum but is running slightly fast. Which single change would slow it down?';
+      var correct = '\\text{lengthen the pendulum}';
+      var wrongs = [
+        '\\text{use a heavier bob}',
+        '\\text{release it from a slightly larger angle}',
+        '\\text{shorten the pendulum}'
+      ];
+      var explain = steps(
+        'The period depends only on length and gravity: \\(T = 2\\pi\\sqrt{L/g}\\)',
+        'Running fast means the period is too short, so \\(T\\) must be increased',
+        '\\(T \\propto \\sqrt{L}\\), so a longer cord gives a longer period and a slower clock',
+        'Bob mass cancels out entirely, and amplitude has no effect while the angle stays small',
+        'Moving the clock somewhere with weaker \\(g\\) would also slow it, since \\(T \\propto 1/\\sqrt{g}\\)'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    deriveSpringMaxSpeed: function (el) {
+      var text = 'A block of mass \\(m\\) on a spring of stiffness \\(k\\) is released from rest at displacement \\(A\\). Using energy conservation, derive its maximum speed.';
+      var correct = 'v_{max} = A\\sqrt{\\dfrac{k}{m}}';
+      var wrongs = ['v_{max} = A\\sqrt{\\dfrac{m}{k}}', 'v_{max} = \\sqrt{\\dfrac{kA}{m}}', 'v_{max} = \\dfrac{kA^2}{2m}'];
+      var explain = steps(
+        'At release the block is at rest at \\(x = A\\), so all the energy is elastic: \\(E = \\tfrac{1}{2}kA^2\\)',
+        'Speed is largest where the restoring force is zero, at \\(x = 0\\), where \\(U_s = 0\\)',
+        'Conservation of energy: \\(\\tfrac{1}{2}mv_{max}^2 = \\tfrac{1}{2}kA^2\\)',
+        'Cancel the halves and solve: \\(v_{max}^2 = \\dfrac{kA^2}{m} \\implies v_{max} = A\\sqrt{\\dfrac{k}{m}}\\)',
+        'Since \\(\\omega = \\sqrt{k/m}\\), this is just \\(v_{max} = A\\omega\\), matching the slope of \\(x = A\\cos\\omega t\\)'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
     }
   };
 })();

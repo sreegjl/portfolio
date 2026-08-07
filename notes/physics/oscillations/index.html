@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oscillations</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Physics</a>
+    <div>
+      <h1>oscillations</h1>
+      <span>conditions for simple harmonic motion, spring-mass oscillators, motion as a function of time, energy in an oscillator, and simple pendulums</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Conditions for simple harmonic motion ── -->
+  <div class="section" id="sec-shm">
+    <p class="section-label">Conditions for simple harmonic motion</p>
+
+    <p class="prose">
+      An <strong>oscillation</strong> is any motion that repeats itself around an equilibrium position. It becomes <strong>simple harmonic motion</strong> only when the net force always points back toward equilibrium <em>and</em> grows in direct proportion to how far the object has been displaced:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[F_\text{net} = -\class{var-spring}{k}\class{var-x}{x}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(x\)</span>
+          <span class="row-val">displacement from equilibrium, not from the floor or the ceiling (m)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(k\)</span>
+          <span class="row-val">stiffness of the restoring force, the proportionality constant (N/m)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">minus sign</span>
+          <span class="row-val">the force opposes the displacement, so it is always a <em>restoring</em> force</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(A\)</span>
+          <span class="row-val">amplitude, the largest displacement reached on either side (m)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Is it simple harmonic?</p>
+        <div class="row">
+          <span class="row-desc">Mass on an ideal spring</span>
+          <span class="row-val">\(F = -kx\) exactly <span class="badge teal">yes</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Pendulum at small angles</span>
+          <span class="row-val">restoring torque is proportional to \(\theta\) once \(\sin\theta \approx \theta\) <span class="badge teal">yes</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Pendulum at large angles</span>
+          <span class="row-val">\(\sin\theta\) falls behind \(\theta\), so the period stretches <span class="badge amber">only approximately</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Ball bouncing on the floor</span>
+          <span class="row-val">restoring force is constant, not proportional to \(x\) <span class="badge coral">no</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      That proportionality is what makes the motion "simple". Because \(F = ma\), it also means the acceleration is \(a = -(k/m)x\): largest at the turning points and exactly zero as the object flies through equilibrium, which is precisely where it moves fastest.
+    </p>
+  </div>
+
+  <!-- ── Spring-mass oscillators ── -->
+  <div class="section" id="sec-spring">
+    <p class="section-label">Spring-mass oscillators</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Cart on a spring bumper</span>
+      </div>
+      <canvas id="osc-spring" width="600" height="300"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      A block on a spring obeys Hooke's law by construction, so it is the cleanest oscillator there is. Solving \(ma = -kx\) gives a <strong>period</strong> set only by the mass and the stiffness:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-period}{T_s} = 2\pi\sqrt{\frac{m}{\class{var-spring}{k}}}, \qquad \class{var-omega}{\omega} = \sqrt{\frac{\class{var-spring}{k}}{m}} = \frac{2\pi}{\class{var-period}{T}} = 2\pi f\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">What changes the period</p>
+        <div class="row">
+          <span class="row-desc">Heavier block</span>
+          <span class="row-val">more inertia to turn around, so a longer period; \(4\times\) the mass gives \(2\times\) the period <span class="badge amber">slower</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Stiffer spring</span>
+          <span class="row-val">stronger restoring force, so a shorter period; \(9\times\) the stiffness gives \(\tfrac{1}{3}\) the period <span class="badge teal">faster</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Larger amplitude</span>
+          <span class="row-val">no change at all <span class="badge amber">isochronous</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Gravity</span>
+          <span class="row-val">no change; hanging the spring vertically only shifts where equilibrium sits <span class="badge amber">no effect</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Period, frequency, angular frequency</p>
+        <div class="row">
+          <span class="row-desc">\(T\)</span>
+          <span class="row-val">seconds for one full cycle out and back (s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(f = 1/T\)</span>
+          <span class="row-val">cycles per second (Hz)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\omega = 2\pi f\)</span>
+          <span class="row-val">radians per second, the quantity that appears inside the sine and cosine (rad/s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Reading a graph</span>
+          <span class="row-val">slope of \(T^2\) plotted against \(m\) is \(4\pi^2/k\), which is how \(k\) is measured from data</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Amplitude independence is the surprising part. Pull the block twice as far and it has twice as far to travel, but the spring pulls twice as hard the whole way, and the two effects cancel exactly. This is why springs and pendulums make usable clocks while a bouncing ball does not.
+    </p>
+  </div>
+
+  <!-- ── Motion as a function of time ── -->
+  <div class="section" id="sec-time">
+    <p class="section-label">Motion as a function of time</p>
+
+    <p class="prose">
+      Because the acceleration is proportional to the negative of the displacement, the solution is a <strong>sinusoid</strong>. Starting the clock at maximum displacement gives the cosine form, and velocity and acceleration follow from its slopes:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-x}{x(t)} = \class{var-amp}{A}\cos(\class{var-omega}{\omega} t + \varphi), \qquad v(t) = -\class{var-amp}{A}\class{var-omega}{\omega}\sin(\class{var-omega}{\omega} t + \varphi), \qquad a(t) = -\class{var-amp}{A}\class{var-omega}{\omega}^2\cos(\class{var-omega}{\omega} t + \varphi)\]
+    </p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Position, velocity, and acceleration of one oscillator</span>
+      </div>
+      <canvas id="osc-graphs" width="600" height="330"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Reading the three curves</p>
+      <div class="row">
+        <span class="row-desc">At \(x = \pm A\)</span>
+        <span class="row-val">\(v = 0\) and \(|a|\) is largest <span class="badge coral">turning points</span></span>
+      </div>
+      <div class="row">
+        <span class="row-desc">At \(x = 0\)</span>
+        <span class="row-val">\(|v| = A\omega\) is largest and \(a = 0\) <span class="badge teal">equilibrium</span></span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Velocity vs. position</span>
+        <span class="row-val">shifted a quarter cycle ahead, since \(v\) is the slope of \(x\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Acceleration vs. position</span>
+        <span class="row-val">an exact mirror image: \(a = -\omega^2 x\) at every instant</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Phase constant \(\varphi\)</span>
+        <span class="row-val">slides the whole picture in time; it records where the object was when the clock started</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Amplitude scales all three curves vertically without touching their spacing along the time axis. Only \(\omega\), fixed by the mass and stiffness, decides how tightly the cycles are packed.
+    </p>
+  </div>
+
+  <!-- ── Energy in an oscillator ── -->
+  <div class="section" id="sec-energy">
+    <p class="section-label">Energy in an oscillator</p>
+
+    <p class="prose">
+      With no friction, the spring-block system's total mechanical energy is fixed, and the two forms simply trade back and forth twice per cycle. Evaluating the total at a turning point, where \(v = 0\), is the fastest route to it:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-emech}{E} = \tfrac{1}{2}m\class{var-v}{v}^2 + \tfrac{1}{2}\class{var-spring}{k}\class{var-x}{x}^2 = \tfrac{1}{2}\class{var-spring}{k}\class{var-amp}{A}^2\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Where the energy sits</p>
+        <div class="row">
+          <span class="row-desc">At \(x = \pm A\)</span>
+          <span class="row-val">all elastic potential: \(U_s = \tfrac{1}{2}kA^2\), \(K = 0\) <span class="badge coral">all \(U\)</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">At \(x = 0\)</span>
+          <span class="row-val">all kinetic: \(K = \tfrac{1}{2}kA^2\), \(U_s = 0\) <span class="badge teal">all \(K\)</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Maximum speed</span>
+          <span class="row-val">\(v_\text{max} = A\omega = A\sqrt{k/m}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Doubling the amplitude</span>
+          <span class="row-val">quadruples the energy, doubles the top speed, leaves the period alone <span class="badge amber">\(E \propto A^2\)</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Worked example: loaded cart</p>
+        <div class="row">
+          <span class="row-desc">Given</span>
+          <span class="row-val">a \(0.80\ \text{kg}\) cart on a \(180\ \text{N/m}\) spring, pulled \(0.12\ \text{m}\) and released from rest</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Total energy</span>
+          <span class="row-val">\(E = \tfrac{1}{2}(180)(0.12)^2 = 1.30\ \text{J}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Speed at equilibrium</span>
+          <span class="row-val">\(v_\text{max} = A\sqrt{k/m} = 0.12\sqrt{225} = 1.8\ \text{m/s}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Speed halfway out</span>
+          <span class="row-val">at \(x = A/2\), \(U_s\) is a quarter of \(E\), so \(v = \tfrac{\sqrt{3}}{2}v_\text{max} \approx 1.6\ \text{m/s}\) <span class="badge amber">still 87%</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Notice how flat that last result is. Halfway to the turning point the cart has given up only a quarter of its kinetic energy, so an oscillator spends most of its time near the ends of the swing, moving slowly, and blurs past the middle.
+    </p>
+  </div>
+
+  <!-- ── Simple pendulums ── -->
+  <div class="section" id="sec-pendulum">
+    <p class="section-label">Simple pendulums</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Lantern swinging from a rafter</span>
+      </div>
+      <canvas id="osc-pendulum" width="600" height="360"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      A <strong>simple pendulum</strong> is a point mass on a massless string. Gravity supplies a restoring <em>torque</em> about the pivot, using the perpendicular component \(mg\sin\theta\) with lever arm \(L\):
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\tau = -mgL\sin\class{var-theta}{\theta} \;\xrightarrow{\ \sin\theta\,\approx\,\theta\ }\; \tau \approx -mgL\class{var-theta}{\theta}\]
+    </p>
+
+    <p class="prose">
+      That approximation is the whole trick. Once \(\sin\theta\) is replaced by \(\theta\), the torque is proportional to the angular displacement, which is the rotational version of \(F = -kx\), and the motion is simple harmonic with:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-period}{T_p} = 2\pi\sqrt{\frac{L}{g}}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">The small-angle approximation</p>
+        <div class="row">
+          <span class="row-desc">\(\theta = 5°\)</span>
+          <span class="row-val">\(\sin\theta\) and \(\theta\) agree to \(0.1\%\) <span class="badge teal">excellent</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\theta = 15°\)</span>
+          <span class="row-val">period runs about \(0.4\%\) long <span class="badge teal">fine for most work</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\theta = 45°\)</span>
+          <span class="row-val">period runs about \(4\%\) long <span class="badge coral">no longer SHM</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Why it works</span>
+          <span class="row-val">\(\theta\) must be in radians; \(\sin\theta = \theta - \theta^3/6 + \dots\) and the correction is tiny while \(\theta\) is small</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">What changes the period</p>
+        <div class="row">
+          <span class="row-desc">Longer string</span>
+          <span class="row-val">longer period; \(4\times\) the length gives \(2\times\) the period <span class="badge amber">slower</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Heavier bob</span>
+          <span class="row-val">no change; \(m\) sets both the torque and the rotational inertia and cancels <span class="badge amber">no effect</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Larger release angle</span>
+          <span class="row-val">no change while the angle stays small <span class="badge amber">no effect</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Weaker gravity</span>
+          <span class="row-val">longer period; the same pendulum on the Moon takes about \(2.5\times\) as long <span class="badge coral">slower</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Mass cancelling is the mirror image of free fall: a heavier bob is pulled harder but is equally harder to move. Because only \(L\) and \(g\) survive, a swinging pendulum is a direct measurement of local gravity, and plotting \(T^2\) against \(L\) gives a straight line of slope \(4\pi^2/g\).
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">Condition for SHM</span>
+        <span class="row-val">\(F_\text{net} = -\class{var-spring}{k}\class{var-x}{x}\): restoring and proportional to displacement, so \(a = -\omega^2 x\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Spring-mass period</span>
+        <span class="row-val">\(\class{var-period}{T_s} = 2\pi\sqrt{m/\class{var-spring}{k}}\), set by mass and stiffness only</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Pendulum period</span>
+        <span class="row-val">\(\class{var-period}{T_p} = 2\pi\sqrt{L/g}\), set by length and gravity only</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Amplitude</span>
+        <span class="row-val">never appears in either period; it scales speed and energy, not timing</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Frequency relations</span>
+        <span class="row-val">\(\class{var-omega}{\omega} = 2\pi f = 2\pi/\class{var-period}{T}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Motion in time</span>
+        <span class="row-val">\(\class{var-x}{x} = \class{var-amp}{A}\cos(\class{var-omega}{\omega} t + \varphi)\), with \(v\) a quarter cycle ahead and \(a\) inverted</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Oscillator energy</span>
+        <span class="row-val">\(\class{var-emech}{E} = \tfrac{1}{2}\class{var-spring}{k}\class{var-amp}{A}^2\), all potential at the ends and all kinetic at the middle</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Maximum speed</span>
+        <span class="row-val">\(v_\text{max} = \class{var-amp}{A}\class{var-omega}{\omega} = \class{var-amp}{A}\sqrt{\class{var-spring}{k}/m}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Small-angle approximation</span>
+        <span class="row-val">\(\sin\theta \approx \theta\) in radians is what turns a pendulum into a simple harmonic oscillator</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Spring vs. pendulum</span>
+        <span class="row-val">mass matters for the spring and cancels for the pendulum; gravity is the reverse</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Shared canvas helpers ─────────────────────────────
+function oscCss(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+function oscArrow(ctx, sx, sy, dx, dy, color, hl, lw) {
+  hl = hl || 7;
+  var a = Math.atan2(dy, dx);
+  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = lw || 2;
+  ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(sx + dx, sy + dy);
+  ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+  ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+  ctx.closePath(); ctx.fill();
+}
+
+// Measure and (re)size a canvas. Floors the width so the drawing layout can never invert
+// on a narrow pane; the browser scales the backing store down to fit.
+function oscFit(canvas, ratio, minW) {
+  var dpr = window.devicePixelRatio || 1;
+  var measured = Math.round(canvas.getBoundingClientRect().width);
+  var w = Math.max(minW, measured > 0 ? measured : minW);
+  var h = Math.round(w * ratio);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { w: w, h: h };
+}
+
+// Re-fit on resize so a narrowed window relays out instead of staying stuck at the load-time size.
+function oscOnResize(fn) {
+  var t = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(t);
+    t = setTimeout(fn, 120);
+  });
+}
+
+// Typeset a caption safely. window.MathJax exists from the moment the config object is set in
+// <head>, but typesetPromise only appears once MathJax has finished loading, and the
+// loader: ['[tex]/html'] component is fetched asynchronously. Calling it too early throws,
+// and an uncaught throw here would abort the rest of this script block.
+function oscTypeset(el) {
+  var MJ = window.MathJax;
+  if (!el || !MJ) return;
+  if (typeof MJ.typesetPromise === 'function') {
+    MJ.typesetPromise([el]).catch(function () {});
+  } else if (MJ.startup && MJ.startup.promise) {
+    MJ.startup.promise.then(function () {
+      if (typeof window.MathJax.typesetPromise === 'function') window.MathJax.typesetPromise([el]).catch(function () {});
+    }).catch(function () {});
+  }
+}
+
+function oscGrid(ctx, w, h) {
+  ctx.fillStyle = oscCss('--surface');
+  ctx.fillRect(0, 0, w, h);
+  var gs = 25;
+  ctx.strokeStyle = oscCss('--border') || 'rgba(0,0,0,0.06)';
+  ctx.lineWidth = 1;
+  for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+  for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+}
+
+// Hatched surface, matching the ground styling on the forces and dynamics pages
+function oscGround(ctx, w, y, fromX) {
+  fromX = fromX || 0;
+  ctx.strokeStyle = oscCss('--border-strong'); ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(fromX, y); ctx.lineTo(w, y); ctx.stroke();
+  ctx.strokeStyle = oscCss('--border'); ctx.lineWidth = 1;
+  for (var hx = fromX + 7; hx < w; hx += 14) {
+    ctx.beginPath(); ctx.moveTo(hx, y); ctx.lineTo(hx - 7, y + 7); ctx.stroke();
+  }
+}
+
+// Hover playback scrub bar shared by all three animated canvases
+function oscScrub(canvas, id, onScrub) {
+  var t = document.createElement('input');
+  t.type = 'range'; t.min = 0; t.max = 1000; t.value = 0; t.step = 1; t.id = id;
+  t.style.cssText = 'width:100%;height:3px;margin:0;padding:0;display:block;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none;background:var(--border-strong);border-radius:2px;transition:opacity 0.2s;';
+  var st = document.createElement('style');
+  st.textContent = '#' + id + '::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent-purple);cursor:pointer;}#' + id + '::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent-purple);border:none;cursor:pointer;}';
+  document.head.appendChild(st);
+  canvas.after(t);
+  var card = canvas.closest('.graph-card');
+  var state = { el: t, scrubbing: false };
+  card.addEventListener('mouseenter', function () { t.style.opacity = '0.5'; });
+  card.addEventListener('mouseleave', function () { if (!state.scrubbing) t.style.opacity = '0'; });
+  t.addEventListener('input', function () { state.scrubbing = true; onScrub(parseFloat(t.value) / 1000); });
+  t.addEventListener('mouseup', function () { state.scrubbing = false; });
+  t.addEventListener('touchend', function () { state.scrubbing = false; });
+  return state;
+}
+
+function oscSliders(wrap, vals, defs, onChange) {
+  var cd = document.createElement('div');
+  cd.className = 'fbd-controls';
+  var rows = [];
+  defs.forEach(function (d) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = d.label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = d.min; inp.max = d.max; inp.step = d.step; inp.value = vals[d.id];
+    var dp = d.step < 1 ? ('' + d.step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+vals[d.id]).toFixed(dp) + ' ' + d.unit;
+    inp.addEventListener('input', function () {
+      vals[d.id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + d.unit;
+      onChange();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+    rows.push({ def: d, input: inp, val: vs, dp: dp });
+  });
+  wrap.appendChild(cd);
+  return {
+    sync: function () {
+      rows.forEach(function (r) {
+        r.input.value = vals[r.def.id];
+        r.val.textContent = (+vals[r.def.id]).toFixed(r.dp) + ' ' + r.def.unit;
+      });
+    }
+  };
+}
+
+// Randomize + play buttons on the caption row, wired the same way on every canvas here
+function oscButtons(cap, randomize, onPlay) {
+  if (!cap) return null;
+  var rb = document.createElement('button');
+  rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+  rb.addEventListener('click', randomize);
+  cap.appendChild(rb);
+
+  var pb = document.createElement('button');
+  pb.className = 'fbd-pause'; pb.type = 'button';
+  pb.textContent = 'play'; pb.style.display = 'none';
+  pb.addEventListener('click', function () { pb.style.display = 'none'; onPlay(); });
+  cap.appendChild(pb);
+  return pb;
+}
+
+// ── Cart on a spring bumper ───────────────────────────
+(function () {
+  var canvas = document.getElementById('osc-spring');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  var MAX_A = 0.30;
+  // Playback runs slower than real time. A stiff spring on a light block has a real period of
+  // well under half a second, which is too fast to read; the T readout still quotes the real one.
+  var TIME_SCALE = 0.35;
+  var vals = { m: 2.0, k: 180, A: 0.25 };
+  var phase = 0, paused = false, animId = null;
+
+  var w, h, groundY, wallX, cx, travel, blockW, blockH, restLen, pxPerM;
+  function layout() {
+    var dim = oscFit(canvas, 0.5, 260);
+    w = dim.w; h = dim.h;
+    groundY = h - 30;
+    wallX = 14;
+    var boxR = w - Math.min(150, w * 0.3) - 10;
+    var avail = Math.max(80, boxR - wallX);
+    blockW = Math.min(36, avail * 0.18);
+    blockH = Math.max(18, blockW * 0.62);
+    travel = Math.max(14, avail * 0.22);
+    restLen = Math.max(30, avail * 0.28);
+    cx = wallX + restLen + travel + blockW / 2;
+    pxPerM = travel / MAX_A;
+  }
+  layout();
+
+  function physics() {
+    var omega = Math.sqrt(vals.k / vals.m);
+    var T = 2 * Math.PI / omega;
+    var x = vals.A * Math.cos(phase);
+    var v = -vals.A * omega * Math.sin(phase);
+    var E = 0.5 * vals.k * vals.A * vals.A;
+    var U = 0.5 * vals.k * x * x;
+    return { omega: omega, T: T, f: 1 / T, x: x, v: v, a: -omega * omega * x, E: E, U: U, K: E - U };
+  }
+
+  // A zigzag spring from the wall to the left face of the block. Coil count is fixed so the
+  // coils visibly bunch up and stretch out as the block moves.
+  function drawSpring(x0, x1, y) {
+    var coils = 11, span = x1 - x0, amp = Math.min(11, blockH * 0.45);
+    ctx.strokeStyle = oscCss('--muted'); ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(x0, y);
+    var lead = Math.min(10, span * 0.12);
+    ctx.lineTo(x0 + lead, y);
+    var body = span - 2 * lead;
+    for (var i = 0; i < coils; i++) {
+      var xa = x0 + lead + (body * (i + 0.5)) / coils;
+      ctx.lineTo(xa, y + (i % 2 === 0 ? -amp : amp));
+    }
+    ctx.lineTo(x1 - lead, y);
+    ctx.lineTo(x1, y);
+    ctx.stroke();
+  }
+
+  function render() {
+    var p = physics();
+    ctx.clearRect(0, 0, w, h);
+    oscGrid(ctx, w, h);
+    oscGround(ctx, w, groundY, wallX);
+
+    var bx = cx + p.x * pxPerM;
+    var by = groundY - blockH / 2;
+
+    // wall
+    ctx.strokeStyle = oscCss('--border-strong'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(wallX, groundY); ctx.lineTo(wallX, groundY - blockH * 2.1); ctx.stroke();
+    ctx.strokeStyle = oscCss('--border'); ctx.lineWidth = 1;
+    for (var hy = groundY - blockH * 2.1 + 6; hy < groundY; hy += 12) {
+      ctx.beginPath(); ctx.moveTo(wallX, hy); ctx.lineTo(wallX - 7, hy - 7); ctx.stroke();
+    }
+
+    // amplitude limits and the equilibrium line
+    ctx.save(); ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = oscCss('--border-strong'); ctx.lineWidth = 1;
+    [-1, 1].forEach(function (s) {
+      var lx = cx + s * vals.A * pxPerM;
+      ctx.beginPath(); ctx.moveTo(lx, groundY - blockH * 1.7); ctx.lineTo(lx, groundY); ctx.stroke();
+    });
+    ctx.restore();
+    ctx.strokeStyle = oscCss('--hint'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx, groundY - blockH * 1.9); ctx.lineTo(cx, groundY); ctx.stroke();
+    ctx.fillStyle = oscCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.fillText('x = 0', cx, groundY + 11);
+    ctx.fillText('-A', cx - vals.A * pxPerM, groundY + 11);
+    ctx.fillText('+A', cx + vals.A * pxPerM, groundY + 11);
+
+    drawSpring(wallX, bx - blockW / 2, by);
+
+    // restoring force, drawn back toward equilibrium
+    var fLen = (Math.abs(p.x) / MAX_A) * travel * 0.9;
+    if (fLen > 3) {
+      var dir = p.x > 0 ? -1 : 1;
+      oscArrow(ctx, bx + dir * blockW / 2, by - blockH * 0.15, dir * fLen, 0, oscCss('--accent-coral'), 7, 2);
+      ctx.fillStyle = oscCss('--accent-coral');
+      ctx.font = '600 10px "DM Mono", monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.fillText('F = -kx', bx + dir * (blockW / 2 + fLen / 2), by - blockH * 0.15 - 5);
+    }
+
+    // velocity
+    var vLen = (Math.abs(p.v) / (vals.A * p.omega || 1)) * travel * 0.75;
+    if (vLen > 3) {
+      var vd = p.v > 0 ? 1 : -1;
+      oscArrow(ctx, bx, by + blockH * 0.28, vd * vLen, 0, oscCss('--accent-purple'), 7, 2);
+      ctx.fillStyle = oscCss('--accent-purple');
+      ctx.font = '600 10px "DM Mono", monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText('v', bx + vd * vLen / 2, by + blockH * 0.28 + 4);
+    }
+
+    // the cart itself
+    ctx.fillStyle = oscCss('--bg');
+    ctx.strokeStyle = oscCss('--muted');
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(bx - blockW / 2, by - blockH / 2, blockW, blockH, 3);
+    else ctx.rect(bx - blockW / 2, by - blockH / 2, blockW, blockH);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = oscCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('m', bx, by);
+
+    // ── readouts ──
+    var lx = w - 10, ly = 12;
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = oscCss('--accent-amber');
+    ctx.fillText('T = ' + p.T.toFixed(2) + ' s', lx, ly); ly += 14;
+    ctx.fillStyle = oscCss('--hint');
+    ctx.fillText('f = ' + p.f.toFixed(2) + ' Hz', lx, ly); ly += 14;
+    ctx.fillText('ω = ' + p.omega.toFixed(1) + ' rad/s', lx, ly); ly += 14;
+    ctx.fillText('x = ' + p.x.toFixed(3) + ' m', lx, ly); ly += 14;
+    ctx.fillStyle = oscCss('--accent-purple');
+    ctx.fillText('v = ' + p.v.toFixed(2) + ' m/s', lx, ly); ly += 14;
+
+    // Energy bars: K, U, and the fixed total. All three are positive here, so they share a
+    // left origin and one scale set by E, which is the bar that never moves.
+    ly += 6;
+    var barW = Math.min(140, w * 0.22), rowH = 5, rowGap = 4;
+    var trackL = lx - barW;
+    var rows = [
+      { key: 'K', val: p.K, col: '--accent-teal' },
+      { key: 'U', val: p.U, col: '--accent-coral' },
+      { key: 'E', val: p.E, col: '--accent-amber' }
+    ];
+    ctx.font = '9px "DM Mono", monospace';
+    rows.forEach(function (row, i) {
+      var y = ly + i * (rowH + rowGap);
+      ctx.fillStyle = oscCss('--border');
+      ctx.fillRect(trackL, y, barW, rowH);
+      var len = Math.min(barW, (row.val / p.E) * barW);
+      ctx.globalAlpha = 0.85;
+      ctx.fillStyle = oscCss(row.col);
+      ctx.fillRect(trackL, y, Math.max(0, len), rowH);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = oscCss('--hint');
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      ctx.fillText(row.key, trackL - 5, y + rowH / 2);
+    });
+    ly += rows.length * (rowH + rowGap) + 4;
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = oscCss('--hint');
+    ctx.fillText('E = ½kA² = ' + p.E.toFixed(2) + ' J', lx, ly);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var p = physics();
+    var near = Math.abs(p.x) > 0.75 * vals.A;
+    var lead = near
+      ? 'Near a turning point: the spring pulls hardest and the cart has almost stopped, so the coral \\(U_s\\) bar is nearly full. '
+      : (Math.abs(p.x) < 0.25 * vals.A
+        ? 'Racing through equilibrium: the restoring force has vanished and the teal \\(K\\) bar is nearly full. '
+        : 'Mid-swing: the cart is trading elastic potential energy for kinetic energy. ');
+    var txt = lead + 'With \\(m = ' + vals.m.toFixed(1) + '\\text{ kg}\\) and \\(k = ' + vals.k.toFixed(0) + '\\text{ N/m}\\), \\(T = 2\\pi\\sqrt{m/k} = ' + p.T.toFixed(2) + '\\text{ s}\\); dragging the amplitude slider changes the energy and the top speed but never that period.';
+    var sp = cap.querySelector('span');
+    sp.innerHTML = txt;
+    oscTypeset(sp);
+  }
+
+  var ui = oscSliders(wrap, vals, [
+    { id: 'm', label: 'Cart mass', unit: 'kg', min: 1, max: 4, step: 0.1 },
+    { id: 'k', label: 'Spring constant', unit: 'N/m', min: 20, max: 400, step: 10 },
+    { id: 'A', label: 'Amplitude', unit: 'm', min: 0.04, max: MAX_A, step: 0.01 }
+  ], function () { render(); updateCaption(); });
+
+  var scrub = oscScrub(canvas, 'osc-spring-scrub', function (frac) {
+    phase = frac * Math.PI * 2;
+    paused = true;
+    if (playBtn) playBtn.style.display = '';
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    render(); updateCaption();
+  });
+
+  var playBtn = oscButtons(cap, function () {
+    vals.m = +(1 + Math.random() * 3).toFixed(1);
+    vals.k = Math.round((20 + Math.random() * 380) / 10) * 10;
+    vals.A = +(0.04 + Math.random() * (MAX_A - 0.04)).toFixed(2);
+    ui.sync(); render(); updateCaption();
+  }, function () { paused = false; tick(); });
+
+  function tick() {
+    if (paused) { animId = null; return; }
+    var p = physics();
+    phase += p.omega * TIME_SCALE / 60;
+    if (phase > Math.PI * 2) phase -= Math.PI * 2;
+    if (!scrub.scrubbing) scrub.el.value = Math.round(phase / (Math.PI * 2) * 1000);
+    render();
+    animId = requestAnimationFrame(tick);
+  }
+
+  var card = canvas.closest('.graph-card');
+  card.setAttribute('tabindex', '0');
+  card.addEventListener('keydown', function (e) {
+    if (e.code !== 'Space') return;
+    e.preventDefault();
+    if (paused) { paused = false; if (playBtn) playBtn.style.display = 'none'; tick(); }
+    else { paused = true; if (playBtn) playBtn.style.display = ''; if (animId) { cancelAnimationFrame(animId); animId = null; } }
+  });
+
+  render(); updateCaption(); tick();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  oscOnResize(function () { layout(); render(); });
+})();
+
+// ── Position, velocity, and acceleration curves ───────
+(function () {
+  var canvas = document.getElementById('osc-graphs');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  var WINDOW = 4;              // seconds shown on the time axis, held fixed so T is visible
+  var vals = { A: 0.15, T: 1.6, phi: 0 };
+  var t = 0, paused = false, animId = null;
+
+  var w, h, padL, padR, top, panelH, gap;
+  function layout() {
+    var dim = oscFit(canvas, 0.55, 260);
+    w = dim.w; h = dim.h;
+    padL = 30;
+    padR = Math.min(96, w * 0.2);
+    top = 24;              // leaves a strip above panel 1 for the running clock
+    gap = 12;
+    panelH = Math.max(24, (h - top - 26 - 2 * gap) / 3);
+  }
+  layout();
+
+  function omega() { return 2 * Math.PI / vals.T; }
+  function phi() { return vals.phi * Math.PI / 180; }
+  function xAt(tt) { return vals.A * Math.cos(omega() * tt + phi()); }
+  function vAt(tt) { return -vals.A * omega() * Math.sin(omega() * tt + phi()); }
+  function aAt(tt) { return -vals.A * omega() * omega() * Math.cos(omega() * tt + phi()); }
+
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    oscGrid(ctx, w, h);
+
+    var plotL = padL, plotR = w - padR;
+    var plotW = Math.max(20, plotR - plotL);
+    var panels = [
+      { label: 'x', unit: 'm',     fn: xAt, peak: vals.A,                                col: '--accent-teal' },
+      { label: 'v', unit: 'm/s',   fn: vAt, peak: vals.A * omega(),                      col: '--accent-purple' },
+      { label: 'a', unit: 'm/s²',  fn: aAt, peak: vals.A * omega() * omega(),            col: '--accent-coral' }
+    ];
+
+    panels.forEach(function (p, i) {
+      var yTop = top + i * (panelH + gap);
+      var yMid = yTop + panelH / 2;
+      var half = panelH / 2 - 3;
+
+      // zero axis
+      ctx.strokeStyle = oscCss('--border-strong'); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(plotL, yMid); ctx.lineTo(plotR, yMid); ctx.stroke();
+
+      // curve
+      ctx.strokeStyle = oscCss(p.col); ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      for (var px = 0; px <= plotW; px++) {
+        var tt = (px / plotW) * WINDOW;
+        var yy = yMid - (p.fn(tt) / (p.peak || 1)) * half;
+        if (px === 0) ctx.moveTo(plotL + px, yy); else ctx.lineTo(plotL + px, yy);
+      }
+      ctx.stroke();
+
+      // axis label and the live value at the playhead
+      ctx.fillStyle = oscCss(p.col);
+      ctx.font = '600 11px "DM Mono", monospace';
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      ctx.fillText(p.label, plotL - 7, yMid);
+
+      var val = p.fn(t);
+      ctx.font = '600 10px "DM Mono", monospace';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText(val.toFixed(2), plotR + 8, yMid - 6);
+      ctx.fillStyle = oscCss('--hint');
+      ctx.font = '9px "DM Mono", monospace';
+      ctx.fillText(p.unit, plotR + 8, yMid + 7);
+
+      // playhead dot on this curve
+      var hx = plotL + (t / WINDOW) * plotW;
+      ctx.fillStyle = oscCss(p.col);
+      ctx.beginPath(); ctx.arc(hx, yMid - (val / (p.peak || 1)) * half, 3, 0, Math.PI * 2); ctx.fill();
+    });
+
+    // shared playhead
+    var headX = plotL + (t / WINDOW) * plotW;
+    ctx.save(); ctx.setLineDash([3, 3]);
+    ctx.strokeStyle = oscCss('--hint'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(headX, top); ctx.lineTo(headX, top + 3 * panelH + 2 * gap); ctx.stroke();
+    ctx.restore();
+
+    // one period bracket on the bottom panel, so T can be read straight off the axis
+    var yBase = top + 3 * panelH + 2 * gap;
+    var tEnd = Math.min(WINDOW, vals.T);
+    var bx0 = plotL, bx1 = plotL + (tEnd / WINDOW) * plotW;
+    ctx.strokeStyle = oscCss('--accent-amber'); ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(bx0, yBase + 5); ctx.lineTo(bx0, yBase + 9);
+    ctx.lineTo(bx1, yBase + 9); ctx.lineTo(bx1, yBase + 5);
+    ctx.stroke();
+    ctx.fillStyle = oscCss('--accent-amber');
+    ctx.font = '600 9px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.fillText('T = ' + vals.T.toFixed(2) + ' s', (bx0 + bx1) / 2, yBase + 11);
+
+    // time axis label, and the running clock in the strip above the first panel
+    ctx.fillStyle = oscCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillText(WINDOW + ' s', plotR, yBase + 11);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+    ctx.fillText('t = ' + t.toFixed(2) + ' s', plotL, top - 5);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var vmax = vals.A * omega(), amax = vals.A * omega() * omega();
+    var txt = 'All three curves share one period. Position peaks at \\(A = ' + vals.A.toFixed(2)
+      + '\\text{ m}\\), velocity peaks a quarter cycle later at \\(A\\omega = ' + vmax.toFixed(2)
+      + '\\text{ m/s}\\), and acceleration peaks at \\(A\\omega^2 = ' + amax.toFixed(1)
+      + '\\text{ m/s}^2\\) pointing opposite the displacement. Raising the amplitude stretches every curve vertically; only the period slider changes their spacing in time.';
+    var sp = cap.querySelector('span');
+    sp.innerHTML = txt;
+    oscTypeset(sp);
+  }
+
+  var ui = oscSliders(wrap, vals, [
+    { id: 'A',   label: 'Amplitude',      unit: 'm',   min: 0.05, max: 0.4, step: 0.01 },
+    { id: 'T',   label: 'Period',         unit: 's',   min: 0.6,  max: 3.0, step: 0.1 },
+    { id: 'phi', label: 'Phase constant', unit: '°',   min: 0,    max: 350, step: 10 }
+  ], function () { render(); updateCaption(); });
+
+  var scrub = oscScrub(canvas, 'osc-graphs-scrub', function (frac) {
+    t = frac * WINDOW;
+    paused = true;
+    if (playBtn) playBtn.style.display = '';
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    render(); updateCaption();
+  });
+
+  var playBtn = oscButtons(cap, function () {
+    vals.A = +(0.05 + Math.random() * 0.35).toFixed(2);
+    vals.T = +(0.6 + Math.random() * 2.4).toFixed(1);
+    vals.phi = Math.round(Math.random() * 35) * 10;
+    ui.sync(); render(); updateCaption();
+  }, function () { paused = false; tick(); });
+
+  function tick() {
+    if (paused) { animId = null; return; }
+    t += 1 / 60;
+    if (t > WINDOW) t -= WINDOW;
+    if (!scrub.scrubbing) scrub.el.value = Math.round(t / WINDOW * 1000);
+    render();
+    animId = requestAnimationFrame(tick);
+  }
+
+  var card = canvas.closest('.graph-card');
+  card.setAttribute('tabindex', '0');
+  card.addEventListener('keydown', function (e) {
+    if (e.code !== 'Space') return;
+    e.preventDefault();
+    if (paused) { paused = false; if (playBtn) playBtn.style.display = 'none'; tick(); }
+    else { paused = true; if (playBtn) playBtn.style.display = ''; if (animId) { cancelAnimationFrame(animId); animId = null; } }
+  });
+
+  render(); updateCaption(); tick();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  oscOnResize(function () { layout(); render(); });
+})();
+
+// ── Lantern swinging from a rafter ────────────────────
+(function () {
+  var canvas = document.getElementById('osc-pendulum');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  var G = 9.8, MAX_L = 2.0;
+  var vals = { L: 1.5, m: 1.2, th0: 25 };
+  var phase = 0, paused = false, animId = null;
+
+  var w, h, pivotX, pivotY, pxPerM;
+  function layout() {
+    var dim = oscFit(canvas, 0.6, 260);
+    w = dim.w; h = dim.h;
+    pivotY = 30;
+    // Centred on the canvas. The readouts sit in the top-right corner and the bob hangs well
+    // below them at every length, so the swing has the full width to work with.
+    pivotX = w / 2;
+    pxPerM = Math.max(10, (h - pivotY - 46) / MAX_L);
+  }
+  layout();
+
+  function physics() {
+    var T = 2 * Math.PI * Math.sqrt(vals.L / G);
+    var th0 = vals.th0 * Math.PI / 180;
+    var th = th0 * Math.cos(phase);
+    return {
+      T: T, th0: th0, th: th,
+      thDeg: th * 180 / Math.PI,
+      // leading correction to the small-angle period: T ≈ T₀(1 + θ₀²/16)
+      err: (th0 * th0 / 16) * 100,
+      tangential: vals.m * G * Math.sin(Math.abs(th))
+    };
+  }
+
+  function render() {
+    var p = physics();
+    ctx.clearRect(0, 0, w, h);
+    oscGrid(ctx, w, h);
+
+    // rafter
+    var beamY = pivotY - 8;
+    ctx.strokeStyle = oscCss('--border-strong'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, beamY); ctx.lineTo(w, beamY); ctx.stroke();
+    ctx.strokeStyle = oscCss('--border'); ctx.lineWidth = 1;
+    for (var hx = 7; hx < w; hx += 14) {
+      ctx.beginPath(); ctx.moveTo(hx, beamY); ctx.lineTo(hx - 7, beamY - 7); ctx.stroke();
+    }
+
+    var Lpx = vals.L * pxPerM;
+    var bobX = pivotX + Lpx * Math.sin(p.th);
+    var bobY = pivotY + Lpx * Math.cos(p.th);
+    var bobR = Math.max(6, Math.min(13, 5 + vals.m * 2.2));
+
+    // vertical reference and the swept arc
+    ctx.save(); ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = oscCss('--hint'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pivotX, pivotY); ctx.lineTo(pivotX, pivotY + Lpx + 16); ctx.stroke();
+    ctx.restore();
+
+    ctx.save(); ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = oscCss('--border-strong'); ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(pivotX, pivotY, Lpx, Math.PI / 2 - p.th0, Math.PI / 2 + p.th0);
+    ctx.stroke();
+    ctx.restore();
+
+    // Angle wedge at the pivot. Canvas angles measure from +x with +y pointing down, and the
+    // bob sits along (sinθ, cosθ), so its canvas angle is π/2 - θ, not π/2 + θ.
+    if (Math.abs(p.th) > 0.01) {
+      var aFrom = Math.min(Math.PI / 2, Math.PI / 2 - p.th);
+      var aTo = Math.max(Math.PI / 2, Math.PI / 2 - p.th);
+      ctx.strokeStyle = oscCss('--accent-purple'); ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.arc(pivotX, pivotY, 26, aFrom, aTo); ctx.stroke();
+      ctx.fillStyle = oscCss('--accent-purple');
+      ctx.font = '600 10px "DM Mono", monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('θ', pivotX + 34 * Math.sin(p.th / 2), pivotY + 34 * Math.cos(p.th / 2));
+    }
+
+    // string
+    ctx.strokeStyle = oscCss('--muted'); ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(pivotX, pivotY); ctx.lineTo(bobX, bobY); ctx.stroke();
+
+    // gravity, split into the along-string and restoring tangential pieces
+    var gLen = Math.max(20, Math.min(48, 16 + vals.m * 9));
+    oscArrow(ctx, bobX, bobY, 0, gLen, oscCss('--hint'), 6, 1.6);
+    ctx.fillStyle = oscCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('mg', bobX + 5, bobY + gLen - 4);
+
+    if (Math.abs(p.th) > 0.012) {
+      // tangential direction points back toward the low point
+      var tx = Math.cos(p.th), ty = -Math.sin(p.th);
+      var tLen = gLen * Math.sin(Math.abs(p.th)) / Math.sin(p.th0 || 1) * 0.85;
+      var sgn = p.th > 0 ? -1 : 1;
+      oscArrow(ctx, bobX, bobY, sgn * tx * tLen, sgn * ty * tLen, oscCss('--accent-coral'), 6, 2);
+      ctx.fillStyle = oscCss('--accent-coral');
+      ctx.font = '600 10px "DM Mono", monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.fillText('mg sinθ', bobX + sgn * tx * tLen / 2, bobY + sgn * ty * tLen - 7);
+    }
+
+    // pivot and bob
+    ctx.fillStyle = oscCss('--bg');
+    ctx.strokeStyle = oscCss('--muted'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(pivotX, pivotY, 4, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.arc(bobX, bobY, bobR, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = oscCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('m', bobX, bobY);
+
+    // ── readouts ──
+    // The pendulum is centred, so a long swing reaches further right than on the other two
+    // canvases. On a narrow pane the labels shrink and drop their spelled-out forms rather
+    // than letting the bob run underneath them.
+    var narrow = w < 470;
+    var f1 = narrow ? 8 : 10, f2 = narrow ? 7 : 9;
+    var lx = w - 10, ly = 12;
+    ctx.font = '600 ' + f1 + 'px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = oscCss('--accent-amber');
+    ctx.fillText((narrow ? 'T = ' : 'T = 2π√(L/g) = ') + p.T.toFixed(2) + ' s', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = oscCss('--accent-purple');
+    ctx.fillText('θ = ' + p.thDeg.toFixed(1) + '°', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = oscCss('--accent-coral');
+    ctx.fillText('mg sinθ = ' + p.tangential.toFixed(narrow ? 1 : 2) + ' N', lx, ly); ly += f1 + 6;
+    ctx.font = f2 + 'px "DM Mono", monospace';
+    ctx.fillStyle = oscCss('--hint');
+    ctx.fillText(narrow ? 'm not in T' : 'm does not appear in T', lx, ly); ly += f2 + 3;
+    ctx.fillText((narrow ? '+' : 'true period runs +') + p.err.toFixed(1) + '% long', lx, ly);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var p = physics();
+    var quality = vals.th0 <= 15
+      ? 'well inside the small-angle regime, so the motion is simple harmonic to better than half a percent'
+      : (vals.th0 <= 30
+        ? 'past the comfortable small-angle range, so the real period runs slightly long'
+        : 'far outside the small-angle range: \\(\\sin\\theta\\) lags \\(\\theta\\) badly and the motion is no longer simple harmonic');
+    var txt = 'A \\(' + vals.L.toFixed(2) + '\\text{ m}\\) pendulum released at \\(' + vals.th0.toFixed(0)
+      + '°\\) is ' + quality + '. Its period is \\(T = 2\\pi\\sqrt{L/g} = ' + p.T.toFixed(2)
+      + '\\text{ s}\\); drag the bob mass slider and watch the coral restoring force grow while that period sits completely still.';
+    var sp = cap.querySelector('span');
+    sp.innerHTML = txt;
+    oscTypeset(sp);
+  }
+
+  var ui = oscSliders(wrap, vals, [
+    { id: 'L',   label: 'String length', unit: 'm',   min: 0.3, max: MAX_L, step: 0.05 },
+    { id: 'm',   label: 'Bob mass',      unit: 'kg',  min: 0.2, max: 4,     step: 0.1 },
+    { id: 'th0', label: 'Release angle', unit: '°',   min: 3,   max: 45,    step: 1 }
+  ], function () { render(); updateCaption(); });
+
+  var scrub = oscScrub(canvas, 'osc-pendulum-scrub', function (frac) {
+    phase = frac * Math.PI * 2;
+    paused = true;
+    if (playBtn) playBtn.style.display = '';
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    render(); updateCaption();
+  });
+
+  var playBtn = oscButtons(cap, function () {
+    vals.L = +(Math.round((0.3 + Math.random() * 1.7) / 0.05) * 0.05).toFixed(2);
+    vals.m = +(0.2 + Math.random() * 3.8).toFixed(1);
+    vals.th0 = Math.round(3 + Math.random() * 42);
+    ui.sync(); render(); updateCaption();
+  }, function () { paused = false; tick(); });
+
+  function tick() {
+    if (paused) { animId = null; return; }
+    var p = physics();
+    phase += (2 * Math.PI / p.T) / 60;
+    if (phase > Math.PI * 2) phase -= Math.PI * 2;
+    if (!scrub.scrubbing) scrub.el.value = Math.round(phase / (Math.PI * 2) * 1000);
+    render();
+    animId = requestAnimationFrame(tick);
+  }
+
+  var card = canvas.closest('.graph-card');
+  card.setAttribute('tabindex', '0');
+  card.addEventListener('keydown', function (e) {
+    if (e.code !== 'Space') return;
+    e.preventDefault();
+    if (paused) { paused = false; if (playBtn) playBtn.style.display = 'none'; tick(); }
+    else { paused = true; if (playBtn) playBtn.style.display = ''; if (animId) { cancelAnimationFrame(animId); animId = null; } }
+  });
+
+  render(); updateCaption(); tick();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  oscOnResize(function () { layout(); render(); });
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../notes.js"></script>
+</body>
+</html>
