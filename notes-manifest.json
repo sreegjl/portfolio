@@ -34,7 +34,11 @@
     { "path": "physics/angular-momentum-orbits/index.html", "title": "Angular Momentum & Orbital Energy" },
     { "path": "physics/angular-momentum-orbits/quiz/index.html", "title": "Practice: Angular Momentum & Orbital Energy" },
     { "path": "physics/oscillations/index.html", "title": "Oscillations" },
-    { "path": "physics/oscillations/quiz/index.html", "title": "Practice: Oscillations" }
+    { "path": "physics/oscillations/quiz/index.html", "title": "Practice: Oscillations" },
+    { "path": "physics/fluid-statics/index.html", "title": "Density, Pressure & Buoyancy" },
+    { "path": "physics/fluid-statics/quiz/index.html", "title": "Practice: Density, Pressure & Buoyancy" },
+    { "path": "physics/fluid-flow/index.html", "title": "Fluid Flow & Bernoulli's Principle" },
+    { "path": "physics/fluid-flow/quiz/index.html", "title": "Practice: Fluid Flow & Bernoulli's Principle" }
   ],
   "htmlNotesBase": "notes/"
 }

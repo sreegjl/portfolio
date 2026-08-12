@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fluid Flow &amp; Bernoulli's Principle</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Physics</a>
+    <div>
+      <h1>fluid flow &amp; bernoulli's principle</h1>
+      <span>what drives flow, volume flow rate, the continuity equation, bernoulli's equation, and its standard special cases</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── What makes a fluid flow ── -->
+  <div class="section" id="sec-drive">
+    <p class="section-label">What makes a fluid flow</p>
+
+    <p class="prose">
+      A parcel of fluid is pushed from behind and pushed back from in front. It only accelerates if those two pushes differ, so a <strong>pressure difference</strong> is what drives flow, exactly as a net force drives any other acceleration:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[F_\text{net} = (\class{var-press}{P_1} - \class{var-press}{P_2})\class{var-area}{A}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Ideal flow assumptions</p>
+        <div class="row">
+          <span class="row-desc">Steady</span>
+          <span class="row-val">the speed at any fixed point never changes with time <span class="badge teal">assumed</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Laminar</span>
+          <span class="row-val">smooth layers that never mix, so no turbulence <span class="badge teal">assumed</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Incompressible</span>
+          <span class="row-val">density is uniform and constant <span class="badge teal">assumed</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Non-viscous</span>
+          <span class="row-val">no internal friction, so mechanical energy is conserved <span class="badge teal">assumed</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Reading a pressure difference</p>
+        <div class="row">
+          <span class="row-desc">Higher pressure behind</span>
+          <span class="row-val">net force points forward, so the fluid speeds up <span class="badge teal">accelerates</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Higher pressure ahead</span>
+          <span class="row-val">net force points backward, so the fluid slows down <span class="badge coral">decelerates</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Equal pressures</span>
+          <span class="row-val">constant speed along that stretch <span class="badge amber">no change</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Gravity</span>
+          <span class="row-val">also pushes flow along, which is why water runs downhill without a pump</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Everything that follows is these assumptions plus two conservation laws: mass is conserved, giving the continuity equation, and energy is conserved, giving Bernoulli's equation.
+    </p>
+  </div>
+
+  <!-- ── Flow rate and continuity ── -->
+  <div class="section" id="sec-continuity">
+    <p class="section-label">Flow rate and continuity</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Water through a narrowing pipe</span>
+      </div>
+      <canvas id="fl-pipe" width="600" height="330"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      <strong>Volume flow rate</strong> is how much fluid passes a cross-section each second. Nothing piles up and nothing vanishes in an incompressible fluid, so whatever enters one end of a pipe must leave the other at the same rate:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[Q = \class{var-area}{A}\class{var-v}{v} = \text{constant} \qquad \Longrightarrow \qquad \class{var-area}{A_1}\class{var-v}{v_1} = \class{var-area}{A_2}\class{var-v}{v_2}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(Q\)</span>
+          <span class="row-val">volume flow rate (m³/s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(A\)</span>
+          <span class="row-val">cross-sectional area of the pipe (m²), \(\pi r^2\) for a round pipe</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(v\)</span>
+          <span class="row-val">flow speed averaged across that cross-section (m/s)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Where it comes from</span>
+          <span class="row-val">conservation of mass, once density is the same at both ends</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Consequences</p>
+        <div class="row">
+          <span class="row-desc">Narrow section</span>
+          <span class="row-val">smaller \(A\) forces larger \(v\) <span class="badge teal">faster</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Halving the radius</span>
+          <span class="row-val">quarters the area, so the speed goes up fourfold <span class="badge coral">\(v \propto 1/r^2\)</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Wide section</span>
+          <span class="row-val">the fluid slows and the streamlines spread apart <span class="badge amber">slower</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Streamline spacing</span>
+          <span class="row-val">crowded streamlines mean fast flow, which is how flow pictures are read</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Pinching a garden hose is continuity in your hand. The tap still delivers the same litres per second, so squeezing the exit area is the only way to make the water leave faster.
+    </p>
+  </div>
+
+  <!-- ── Bernoulli's equation ── -->
+  <div class="section" id="sec-bernoulli">
+    <p class="section-label">Bernoulli's equation</p>
+
+    <p class="prose">
+      An ideal fluid loses nothing to friction, so the work done by pressure and gravity goes entirely into kinetic energy. Writing that energy balance per unit of volume gives a quantity that is the same everywhere along a streamline:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-press}{P_1} + \class{var-rho}{\rho} g y_1 + \tfrac{1}{2}\class{var-rho}{\rho}\class{var-v}{v_1}^2 = \class{var-press}{P_2} + \class{var-rho}{\rho} g y_2 + \tfrac{1}{2}\class{var-rho}{\rho}\class{var-v}{v_2}^2\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">What each term is</p>
+        <div class="row">
+          <span class="row-desc">\(P\)</span>
+          <span class="row-val">the pressure itself, which is energy stored per unit volume (J/m³ = Pa)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\rho g y\)</span>
+          <span class="row-val">gravitational potential energy per unit volume, with \(y\) measured from any level you pick</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\tfrac{1}{2}\rho v^2\)</span>
+          <span class="row-val">kinetic energy per unit volume, the dynamic pressure</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">The sum</span>
+          <span class="row-val">constant along a streamline; it is conservation of energy with volume divided out</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Using it safely</p>
+        <div class="row">
+          <span class="row-desc">Same streamline</span>
+          <span class="row-val">the two points must be connected by the flow <span class="badge coral">required</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Open to the air</span>
+          <span class="row-val">the pressure there is atmospheric, not zero</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Same height</span>
+          <span class="row-val">the \(\rho g y\) terms cancel, leaving faster flow at lower pressure <span class="badge teal">the principle</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Zero speed</span>
+          <span class="row-val">the equation collapses back to \(P = P_0 + \rho g h\) for a still fluid</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      The famous half of this is the trade between speed and pressure at one height: where a fluid runs fast, its pressure drops. That is what lifts a wing, pulls a shower curtain inward, and lets a spray bottle draw liquid up its tube.
+    </p>
+  </div>
+
+  <!-- ── Bernoulli in practice ── -->
+  <div class="section" id="sec-apply">
+    <p class="section-label">Bernoulli in practice</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Water jet from a punctured tank</span>
+      </div>
+      <canvas id="fl-tank" width="600" height="330"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      A tank open at the top with a hole in its side is the standard application. Both the surface and the hole sit at atmospheric pressure, and a wide tank's surface barely drops, so the pressure and \(v_1\) terms fall away and only the height difference survives:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-v}{v} = \sqrt{2gh}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Reading the result</p>
+        <div class="row">
+          <span class="row-desc">Density is absent</span>
+          <span class="row-val">it divides out, so oil and water leave at the same speed <span class="badge amber">no effect</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Same as free fall</span>
+          <span class="row-val">identical to a drop released from height \(h\), which is why it is called Torricelli's result</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Deeper hole</span>
+          <span class="row-val">faster jet, but it also has less height left to fall <span class="badge teal">faster</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Farthest reach</span>
+          <span class="row-val">a hole halfway up the water column throws the jet the furthest</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Worked example: narrowing pipe</p>
+        <div class="row">
+          <span class="row-desc">Given</span>
+          <span class="row-val">level water pipe narrowing from \(A_1 = 0.040\ \text{m}^2\) to \(A_2 = 0.010\ \text{m}^2\), with \(v_1 = 1.5\ \text{m/s}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Continuity</span>
+          <span class="row-val">\(v_2 = v_1\dfrac{A_1}{A_2} = 1.5(4) = 6.0\ \text{m/s}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Bernoulli, level pipe</span>
+          <span class="row-val">\(P_1 - P_2 = \tfrac{1}{2}\rho(v_2^2 - v_1^2) = 500(36 - 2.25)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Result</span>
+          <span class="row-val">\(P_1 - P_2 = 16.9\ \text{kPa}\) <span class="badge coral">narrow section is lower</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Notice the asymmetry in that example: the speed rose by a factor of four, but the pressure drop depends on the squares, so it grew sixteenfold. Squeezing a pipe too hard can pull the pressure low enough to boil the liquid, which is how pumps cavitate and damage themselves.
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">What drives flow</span>
+        <span class="row-val">a pressure difference across a parcel, \(F_\text{net} = (\class{var-press}{P_1} - \class{var-press}{P_2})\class{var-area}{A}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Ideal flow</span>
+        <span class="row-val">steady, laminar, incompressible, non-viscous; the last two are what make the equations work</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Volume flow rate</span>
+        <span class="row-val">\(Q = \class{var-area}{A}\class{var-v}{v}\) in m³/s</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Continuity</span>
+        <span class="row-val">\(\class{var-area}{A_1}\class{var-v}{v_1} = \class{var-area}{A_2}\class{var-v}{v_2}\) from conservation of mass; narrow means fast, and \(v \propto 1/r^2\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Bernoulli's equation</span>
+        <span class="row-val">\(\class{var-press}{P} + \class{var-rho}{\rho}gy + \tfrac{1}{2}\class{var-rho}{\rho}\class{var-v}{v}^2\) is constant along a streamline, from conservation of energy</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Bernoulli's principle</span>
+        <span class="row-val">at one height, faster flow sits at lower pressure</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Still fluid</span>
+        <span class="row-val">set every \(v = 0\) and Bernoulli reduces to \(\class{var-press}{P} = \class{var-press}{P_0} + \class{var-rho}{\rho}gh\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Tank with a hole</span>
+        <span class="row-val">\(\class{var-v}{v} = \sqrt{2gh}\), independent of density and equal to free-fall speed from \(h\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Two laws, two equations</span>
+        <span class="row-val">continuity fixes the speeds from the geometry; Bernoulli then fixes the pressures</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Shared canvas helpers ─────────────────────────────
+function ffCss(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+function ffArrow(ctx, sx, sy, dx, dy, color, hl, lw) {
+  hl = hl || 7;
+  var a = Math.atan2(dy, dx);
+  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = lw || 2;
+  ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(sx + dx, sy + dy);
+  ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+  ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+  ctx.closePath(); ctx.fill();
+}
+
+// Measure and (re)size a canvas. Floors the width so the drawing layout can never invert
+// on a narrow pane; the browser scales the backing store down to fit.
+function ffFit(canvas, ratio, minW) {
+  var dpr = window.devicePixelRatio || 1;
+  var measured = Math.round(canvas.getBoundingClientRect().width);
+  var w = Math.max(minW, measured > 0 ? measured : minW);
+  var h = Math.round(w * ratio);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { w: w, h: h };
+}
+
+function ffOnResize(fn) {
+  var t = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(t);
+    t = setTimeout(fn, 120);
+  });
+}
+
+// See the note on the statics page: typesetPromise only exists once MathJax has finished
+// loading, and an uncaught throw here would abort the rest of this script block.
+function ffTypeset(el) {
+  var MJ = window.MathJax;
+  if (!el || !MJ) return;
+  if (typeof MJ.typesetPromise === 'function') {
+    MJ.typesetPromise([el]).catch(function () {});
+  } else if (MJ.startup && MJ.startup.promise) {
+    MJ.startup.promise.then(function () {
+      if (typeof window.MathJax.typesetPromise === 'function') window.MathJax.typesetPromise([el]).catch(function () {});
+    }).catch(function () {});
+  }
+}
+
+function ffGrid(ctx, w, h) {
+  ctx.fillStyle = ffCss('--surface');
+  ctx.fillRect(0, 0, w, h);
+  var gs = 25;
+  ctx.strokeStyle = ffCss('--border') || 'rgba(0,0,0,0.06)';
+  ctx.lineWidth = 1;
+  for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+  for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+}
+
+function ffFloor(ctx, x0, x1, y) {
+  ctx.strokeStyle = ffCss('--border-strong'); ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  ctx.strokeStyle = ffCss('--border'); ctx.lineWidth = 1;
+  for (var hx = x0 + 7; hx < x1; hx += 14) {
+    ctx.beginPath(); ctx.moveTo(hx, y); ctx.lineTo(hx - 7, y + 7); ctx.stroke();
+  }
+}
+
+function ffScrub(canvas, id, onScrub) {
+  var t = document.createElement('input');
+  t.type = 'range'; t.min = 0; t.max = 1000; t.value = 0; t.step = 1; t.id = id;
+  t.style.cssText = 'width:100%;height:3px;margin:0;padding:0;display:block;opacity:0;cursor:pointer;-webkit-appearance:none;appearance:none;background:var(--border-strong);border-radius:2px;transition:opacity 0.2s;';
+  var st = document.createElement('style');
+  st.textContent = '#' + id + '::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent-purple);cursor:pointer;}#' + id + '::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent-purple);border:none;cursor:pointer;}';
+  document.head.appendChild(st);
+  canvas.after(t);
+  var card = canvas.closest('.graph-card');
+  var state = { el: t, scrubbing: false };
+  card.addEventListener('mouseenter', function () { t.style.opacity = '0.5'; });
+  card.addEventListener('mouseleave', function () { if (!state.scrubbing) t.style.opacity = '0'; });
+  t.addEventListener('input', function () { state.scrubbing = true; onScrub(parseFloat(t.value) / 1000); });
+  t.addEventListener('mouseup', function () { state.scrubbing = false; });
+  t.addEventListener('touchend', function () { state.scrubbing = false; });
+  return state;
+}
+
+function ffSliders(wrap, vals, defs, onChange) {
+  var cd = document.createElement('div');
+  cd.className = 'fbd-controls';
+  var rows = [];
+  defs.forEach(function (d) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = d.label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = d.min; inp.max = d.max; inp.step = d.step; inp.value = vals[d.id];
+    var dp = d.step < 1 ? ('' + d.step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+vals[d.id]).toFixed(dp) + ' ' + d.unit;
+    inp.addEventListener('input', function () {
+      vals[d.id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + d.unit;
+      onChange();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+    rows.push({ def: d, input: inp, val: vs, dp: dp });
+  });
+  wrap.appendChild(cd);
+  return {
+    sync: function () {
+      rows.forEach(function (r) {
+        r.input.value = vals[r.def.id];
+        r.val.textContent = (+vals[r.def.id]).toFixed(r.dp) + ' ' + r.def.unit;
+      });
+    }
+  };
+}
+
+function ffButtons(cap, randomize, onPlay) {
+  if (!cap) return null;
+  var rb = document.createElement('button');
+  rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+  rb.addEventListener('click', randomize);
+  cap.appendChild(rb);
+  if (!onPlay) return null;
+  var pb = document.createElement('button');
+  pb.className = 'fbd-pause'; pb.type = 'button';
+  pb.textContent = 'play'; pb.style.display = 'none';
+  pb.addEventListener('click', function () { pb.style.display = 'none'; onPlay(); });
+  cap.appendChild(pb);
+  return pb;
+}
+
+// ── Water through a narrowing pipe ────────────────────
+(function () {
+  var canvas = document.getElementById('fl-pipe');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  var RHO = 1000, N_PARTICLES = 26;
+  var vals = { r1: 12, r2: 6, v1: 1.5 };     // radii in cm
+  var phase = 0, paused = false, animId = null;
+
+  var w, hgt, axisY, pipeL, pipeR, taperL, taperR, pxPerCm, standY;
+  function layout() {
+    var dim = ffFit(canvas, 0.55, 260);
+    w = dim.w; hgt = dim.h;
+    standY = 16;                            // top of the manometer columns
+    axisY = Math.round(hgt * 0.70);         // pipe centreline
+    pipeL = 10;
+    pipeR = w - Math.min(120, w * 0.2) - 10;
+    taperL = pipeL + (pipeR - pipeL) * 0.42;
+    taperR = pipeL + (pipeR - pipeL) * 0.58;
+    pxPerCm = Math.min(1.5, (hgt - axisY - 16) / 16);
+  }
+  layout();
+
+  function physics() {
+    var a1 = Math.PI * Math.pow(vals.r1 / 100, 2);
+    var a2 = Math.PI * Math.pow(vals.r2 / 100, 2);
+    var v2 = vals.v1 * a1 / a2;
+    return { a1: a1, a2: a2, v1: vals.v1, v2: v2, Q: a1 * vals.v1, dP: 0.5 * RHO * (v2 * v2 - vals.v1 * vals.v1) };
+  }
+
+  // Pipe half-height at any x: flat, smooth cosine taper, then flat again.
+  function halfAt(x) {
+    var h1 = vals.r1 * pxPerCm, h2 = vals.r2 * pxPerCm;
+    if (x <= taperL) return h1;
+    if (x >= taperR) return h2;
+    var t = (x - taperL) / (taperR - taperL);
+    return h1 + (h2 - h1) * (1 - Math.cos(Math.PI * t)) / 2;
+  }
+
+  // Local speed follows continuity: v(x) scales as the inverse of the local area.
+  function speedAt(x) {
+    var hh = halfAt(x), h1 = vals.r1 * pxPerCm;
+    return vals.v1 * Math.pow(h1 / Math.max(hh, 0.5), 2);
+  }
+
+  function render() {
+    var p = physics();
+    ctx.clearRect(0, 0, w, hgt);
+    ffGrid(ctx, w, hgt);
+
+    // pipe walls
+    ctx.strokeStyle = ffCss('--border-strong'); ctx.lineWidth = 1.5;
+    [-1, 1].forEach(function (s) {
+      ctx.beginPath();
+      for (var x = pipeL; x <= pipeR; x += 2) {
+        var y = axisY + s * halfAt(x);
+        if (x === pipeL) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    });
+
+    // water inside the pipe
+    ctx.save(); ctx.globalAlpha = 0.10;
+    ctx.fillStyle = ffCss('--accent-teal');
+    ctx.beginPath();
+    for (var xa = pipeL; xa <= pipeR; xa += 2) ctx.lineTo(xa, axisY - halfAt(xa));
+    for (var xb = pipeR; xb >= pipeL; xb -= 2) ctx.lineTo(xb, axisY + halfAt(xb));
+    ctx.closePath(); ctx.fill();
+    ctx.restore();
+
+    // Streamline particles. Each carries its own lane and its own progress; the local speed
+    // sets how fast it advances, so they visibly bunch up and shoot through the throat.
+    ctx.fillStyle = ffCss('--accent-purple');
+    for (var i = 0; i < N_PARTICLES; i++) {
+      var lane = ((i % 5) - 2) / 2.4;
+      var frac = ((i / N_PARTICLES) + phase) % 1;
+      var px = pipeL + frac * (pipeR - pipeL);
+      var py = axisY + lane * halfAt(px) * 0.78;
+      var r = 1.8 + 0.8 * (speedAt(px) / Math.max(p.v2, 0.1));
+      ctx.beginPath(); ctx.arc(px, py, Math.min(3.2, r), 0, Math.PI * 2); ctx.fill();
+    }
+
+    // Velocity arrows in the two sections. The scale keys off whichever section is faster, so
+    // setting the throat wider than the inlet (a legitimate slider position, and one that
+    // reverses the pressure drop) cannot blow the upstream arrow off the canvas.
+    var xw = (pipeL + taperL) / 2, xn = (taperR + pipeR) / 2;
+    var vFast = Math.max(p.v1, p.v2, 0.1);
+    var vScale = Math.min(46, (taperL - pipeL) * 0.7) / vFast;
+    ffArrow(ctx, xw - p.v1 * vScale / 2, axisY, p.v1 * vScale, 0, ffCss('--accent-purple'), 6, 2);
+    ffArrow(ctx, xn - p.v2 * vScale / 2, axisY, p.v2 * vScale, 0, ffCss('--accent-purple'), 6, 2);
+
+    // Manometer columns: standpipe height tracks the local pressure, so the faster section's
+    // column visibly sits lower. Rather than pinning P₁ to the top and letting P₂ swing (which
+    // runs off the canvas as soon as the throat is the wider end), the higher-pressure column
+    // is pinned and the other drops by a separation that saturates inside the standpipe.
+    var colTop1 = standY + 10, span = Math.max(10, axisY - halfAt(xw) - colTop1);
+    var sep = span * Math.min(0.9, Math.abs(p.dP) / Math.max(0.5 * RHO * vFast * vFast, 1));
+    var top1 = p.dP >= 0 ? colTop1 : colTop1 + sep;   // dP = P₁ - P₂
+    var top2 = p.dP >= 0 ? colTop1 + sep : colTop1;
+    [{ x: xw, top: top1, lab: 'P₁' }, { x: xn, top: top2, lab: 'P₂' }].forEach(function (c) {
+      var base = axisY - halfAt(c.x);
+      ctx.strokeStyle = ffCss('--border-strong'); ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(c.x - 7, standY); ctx.lineTo(c.x - 7, base);
+      ctx.moveTo(c.x + 7, standY); ctx.lineTo(c.x + 7, base);
+      ctx.stroke();
+      ctx.save(); ctx.globalAlpha = 0.28;
+      ctx.fillStyle = ffCss('--accent-coral');
+      ctx.fillRect(c.x - 6, c.top, 12, base - c.top);
+      ctx.restore();
+      ctx.strokeStyle = ffCss('--accent-coral'); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(c.x - 6, c.top); ctx.lineTo(c.x + 6, c.top); ctx.stroke();
+      ctx.fillStyle = ffCss('--accent-coral');
+      ctx.font = '600 10px "DM Mono", monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.fillText(c.lab, c.x, c.top - 3);
+    });
+
+    ffFloor(ctx, 0, w, hgt - 6);
+
+    // section labels under the pipe
+    ctx.fillStyle = ffCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.fillText('A₁', xw, axisY + halfAt(xw) + 5);
+    ctx.fillText('A₂', xn, axisY + halfAt(xn) + 5);
+
+    // ── readouts ──
+    var narrow = w < 460;
+    var f1 = narrow ? 8 : 10, f2 = narrow ? 7 : 9;
+    var lx = w - 8, ly = 10;
+    ctx.font = '600 ' + f1 + 'px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = ffCss('--hint');
+    ctx.fillText('A₁ = ' + p.a1.toFixed(3) + ' m²', lx, ly); ly += f1 + 4;
+    ctx.fillText('A₂ = ' + p.a2.toFixed(3) + ' m²', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = ffCss('--accent-purple');
+    ctx.fillText('v₁ = ' + p.v1.toFixed(2) + ' m/s', lx, ly); ly += f1 + 4;
+    ctx.fillText('v₂ = ' + p.v2.toFixed(2) + ' m/s', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = ffCss('--accent-teal');
+    ctx.fillText('Q = ' + p.Q.toFixed(3) + ' m³/s', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = ffCss('--accent-coral');
+    ctx.fillText('P₁-P₂ = ' + (p.dP / 1000).toFixed(1) + ' kPa', lx, ly); ly += f1 + 5;
+    ctx.font = f2 + 'px "DM Mono", monospace';
+    ctx.fillStyle = ffCss('--hint');
+    ctx.fillText('Q is the same at both ends', lx, ly);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var p = physics();
+    var ratio = p.a1 / p.a2;
+    var txt;
+    if (ratio > 1.02) {
+      txt = 'The second section is \\(' + ratio.toFixed(1) + '\\times\\) narrower in area, so continuity forces the water through \\(' + ratio.toFixed(1)
+        + '\\times\\) faster: \\(' + p.v1.toFixed(2) + ' \\to ' + p.v2.toFixed(2)
+        + '\\text{ m/s}\\), while \\(Q = ' + p.Q.toFixed(3) + '\\text{ m}^3\\text{/s}\\) never changes. Bernoulli then pays for that speed out of pressure, which is why the coral standpipe over the throat sits \\(' + (p.dP / 1000).toFixed(1) + '\\text{ kPa}\\) lower.';
+    } else if (ratio < 0.98) {
+      txt = 'Set wider than the inlet, the second section runs the argument backwards: the area grows \\(' + (1 / ratio).toFixed(1)
+        + '\\times\\), so the water slows from \\(' + p.v1.toFixed(2) + '\\) to \\(' + p.v2.toFixed(2)
+        + '\\text{ m/s}\\) and Bernoulli hands that kinetic energy back as pressure. The downstream standpipe now stands \\(' + Math.abs(p.dP / 1000).toFixed(1)
+        + '\\text{ kPa}\\) higher, and \\(Q = ' + p.Q.toFixed(3) + '\\text{ m}^3\\text{/s}\\) is still unchanged.';
+    } else {
+      txt = 'With both sections the same width the pipe is effectively uniform: \\(A_1 = A_2\\) forces \\(v_1 = v_2 = ' + p.v1.toFixed(2)
+        + '\\text{ m/s}\\), so there is no speed change to pay for and the two standpipes sit level. Move either radius slider to break the tie.';
+    }
+    var sp = cap.querySelector('span');
+    sp.innerHTML = txt;
+    ffTypeset(sp);
+  }
+
+  var ui = ffSliders(wrap, vals, [
+    { id: 'r1', label: 'Wide radius',   unit: 'cm',  min: 8,   max: 16, step: 0.5 },
+    { id: 'r2', label: 'Throat radius', unit: 'cm',  min: 3,   max: 14, step: 0.5 },
+    { id: 'v1', label: 'Inlet speed',   unit: 'm/s', min: 0.5, max: 4,  step: 0.1 }
+  ], function () { render(); updateCaption(); });
+
+  var scrub = ffScrub(canvas, 'fl-pipe-scrub', function (frac) {
+    phase = frac;
+    paused = true;
+    if (playBtn) playBtn.style.display = '';
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    render(); updateCaption();
+  });
+
+  var playBtn = ffButtons(cap, function () {
+    vals.r1 = +(8 + Math.random() * 8).toFixed(1);
+    vals.r2 = +(3 + Math.random() * Math.min(11, vals.r1 - 3)).toFixed(1);
+    vals.v1 = +(0.5 + Math.random() * 3.5).toFixed(1);
+    ui.sync(); render(); updateCaption();
+  }, function () { paused = false; tick(); });
+
+  function tick() {
+    if (paused) { animId = null; return; }
+    phase = (phase + 0.0035) % 1;
+    if (!scrub.scrubbing) scrub.el.value = Math.round(phase * 1000);
+    render();
+    animId = requestAnimationFrame(tick);
+  }
+
+  var card = canvas.closest('.graph-card');
+  card.setAttribute('tabindex', '0');
+  card.addEventListener('keydown', function (e) {
+    if (e.code !== 'Space') return;
+    e.preventDefault();
+    if (paused) { paused = false; if (playBtn) playBtn.style.display = 'none'; tick(); }
+    else { paused = true; if (playBtn) playBtn.style.display = ''; if (animId) { cancelAnimationFrame(animId); animId = null; } }
+  });
+
+  render(); updateCaption(); tick();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  ffOnResize(function () { layout(); render(); });
+})();
+
+// ── Water jet from a punctured tank ───────────────────
+(function () {
+  var canvas = document.getElementById('fl-tank');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  var G = 9.8, MAX_LEVEL = 4.0;
+  var vals = { level: 3.0, hole: 1.0, rho: 1000 };   // metres above the ground
+
+  var w, hgt, groundY, tankL, tankR, pxPerM;
+  function layout() {
+    var dim = ffFit(canvas, 0.55, 260);
+    w = dim.w; hgt = dim.h;
+    groundY = hgt - 20;
+    tankL = 16;
+    tankR = Math.max(tankL + 40, Math.min(w * 0.34, 150));
+    pxPerM = (groundY - 26) / MAX_LEVEL;
+  }
+  layout();
+
+  function physics() {
+    var h = Math.max(0, vals.level - vals.hole);      // depth of the hole below the surface
+    var v = Math.sqrt(2 * G * h);
+    var t = Math.sqrt(2 * vals.hole / G);
+    return { h: h, v: v, t: t, range: v * t, vFree: Math.sqrt(2 * G * vals.level) };
+  }
+
+  function render() {
+    var p = physics();
+    ctx.clearRect(0, 0, w, hgt);
+    ffGrid(ctx, w, hgt);
+
+    var levelY = groundY - vals.level * pxPerM;
+    var holeY = groundY - vals.hole * pxPerM;
+
+    // water in the tank
+    ctx.save(); ctx.globalAlpha = 0.10;
+    ctx.fillStyle = ffCss('--accent-teal');
+    ctx.fillRect(tankL, levelY, tankR - tankL, groundY - levelY);
+    ctx.restore();
+    ctx.strokeStyle = ffCss('--accent-teal'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(tankL, levelY); ctx.lineTo(tankR, levelY); ctx.stroke();
+
+    // tank walls, open at the top, with a gap at the hole
+    ctx.strokeStyle = ffCss('--border-strong'); ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(tankL, groundY - MAX_LEVEL * pxPerM - 6); ctx.lineTo(tankL, groundY);
+    ctx.lineTo(tankR, groundY);
+    ctx.moveTo(tankR, groundY - MAX_LEVEL * pxPerM - 6); ctx.lineTo(tankR, holeY - 4);
+    ctx.moveTo(tankR, holeY + 4); ctx.lineTo(tankR, groundY);
+    ctx.stroke();
+
+    // depth marker from the surface down to the hole
+    ctx.save(); ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = ffCss('--accent-amber'); ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(tankR - 16, levelY); ctx.lineTo(tankR - 16, holeY); ctx.stroke();
+    ctx.restore();
+    ctx.fillStyle = ffCss('--accent-amber');
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText('h = ' + p.h.toFixed(2) + ' m', tankR - 20, (levelY + holeY) / 2);
+
+    // the jet: leaves horizontally at v, then falls as a projectile
+    ctx.strokeStyle = ffCss('--accent-purple'); ctx.lineWidth = 2;
+    ctx.beginPath();
+    var landed = false, endX = tankR, endY = holeY;
+    for (var s = 0; s <= 200; s++) {
+      var tt = (s / 200) * (p.t * 1.02);
+      var jx = tankR + p.v * tt * pxPerM;
+      var jy = holeY + 0.5 * G * tt * tt * pxPerM;
+      if (jy > groundY || jx > w - 4) { landed = true; break; }
+      if (s === 0) ctx.moveTo(jx, jy); else ctx.lineTo(jx, jy);
+      endX = jx; endY = jy;
+    }
+    ctx.stroke();
+
+    // exit velocity arrow
+    if (p.v > 0.05) {
+      var aLen = Math.min(54, 12 + p.v * 7);
+      ffArrow(ctx, tankR + 2, holeY, aLen, 0, ffCss('--accent-purple'), 6, 2);
+      ctx.fillStyle = ffCss('--accent-purple');
+      ctx.font = '600 10px "DM Mono", monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.fillText('v = √(2gh)', tankR + 2 + aLen / 2, holeY - 6);
+    }
+
+    ffFloor(ctx, 0, w, groundY);
+
+    // landing marker and the range
+    if (landed && endY > holeY + 4) {
+      ctx.save(); ctx.setLineDash([2, 3]);
+      ctx.strokeStyle = ffCss('--hint'); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(tankR, groundY + 9); ctx.lineTo(Math.min(endX, w - 4), groundY + 9); ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = ffCss('--hint');
+      ctx.font = '9px "DM Mono", monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText('range ' + p.range.toFixed(2) + ' m', (tankR + Math.min(endX, w - 4)) / 2, groundY + 11);
+    }
+
+    // ── readouts ──
+    var narrow = w < 460;
+    var f1 = narrow ? 8 : 10, f2 = narrow ? 7 : 9;
+    var lx = w - 8, ly = 10;
+    ctx.font = '600 ' + f1 + 'px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = ffCss('--accent-amber');
+    ctx.fillText('h = ' + p.h.toFixed(2) + ' m', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = ffCss('--accent-purple');
+    ctx.fillText('v = ' + p.v.toFixed(2) + ' m/s', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = ffCss('--hint');
+    ctx.fillText('fall time ' + p.t.toFixed(2) + ' s', lx, ly); ly += f1 + 4;
+    ctx.fillText('range ' + p.range.toFixed(2) + ' m', lx, ly); ly += f1 + 5;
+    ctx.font = f2 + 'px "DM Mono", monospace';
+    ctx.fillText(narrow ? 'ρ cancels out' : 'ρ does not appear in v', lx, ly); ly += f2 + 3;
+    ctx.fillText(narrow ? 'range peaks mid-column' : 'range peaks at half the column', lx, ly);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var p = physics();
+    if (vals.hole >= vals.level) {
+      var sp0 = cap.querySelector('span');
+      sp0.innerHTML = 'The hole now sits above the waterline, so there is no fluid column over it and nothing leaks: \\(h = 0\\) gives \\(v = \\sqrt{2gh} = 0\\). Lower the hole below the surface, or raise the water level, to start the jet.';
+      ffTypeset(sp0);
+      return;
+    }
+    var best = vals.level / 2;
+    var note = Math.abs(vals.hole - best) < 0.2
+      ? ' The hole sits near half the water column, which is exactly where the jet reaches furthest.'
+      : (vals.hole < best
+        ? ' A lower hole squirts faster but starts closer to the ground, so it lands sooner.'
+        : ' A higher hole has longer to fall but leaves more slowly, so it also falls short.');
+    var txt = 'With \\(' + p.h.toFixed(2) + '\\text{ m}\\) of water above the hole, the jet leaves at \\(v = \\sqrt{2gh} = '
+      + p.v.toFixed(2) + '\\text{ m/s}\\), the same speed a drop would reach falling that far. Dragging the density slider changes nothing: \\(\\rho\\) divides out of Bernoulli\'s equation here.' + note;
+    var sp = cap.querySelector('span');
+    sp.innerHTML = txt;
+    ffTypeset(sp);
+  }
+
+  var ui = ffSliders(wrap, vals, [
+    { id: 'level', label: 'Water level', unit: 'm',     min: 0.5, max: MAX_LEVEL, step: 0.1 },
+    { id: 'hole',  label: 'Hole height', unit: 'm',     min: 0.1, max: 3.5,       step: 0.1 },
+    { id: 'rho',   label: 'Fluid density', unit: 'kg/m³', min: 700, max: 1400,    step: 25 }
+  ], function () { render(); updateCaption(); });
+
+  ffButtons(cap, function () {
+    vals.level = +(0.5 + Math.random() * 3.5).toFixed(1);
+    vals.hole = +(0.1 + Math.random() * Math.min(3.4, vals.level - 0.1)).toFixed(1);
+    vals.rho = Math.round((700 + Math.random() * 700) / 25) * 25;
+    ui.sync(); render(); updateCaption();
+  }, null);
+
+  render(); updateCaption();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  ffOnResize(function () { layout(); render(); });
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../notes.js"></script>
+</body>
+</html>

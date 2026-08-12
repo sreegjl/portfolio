@@ -1563,6 +1563,299 @@ var QuizGen = (function () {
         'Since \\(\\omega = \\sqrt{k/m}\\), this is just \\(v_{max} = A\\omega\\), matching the slope of \\(x = A\\cos\\omega t\\)'
       );
       renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    // ── Density, pressure & buoyancy ──────────────────
+    densityFromMassVolume: function (el) {
+      var V = rand(0.02, 0.20, 0.02);
+      var rho = rand(600, 2400, 100);
+      var m = +(rho * V).toFixed(1);
+      var text = 'A solid block has a mass of \\(' + m + '\\text{ kg}\\) and a volume of \\(' + V.toFixed(2) + '\\text{ m}^3\\). What is its density?';
+      var wrongs = [+(V / m).toFixed(3), +(m * V).toFixed(1), +(m / (V * 10)).toFixed(1)];
+      var explain = steps(
+        'Density is mass per unit volume: \\(\\rho = \\dfrac{m}{V}\\)',
+        '\\(\\rho = \\dfrac{' + m + '}{' + V.toFixed(2) + '}\\)',
+        '\\(= ' + rho + '\\text{ kg/m}^3\\)',
+        rho < 1000
+          ? 'That is less than water\'s \\(1000\\text{ kg/m}^3\\), so this block would float'
+          : 'That is more than water\'s \\(1000\\text{ kg/m}^3\\), so this block would sink',
+        'Density decides floating, not mass: a heavier object of lower density still floats'
+      );
+      renderQ(el, text, makeOpts(rho, wrongs), explain, '\\text{ kg/m}^3');
+    },
+
+    pressureConcept: function (el) {
+      var text = 'A diver hovers motionless in a lake. Which statement about the water pressure on the diver is correct?';
+      var correct = '\\text{it acts perpendicular to every surface, pushing inward from all directions}';
+      var wrongs = [
+        '\\text{it acts only downward, since the water above is what has weight}',
+        '\\text{it acts only on the diver\'s upper surfaces}',
+        '\\text{it is a vector pointing toward the bottom of the lake}'
+      ];
+      var explain = steps(
+        'Pressure is a scalar: it has a value at each point but no direction of its own',
+        'The force it produces on a surface is always perpendicular to that surface and pushes inward',
+        'Fluid particles collide with the diver from every side, so the squeeze is isotropic',
+        'Pressure does grow with depth, so the push on the diver\'s underside is slightly larger',
+        'That top-to-bottom difference is exactly what produces the upward buoyant force'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    gaugePressureInput: function (el) {
+      var h = rand(5, 40, 5);
+      var rho = rand(800, 1300, 25);
+      var P = +(rho * 9.8 * h / 1000).toFixed(1);
+      var text = 'A sensor sits \\(' + h + '\\text{ m}\\) below the surface of a fluid of density \\(' + rho + '\\text{ kg/m}^3\\). What is the gauge pressure at the sensor? (use \\(g = 9.8\\text{ m/s}^2\\); answer in kPa)';
+      var explain = steps(
+        'Gauge pressure is the amount above atmospheric: \\(P_{gauge} = \\rho g h\\)',
+        '\\(P_{gauge} = (' + rho + ')(9.8)(' + h + ')\\)',
+        '\\(= ' + (rho * 9.8 * h).toFixed(0) + '\\text{ Pa} = ' + P + '\\text{ kPa}\\)',
+        'Absolute pressure would add the \\(101\\text{ kPa}\\) atmosphere on the surface: \\(' + (P + 101.3).toFixed(1) + '\\text{ kPa}\\)',
+        'Neither answer depends on the container\'s shape or the total volume of fluid, only on depth'
+      );
+      renderInput(el, text, P, 1.5, explain);
+    },
+
+    pressureDepthConcept: function (el) {
+      var text = 'Three sealed tanks hold the same water to the same depth, but one is a narrow cylinder, one is a wide drum, and one flares outward toward the top. How does the pressure at the bottom compare?';
+      var correct = '\\text{identical in all three}';
+      var wrongs = [
+        '\\text{greatest in the widest tank}',
+        '\\text{greatest in the narrowest tank}',
+        '\\text{greatest in the tank holding the most water}'
+      ];
+      var explain = steps(
+        'Pressure at depth follows \\(P = P_0 + \\rho g h\\)',
+        'The only geometric quantity in that expression is \\(h\\), the depth below the surface',
+        'Container width, shape, and total volume never appear',
+        'All three tanks share the same \\(\\rho\\), \\(g\\), and \\(h\\), so the bottom pressure matches',
+        'This is the hydrostatic paradox: the walls of a flared tank carry the extra weight, not the base'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    buoyantForceCalc: function (el) {
+      var V = rand(0.02, 0.30, 0.02);
+      var rho = rand(800, 1300, 25);
+      var Fb = +(rho * V * 9.8).toFixed(0);
+      var text = 'A sealed container of volume \\(' + V.toFixed(2) + '\\text{ m}^3\\) is held completely submerged in a fluid of density \\(' + rho + '\\text{ kg/m}^3\\). What is the buoyant force on it?';
+      var wrongs = [+(rho * V).toFixed(0), +(V * 9.8).toFixed(2), +(rho * V * 9.8 / 2).toFixed(0)];
+      var explain = steps(
+        'Archimedes: the buoyant force equals the weight of the displaced fluid, \\(F_b = \\rho_{fluid}V_{disp}\\,g\\)',
+        'Fully submerged, so \\(V_{disp}\\) is the container\'s whole volume, \\(' + V.toFixed(2) + '\\text{ m}^3\\)',
+        '\\(F_b = (' + rho + ')(' + V.toFixed(2) + ')(9.8)\\)',
+        '\\(= ' + Fb + '\\text{ N}\\), directed straight up',
+        'The container\'s own density and its depth never enter: only fluid density and displaced volume'
+      );
+      renderQ(el, text, makeOpts(Fb, wrongs), explain, '\\text{ N}');
+    },
+
+    buoyancyDepthConcept: function (el) {
+      var text = 'A fully submerged anchor is lowered from \\(4\\text{ m}\\) to \\(20\\text{ m}\\) below the surface of a lake. What happens to the buoyant force on it?';
+      var correct = '\\text{it stays exactly the same}';
+      var wrongs = [
+        '\\text{it increases, since the pressure is larger down there}',
+        '\\text{it decreases, since the water above weighs more}',
+        '\\text{it increases in proportion to the depth}'
+      ];
+      var explain = steps(
+        'Buoyancy comes from the pressure being larger on the anchor\'s bottom than on its top',
+        'Going deeper raises the pressure on both faces by exactly the same \\(\\rho g \\Delta h\\)',
+        'The difference between them is unchanged, so the net upward force is unchanged',
+        'The formula agrees: \\(F_b = \\rho_{fluid}V_{disp}\\,g\\) contains no depth at all',
+        'Once fully submerged, \\(V_{disp}\\) stops growing too, so nothing on the right-hand side moves'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    floatingFractionInput: function (el) {
+      var rhoF = rand(1000, 1300, 25);
+      var rhoO = rand(300, 900, 25);
+      var pct = +(rhoO / rhoF * 100).toFixed(1);
+      var text = 'A uniform block of density \\(' + rhoO + '\\text{ kg/m}^3\\) floats in a fluid of density \\(' + rhoF + '\\text{ kg/m}^3\\). What percentage of the block\'s volume sits below the surface? (answer as a number, e.g. 42.5)';
+      var explain = steps(
+        'Floating means buoyancy balances weight: \\(\\rho_{fluid}V_{disp}\\,g = \\rho_{obj}V_{obj}\\,g\\)',
+        'The \\(g\\) cancels, leaving \\(\\dfrac{V_{disp}}{V_{obj}} = \\dfrac{\\rho_{obj}}{\\rho_{fluid}}\\)',
+        '\\(\\dfrac{' + rhoO + '}{' + rhoF + '} = ' + (rhoO / rhoF).toFixed(4) + '\\)',
+        '\\(= ' + pct + '\\%\\) of the block is submerged',
+        'Notice the block\'s size never entered: a bigger block of the same material floats at the same line'
+      );
+      renderInput(el, text, pct, 0.6, explain);
+    },
+
+    apparentWeightConcept: function (el) {
+      var m = rand(4, 20, 2);
+      var rhoO = rand(2000, 8000, 500);
+      var V = m / rhoO;
+      var W = +(m * 9.8).toFixed(1);
+      var Fb = +(1000 * V * 9.8).toFixed(1);
+      var app = +(W - Fb).toFixed(1);
+      var text = 'A \\(' + m + '\\text{ kg}\\) statue of density \\(' + rhoO + '\\text{ kg/m}^3\\) hangs fully submerged from a scale in fresh water (\\(1000\\text{ kg/m}^3\\)). What does the scale read?';
+      var wrongs = [W, +(W + Fb).toFixed(1), Fb];
+      var explain = steps(
+        'The statue\'s volume is \\(V = \\dfrac{m}{\\rho_{obj}} = \\dfrac{' + m + '}{' + rhoO + '} = ' + V.toFixed(5) + '\\text{ m}^3\\)',
+        'True weight: \\(W = mg = ' + W + '\\text{ N}\\)',
+        'Buoyant force: \\(F_b = (1000)(' + V.toFixed(5) + ')(9.8) = ' + Fb + '\\text{ N}\\)',
+        'The scale reads the apparent weight, \\(W - F_b = ' + W + ' - ' + Fb + '\\)',
+        '\\(= ' + app + '\\text{ N}\\), which is why heavy objects feel light underwater'
+      );
+      renderQ(el, text, makeOpts(app, wrongs), explain, '\\text{ N}');
+    },
+
+    deriveFloatingFraction: function (el) {
+      var text = 'A uniform block of density \\(\\rho_{obj}\\) floats at rest in a fluid of density \\(\\rho_{fluid}\\). Derive the fraction of its volume that is submerged.';
+      var correct = '\\dfrac{V_{disp}}{V_{obj}} = \\dfrac{\\rho_{obj}}{\\rho_{fluid}}';
+      var wrongs = [
+        '\\dfrac{V_{disp}}{V_{obj}} = \\dfrac{\\rho_{fluid}}{\\rho_{obj}}',
+        '\\dfrac{V_{disp}}{V_{obj}} = \\dfrac{\\rho_{obj}}{\\rho_{obj} + \\rho_{fluid}}',
+        '\\dfrac{V_{disp}}{V_{obj}} = 1 - \\dfrac{\\rho_{obj}}{\\rho_{fluid}}'
+      ];
+      var explain = steps(
+        'Floating at rest means the net force is zero: \\(F_b = W\\)',
+        'Buoyancy uses the displaced fluid: \\(F_b = \\rho_{fluid}V_{disp}\\,g\\)',
+        'Weight uses the whole block: \\(W = m g = \\rho_{obj}V_{obj}\\,g\\)',
+        'Set them equal and cancel \\(g\\): \\(\\rho_{fluid}V_{disp} = \\rho_{obj}V_{obj}\\)',
+        'Rearrange: \\(\\dfrac{V_{disp}}{V_{obj}} = \\dfrac{\\rho_{obj}}{\\rho_{fluid}}\\); a denser object rides lower, and equal densities give a fully submerged neutral float'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    // ── Fluid flow & Bernoulli ────────────────────────
+    flowDriverConcept: function (el) {
+      var text = 'A parcel of ideal fluid moving along a level pipe speeds up. What must be true of the pressure around it?';
+      var correct = '\\text{the pressure behind it is greater than the pressure ahead of it}';
+      var wrongs = [
+        '\\text{the pressure ahead of it is greater than the pressure behind it}',
+        '\\text{the pressure is the same on both sides}',
+        '\\text{the pressure is zero ahead of it}'
+      ];
+      var explain = steps(
+        'The parcel is pushed forward from behind and pushed back from in front',
+        'Net force from those two pushes: \\(F_{net} = (P_1 - P_2)A\\)',
+        'Speeding up requires a forward net force, so \\(P_1 > P_2\\)',
+        'A pressure difference is what drives flow, just as a net force drives any acceleration',
+        'Bernoulli says the same thing in energy terms: on a level pipe, faster flow sits at lower pressure'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    continuitySpeedCalc: function (el) {
+      var r1 = rand(4, 12, 1);
+      var k = [2, 3, 4][Math.floor(Math.random() * 3)];
+      var r2 = +(r1 / Math.sqrt(k)).toFixed(2);
+      var v1 = rand(1, 4, 0.5);
+      var v2 = +(v1 * k).toFixed(2);
+      var text = 'Water flows at \\(' + v1.toFixed(1) + '\\text{ m/s}\\) through a pipe of cross-sectional area \\(A_1\\). The pipe narrows to \\(A_2 = A_1/' + k + '\\). How fast does the water move in the narrow section?';
+      var wrongs = [+(v1 / k).toFixed(2), v1, +(v1 * k * k).toFixed(2)];
+      var explain = steps(
+        'An incompressible fluid conserves volume flow rate: \\(Q = Av\\) is the same everywhere',
+        'So \\(A_1v_1 = A_2v_2\\)',
+        '\\(v_2 = v_1\\dfrac{A_1}{A_2} = ' + v1.toFixed(1) + '(' + k + ')\\)',
+        '\\(= ' + v2 + '\\text{ m/s}\\): ' + k + '× narrower means ' + k + '× faster',
+        'Careful with radii rather than areas: halving the radius quarters the area and quadruples the speed'
+      );
+      renderQ(el, text, makeOpts(v2, wrongs), explain, '\\text{ m/s}');
+    },
+
+    continuityRadiusConcept: function (el) {
+      var text = 'A round pipe narrows so that its radius is halved. What happens to the flow speed?';
+      var correct = '\\text{it becomes four times larger}';
+      var wrongs = [
+        '\\text{it doubles}',
+        '\\text{it is halved}',
+        '\\text{it becomes one quarter as large}'
+      ];
+      var explain = steps(
+        'For a round pipe the cross-sectional area is \\(A = \\pi r^2\\)',
+        'Halving \\(r\\) gives \\(A_2 = \\pi(r/2)^2 = \\tfrac{1}{4}\\pi r^2\\), so the area drops to a quarter',
+        'Continuity: \\(A_1v_1 = A_2v_2 \\implies v_2 = v_1\\dfrac{A_1}{A_2}\\)',
+        '\\(\\dfrac{A_1}{A_2} = 4\\), so \\(v_2 = 4v_1\\)',
+        'Speed goes as \\(1/r^2\\), which is why a small change in radius has such a large effect'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    bernoulliPressureDropInput: function (el) {
+      var v1 = rand(1, 3, 0.5);
+      var k = [2, 3, 4][Math.floor(Math.random() * 3)];
+      var v2 = v1 * k;
+      var dP = +(0.5 * 1000 * (v2 * v2 - v1 * v1) / 1000).toFixed(2);
+      var text = 'Water (\\(1000\\text{ kg/m}^3\\)) flows through a level pipe at \\(' + v1.toFixed(1) + '\\text{ m/s}\\), then through a narrow section at \\(' + v2.toFixed(1) + '\\text{ m/s}\\). By how much does the pressure drop? (answer in kPa)';
+      var explain = steps(
+        'Bernoulli along a streamline: \\(P_1 + \\rho g y_1 + \\tfrac{1}{2}\\rho v_1^2 = P_2 + \\rho g y_2 + \\tfrac{1}{2}\\rho v_2^2\\)',
+        'The pipe is level, so \\(y_1 = y_2\\) and the \\(\\rho g y\\) terms cancel',
+        '\\(P_1 - P_2 = \\tfrac{1}{2}\\rho(v_2^2 - v_1^2) = 500(' + (v2 * v2).toFixed(2) + ' - ' + (v1 * v1).toFixed(2) + ')\\)',
+        '\\(= ' + (dP * 1000).toFixed(0) + '\\text{ Pa} = ' + dP + '\\text{ kPa}\\)',
+        'The drop goes as the squares, so a ' + k + '× speed-up costs far more than ' + k + '× the pressure'
+      );
+      renderInput(el, text, dP, 0.25, explain);
+    },
+
+    bernoulliTermsConcept: function (el) {
+      var text = 'In Bernoulli\'s equation, what does the term \\(\\tfrac{1}{2}\\rho v^2\\) represent?';
+      var correct = '\\text{kinetic energy per unit volume of the fluid}';
+      var wrongs = [
+        '\\text{the total kinetic energy of the fluid}',
+        '\\text{the force the fluid exerts on the pipe wall}',
+        '\\text{gravitational potential energy per unit volume}'
+      ];
+      var explain = steps(
+        'Bernoulli\'s equation is conservation of energy with the volume divided out',
+        'Start from \\(\\tfrac{1}{2}mv^2\\) and divide by volume: \\(\\dfrac{m}{V} = \\rho\\), giving \\(\\tfrac{1}{2}\\rho v^2\\)',
+        'Every term therefore carries units of J/m³, which are the same as pascals',
+        '\\(\\rho g y\\) is the gravitational potential energy per unit volume, and \\(P\\) is the stored pressure energy',
+        'That is why the three terms can be added together and compared directly'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    torricelliSpeedCalc: function (el) {
+      var h = rand(0.5, 5, 0.5);
+      var v = +Math.sqrt(2 * 9.8 * h).toFixed(2);
+      var rho = rand(800, 1300, 100);
+      var text = 'A large open tank holds a fluid of density \\(' + rho + '\\text{ kg/m}^3\\). A small hole is punched in its side \\(' + h.toFixed(1) + '\\text{ m}\\) below the surface. How fast does the fluid leave the hole?';
+      var wrongs = [+(9.8 * h).toFixed(2), +Math.sqrt(9.8 * h).toFixed(2), +Math.sqrt(2 * 9.8 * h / (rho / 1000)).toFixed(2)];
+      var explain = steps(
+        'Apply Bernoulli from the surface to the hole; both are open to the air, so \\(P_1 = P_2\\)',
+        'The tank is wide, so the surface barely moves and \\(v_1 \\approx 0\\)',
+        'What is left is \\(\\rho g h = \\tfrac{1}{2}\\rho v^2\\), and \\(\\rho\\) divides out',
+        '\\(v = \\sqrt{2gh} = \\sqrt{2(9.8)(' + h.toFixed(1) + ')}\\)',
+        '\\(= ' + v + '\\text{ m/s}\\), exactly the speed of a drop that free-fell \\(' + h.toFixed(1) + '\\text{ m}\\); the density is a distractor'
+      );
+      renderQ(el, text, makeOpts(v, wrongs), explain, '\\text{ m/s}');
+    },
+
+    bernoulliApplicationConcept: function (el) {
+      var text = 'Air rushes over the curved top of a wing faster than it passes along the flatter underside. What does Bernoulli\'s equation say about the pressures?';
+      var correct = '\\text{pressure is lower above the wing, giving a net upward force}';
+      var wrongs = [
+        '\\text{pressure is higher above the wing, giving a net downward force}',
+        '\\text{pressure is the same on both surfaces}',
+        '\\text{pressure is lower above the wing, giving a net downward force}'
+      ];
+      var explain = steps(
+        'The two surfaces sit at essentially the same height, so the \\(\\rho g y\\) terms cancel',
+        'What remains is \\(P + \\tfrac{1}{2}\\rho v^2 = \\) constant',
+        'Larger \\(v\\) over the top forces a smaller \\(P\\) there to keep the sum fixed',
+        'Higher pressure underneath and lower pressure above leaves a net upward force',
+        'The same trade explains a shower curtain pulling inward and a spray bottle drawing liquid up its tube'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
+    },
+
+    deriveTorricelli: function (el) {
+      var text = 'A wide open tank of fluid has a small hole in its side a depth \\(h\\) below the surface. Derive the speed of the fluid leaving the hole.';
+      var correct = 'v = \\sqrt{2gh}';
+      var wrongs = ['v = \\sqrt{gh}', 'v = \\sqrt{\\dfrac{2gh}{\\rho}}', 'v = 2gh'];
+      var explain = steps(
+        'Take point 1 at the surface and point 2 at the hole, connected by a streamline',
+        'Both are open to the atmosphere, so \\(P_1 = P_2 = P_0\\) and those terms cancel',
+        'The tank is wide, so the surface drops slowly and \\(v_1 \\approx 0\\)',
+        'Bernoulli reduces to \\(\\rho g h = \\tfrac{1}{2}\\rho v^2\\), and \\(\\rho\\) divides out of both sides',
+        '\\(v = \\sqrt{2gh}\\): independent of density, and identical to free-fall speed from height \\(h\\)'
+      );
+      renderQ(el, text, makeOpts(correct, wrongs), explain, '');
     }
   };
 })();

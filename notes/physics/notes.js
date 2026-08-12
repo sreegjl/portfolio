@@ -144,7 +144,9 @@ if (studyToggle && page) {
     'rotational-dynamics': { fc: 'rotational-dynamics' },
     'rotational-energy': { fc: 'rotational-energy' },
     'angular-momentum-orbits': { fc: 'angular-momentum-orbits' },
-    'oscillations':    { fc: 'oscillations' }
+    'oscillations':    { fc: 'oscillations' },
+    'fluid-statics':   { fc: 'fluid-statics' },
+    'fluid-flow':      { fc: 'fluid-flow' }
   };
 
   fetch('/notes-manifest.json')

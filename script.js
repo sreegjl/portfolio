@@ -921,6 +921,22 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                     { type: 'flashcard', name: 'Oscillations Flashcards', desc: 'Formula cards for quick review',                                                                                                        path: 'oscillations/flashcards/' },
                     { type: 'practice',  name: 'Oscillations Practice',   desc: 'Solve spring-mass, pendulum, and oscillator energy problems',                                                                          path: 'oscillations/quiz/' }
                 ]
+            },
+            {
+                num: 13, title: 'Density, Pressure & Buoyancy',
+                lessons: [
+                    { type: 'note',      name: 'Density, Pressure & Buoyancy',            desc: 'The ideal fluid model, density, pressure and depth, absolute vs. gauge pressure, and the buoyant force', path: 'fluid-statics/' },
+                    { type: 'flashcard', name: 'Density, Pressure & Buoyancy Flashcards', desc: 'Formula cards for quick review',                                                                            path: 'fluid-statics/flashcards/' },
+                    { type: 'practice',  name: 'Density, Pressure & Buoyancy Practice',   desc: 'Solve pressure, buoyancy, floating, and apparent weight problems',                                          path: 'fluid-statics/quiz/' }
+                ]
+            },
+            {
+                num: 14, title: "Fluid Flow & Bernoulli's Principle",
+                lessons: [
+                    { type: 'note',      name: "Fluid Flow & Bernoulli's Principle",            desc: 'What drives flow, volume flow rate, the continuity equation, and Bernoulli\'s equation', path: 'fluid-flow/' },
+                    { type: 'flashcard', name: "Fluid Flow & Bernoulli's Principle Flashcards", desc: 'Formula cards for quick review',                                                            path: 'fluid-flow/flashcards/' },
+                    { type: 'practice',  name: "Fluid Flow & Bernoulli's Principle Practice",   desc: 'Solve continuity, Bernoulli, and efflux problems',                                          path: 'fluid-flow/quiz/' }
+                ]
             }
         ];
 

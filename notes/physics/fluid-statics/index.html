@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Density, Pressure &amp; Buoyancy</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Physics</a>
+    <div>
+      <h1>density, pressure &amp; buoyancy</h1>
+      <span>the ideal fluid model, density, pressure and how it grows with depth, absolute vs. gauge pressure, and the buoyant force</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Fluids and density ── -->
+  <div class="section" id="sec-density">
+    <p class="section-label">Fluids and density</p>
+
+    <p class="prose">
+      A <strong>fluid</strong> is anything that flows and takes the shape of its container, so both liquids and gases count. Rather than track every particle, we describe a fluid by bulk properties, starting with <strong>density</strong>, the mass packed into each unit of volume:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-rho}{\rho} = \frac{m}{V}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(\rho\)</span>
+          <span class="row-val">density (kg/m³)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(m\), \(V\)</span>
+          <span class="row-val">mass (kg) and volume (m³) of the sample</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Fresh water</span>
+          <span class="row-val">\(1000\ \text{kg/m}^3\), the reference every other value is judged against</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Air, seawater, mercury</span>
+          <span class="row-val">about \(1.2\), \(1025\), and \(13600\ \text{kg/m}^3\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">The ideal fluid model</p>
+        <div class="row">
+          <span class="row-desc">Incompressible</span>
+          <span class="row-val">density is the same everywhere and never changes <span class="badge teal">assumed</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Non-viscous</span>
+          <span class="row-val">no internal friction, so no mechanical energy is lost to drag <span class="badge teal">assumed</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Real fluids</span>
+          <span class="row-val">gases compress easily and honey is thick with viscosity <span class="badge coral">model breaks down</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Why it is fair</span>
+          <span class="row-val">water barely compresses at all, so liquids fit the model closely</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Density is what decides whether something floats, not weight. A shipping container of foam outweighs a marble and still floats, because floating is a competition between two densities rather than two weights.
+    </p>
+  </div>
+
+  <!-- ── Pressure ── -->
+  <div class="section" id="sec-pressure">
+    <p class="section-label">Pressure</p>
+
+    <p class="prose">
+      Fluid particles are constantly colliding with any surface they touch. Averaged over a surface, those countless tiny collisions add up to a steady perpendicular force, and <strong>pressure</strong> is that force spread over the area it acts on:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-press}{P} = \frac{F_\perp}{\class{var-area}{A}}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables and units</p>
+        <div class="row">
+          <span class="row-desc">\(P\)</span>
+          <span class="row-val">pressure, in pascals (\(1\ \text{Pa} = 1\ \text{N/m}^2\))</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(F_\perp\)</span>
+          <span class="row-val">force component perpendicular to the surface (N)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(A\)</span>
+          <span class="row-val">area the force is spread over (m²)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(1\ \text{atm}\)</span>
+          <span class="row-val">\(1.013\times10^{5}\ \text{Pa}\), about \(101\ \text{kPa}\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Key properties</p>
+        <div class="row">
+          <span class="row-desc">Pressure is a scalar</span>
+          <span class="row-val">it has no direction of its own <span class="badge amber">scalar</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">The force it makes is not</span>
+          <span class="row-val">always perpendicular to the surface and pointing into it</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Acts in every direction</span>
+          <span class="row-val">a point in a fluid is squeezed equally from all sides <span class="badge teal">isotropic</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Same depth, same pressure</span>
+          <span class="row-val">two connected points at one depth are always at one pressure</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Dividing by area is why a thumbtack works. Your thumb and the tack's point carry the same force, but the point concentrates it into a tiny area, so the pressure there is enormous.
+    </p>
+  </div>
+
+  <!-- ── Pressure with depth ── -->
+  <div class="section" id="sec-depth">
+    <p class="section-label">Pressure with depth</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Sensor lowered into a harbor</span>
+      </div>
+      <canvas id="fl-depth" width="600" height="330"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      Anything at depth \(h\) has to hold up the entire column of fluid stacked above it, and that column's weight is \(\rho g h\) per unit of area. So pressure climbs steadily as you descend, starting from whatever is pressing down on the surface:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-press}{P} = \class{var-press}{P_0} + \class{var-rho}{\rho} g h\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Absolute vs. gauge</p>
+        <div class="row">
+          <span class="row-desc">Absolute pressure</span>
+          <span class="row-val">the full \(P = P_0 + \rho g h\), measured from a true vacuum</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Gauge pressure</span>
+          <span class="row-val">\(P_\text{gauge} = P - P_0 = \rho g h\), the amount above atmospheric</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">A tire read as flat</span>
+          <span class="row-val">gauge pressure zero, absolute pressure still \(1\ \text{atm}\) <span class="badge amber">not a vacuum</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Which to use</span>
+          <span class="row-val">gauge for anything that has atmosphere on both sides, absolute inside Bernoulli</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">What depth pressure ignores</p>
+        <div class="row">
+          <span class="row-desc">Shape of the container</span>
+          <span class="row-val">a narrow pipe and a wide lake match at equal depth <span class="badge amber">no effect</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Total volume of fluid</span>
+          <span class="row-val">no effect at all <span class="badge amber">no effect</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Depth below the surface</span>
+          <span class="row-val">linear increase, the only geometric thing that matters <span class="badge teal">matters</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Sideways position</span>
+          <span class="row-val">no effect; move horizontally and the pressure is unchanged <span class="badge amber">no effect</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Only the vertical drop counts, which is why a dam's thickness is set by the water's depth rather than by how far the reservoir stretches behind it. It is also why divers descending just \(10\ \text{m}\) of water already double the pressure on their bodies.
+    </p>
+  </div>
+
+  <!-- ── The buoyant force ── -->
+  <div class="section" id="sec-buoyancy">
+    <p class="section-label">The buoyant force</p>
+
+    <p class="prose">
+      Since pressure grows with depth, the fluid pushes harder on the bottom of a submerged object than on its top. Those two pushes do not cancel, and the leftover is the <strong>buoyant force</strong>, always pointing straight up:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-fb}{F_b} = \class{var-rho}{\rho_\text{fluid}}\, V_\text{disp}\, g\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Variables</p>
+        <div class="row">
+          <span class="row-desc">\(F_b\)</span>
+          <span class="row-val">buoyant force, always upward (N)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\rho_\text{fluid}\)</span>
+          <span class="row-val">density of the fluid, not of the object (kg/m³)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(V_\text{disp}\)</span>
+          <span class="row-val">volume of fluid pushed out of the way, so only the submerged part (m³)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">In words</span>
+          <span class="row-val">Archimedes' principle: the upward push equals the weight of the displaced fluid</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Reading the formula</p>
+        <div class="row">
+          <span class="row-desc">Object's own density</span>
+          <span class="row-val">never appears; it decides the weight, not the buoyant force <span class="badge amber">absent</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Fully submerged</span>
+          <span class="row-val">\(V_\text{disp}\) equals the object's whole volume, so \(F_b\) stops growing with depth</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Deeper is not stronger</span>
+          <span class="row-val">both faces gain the same extra pressure, so the difference is unchanged <span class="badge amber">depth-independent</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Denser fluid</span>
+          <span class="row-val">larger \(F_b\) for the same object, which is why saltwater floats you higher <span class="badge teal">stronger</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      A hollow steel hull floats for exactly this reason. Shaping the steel around a large volume of air makes the displaced water heavier than the ship without adding any mass to it.
+    </p>
+  </div>
+
+  <!-- ── Floating and sinking ── -->
+  <div class="section" id="sec-floating">
+    <p class="section-label">Floating and sinking</p>
+
+    <div class="graph-card" style="margin-bottom: 0.75rem;">
+      <div class="graph-card-header">
+        <span class="graph-card-title">Cargo crate released in a harbor</span>
+      </div>
+      <canvas id="fl-float" width="600" height="330"></canvas>
+      <div class="graph-caption"><span></span></div>
+    </div>
+
+    <p class="prose">
+      A floating object settles at the depth where buoyancy exactly balances weight. Setting \(\rho_\text{fluid}V_\text{disp}g = \rho_\text{obj}V_\text{obj}g\) and cancelling \(g\) leaves a result with no masses in it at all:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\frac{V_\text{disp}}{V_\text{obj}} = \frac{\class{var-rho}{\rho_\text{obj}}}{\class{var-rho}{\rho_\text{fluid}}}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Three cases</p>
+        <div class="row">
+          <span class="row-desc">\(\rho_\text{obj} < \rho_\text{fluid}\)</span>
+          <span class="row-val">floats, with that density ratio as the submerged fraction <span class="badge teal">floats</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\rho_\text{obj} = \rho_\text{fluid}\)</span>
+          <span class="row-val">hovers anywhere it is placed <span class="badge amber">neutral</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\rho_\text{obj} > \rho_\text{fluid}\)</span>
+          <span class="row-val">sinks; the floor supplies the missing upward force <span class="badge coral">sinks</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Apparent weight</span>
+          <span class="row-val">a submerged object reads \(W - F_b\) on a scale, never its true weight</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Worked example: floating buoy</p>
+        <div class="row">
+          <span class="row-desc">Given</span>
+          <span class="row-val">a \(0.50\ \text{m}^3\) buoy of density \(300\ \text{kg/m}^3\) in seawater (\(1025\ \text{kg/m}^3\))</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Weight</span>
+          <span class="row-val">\(m = \rho_\text{obj}V = 150\ \text{kg}\), so \(W = 1470\ \text{N}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Submerged fraction</span>
+          <span class="row-val">\(\dfrac{300}{1025} = 0.293\) <span class="badge teal">29% under</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Check</span>
+          <span class="row-val">\(F_b = 1025(0.293 \times 0.50)(9.8) = 1470\ \text{N}\), matching the weight exactly</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      An iceberg makes the point vividly: ice at \(917\ \text{kg/m}^3\) in seawater sits with \(89\%\) of itself below the surface. The visible tip is the small remainder, and the ratio is fixed by the two densities alone.
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">Density</span>
+        <span class="row-val">\(\class{var-rho}{\rho} = m/V\) in kg/m³; water is \(1000\), the benchmark for everything else</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Ideal fluid</span>
+        <span class="row-val">incompressible and non-viscous, so density is uniform and no energy is lost to drag</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Pressure</span>
+        <span class="row-val">\(\class{var-press}{P} = F_\perp/\class{var-area}{A}\) in pascals; a scalar that pushes perpendicular to every surface</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Pressure with depth</span>
+        <span class="row-val">\(\class{var-press}{P} = \class{var-press}{P_0} + \class{var-rho}{\rho}gh\); depth is all that matters, not shape or volume</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Gauge pressure</span>
+        <span class="row-val">\(P_\text{gauge} = \rho g h\), the reading above atmospheric rather than above vacuum</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Buoyant force</span>
+        <span class="row-val">\(\class{var-fb}{F_b} = \class{var-rho}{\rho_\text{fluid}}V_\text{disp}\,g\), the weight of the displaced fluid, always upward</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Floating condition</span>
+        <span class="row-val">\(V_\text{disp}/V_\text{obj} = \rho_\text{obj}/\rho_\text{fluid}\); denser than the fluid means it sinks</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Apparent weight</span>
+        <span class="row-val">\(W - F_b\) for anything submerged, which is why lifting a rock underwater feels easy</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">What buoyancy ignores</span>
+        <span class="row-val">the object's density and its depth; only fluid density and displaced volume enter</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Shared canvas helpers ─────────────────────────────
+function flCss(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+function flArrow(ctx, sx, sy, dx, dy, color, hl, lw) {
+  hl = hl || 7;
+  var a = Math.atan2(dy, dx);
+  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = lw || 2;
+  ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + dx, sy + dy); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(sx + dx, sy + dy);
+  ctx.lineTo(sx + dx - hl * Math.cos(a - Math.PI / 6), sy + dy - hl * Math.sin(a - Math.PI / 6));
+  ctx.lineTo(sx + dx - hl * Math.cos(a + Math.PI / 6), sy + dy - hl * Math.sin(a + Math.PI / 6));
+  ctx.closePath(); ctx.fill();
+}
+
+// Measure and (re)size a canvas. Floors the width so the drawing layout can never invert
+// on a narrow pane; the browser scales the backing store down to fit.
+function flFit(canvas, ratio, minW) {
+  var dpr = window.devicePixelRatio || 1;
+  var measured = Math.round(canvas.getBoundingClientRect().width);
+  var w = Math.max(minW, measured > 0 ? measured : minW);
+  var h = Math.round(w * ratio);
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.height = h + 'px';
+  canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { w: w, h: h };
+}
+
+// Re-fit on resize so a narrowed window relays out instead of staying stuck at the load-time size.
+function flOnResize(fn) {
+  var t = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(t);
+    t = setTimeout(fn, 120);
+  });
+}
+
+// Typeset a caption safely. window.MathJax exists from the moment the config object is set in
+// <head>, but typesetPromise only appears once MathJax has finished loading, and the
+// loader: ['[tex]/html'] component is fetched asynchronously. Calling it too early throws,
+// and an uncaught throw here would abort the rest of this script block.
+function flTypeset(el) {
+  var MJ = window.MathJax;
+  if (!el || !MJ) return;
+  if (typeof MJ.typesetPromise === 'function') {
+    MJ.typesetPromise([el]).catch(function () {});
+  } else if (MJ.startup && MJ.startup.promise) {
+    MJ.startup.promise.then(function () {
+      if (typeof window.MathJax.typesetPromise === 'function') window.MathJax.typesetPromise([el]).catch(function () {});
+    }).catch(function () {});
+  }
+}
+
+function flGrid(ctx, w, h) {
+  ctx.fillStyle = flCss('--surface');
+  ctx.fillRect(0, 0, w, h);
+  var gs = 25;
+  ctx.strokeStyle = flCss('--border') || 'rgba(0,0,0,0.06)';
+  ctx.lineWidth = 1;
+  for (var gx = gs; gx < w; gx += gs) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+  for (var gy = gs; gy < h; gy += gs) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+}
+
+// A body of fluid: faint tint plus a drawn surface line, so the water reads as water without
+// competing with the accent-coloured force arrows on top of it.
+function flWater(ctx, x0, x1, surfaceY, bottomY, wavy) {
+  ctx.save();
+  ctx.globalAlpha = 0.10;
+  ctx.fillStyle = flCss('--accent-teal');
+  ctx.fillRect(x0, surfaceY, x1 - x0, bottomY - surfaceY);
+  ctx.restore();
+  ctx.strokeStyle = flCss('--accent-teal'); ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  if (wavy) {
+    for (var x = x0; x <= x1; x += 3) {
+      var y = surfaceY + Math.sin(x / 13) * 2;
+      if (x === x0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+  } else { ctx.moveTo(x0, surfaceY); ctx.lineTo(x1, surfaceY); }
+  ctx.stroke();
+}
+
+// Hatched floor, matching the ground styling used across the other notes pages
+function flFloor(ctx, x0, x1, y) {
+  ctx.strokeStyle = flCss('--border-strong'); ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  ctx.strokeStyle = flCss('--border'); ctx.lineWidth = 1;
+  for (var hx = x0 + 7; hx < x1; hx += 14) {
+    ctx.beginPath(); ctx.moveTo(hx, y); ctx.lineTo(hx - 7, y + 7); ctx.stroke();
+  }
+}
+
+function flSliders(wrap, vals, defs, onChange) {
+  var cd = document.createElement('div');
+  cd.className = 'fbd-controls';
+  var rows = [];
+  defs.forEach(function (d) {
+    var row = document.createElement('div'); row.className = 'fbd-control';
+    var lbl = document.createElement('span'); lbl.className = 'fbd-control-label'; lbl.textContent = d.label;
+    var inp = document.createElement('input');
+    inp.type = 'range'; inp.min = d.min; inp.max = d.max; inp.step = d.step; inp.value = vals[d.id];
+    var dp = d.step < 1 ? ('' + d.step).split('.')[1].length : 0;
+    var vs = document.createElement('span'); vs.className = 'fbd-control-val';
+    vs.textContent = (+vals[d.id]).toFixed(dp) + ' ' + d.unit;
+    inp.addEventListener('input', function () {
+      vals[d.id] = parseFloat(inp.value);
+      vs.textContent = (+inp.value).toFixed(dp) + ' ' + d.unit;
+      onChange();
+    });
+    row.appendChild(lbl); row.appendChild(inp); row.appendChild(vs);
+    cd.appendChild(row);
+    rows.push({ def: d, input: inp, val: vs, dp: dp });
+  });
+  wrap.appendChild(cd);
+  return {
+    sync: function () {
+      rows.forEach(function (r) {
+        r.input.value = vals[r.def.id];
+        r.val.textContent = (+vals[r.def.id]).toFixed(r.dp) + ' ' + r.def.unit;
+      });
+    }
+  };
+}
+
+function flRandomize(cap, fn) {
+  if (!cap) return;
+  var rb = document.createElement('button');
+  rb.className = 'fbd-randomize'; rb.type = 'button'; rb.textContent = 'randomize';
+  rb.addEventListener('click', fn);
+  cap.appendChild(rb);
+}
+
+// ── Sensor lowered into a harbor ──────────────────────
+(function () {
+  var canvas = document.getElementById('fl-depth');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  var G = 9.8, MAX_H = 40;
+  var vals = { h: 18, rho: 1025, p0: 101 };
+
+  var w, hgt, surfaceY, bottomY, pxPerM, probeX, rulerX;
+  function layout() {
+    var dim = flFit(canvas, 0.55, 260);
+    w = dim.w; hgt = dim.h;
+    surfaceY = 34;
+    bottomY = hgt - 18;
+    pxPerM = (bottomY - surfaceY) / MAX_H;
+    rulerX = 24;
+    probeX = Math.max(rulerX + 44, w * 0.34);
+  }
+  layout();
+
+  function physics() {
+    var col = vals.rho * G * vals.h;           // gauge pressure, Pa
+    var p0 = vals.p0 * 1000;
+    return { col: col, p0: p0, abs: p0 + col, atm: (p0 + col) / 101325 };
+  }
+
+  function render() {
+    var p = physics();
+    ctx.clearRect(0, 0, w, hgt);
+    flGrid(ctx, w, hgt);
+    flWater(ctx, 0, w, surfaceY, bottomY, true);
+    flFloor(ctx, 0, w, bottomY);
+
+    // depth ruler
+    ctx.strokeStyle = flCss('--border-strong'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(rulerX, surfaceY); ctx.lineTo(rulerX, bottomY); ctx.stroke();
+    ctx.fillStyle = flCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    for (var d = 0; d <= MAX_H; d += 10) {
+      var ty = surfaceY + d * pxPerM;
+      ctx.strokeStyle = flCss('--border-strong');
+      ctx.beginPath(); ctx.moveTo(rulerX - 4, ty); ctx.lineTo(rulerX, ty); ctx.stroke();
+      ctx.fillText(d + 'm', rulerX - 7, ty);
+    }
+
+    var py = surfaceY + vals.h * pxPerM;
+
+    // depth line across to the probe
+    ctx.save(); ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = flCss('--accent-amber'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(rulerX, py); ctx.lineTo(probeX, py); ctx.stroke();
+    ctx.restore();
+
+    // pressure arrows squeezing the probe from every direction, all the same length
+    var aLen = 11 + (p.abs / (1400 * G * MAX_H + 120000)) * 26;
+    var probeR = 9;
+    for (var i = 0; i < 8; i++) {
+      var ang = i * Math.PI / 4;
+      var ox = Math.cos(ang), oy = Math.sin(ang);
+      flArrow(ctx, probeX + ox * (probeR + aLen), py + oy * (probeR + aLen),
+        -ox * aLen, -oy * aLen, flCss('--accent-coral'), 5, 1.4);
+    }
+
+    // the sensor itself
+    ctx.fillStyle = flCss('--bg');
+    ctx.strokeStyle = flCss('--muted'); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(probeX, py, probeR, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = flCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('P', probeX, py);
+
+    // tether up to the surface
+    ctx.strokeStyle = flCss('--muted'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(probeX, surfaceY); ctx.lineTo(probeX, py - probeR); ctx.stroke();
+
+    ctx.fillStyle = flCss('--accent-amber');
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+    ctx.fillText('h = ' + vals.h.toFixed(0) + ' m', rulerX + 6, py - 4);
+
+    // ── readouts ──
+    var narrow = w < 460;
+    var f1 = narrow ? 8 : 10, f2 = narrow ? 7 : 9;
+    var lx = w - 10, ly = 10;
+    ctx.font = '600 ' + f1 + 'px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = flCss('--accent-amber');
+    ctx.fillText('P₀ = ' + (p.p0 / 1000).toFixed(0) + ' kPa', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = flCss('--accent-teal');
+    ctx.fillText('ρgh = ' + (p.col / 1000).toFixed(0) + ' kPa', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = flCss('--accent-coral');
+    ctx.fillText('P = ' + (p.abs / 1000).toFixed(0) + ' kPa', lx, ly); ly += f1 + 6;
+
+    // Stacked bars: the amber P₀ and the teal column add up to the coral absolute pressure,
+    // so the "gauge is the part above atmospheric" split is visible at a glance.
+    var barW = Math.min(narrow ? 86 : 132, w * 0.24), rowH = 5, rowGap = 4;
+    var trackL = lx - barW;
+    var pMax = 120000 + 1400 * G * MAX_H;
+    ctx.font = f2 + 'px "DM Mono", monospace';
+    [
+      { key: 'P₀', val: p.p0, col: '--accent-amber' },
+      { key: 'ρgh', val: p.col, col: '--accent-teal' },
+      { key: 'P', val: p.abs, col: '--accent-coral' }
+    ].forEach(function (row, i) {
+      var y = ly + i * (rowH + rowGap);
+      ctx.fillStyle = flCss('--border');
+      ctx.fillRect(trackL, y, barW, rowH);
+      ctx.globalAlpha = 0.85;
+      ctx.fillStyle = flCss(row.col);
+      ctx.fillRect(trackL, y, Math.max(0, Math.min(barW, (row.val / pMax) * barW)), rowH);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = flCss('--hint');
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      ctx.fillText(row.key, trackL - 4, y + rowH / 2);
+    });
+    ly += 3 * (rowH + rowGap) + 4;
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = flCss('--hint');
+    ctx.fillText('gauge = ' + (p.col / 1000).toFixed(0) + ' kPa', lx, ly); ly += f2 + 3;
+    ctx.fillText('= ' + p.atm.toFixed(2) + ' atm total', lx, ly);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var p = physics();
+    var txt = 'At \\(h = ' + vals.h.toFixed(0) + '\\text{ m}\\) in fluid of density \\(' + vals.rho.toFixed(0)
+      + '\\text{ kg/m}^3\\), the column overhead adds \\(\\rho g h = ' + (p.col / 1000).toFixed(0)
+      + '\\text{ kPa}\\) on top of the \\(' + (p.p0 / 1000).toFixed(0)
+      + '\\text{ kPa}\\) pressing on the surface, giving \\(P = ' + (p.abs / 1000).toFixed(0)
+      + '\\text{ kPa}\\) absolute. The coral arrows stay equal in every direction: pressure squeezes a point from all sides at once, and sliding the sensor sideways would not change a thing.';
+    var sp = cap.querySelector('span');
+    sp.innerHTML = txt;
+    flTypeset(sp);
+  }
+
+  var ui = flSliders(wrap, vals, [
+    { id: 'h',   label: 'Depth',           unit: 'm',      min: 0,   max: MAX_H, step: 1 },
+    { id: 'rho', label: 'Fluid density',   unit: 'kg/m³',  min: 700, max: 1400,  step: 25 },
+    { id: 'p0',  label: 'Surface pressure', unit: 'kPa',   min: 80,  max: 120,   step: 1 }
+  ], function () { render(); updateCaption(); });
+
+  flRandomize(cap, function () {
+    vals.h = Math.round(Math.random() * MAX_H);
+    vals.rho = Math.round((700 + Math.random() * 700) / 25) * 25;
+    vals.p0 = Math.round(80 + Math.random() * 40);
+    ui.sync(); render(); updateCaption();
+  });
+
+  render(); updateCaption();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  flOnResize(function () { layout(); render(); });
+})();
+
+// ── Cargo crate released in a harbor ──────────────────
+(function () {
+  var canvas = document.getElementById('fl-float');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+
+  var G = 9.8;
+  var vals = { rhoObj: 600, rhoFl: 1025, V: 0.8 };
+
+  var w, hgt, surfaceY, bottomY, cx;
+  function layout() {
+    var dim = flFit(canvas, 0.55, 260);
+    w = dim.w; hgt = dim.h;
+    surfaceY = Math.round(hgt * 0.30);
+    bottomY = hgt - 18;
+    cx = Math.max(70, w * 0.33);
+  }
+  layout();
+
+  function physics() {
+    var m = vals.rhoObj * vals.V;
+    var W = m * G;
+    var floats = vals.rhoObj < vals.rhoFl;
+    var frac = floats ? vals.rhoObj / vals.rhoFl : 1;
+    var Vdisp = frac * vals.V;
+    var Fb = vals.rhoFl * Vdisp * G;
+    return { m: m, W: W, floats: floats, frac: frac, Vdisp: Vdisp, Fb: Fb, N: Math.max(0, W - Fb) };
+  }
+
+  function render() {
+    var p = physics();
+    ctx.clearRect(0, 0, w, hgt);
+    flGrid(ctx, w, hgt);
+    flWater(ctx, 0, w, surfaceY, bottomY, true);
+    flFloor(ctx, 0, w, bottomY);
+
+    // Crate size tracks its volume so the volume slider is visibly doing something, but it is
+    // capped to the water depth so a big crate can never be drawn taller than the harbor.
+    var maxSide = Math.min(bottomY - surfaceY - 6, hgt * 0.34);
+    var side = Math.max(26, Math.min(maxSide, 30 + vals.V * 46));
+    var topY;
+    if (p.floats) topY = surfaceY - side * (1 - p.frac);
+    else topY = bottomY - side;
+
+    // submerged portion, tinted a little more strongly than the surrounding water
+    var subTop = Math.max(topY, surfaceY);
+    if (bottomY > subTop) {
+      ctx.save(); ctx.globalAlpha = 0.16;
+      ctx.fillStyle = flCss('--accent-teal');
+      ctx.fillRect(cx - side / 2, subTop, side, Math.min(topY + side, bottomY) - subTop);
+      ctx.restore();
+    }
+
+    // the crate
+    ctx.fillStyle = flCss('--bg');
+    ctx.strokeStyle = flCss('--muted'); ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(cx - side / 2, topY, side, side, 3);
+    else ctx.rect(cx - side / 2, topY, side, side);
+    ctx.fill(); ctx.stroke();
+
+    // waterline across the crate
+    if (p.floats) {
+      ctx.save(); ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = flCss('--accent-teal'); ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(cx - side / 2, surfaceY); ctx.lineTo(cx + side / 2, surfaceY); ctx.stroke();
+      ctx.restore();
+    }
+
+    ctx.fillStyle = flCss('--hint');
+    ctx.font = '9px "DM Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText((p.frac * 100).toFixed(0) + '%', cx, topY + side * (1 - p.frac / 2));
+
+    // force arrows: weight down from the centre, buoyancy up, normal force if it is resting
+    var scale = Math.min(52, (hgt * 0.20)) / Math.max(p.W, p.Fb, 1);
+    var midY = topY + side / 2;
+    flArrow(ctx, cx, midY, 0, p.W * scale, flCss('--accent-coral'), 6, 2);
+    flArrow(ctx, cx, midY, 0, -p.Fb * scale, flCss('--accent-teal'), 6, 2);
+    ctx.font = '600 10px "DM Mono", monospace';
+    ctx.fillStyle = flCss('--accent-coral');
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('Fg', cx + 5, midY + p.W * scale - 5);
+    ctx.fillStyle = flCss('--accent-teal');
+    ctx.fillText('Fb', cx + 5, midY - p.Fb * scale + 5);
+    if (!p.floats && p.N > 0) {
+      flArrow(ctx, cx - side / 2 + 6, bottomY, 0, -p.N * scale, flCss('--accent-purple'), 6, 2);
+      ctx.fillStyle = flCss('--accent-purple');
+      ctx.textAlign = 'right';
+      ctx.fillText('N', cx - side / 2 + 2, bottomY - p.N * scale + 5);
+    }
+
+    // ── readouts ──
+    var narrow = w < 460;
+    var f1 = narrow ? 8 : 10, f2 = narrow ? 7 : 9;
+    var lx = w - 10, ly = 10;
+    ctx.font = '600 ' + f1 + 'px "DM Mono", monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillStyle = flCss('--hint');
+    ctx.fillText('m = ' + p.m.toFixed(0) + ' kg', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = flCss('--accent-coral');
+    ctx.fillText('Fg = ' + p.W.toFixed(0) + ' N', lx, ly); ly += f1 + 4;
+    ctx.fillStyle = flCss('--accent-teal');
+    ctx.fillText('Fb = ' + p.Fb.toFixed(0) + ' N', lx, ly); ly += f1 + 4;
+    if (!p.floats) {
+      ctx.fillStyle = flCss('--accent-purple');
+      ctx.fillText('N = ' + p.N.toFixed(0) + ' N', lx, ly); ly += f1 + 4;
+    }
+    ly += 2;
+    ctx.font = f2 + 'px "DM Mono", monospace';
+    ctx.fillStyle = flCss('--hint');
+    ctx.fillText('Vdisp = ' + p.Vdisp.toFixed(2) + ' m³', lx, ly); ly += f2 + 3;
+    ctx.fillText(p.floats ? ((p.frac * 100).toFixed(0) + '% submerged') : 'fully submerged, resting', lx, ly); ly += f2 + 3;
+    ctx.fillText(p.floats ? 'ρobj/ρfluid sets the line' : ('apparent weight ' + p.N.toFixed(0) + ' N'), lx, ly);
+  }
+
+  var wrap = canvas.parentElement;
+  var cap = wrap.querySelector('.graph-caption');
+
+  function updateCaption() {
+    if (!cap) return;
+    var p = physics();
+    var txt = p.floats
+      ? 'The crate settles with \\(' + (p.frac * 100).toFixed(0) + '\\%\\) of itself under the line, exactly the density ratio \\(' + vals.rhoObj.toFixed(0) + '/' + vals.rhoFl.toFixed(0) + '\\). At that depth the teal \\(F_b\\) and the coral \\(F_g\\) arrows are the same length: \\(' + p.Fb.toFixed(0) + '\\text{ N}\\) each. Growing the crate lengthens both arrows together and leaves the waterline untouched.'
+      : 'Denser than the fluid, the crate sinks and sits on the bottom. Buoyancy still lifts \\(' + p.Fb.toFixed(0) + '\\text{ N}\\) of its \\(' + p.W.toFixed(0) + '\\text{ N}\\) weight, so the floor only has to supply the remaining \\(' + p.N.toFixed(0) + '\\text{ N}\\). That leftover is what a scale underwater would read.';
+    var sp = cap.querySelector('span');
+    sp.innerHTML = txt;
+    flTypeset(sp);
+  }
+
+  var ui = flSliders(wrap, vals, [
+    { id: 'rhoObj', label: 'Crate density', unit: 'kg/m³', min: 200, max: 1600, step: 25 },
+    { id: 'rhoFl',  label: 'Fluid density', unit: 'kg/m³', min: 700, max: 1400, step: 25 },
+    { id: 'V',      label: 'Crate volume',  unit: 'm³',    min: 0.2, max: 2.0,  step: 0.1 }
+  ], function () { render(); updateCaption(); });
+
+  flRandomize(cap, function () {
+    vals.rhoObj = Math.round((200 + Math.random() * 1400) / 25) * 25;
+    vals.rhoFl = Math.round((700 + Math.random() * 700) / 25) * 25;
+    vals.V = +(0.2 + Math.random() * 1.8).toFixed(1);
+    ui.sync(); render(); updateCaption();
+  });
+
+  render(); updateCaption();
+  document.addEventListener('themechange', render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  flOnResize(function () { layout(); render(); });
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../notes.js"></script>
+</body>
+</html>
