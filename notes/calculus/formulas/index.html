@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formula Sheet</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<!-- notes.css / notes.js are shared across courses; they still live under physics/ for historical
+     reasons. See notes/calculus/foundations/index.html for the same note. -->
+<link rel="stylesheet" href="../../physics/notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+/* Wider layout, matching the physics equation sheet */
+.page { max-width: 980px; }
+
+/* No note meta bar here (this page is not in notes-manifest.json), and that bar is what
+   normally separates the header from the first section, so restore its 1.5rem gap. */
+.page > header { margin-bottom: 1.5rem; }
+
+/* Section heading with a link to the source note on the right */
+.eq-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.eq-section-head .section-label { margin-bottom: 0.6rem; }
+
+.eq-fc-btn {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  color: var(--hint);
+  text-decoration: none;
+  padding: 0.22rem 0.6rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+.eq-fc-btn:hover { color: var(--accent-teal); border-color: var(--accent-teal); }
+
+/* Pre-calc banner at the top */
+.eq-all-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.95rem 1.125rem;
+  text-decoration: none;
+  transition: border-color 0.18s;
+}
+.eq-all-card:hover { border-color: var(--accent-teal); }
+.eq-all-card:hover .eq-all-arrow { color: var(--accent-teal); transform: translateX(3px); }
+
+.eq-all-title {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 0.2rem;
+}
+.eq-all-desc {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  color: var(--hint);
+  margin: 0;
+}
+.eq-all-arrow {
+  font-size: 1rem;
+  color: var(--muted);
+  transition: color 0.15s, transform 0.15s;
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Calculus</a>
+    <div>
+      <h1>formula sheet</h1>
+      <span>every formula from the calculus notes in one place</span>
+    </div>
+  </header>
+
+  <div class="section">
+    <a class="eq-all-card" href="../precalc-reference/">
+      <div>
+        <p class="eq-all-title">Pre-calc reference</p>
+        <p class="eq-all-desc">the algebra, log rules, and trig identities these formulas assume</p>
+      </div>
+      <span class="eq-all-arrow">&#8594;</span>
+    </a>
+  </div>
+
+  <!-- ── Limits ── -->
+  <div class="section">
+    <div class="eq-section-head">
+      <p class="section-label">Limits</p>
+      <a class="eq-fc-btn" href="../foundations/">notes &#8594;</a>
+    </div>
+    <div class="card">
+      <div class="row">
+        <span class="row-desc">Limit</span>
+        <span class="row-val">\(\lim\limits_{x \to a} f(x) = L\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Existence</span>
+        <span class="row-val">\(\lim\limits_{x \to a^-} f(x) = \lim\limits_{x \to a^+} f(x) = L\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Continuity at \(a\)</span>
+        <span class="row-val">\(\lim\limits_{x \to a} f(x) = f(a)\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Sum and difference</span>
+        <span class="row-val">\(\lim (f \pm g) = \lim f \pm \lim g\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Constant multiple</span>
+        <span class="row-val">\(\lim c\,f = c \lim f\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Product</span>
+        <span class="row-val">\(\lim fg = \lim f \cdot \lim g\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Quotient</span>
+        <span class="row-val">\(\lim \dfrac{f}{g} = \dfrac{\lim f}{\lim g}\), \(\lim g \neq 0\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Power and root</span>
+        <span class="row-val">\(\lim [f]^n = [\lim f]^n\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Composition</span>
+        <span class="row-val">\(\lim f(g(x)) = f(\lim g(x))\), \(f\) continuous</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Limits at infinity ── -->
+  <div class="section">
+    <div class="eq-section-head">
+      <p class="section-label">Limits at infinity</p>
+      <a class="eq-fc-btn" href="../foundations/">notes &#8594;</a>
+    </div>
+    <div class="card">
+      <div class="row">
+        <span class="row-desc">Top degree \(&lt;\) bottom</span>
+        <span class="row-val">\(\lim\limits_{x \to \infty} \dfrac{p(x)}{q(x)} = 0\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Degrees equal</span>
+        <span class="row-val">ratio of the leading coefficients</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Top degree \(&gt;\) bottom</span>
+        <span class="row-val">\(\pm\infty\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Growth ranking</span>
+        <span class="row-val">\(\ln x \ll x^n \ll e^x \ll x!\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Standard move</span>
+        <span class="row-val">divide every term by the highest power of \(x\)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Indeterminate forms and l'Hôpital ── -->
+  <div class="section">
+    <div class="eq-section-head">
+      <p class="section-label">Indeterminate forms &amp; l'Hôpital</p>
+      <a class="eq-fc-btn" href="../foundations/">notes &#8594;</a>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">The seven forms</p>
+        <div class="row">
+          <span class="row-desc">Quotient</span>
+          <span class="row-val">\(\dfrac{0}{0}\), \(\dfrac{\infty}{\infty}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Product and difference</span>
+          <span class="row-val">\(0 \cdot \infty\), \(\infty - \infty\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Exponential</span>
+          <span class="row-val">\(1^\infty\), \(0^0\), \(\infty^0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Not indeterminate</span>
+          <span class="row-val">\(\dfrac{k}{0} = \pm\infty\), \(\dfrac{k}{\infty} = 0\), \(0^\infty = 0\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">L'Hôpital's rule</p>
+        <div class="row">
+          <span class="row-desc">The rule</span>
+          <span class="row-val">\(\lim \dfrac{f(x)}{g(x)} = \lim \dfrac{f'(x)}{g'(x)}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Condition</span>
+          <span class="row-val">only for \(\frac{0}{0}\) or \(\frac{\infty}{\infty}\), rechecked each pass</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(0 \cdot \infty\)</span>
+          <span class="row-val">rewrite \(fg\) as \(\dfrac{f}{1/g}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Exponential forms</span>
+          <span class="row-val">\(y = f^g \Rightarrow \lim y = e^{\lim g \ln f}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Classic result</span>
+          <span class="row-val">\(\lim\limits_{x \to \infty}\left(1 + \tfrac{1}{x}\right)^x = e\)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Differentiation rules ── -->
+  <div class="section">
+    <div class="eq-section-head">
+      <p class="section-label">Differentiation rules</p>
+      <a class="eq-fc-btn" href="../derivatives/">notes &#8594;</a>
+    </div>
+    <div class="card">
+      <div class="row">
+        <span class="row-desc">Definition</span>
+        <span class="row-val">\(f'(x) = \lim\limits_{h \to 0} \dfrac{f(x+h) - f(x)}{h}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Power rule</span>
+        <span class="row-val">\(\dfrac{d}{dx}x^n = nx^{n-1}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Constant</span>
+        <span class="row-val">\(\dfrac{d}{dx}c = 0\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Constant multiple</span>
+        <span class="row-val">\(\dfrac{d}{dx}c\,f = c\,f'\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Sum and difference</span>
+        <span class="row-val">\((f \pm g)' = f' \pm g'\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Product rule</span>
+        <span class="row-val">\((uv)' = u'v + uv'\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Quotient rule</span>
+        <span class="row-val">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^2}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Chain rule</span>
+        <span class="row-val">\(\dfrac{d}{dx}f(g(x)) = f'(g(x))\,g'(x)\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Chain rule, Leibniz</span>
+        <span class="row-val">\(\dfrac{dy}{dx} = \dfrac{dy}{du}\cdot\dfrac{du}{dx}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Implicit</span>
+        <span class="row-val">\(\dfrac{d}{dx}y^n = ny^{n-1}\dfrac{dy}{dx}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Tangent line at \(a\)</span>
+        <span class="row-val">\(y - f(a) = f'(a)(x - a)\)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Derivatives of common functions ── -->
+  <div class="section">
+    <div class="eq-section-head">
+      <p class="section-label">Derivatives of common functions</p>
+      <a class="eq-fc-btn" href="../derivatives/">notes &#8594;</a>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Trigonometric</p>
+        <div class="row">
+          <span class="row-desc">\(\sin x\)</span>
+          <span class="row-val">\(\cos x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\cos x\)</span>
+          <span class="row-val">\(-\sin x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\tan x\)</span>
+          <span class="row-val">\(\sec^2 x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\sec x\)</span>
+          <span class="row-val">\(\sec x \tan x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\csc x\)</span>
+          <span class="row-val">\(-\csc x \cot x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\cot x\)</span>
+          <span class="row-val">\(-\csc^2 x\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Exponential and logarithmic</p>
+        <div class="row">
+          <span class="row-desc">\(e^x\)</span>
+          <span class="row-val">\(e^x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(b^x\)</span>
+          <span class="row-val">\(b^x \ln b\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\ln x\)</span>
+          <span class="row-val">\(\dfrac{1}{x}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\ln|x|\)</span>
+          <span class="row-val">\(\dfrac{1}{x}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\log_b x\)</span>
+          <span class="row-val">\(\dfrac{1}{x \ln b}\)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Inverse trigonometric</p>
+        <div class="row">
+          <span class="row-desc">\(\arcsin x\)</span>
+          <span class="row-val">\(\dfrac{1}{\sqrt{1 - x^2}}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\arccos x\)</span>
+          <span class="row-val">\(-\dfrac{1}{\sqrt{1 - x^2}}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\arctan x\)</span>
+          <span class="row-val">\(\dfrac{1}{1 + x^2}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\operatorname{arccot} x\)</span>
+          <span class="row-val">\(-\dfrac{1}{1 + x^2}\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">With the chain rule</p>
+        <div class="row">
+          <span class="row-desc">\([g(x)]^n\)</span>
+          <span class="row-val">\(n[g(x)]^{n-1}g'(x)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(e^{g(x)}\)</span>
+          <span class="row-val">\(e^{g(x)}g'(x)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\ln g(x)\)</span>
+          <span class="row-val">\(\dfrac{g'(x)}{g(x)}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\sin g(x)\)</span>
+          <span class="row-val">\(\cos(g(x))\,g'(x)\)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Integration rules ── -->
+  <div class="section">
+    <div class="eq-section-head">
+      <p class="section-label">Integration rules</p>
+      <a class="eq-fc-btn" href="../integrals/">notes &#8594;</a>
+    </div>
+    <div class="card">
+      <div class="row">
+        <span class="row-desc">Antiderivative</span>
+        <span class="row-val">\(\displaystyle\int f(x)\,dx = F(x) + C\), \(F' = f\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Power rule</span>
+        <span class="row-val">\(\displaystyle\int x^n dx = \dfrac{x^{n+1}}{n+1} + C\), \(n \neq -1\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Constant multiple</span>
+        <span class="row-val">\(\displaystyle\int c\,f\,dx = c\int f\,dx\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Sum and difference</span>
+        <span class="row-val">\(\displaystyle\int (f \pm g)\,dx = \int f\,dx \pm \int g\,dx\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Fundamental theorem</span>
+        <span class="row-val">\(\displaystyle\int_a^b f(x)\,dx = F(b) - F(a)\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Accumulation</span>
+        <span class="row-val">\(\dfrac{d}{dx}\displaystyle\int_a^x f(t)\,dt = f(x)\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Net change</span>
+        <span class="row-val">\(\displaystyle\int_a^b f'(x)\,dx = f(b) - f(a)\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Swapping limits</span>
+        <span class="row-val">\(\displaystyle\int_b^a f = -\int_a^b f\), and \(\displaystyle\int_a^a f = 0\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Splitting</span>
+        <span class="row-val">\(\displaystyle\int_a^c f = \int_a^b f + \int_b^c f\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">u-substitution</span>
+        <span class="row-val">\(\displaystyle\int f(g(x))g'(x)\,dx = \int f(u)\,du\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Integration by parts</span>
+        <span class="row-val">\(\displaystyle\int u\,dv = uv - \int v\,du\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">By parts, definite</span>
+        <span class="row-val">\(\displaystyle\int_a^b u\,dv = \Big[uv\Big]_a^b - \int_a^b v\,du\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Linear inside</span>
+        <span class="row-val">\(\displaystyle\int f(ax+b)\,dx = \dfrac{1}{a}F(ax+b) + C\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">LIATE</span>
+        <span class="row-val">log, inverse trig, algebraic, trig, exponential; first one is \(u\)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Common integrals ── -->
+  <div class="section">
+    <div class="eq-section-head">
+      <p class="section-label">Common integrals</p>
+      <a class="eq-fc-btn" href="../integrals/">notes &#8594;</a>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Powers, exponentials, logarithms</p>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int k\,dx\)</span>
+          <span class="row-val">\(kx + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int x^n dx\)</span>
+          <span class="row-val">\(\dfrac{x^{n+1}}{n+1} + C\), \(n \neq -1\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \frac{1}{x}dx\)</span>
+          <span class="row-val">\(\ln|x| + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int e^x dx\)</span>
+          <span class="row-val">\(e^x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int b^x dx\)</span>
+          <span class="row-val">\(\dfrac{b^x}{\ln b} + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \ln x\,dx\)</span>
+          <span class="row-val">\(x\ln x - x + C\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Trigonometric</p>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \sin x\,dx\)</span>
+          <span class="row-val">\(-\cos x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \cos x\,dx\)</span>
+          <span class="row-val">\(\sin x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \sec^2 x\,dx\)</span>
+          <span class="row-val">\(\tan x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \sec x \tan x\,dx\)</span>
+          <span class="row-val">\(\sec x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \tan x\,dx\)</span>
+          <span class="row-val">\(-\ln|\cos x| + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \sec x\,dx\)</span>
+          <span class="row-val">\(\ln|\sec x + \tan x| + C\)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Forms giving inverse trig</p>
+      <div class="row">
+        <span class="row-desc">\(\displaystyle\int \frac{dx}{1 + x^2}\)</span>
+        <span class="row-val">\(\arctan x + C\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(\displaystyle\int \frac{dx}{\sqrt{1 - x^2}}\)</span>
+        <span class="row-val">\(\arcsin x + C\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(\displaystyle\int \frac{dx}{a^2 + x^2}\)</span>
+        <span class="row-val">\(\dfrac{1}{a}\arctan\dfrac{x}{a} + C\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">\(\displaystyle\int \frac{dx}{\sqrt{a^2 - x^2}}\)</span>
+        <span class="row-val">\(\arcsin\dfrac{x}{a} + C\)</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../../physics/notes.js"></script>
+</body>
+</html>

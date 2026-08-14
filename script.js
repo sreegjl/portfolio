@@ -536,21 +536,33 @@ if (document.getElementById('markdown-content')) {
 // ===== NOTES TABLE PAGE - Load and display notes list =====
 // Populate course card meta on the course listing page
 (function () {
-    var meta = document.getElementById('physicsCourseMeta');
-    if (!meta) return;
-    var topics = 5, lessons = 9;
+    // Each course counts only the manifest entries under its own folder, so adding a second
+    // course does not inflate the first one's lesson count.
+    var COURSES = [
+        { id: 'physicsCourseMeta',  prefix: 'physics/',  fallback: '5 topics · 9 lessons' },
+        { id: 'calculusCourseMeta', prefix: 'calculus/', fallback: 'Reference material only' }
+    ];
+    var present = COURSES.filter(function (c) {
+        c.el = document.getElementById(c.id);
+        return !!c.el;
+    });
+    if (!present.length) return;
+
     fetch('notes-manifest.json').then(function (r) { return r.json(); }).then(function (m) {
         var html = m.htmlNotes || [];
-        var noteCount = html.length;
-        var topicSet = new Set();
-        html.forEach(function (n) {
-            if (n.path.indexOf('/quiz/') !== -1) return;
-            var parts = n.path.split('/');
-            topicSet.add(parts.length > 1 ? parts[1] : parts[0]);
+        present.forEach(function (c) {
+            var mine = html.filter(function (n) { return n.path.indexOf(c.prefix) === 0; });
+            if (!mine.length) { c.el.textContent = c.fallback; return; }
+            var topicSet = new Set();
+            mine.forEach(function (n) {
+                if (n.path.indexOf('/quiz/') !== -1) return;
+                var parts = n.path.split('/');
+                topicSet.add(parts.length > 1 ? parts[1] : parts[0]);
+            });
+            c.el.textContent = topicSet.size + ' topics · ' + mine.length + ' lessons';
         });
-        meta.textContent = topicSet.size + ' topics · ' + noteCount + ' lessons';
     }).catch(function () {
-        meta.textContent = topics + ' topics · ' + lessons + ' lessons';
+        present.forEach(function (c) { c.el.textContent = c.fallback; });
     });
 })();
 
@@ -825,7 +837,11 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
         var topicsList = document.getElementById('topicsList');
         var htmlLoading = document.getElementById('htmlLoading');
 
-        var topics = [
+        // Topic lists per course. The course page picks one via data-course on #topicsList;
+        // a course with an empty list renders the "no lessons yet" state below.
+        var COURSE_TOPICS = {};
+
+        COURSE_TOPICS.physics = [
             {
                 num: 1, title: 'Kinematics',
                 lessons: [
@@ -940,6 +956,31 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
             }
         ];
 
+        // Notes only for now; practice and flashcard lessons come later.
+        COURSE_TOPICS.calculus = [
+            {
+                num: 1, title: 'Foundations',
+                lessons: [
+                    { type: 'note', name: 'Foundations', desc: "Limit laws, indeterminate forms, and l'Hôpital's rule", path: 'foundations/' }
+                ]
+            },
+            {
+                num: 2, title: 'Derivatives',
+                lessons: [
+                    { type: 'note', name: 'Derivatives', desc: 'Power, product, quotient and chain rules, common derivatives, and implicit differentiation', path: 'derivatives/' }
+                ]
+            },
+            {
+                num: 3, title: 'Integrals',
+                lessons: [
+                    { type: 'note', name: 'Integrals', desc: 'Antiderivatives, common forms, u-substitution, and integration by parts', path: 'integrals/' }
+                ]
+            }
+        ];
+
+        var course = topicsList.getAttribute('data-course') || 'physics';
+        var topics = COURSE_TOPICS[course] || [];
+
         var base = topicsList.getAttribute('data-base') || 'notes/';
         var checkSvg = '<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
@@ -984,6 +1025,33 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
         topics.forEach(function (t) { totalLessons += t.lessons.length; });
 
         var subtitleEl = document.getElementById('syllabusSubtitle');
+
+        // A course with no lessons yet: show an empty state and hide the progress/resume UI,
+        // which would otherwise read "0 of 0 lessons" and offer a Continue link to nowhere.
+        if (!topics.length) {
+            if (subtitleEl) subtitleEl.textContent = 'No lessons yet';
+
+            var emptyCard = document.createElement('div');
+            emptyCard.className = 'module-card module-empty';
+            emptyCard.innerHTML =
+                '<p class="module-empty-title">No lessons yet</p>' +
+                '<p class="module-empty-desc">Topics for this course have not been written. Reference material listed in the sidebar is available in the meantime.</p>';
+            topicsList.appendChild(emptyCard);
+
+            var emptyCount = document.getElementById('studiedCount');
+            var emptyTotal = document.getElementById('totalLessons');
+            var emptyFill = document.getElementById('sidebarProgressFill');
+            if (emptyCount) emptyCount.textContent = '0';
+            if (emptyTotal) emptyTotal.textContent = '0';
+            if (emptyFill) emptyFill.style.width = '0%';
+
+            var emptyUpNext = document.getElementById('upNextCard');
+            if (emptyUpNext) emptyUpNext.style.display = 'none';
+            var emptyContinue = document.getElementById('continueBtn');
+            if (emptyContinue) emptyContinue.style.display = 'none';
+            return;
+        }
+
         if (subtitleEl) subtitleEl.textContent = topics.length + ' topics · ' + totalLessons + ' lessons';
 
         totalLessons = 0;
@@ -1000,7 +1068,7 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
                 '<div class="module-num">' + numStr + '</div>' +
                 '<div class="module-header-text">' +
                     '<div class="module-title">' + t.title + '</div>' +
-                    '<div class="module-meta">' + lessonCount + ' lessons</div>' +
+                    '<div class="module-meta">' + lessonCount + (lessonCount === 1 ? ' lesson' : ' lessons') + '</div>' +
                 '</div>' +
             '</div>';
 
@@ -1043,7 +1111,7 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
             var fillEl = document.getElementById('sidebarProgressFill');
             if (countEl) countEl.textContent = count;
             if (totalEl) totalEl.textContent = totalLessons;
-            if (fillEl) fillEl.style.width = (count / totalLessons * 100) + '%';
+            if (fillEl) fillEl.style.width = (totalLessons ? count / totalLessons * 100 : 0) + '%';
 
             // Up next
             var upNextTopic = document.getElementById('upNextTopic');
@@ -1069,7 +1137,9 @@ if (document.getElementById('notesTableBody') || document.getElementById('htmlNo
             } else if (upNextCard) {
                 upNextTopic.textContent = 'All done!';
                 upNextLink.style.display = 'none';
-                if (continueBtn) continueBtn.href = base + topics[0].lessons[0].path;
+                if (continueBtn && topics.length && topics[0].lessons.length) {
+                    continueBtn.href = base + topics[0].lessons[0].path;
+                }
             }
         }
 

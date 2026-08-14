@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Derivatives</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<!-- notes.css / notes.js still live under physics/ because that was the only course when they
+     were written; they are shared assets, not physics-specific. -->
+<link rel="stylesheet" href="../../physics/notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Calculus</a>
+    <div>
+      <h1>derivatives</h1>
+      <span>the definition, power, product, quotient and chain rules, derivatives of common functions, and implicit differentiation</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── What a derivative is ── -->
+  <div class="section" id="sec-definition">
+    <p class="section-label">What a derivative is</p>
+
+    <p class="prose">
+      The <strong>derivative</strong> measures how fast a function changes at a single instant. It is the slope of a secant line taken to the limit as the two points merge, which turns an average rate into an instantaneous one:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\class{var-fn}{f}'(x) = \lim_{h \to 0}\frac{\class{var-fn}{f}(x+h) - \class{var-fn}{f}(x)}{h}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Notation</p>
+        <div class="row">
+          <span class="row-desc">\(f'(x)\)</span>
+          <span class="row-val">Lagrange notation, compact and best for stating rules</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\dfrac{dy}{dx}\)</span>
+          <span class="row-val">Leibniz notation, names the variables and survives the chain rule</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\dfrac{d}{dx}\big[\ \big]\)</span>
+          <span class="row-val">the operator form, read as "differentiate this with respect to \(x\)"</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(f''(x)\), \(\dfrac{d^2y}{dx^2}\)</span>
+          <span class="row-val">the second derivative, the rate at which the rate changes</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(f'(a)\)</span>
+          <span class="row-val">a single number: the slope at that one point</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">What it tells you</p>
+        <div class="row">
+          <span class="row-desc">Geometrically</span>
+          <span class="row-val">the slope of the tangent line at \(x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Physically</span>
+          <span class="row-val">an instantaneous rate: position gives velocity, velocity gives acceleration</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Tangent line</span>
+          <span class="row-val">\(y - f(a) = f'(a)(x - a)\), straight from point-slope form</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Differentiable \(\Rightarrow\) continuous</span>
+          <span class="row-val">but not the reverse <span class="badge amber">one-way implication</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">No derivative at</span>
+          <span class="row-val">corners, cusps, vertical tangents, and any break in the graph <span class="badge coral">not differentiable</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Running that limit by hand is slow, so it gets done once per function family. Everything below is the result of that work, packaged into rules you can apply directly.
+    </p>
+  </div>
+
+  <!-- ── The power rule and its companions ── -->
+  <div class="section" id="sec-power">
+    <p class="section-label">The power rule and its companions</p>
+
+    <p class="prose">
+      Any term that is a variable raised to a constant power follows one pattern: drop the exponent in front, then reduce it by one. It holds for every real exponent, negative and fractional included:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\frac{d}{dx}\,x^{\class{var-gn}{n}} = \class{var-gn}{n}\,x^{\class{var-gn}{n}-1}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Rules that come with it</p>
+        <div class="row">
+          <span class="row-desc">Constant</span>
+          <span class="row-val">\(\dfrac{d}{dx}c = 0\); a flat line has no slope</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Constant multiple</span>
+          <span class="row-val">\(\dfrac{d}{dx}\,c\,f(x) = c\,f'(x)\); coefficients ride along</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Sum and difference</span>
+          <span class="row-val">differentiate term by term, in any order</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Linear term</span>
+          <span class="row-val">\(\dfrac{d}{dx}x = 1\), the power rule with \(n = 1\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Watch out</span>
+          <span class="row-val">\(\dfrac{d}{dx}b^x \neq x\,b^{x-1}\); a constant base is a different rule entirely <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Rewrite before differentiating</p>
+        <div class="row">
+          <span class="row-desc">\(\sqrt{x}\)</span>
+          <span class="row-val">\(= x^{1/2}\), so the derivative is \(\tfrac{1}{2}x^{-1/2}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\dfrac{1}{x^3}\)</span>
+          <span class="row-val">\(= x^{-3}\), giving \(-3x^{-4}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\dfrac{x^2 + 5x}{x}\)</span>
+          <span class="row-val">split it into \(x + 5\) first and skip the quotient rule <span class="badge teal">saves work</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(x^2 \cdot x^4\)</span>
+          <span class="row-val">combine to \(x^6\) rather than reaching for the product rule</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Habit</span>
+          <span class="row-val">simplify into powers first; it removes most of the hard rules <span class="badge teal">essential habit</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Most messy-looking derivatives are just algebra that was never cleaned up. Rewriting first is faster than differentiating and simplifying afterward.
+    </p>
+  </div>
+
+  <!-- ── Product and quotient rules ── -->
+  <div class="section" id="sec-product-quotient">
+    <p class="section-label">Product and quotient rules</p>
+
+    <p class="prose">
+      Derivatives do not distribute across multiplication. When two functions are multiplied, each one changes while the other is still present, so both contributions are counted:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[(\class{var-fn}{u}\class{var-gn}{v})' = \class{var-fn}{u}'\class{var-gn}{v} + \class{var-fn}{u}\class{var-gn}{v}'\]
+    </p>
+
+    <p class="prose">
+      Division follows from the same idea, with the second term subtracted and the denominator squared:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\left(\frac{\class{var-fn}{u}}{\class{var-gn}{v}}\right)' = \frac{\class{var-fn}{u}'\class{var-gn}{v} - \class{var-fn}{u}\class{var-gn}{v}'}{\class{var-gn}{v}^2}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Using them</p>
+        <div class="row">
+          <span class="row-desc">Product order</span>
+          <span class="row-val">addition, so the order of the two terms does not matter</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Quotient order</span>
+          <span class="row-val">subtraction, so the numerator's derivative must come first <span class="badge coral">sign error trap</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Constant denominator</span>
+          <span class="row-val">use the constant multiple rule instead; no quotient rule needed</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Three factors</span>
+          <span class="row-val">\((uvw)' = u'vw + uv'w + uvw'\), one term per factor</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Never</span>
+          <span class="row-val">\((uv)' \neq u'v'\) <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Example: \(y = x^3\ln x\)</p>
+        <div class="row">
+          <span class="row-desc">Label the pieces</span>
+          <span class="row-val">\(u = x^3\), \(v = \ln x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Their derivatives</span>
+          <span class="row-val">\(u' = 3x^2\), \(v' = \dfrac{1}{x}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Assemble</span>
+          <span class="row-val">\(y' = 3x^2\ln x + x^3 \cdot \dfrac{1}{x}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Simplify</span>
+          <span class="row-val">\(y' = 3x^2\ln x + x^2 = x^2(3\ln x + 1)\) <span class="badge teal">answer</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      A quotient can always be rewritten as a product with a negative exponent, so the quotient rule is a convenience rather than a necessity. Use whichever leaves less algebra behind.
+    </p>
+  </div>
+
+  <!-- ── The chain rule ── -->
+  <div class="section" id="sec-chain">
+    <p class="section-label">The chain rule</p>
+
+    <p class="prose">
+      When one function is nested inside another, the rates multiply. Differentiate the outer function while leaving the inner one untouched, then multiply by the derivative of the inner:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\frac{d}{dx}\,\class{var-fn}{f}\big(\class{var-gn}{g}(x)\big) = \class{var-fn}{f}'\big(\class{var-gn}{g}(x)\big) \cdot \class{var-gn}{g}'(x)\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Procedure</p>
+        <div class="row">
+          <span class="row-desc">1. Identify the layers</span>
+          <span class="row-val">the outer function is whatever you would evaluate last</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">2. Differentiate outward</span>
+          <span class="row-val">apply the outer rule with the inner expression left in place</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">3. Multiply by the inside</span>
+          <span class="row-val">tack on \(g'(x)\); skipping this is the most common mistake in calculus <span class="badge coral">never skip</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">More layers</span>
+          <span class="row-val">keep multiplying inward: \(f'(g(h))\cdot g'(h)\cdot h'\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Leibniz form</span>
+          <span class="row-val">\(\dfrac{dy}{dx} = \dfrac{dy}{du}\cdot\dfrac{du}{dx}\), where the \(du\) appears to cancel</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Patterns worth recognizing</p>
+        <div class="row">
+          <span class="row-desc">\([g(x)]^n\)</span>
+          <span class="row-val">\(n[g(x)]^{n-1}g'(x)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(e^{g(x)}\)</span>
+          <span class="row-val">\(e^{g(x)}g'(x)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\ln g(x)\)</span>
+          <span class="row-val">\(\dfrac{g'(x)}{g(x)}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\sin g(x)\)</span>
+          <span class="row-val">\(\cos\big(g(x)\big)\,g'(x)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\sin^2 x\)</span>
+          <span class="row-val">read as \((\sin x)^2\), giving \(2\sin x\cos x\) <span class="badge amber">notation trap</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Think of gears in mesh. If the outer wheel turns three times as fast as the middle one, and the middle turns twice as fast as the inner, the outer turns six times as fast as the inner. The chain rule is that multiplication.
+    </p>
+  </div>
+
+  <!-- ── Derivatives of common functions ── -->
+  <div class="section" id="sec-common">
+    <p class="section-label">Derivatives of common functions</p>
+
+    <p class="prose">
+      These are the building blocks every problem is assembled from. Each one assumes a bare \(x\) inside; with anything else in there, the chain rule adds a factor of the inside's derivative.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Trigonometric</p>
+        <div class="row">
+          <span class="row-desc">\(\sin x\)</span>
+          <span class="row-val">\(\cos x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\cos x\)</span>
+          <span class="row-val">\(-\sin x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\tan x\)</span>
+          <span class="row-val">\(\sec^2 x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\sec x\)</span>
+          <span class="row-val">\(\sec x \tan x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\csc x\)</span>
+          <span class="row-val">\(-\csc x \cot x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\cot x\)</span>
+          <span class="row-val">\(-\csc^2 x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Pattern</span>
+          <span class="row-val">every co-function derivative carries a minus sign <span class="badge teal">memory hook</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Exponential and logarithmic</p>
+        <div class="row">
+          <span class="row-desc">\(e^x\)</span>
+          <span class="row-val">\(e^x\), the function that is its own derivative <span class="badge teal">unique</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(b^x\)</span>
+          <span class="row-val">\(b^x \ln b\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\ln x\)</span>
+          <span class="row-val">\(\dfrac{1}{x}\), for \(x &gt; 0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\log_b x\)</span>
+          <span class="row-val">\(\dfrac{1}{x \ln b}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\ln|x|\)</span>
+          <span class="row-val">\(\dfrac{1}{x}\) on both sides of zero <span class="badge amber">matters for integrals</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Inverse trigonometric</p>
+        <div class="row">
+          <span class="row-desc">\(\arcsin x\)</span>
+          <span class="row-val">\(\dfrac{1}{\sqrt{1 - x^2}}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\arccos x\)</span>
+          <span class="row-val">\(-\dfrac{1}{\sqrt{1 - x^2}}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\arctan x\)</span>
+          <span class="row-val">\(\dfrac{1}{1 + x^2}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\operatorname{arccot} x\)</span>
+          <span class="row-val">\(-\dfrac{1}{1 + x^2}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Worth noticing</span>
+          <span class="row-val">no trig functions appear in the answers, which is why they show up in integrals</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Applying the chain rule to these</p>
+        <div class="row">
+          <span class="row-desc">\(\cos(5x)\)</span>
+          <span class="row-val">\(-5\sin(5x)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(e^{-2x}\)</span>
+          <span class="row-val">\(-2e^{-2x}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\ln(x^2 + 1)\)</span>
+          <span class="row-val">\(\dfrac{2x}{x^2 + 1}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\tan(3x^2)\)</span>
+          <span class="row-val">\(6x\sec^2(3x^2)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Radians only</span>
+          <span class="row-val">the trig derivatives are false in degrees <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Learn these as a table, not as derivations. Fluency here is what makes the harder rules feel mechanical rather than difficult.
+    </p>
+  </div>
+
+  <!-- ── Implicit differentiation ── -->
+  <div class="section" id="sec-implicit">
+    <p class="section-label">Implicit differentiation</p>
+
+    <p class="prose">
+      Some curves cannot be solved for \(y\), and others are painful to solve. Instead, differentiate both sides of the equation as they stand, treating \(y\) as an unknown function of \(x\) so every \(y\) term picks up a chain rule factor:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\frac{d}{dx}\,\class{var-gn}{y}^{\,n} = n\,\class{var-gn}{y}^{\,n-1}\,\frac{d\class{var-gn}{y}}{dx}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Procedure</p>
+        <div class="row">
+          <span class="row-desc">1. Differentiate both sides</span>
+          <span class="row-val">with respect to \(x\), term by term</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">2. Tag every \(y\)</span>
+          <span class="row-val">each \(y\) term produces a \(\dfrac{dy}{dx}\) factor <span class="badge coral">never skip</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">3. Mixed terms</span>
+          <span class="row-val">a term like \(xy\) needs the product rule as well</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">4. Collect</span>
+          <span class="row-val">move every \(\dfrac{dy}{dx}\) term to one side, everything else to the other</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">5. Factor and divide</span>
+          <span class="row-val">the answer usually contains both \(x\) and \(y\) <span class="badge amber">expected</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Example: \(x^2 + xy + y^2 = 7\)</p>
+        <div class="row">
+          <span class="row-desc">Differentiate</span>
+          <span class="row-val">\(2x + \left(y + x\dfrac{dy}{dx}\right) + 2y\dfrac{dy}{dx} = 0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Collect</span>
+          <span class="row-val">\((x + 2y)\dfrac{dy}{dx} = -(2x + y)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Solve</span>
+          <span class="row-val">\(\dfrac{dy}{dx} = -\dfrac{2x + y}{x + 2y}\) <span class="badge teal">answer</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Use it</span>
+          <span class="row-val">substitute a point on the curve to get that tangent's slope</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Horizontal tangents</span>
+          <span class="row-val">where the numerator is zero and the denominator is not</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      The same idea drives related rates: differentiate a relationship with respect to time instead of \(x\), and every variable contributes its own rate. It also derives the inverse trig derivatives above, starting from \(\sin y = x\).
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section" id="sec-summary">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">Definition</span>
+        <span class="row-val">\(f'(x) = \lim\limits_{h \to 0}\frac{f(x+h)-f(x)}{h}\), the slope of the tangent line</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Power rule</span>
+        <span class="row-val">\(\frac{d}{dx}x^n = nx^{n-1}\); rewrite roots and reciprocals as powers first</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Product rule</span>
+        <span class="row-val">\((uv)' = u'v + uv'\), one term per factor</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Quotient rule</span>
+        <span class="row-val">\(\left(\frac{u}{v}\right)' = \frac{u'v - uv'}{v^2}\), numerator's derivative first</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Chain rule</span>
+        <span class="row-val">\(\frac{d}{dx}f(g(x)) = f'(g(x))g'(x)\); the inner derivative is the step people forget</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Core table</span>
+        <span class="row-val">\(\sin \to \cos\), \(\cos \to -\sin\), \(e^x \to e^x\), \(\ln x \to \frac{1}{x}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Implicit</span>
+        <span class="row-val">differentiate through, attach \(\frac{dy}{dx}\) to every \(y\), then solve for it</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Choosing a rule</span>
+        <span class="row-val">simplify first; nested means chain, multiplied means product</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../../physics/notes.js"></script>
+</body>
+</html>

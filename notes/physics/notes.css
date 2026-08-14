@@ -583,6 +583,10 @@ canvas { display: block; width: 100%; }
 .var-press   { color: var(--accent-coral)  !important; }
 .var-fb      { color: var(--accent-amber)  !important; }
 .var-area    { color: var(--accent-teal)   !important; }
+/* Calculus: outer function / u teal, inner function / v and dv coral, limit value amber */
+.var-fn      { color: var(--accent-teal)   !important; }
+.var-gn      { color: var(--accent-coral)  !important; }
+.var-lim     { color: var(--accent-amber)  !important; }
 
 .study-mode .formula:not(.revealed)  .var-k,
 .study-mode .formula:not(.revealed)  .var-u,
@@ -604,6 +608,9 @@ canvas { display: block; width: 100%; }
 .study-mode .formula:not(.revealed)  .var-press,
 .study-mode .formula:not(.revealed)  .var-fb,
 .study-mode .formula:not(.revealed)  .var-area,
+.study-mode .formula:not(.revealed)  .var-fn,
+.study-mode .formula:not(.revealed)  .var-gn,
+.study-mode .formula:not(.revealed)  .var-lim,
 .study-mode .row-val:not(.revealed)  .var-k,
 .study-mode .row-val:not(.revealed)  .var-u,
 .study-mode .row-val:not(.revealed)  .var-emech,
@@ -624,6 +631,9 @@ canvas { display: block; width: 100%; }
 .study-mode .row-val:not(.revealed)  .var-press,
 .study-mode .row-val:not(.revealed)  .var-fb,
 .study-mode .row-val:not(.revealed)  .var-area,
+.study-mode .row-val:not(.revealed)  .var-fn,
+.study-mode .row-val:not(.revealed)  .var-gn,
+.study-mode .row-val:not(.revealed)  .var-lim,
 .study-mode .badge:not(.revealed)    .var-k,
 .study-mode .badge:not(.revealed)    .var-u,
 .study-mode .badge:not(.revealed)    .var-emech,
@@ -643,7 +653,10 @@ canvas { display: block; width: 100%; }
 .study-mode .badge:not(.revealed)    .var-rho,
 .study-mode .badge:not(.revealed)    .var-press,
 .study-mode .badge:not(.revealed)    .var-fb,
-.study-mode .badge:not(.revealed)    .var-area { color: transparent !important; }
+.study-mode .badge:not(.revealed)    .var-area,
+.study-mode .badge:not(.revealed)    .var-fn,
+.study-mode .badge:not(.revealed)    .var-gn,
+.study-mode .badge:not(.revealed)    .var-lim { color: transparent !important; }
 
 .study-mode .graph-caption span {
   color: transparent;

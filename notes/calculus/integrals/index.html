@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integrals</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<!-- notes.css / notes.js still live under physics/ because that was the only course when they
+     were written; they are shared assets, not physics-specific. -->
+<link rel="stylesheet" href="../../physics/notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Calculus</a>
+    <div>
+      <h1>integrals</h1>
+      <span>antiderivatives, the definite integral, a table of common forms, u-substitution, and integration by parts</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Antiderivatives ── -->
+  <div class="section" id="sec-antiderivatives">
+    <p class="section-label">Antiderivatives</p>
+
+    <p class="prose">
+      Integration runs differentiation backward. An <strong>antiderivative</strong> of \(f\) is any function whose derivative is \(f\), and the indefinite integral names the whole family of them at once:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\int \class{var-fn}{f}(x)\,dx = \class{var-gn}{F}(x) + C \quad \text{where} \quad \class{var-gn}{F}'(x) = \class{var-fn}{f}(x)\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Reading the notation</p>
+        <div class="row">
+          <span class="row-desc">\(\int\)</span>
+          <span class="row-val">the integral sign, an elongated S for "sum"</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(dx\)</span>
+          <span class="row-val">names the variable of integration; it is not optional <span class="badge coral">always write it</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(+C\)</span>
+          <span class="row-val">constants differentiate to zero, so every answer has an unknown one</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Check any answer</span>
+          <span class="row-val">differentiate it; you should get the integrand back <span class="badge teal">free verification</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Indefinite vs. definite</span>
+          <span class="row-val">a family of functions vs. a single number</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">The rules that reverse cleanly</p>
+        <div class="row">
+          <span class="row-desc">Power rule</span>
+          <span class="row-val">\(\displaystyle\int x^n dx = \frac{x^{n+1}}{n+1} + C\), for \(n \neq -1\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">The exception</span>
+          <span class="row-val">\(\displaystyle\int x^{-1}dx = \ln|x| + C\), since \(n+1\) would be zero <span class="badge amber">special case</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Constant multiple</span>
+          <span class="row-val">\(\displaystyle\int c\,f\,dx = c\displaystyle\int f\,dx\); constants pull straight out</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Sum and difference</span>
+          <span class="row-val">integrate term by term</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">No product or quotient rule</span>
+          <span class="row-val">\(\int fg \neq \int f \int g\); products need substitution or parts <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Differentiation is a procedure: follow the rules and an answer always appears. Integration is pattern matching, so the goal of the rest of this page is to force unfamiliar integrals into shapes you already recognize.
+    </p>
+  </div>
+
+  <!-- ── Definite integrals ── -->
+  <div class="section" id="sec-definite">
+    <p class="section-label">Definite integrals</p>
+
+    <p class="prose">
+      Attaching limits turns the family of antiderivatives into one number, the signed area under the curve between those bounds. The <strong>fundamental theorem of calculus</strong> says you get it by evaluating any antiderivative at both ends:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\int_{\class{var-gn}{a}}^{\class{var-gn}{b}} \class{var-fn}{f}(x)\,dx = \class{var-lim}{F}(\class{var-gn}{b}) - \class{var-lim}{F}(\class{var-gn}{a})\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Properties</p>
+        <div class="row">
+          <span class="row-desc">Swapping the limits</span>
+          <span class="row-val">\(\displaystyle\int_b^a f = -\int_a^b f\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Equal limits</span>
+          <span class="row-val">\(\displaystyle\int_a^a f\,dx = 0\), no width means no area</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Splitting</span>
+          <span class="row-val">\(\displaystyle\int_a^c f = \int_a^b f + \int_b^c f\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Signed area</span>
+          <span class="row-val">area below the axis counts as negative <span class="badge amber">not the same as total area</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">No \(+C\)</span>
+          <span class="row-val">the constants cancel in the subtraction</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">The other half of the theorem</p>
+        <div class="row">
+          <span class="row-desc">Accumulation</span>
+          <span class="row-val">\(\dfrac{d}{dx}\displaystyle\int_a^x f(t)\,dt = f(x)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">What it means</span>
+          <span class="row-val">differentiation and integration undo each other <span class="badge teal">the whole point</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Variable upper limit</span>
+          <span class="row-val">if the top is \(g(x)\), multiply by \(g'(x)\) as usual</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Net change</span>
+          <span class="row-val">\(\displaystyle\int_a^b f'(x)\,dx = f(b) - f(a)\), the integral of a rate is the total change</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Every technique below works for definite integrals too. The only extra care is with substitution, where the bounds belong to \(x\) and have to be handled deliberately.
+    </p>
+  </div>
+
+  <!-- ── Common forms ── -->
+  <div class="section" id="sec-table">
+    <p class="section-label">Common forms</p>
+
+    <p class="prose">
+      These are the reference tables. Each is a derivative rule read right to left, so anything you can differentiate on sight belongs here as well.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Powers, exponentials, logarithms</p>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int x^n dx\)</span>
+          <span class="row-val">\(\dfrac{x^{n+1}}{n+1} + C\), \(n \neq -1\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \frac{1}{x}dx\)</span>
+          <span class="row-val">\(\ln|x| + C\) <span class="badge amber">absolute value required</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int e^x dx\)</span>
+          <span class="row-val">\(e^x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int b^x dx\)</span>
+          <span class="row-val">\(\dfrac{b^x}{\ln b} + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \ln x\,dx\)</span>
+          <span class="row-val">\(x\ln x - x + C\) <span class="badge teal">by parts</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int k\,dx\)</span>
+          <span class="row-val">\(kx + C\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Trigonometric</p>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \sin x\,dx\)</span>
+          <span class="row-val">\(-\cos x + C\) <span class="badge coral">sign flips</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \cos x\,dx\)</span>
+          <span class="row-val">\(\sin x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \sec^2 x\,dx\)</span>
+          <span class="row-val">\(\tan x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \sec x \tan x\,dx\)</span>
+          <span class="row-val">\(\sec x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \tan x\,dx\)</span>
+          <span class="row-val">\(-\ln|\cos x| + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \sec x\,dx\)</span>
+          <span class="row-val">\(\ln|\sec x + \tan x| + C\) <span class="badge amber">memorize</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Forms giving inverse trig</p>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \frac{dx}{1 + x^2}\)</span>
+          <span class="row-val">\(\arctan x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \frac{dx}{\sqrt{1 - x^2}}\)</span>
+          <span class="row-val">\(\arcsin x + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \frac{dx}{a^2 + x^2}\)</span>
+          <span class="row-val">\(\dfrac{1}{a}\arctan\dfrac{x}{a} + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \frac{dx}{\sqrt{a^2 - x^2}}\)</span>
+          <span class="row-val">\(\arcsin\dfrac{x}{a} + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Recognizing them</span>
+          <span class="row-val">a lone constant plus or minus a square in the denominator <span class="badge teal">look for this shape</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Linear inside shortcut</p>
+        <div class="row">
+          <span class="row-desc">The pattern</span>
+          <span class="row-val">\(\displaystyle\int f(ax + b)\,dx = \dfrac{1}{a}F(ax+b) + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \cos(5x)\,dx\)</span>
+          <span class="row-val">\(\dfrac{1}{5}\sin(5x) + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int e^{3x}dx\)</span>
+          <span class="row-val">\(\dfrac{1}{3}e^{3x} + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int (2x + 1)^4 dx\)</span>
+          <span class="row-val">\(\dfrac{(2x+1)^5}{10} + C\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Only for linear insides</span>
+          <span class="row-val">with \(x^2\) or worse inside, you need a real substitution <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      That shortcut is substitution done in your head, and the \(1/a\) out front is there to cancel the chain rule factor differentiation would produce.
+    </p>
+  </div>
+
+  <!-- ── u-substitution ── -->
+  <div class="section" id="sec-usub">
+    <p class="section-label">u-substitution</p>
+
+    <p class="prose">
+      Substitution reverses the chain rule. If the integrand contains an inner function alongside its own derivative, renaming that inner function collapses the whole expression into something basic:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\int \class{var-fn}{f}\big(\class{var-gn}{g}(x)\big)\class{var-gn}{g}'(x)\,dx = \int \class{var-fn}{f}(\class{var-gn}{u})\,d\class{var-gn}{u}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Procedure</p>
+        <div class="row">
+          <span class="row-desc">1. Choose \(u\)</span>
+          <span class="row-val">the inner function, whatever sits inside a power, root, exponent, or trig argument</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">2. Differentiate</span>
+          <span class="row-val">\(du = g'(x)\,dx\), then solve for \(dx\) if that helps</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">3. Substitute everything</span>
+          <span class="row-val">no \(x\) may survive in the new integral <span class="badge coral">check before integrating</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">4. Integrate in \(u\)</span>
+          <span class="row-val">it should now match a form from the table above</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">5. Substitute back</span>
+          <span class="row-val">replace \(u\) with \(g(x)\), and keep the \(+C\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Choosing \(u\)</p>
+        <div class="row">
+          <span class="row-desc">Best candidate</span>
+          <span class="row-val">the expression whose derivative also appears, up to a constant multiple</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Inside a composition</span>
+          <span class="row-val">the exponent of \(e\), the argument of \(\ln\) or \(\sin\), the base of a power</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">A denominator</span>
+          <span class="row-val">good choice when the numerator is close to its derivative</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Constants are fine</span>
+          <span class="row-val">a stray factor of \(2\) can be balanced by a \(\tfrac{1}{2}\) out front</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Variables are not</span>
+          <span class="row-val">a leftover \(x\) cannot be moved outside the integral <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      For a definite integral, convert the bounds as well: \(x = a\) becomes \(u = g(a)\). Then you evaluate directly in \(u\) and never substitute back.
+    </p>
+
+    <div class="card">
+      <p class="card-title">Example: \(\displaystyle\int x\sqrt{x^2 + 5}\,dx\)</p>
+      <div class="row">
+        <span class="row-desc">Choose</span>
+        <span class="row-val">\(u = x^2 + 5\), the inside of the root</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Differentiate</span>
+        <span class="row-val">\(du = 2x\,dx\), so \(x\,dx = \tfrac{1}{2}du\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Rewrite</span>
+        <span class="row-val">\(\displaystyle\frac{1}{2}\int u^{1/2}\,du\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Integrate</span>
+        <span class="row-val">\(\dfrac{1}{2}\cdot\dfrac{2}{3}u^{3/2} = \dfrac{1}{3}u^{3/2}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Back-substitute</span>
+        <span class="row-val">\(\dfrac{1}{3}(x^2+5)^{3/2} + C\) <span class="badge teal">answer</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Integration by parts ── -->
+  <div class="section" id="sec-parts">
+    <p class="section-label">Integration by parts</p>
+
+    <p class="prose">
+      Integrating the product rule and rearranging gives the tool for products that substitution cannot touch. It trades one integral for another, and the method only pays off if the new one is easier:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\int \class{var-fn}{u}\,d\class{var-gn}{v} = \class{var-fn}{u}\class{var-gn}{v} - \int \class{var-gn}{v}\,d\class{var-fn}{u}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Choosing \(u\) with LIATE</p>
+        <div class="row">
+          <span class="row-desc">The ranking</span>
+          <span class="row-val">Logarithmic, Inverse trig, Algebraic, Trigonometric, Exponential</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">How to use it</span>
+          <span class="row-val">whichever type comes first in that list becomes \(u\); the rest is \(dv\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Why it works</span>
+          <span class="row-val">\(u\) should get simpler when differentiated, \(dv\) should be easy to integrate</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\displaystyle\int \ln x\,dx\)</span>
+          <span class="row-val">take \(u = \ln x\) and \(dv = dx\) <span class="badge teal">the standard trick</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Definite version</span>
+          <span class="row-val">\(\displaystyle\int_a^b u\,dv = \Big[uv\Big]_a^b - \int_a^b v\,du\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">When to reach for it</p>
+        <div class="row">
+          <span class="row-desc">Mixed types</span>
+          <span class="row-val">a polynomial times a trig or exponential factor</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">A lone log or inverse trig</span>
+          <span class="row-val">\(\ln x\) and \(\arctan x\) have no basic antiderivative</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Repeat if needed</span>
+          <span class="row-val">\(x^2 e^x\) takes two passes, dropping the power each time</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Cyclic case</span>
+          <span class="row-val">\(e^x\sin x\) returns to itself; solve for the integral algebraically <span class="badge amber">clever finish</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Try substitution first</span>
+          <span class="row-val">it is faster whenever it applies <span class="badge teal">order of attack</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Example: \(\displaystyle\int x e^{3x}\,dx\)</p>
+      <div class="row">
+        <span class="row-desc">Assign by LIATE</span>
+        <span class="row-val">algebraic beats exponential, so \(u = x\) and \(dv = e^{3x}dx\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Build the pieces</span>
+        <span class="row-val">\(du = dx\), \(v = \tfrac{1}{3}e^{3x}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Apply the formula</span>
+        <span class="row-val">\(\dfrac{x}{3}e^{3x} - \displaystyle\int \dfrac{1}{3}e^{3x}dx\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Finish</span>
+        <span class="row-val">\(\dfrac{x}{3}e^{3x} - \dfrac{1}{9}e^{3x} + C\) <span class="badge teal">answer</span></span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Verify</span>
+        <span class="row-val">differentiating with the product rule returns \(xe^{3x}\)</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      Had the assignment been reversed, the remaining integral would have contained \(x^2\) instead of \(x\), which is worse than where you started. That is the signal to swap the choice and try again.
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section" id="sec-summary">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">Antiderivative</span>
+        <span class="row-val">\(\int f\,dx = F + C\) with \(F' = f\); always carry the \(+C\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Power rule</span>
+        <span class="row-val">\(\int x^n dx = \frac{x^{n+1}}{n+1} + C\) except at \(n = -1\), which gives \(\ln|x|\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Fundamental theorem</span>
+        <span class="row-val">\(\int_a^b f\,dx = F(b) - F(a)\), a signed area</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">u-substitution</span>
+        <span class="row-val">reverses the chain rule; pick \(u\) so that \(du\) is already present</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">By parts</span>
+        <span class="row-val">\(\int u\,dv = uv - \int v\,du\), with \(u\) chosen by LIATE</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Strategy</span>
+        <span class="row-val">simplify, match the table, then substitution, then parts</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Checking work</span>
+        <span class="row-val">differentiate the answer; integration is the only topic that grades itself</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../../physics/notes.js"></script>
+</body>
+</html>

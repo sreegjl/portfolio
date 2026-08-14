@@ -157,6 +157,13 @@ if (studyToggle && page) {
       var path  = window.location.pathname.replace(/\/index\.html$/, '/');
       if (path.charAt(path.length - 1) !== '/') path += '/';
 
+      // Prev/next stay inside one course. The manifest lists every course's notes, so without
+      // this the last physics note would link forward into calculus.
+      var course = path.indexOf(base) === 0 ? path.slice(base.length).split('/')[0] : '';
+      if (course) {
+        allNotes = allNotes.filter(function (n) { return n.path.split('/')[0] === course; });
+      }
+
       var idx = -1;
       allNotes.forEach(function (n, i) {
         var np = base + n.path.replace(/\/index\.html$/, '') + '/';

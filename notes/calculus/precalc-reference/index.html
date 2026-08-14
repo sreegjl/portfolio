@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Calc Reference</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<!-- notes.css / notes.js are the shared notes stylesheet and page behaviour. They still live
+     under physics/ because that was the only course when they were written; worth promoting to
+     notes/ once calculus has pages of its own. -->
+<link rel="stylesheet" href="../../physics/notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+/* Wider layout, matching the physics equation sheet */
+.page { max-width: 980px; }
+
+/* notes.js relocates the study toggle into the note meta bar, but that bar is only built for
+   pages listed in notes-manifest.json, which a reference page is not. The header is a column,
+   so pin the toggle to the right instead of letting it stack under the subtitle.
+   That missing meta bar is also what normally separates the header from the first section
+   (header itself is margin-bottom: 0), so restore its 1.5rem here or "Algebra toolkit" sits
+   flush against the header rule. */
+.page > header { position: relative; margin-bottom: 1.5rem; }
+.page > header .study-toggle { position: absolute; right: 0; bottom: 1.25rem; }
+
+@media (max-width: 620px) {
+  .page > header .study-toggle { position: static; margin-top: 0.5rem; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Calculus</a>
+    <div>
+      <h1>pre-calc reference</h1>
+      <span>the algebra, functions, logarithms, and trigonometry assumed by everything in calculus</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── Algebra toolkit ── -->
+  <div class="section" id="sec-algebra">
+    <p class="section-label">Algebra toolkit</p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Exponents and radicals</p>
+        <div class="row">
+          <span class="row-desc">Product / quotient</span>
+          <span class="row-val">\(x^a x^b = x^{a+b}\), \(\dfrac{x^a}{x^b} = x^{a-b}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Power of a power</span>
+          <span class="row-val">\((x^a)^b = x^{ab}\), \((xy)^a = x^a y^a\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Negative and zero</span>
+          <span class="row-val">\(x^{-a} = \dfrac{1}{x^a}\), \(x^0 = 1\) for \(x \neq 0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Fractional</span>
+          <span class="row-val">\(x^{m/n} = \sqrt[n]{x^m} = (\sqrt[n]{x})^m\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Rewrite before differentiating</span>
+          <span class="row-val">\(\dfrac{1}{\sqrt{x}} = x^{-1/2}\), \(\sqrt[3]{x^2} = x^{2/3}\) <span class="badge teal">essential habit</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Factoring and special products</p>
+        <div class="row">
+          <span class="row-desc">Difference of squares</span>
+          <span class="row-val">\(a^2 - b^2 = (a-b)(a+b)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Perfect squares</span>
+          <span class="row-val">\((a \pm b)^2 = a^2 \pm 2ab + b^2\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Sum / difference of cubes</span>
+          <span class="row-val">\(a^3 \pm b^3 = (a \pm b)(a^2 \mp ab + b^2)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Grouping</span>
+          <span class="row-val">\(ax + ay + bx + by = (a+b)(x+y)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Why it matters</span>
+          <span class="row-val">factoring is how a \(0/0\) limit gets resolved <span class="badge amber">used constantly</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Quadratics</p>
+        <div class="row">
+          <span class="row-desc">Quadratic formula</span>
+          <span class="row-val">\(x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Discriminant \(b^2 - 4ac\)</span>
+          <span class="row-val">positive: two real roots; zero: one; negative: none <span class="badge amber">counts roots</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Vertex form</span>
+          <span class="row-val">\(y = a(x-h)^2 + k\), vertex at \((h, k)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Vertex from standard form</span>
+          <span class="row-val">\(h = -\dfrac{b}{2a}\), then \(k = f(h)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Completing the square</span>
+          <span class="row-val">\(x^2 + bx = \left(x + \tfrac{b}{2}\right)^2 - \tfrac{b^2}{4}\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Fractions and radicals</p>
+        <div class="row">
+          <span class="row-desc">Common denominator</span>
+          <span class="row-val">\(\dfrac{a}{b} + \dfrac{c}{d} = \dfrac{ad + bc}{bd}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Complex fraction</span>
+          <span class="row-val">multiply top and bottom by the inner denominators</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Rationalizing</span>
+          <span class="row-val">multiply by the conjugate: \(\dfrac{1}{\sqrt{a}-\sqrt{b}} \cdot \dfrac{\sqrt{a}+\sqrt{b}}{\sqrt{a}+\sqrt{b}}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Absolute value</span>
+          <span class="row-val">\(|x| = a \Rightarrow x = \pm a\); \(|x| &lt; a \Rightarrow -a &lt; x &lt; a\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Never do this</span>
+          <span class="row-val">\(\sqrt{a+b} \neq \sqrt{a} + \sqrt{b}\), \(\dfrac{1}{a+b} \neq \dfrac{1}{a} + \dfrac{1}{b}\) <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Functions ── -->
+  <div class="section" id="sec-functions">
+    <p class="section-label">Functions</p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Domain and range</p>
+        <div class="row">
+          <span class="row-desc">Denominators</span>
+          <span class="row-val">exclude anything making the bottom zero</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Even roots</span>
+          <span class="row-val">need the inside \(\geq 0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Logarithms</span>
+          <span class="row-val">need the argument \(&gt; 0\) strictly</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Interval notation</span>
+          <span class="row-val">\((a,b)\) excludes ends, \([a,b]\) includes them, \(\infty\) is always open</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Vertical line test</span>
+          <span class="row-val">a graph is a function if no vertical line meets it twice</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Composition and inverses</p>
+        <div class="row">
+          <span class="row-desc">Composition</span>
+          <span class="row-val">\((f \circ g)(x) = f(g(x))\), inner function first</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Decomposing</span>
+          <span class="row-val">spotting \(f(g(x))\) is what the chain rule needs <span class="badge teal">essential habit</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Inverse</span>
+          <span class="row-val">swap \(x\) and \(y\), then solve for \(y\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Inverse property</span>
+          <span class="row-val">\(f(f^{-1}(x)) = x\); the graphs reflect across \(y = x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Exists only if</span>
+          <span class="row-val">the function is one-to-one, so it passes the horizontal line test</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Symmetry</p>
+        <div class="row">
+          <span class="row-desc">Even</span>
+          <span class="row-val">\(f(-x) = f(x)\), symmetric about the \(y\)-axis (\(x^2\), \(\cos x\))</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Odd</span>
+          <span class="row-val">\(f(-x) = -f(x)\), symmetric about the origin (\(x^3\), \(\sin x\))</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Neither</span>
+          <span class="row-val">most functions, including \(e^x\) and \(x^2 + x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Quick test</span>
+          <span class="row-val">substitute \(-x\) and compare with the original</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Transformations of \(y = f(x)\)</p>
+        <div class="row">
+          <span class="row-desc">\(f(x) + k\)</span>
+          <span class="row-val">shifts up \(k\); \(f(x) - k\) shifts down</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(f(x - h)\)</span>
+          <span class="row-val">shifts right \(h\), opposite the sign <span class="badge amber">counterintuitive</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(a\,f(x)\)</span>
+          <span class="row-val">stretches vertically by \(a\); \(a &lt; 0\) also flips over the \(x\)-axis</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(f(bx)\)</span>
+          <span class="row-val">compresses horizontally by \(b\), again the reverse of what it looks like</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Order</span>
+          <span class="row-val">horizontal changes act on the input first, vertical ones on the output last</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Polynomials and rational functions ── -->
+  <div class="section" id="sec-rational">
+    <p class="section-label">Polynomials and rational functions</p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Lines and polynomials</p>
+        <div class="row">
+          <span class="row-desc">Slope</span>
+          <span class="row-val">\(m = \dfrac{y_2 - y_1}{x_2 - x_1}\), the quantity a derivative generalizes</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Point-slope form</span>
+          <span class="row-val">\(y - y_1 = m(x - x_1)\) <span class="badge teal">used for every tangent line</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Parallel / perpendicular</span>
+          <span class="row-val">equal slopes; slopes multiplying to \(-1\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">End behavior</span>
+          <span class="row-val">set by the leading term: even degree matches at both ends, odd degree opposes</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Roots and multiplicity</span>
+          <span class="row-val">odd multiplicity crosses the axis, even multiplicity touches and turns back</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Asymptotes and holes</p>
+        <div class="row">
+          <span class="row-desc">Vertical asymptote</span>
+          <span class="row-val">denominator zero that does not cancel</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Hole</span>
+          <span class="row-val">a factor that cancels from top and bottom <span class="badge amber">not an asymptote</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Top degree \(&lt;\) bottom</span>
+          <span class="row-val">horizontal asymptote \(y = 0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Degrees equal</span>
+          <span class="row-val">horizontal asymptote at the ratio of leading coefficients</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Top degree one higher</span>
+          <span class="row-val">a slant asymptote, found by polynomial division</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Exponentials and logarithms ── -->
+  <div class="section" id="sec-logs">
+    <p class="section-label">Exponentials and logarithms</p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Log rules</p>
+        <div class="row">
+          <span class="row-desc">Definition</span>
+          <span class="row-val">\(\log_b x = y \iff b^y = x\), with \(b &gt; 0\), \(b \neq 1\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Product / quotient</span>
+          <span class="row-val">\(\log(xy) = \log x + \log y\), \(\log\dfrac{x}{y} = \log x - \log y\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Power</span>
+          <span class="row-val">\(\log(x^n) = n\log x\) <span class="badge teal">used for log differentiation</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Change of base</span>
+          <span class="row-val">\(\log_b x = \dfrac{\ln x}{\ln b}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Never do this</span>
+          <span class="row-val">\(\log(x+y) \neq \log x + \log y\) <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Working with \(e\) and \(\ln\)</p>
+        <div class="row">
+          <span class="row-desc">Natural log</span>
+          <span class="row-val">\(\ln x = \log_e x\), with \(e \approx 2.71828\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Inverse pair</span>
+          <span class="row-val">\(e^{\ln x} = x\) for \(x &gt; 0\), and \(\ln(e^x) = x\) for all \(x\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Known values</span>
+          <span class="row-val">\(\ln 1 = 0\), \(\ln e = 1\); \(\ln x \to -\infty\) as \(x \to 0^+\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Solving \(b^x = c\)</span>
+          <span class="row-val">take \(\ln\) of both sides, then \(x = \dfrac{\ln c}{\ln b}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Rewriting any base</span>
+          <span class="row-val">\(b^x = e^{x\ln b}\), the form calculus prefers</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Trigonometry ── -->
+  <div class="section" id="sec-trig">
+    <p class="section-label">Trigonometry</p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Unit circle values</p>
+        <div class="row">
+          <span class="row-desc">\(0\)</span>
+          <span class="row-val">\(\sin = 0\), \(\cos = 1\), \(\tan = 0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\pi/6\) (\(30^\circ\))</span>
+          <span class="row-val">\(\sin = \tfrac{1}{2}\), \(\cos = \tfrac{\sqrt{3}}{2}\), \(\tan = \tfrac{\sqrt{3}}{3}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\pi/4\) (\(45^\circ\))</span>
+          <span class="row-val">\(\sin = \cos = \tfrac{\sqrt{2}}{2}\), \(\tan = 1\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\pi/3\) (\(60^\circ\))</span>
+          <span class="row-val">\(\sin = \tfrac{\sqrt{3}}{2}\), \(\cos = \tfrac{1}{2}\), \(\tan = \sqrt{3}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\pi/2\) (\(90^\circ\))</span>
+          <span class="row-val">\(\sin = 1\), \(\cos = 0\), \(\tan\) undefined</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Signs by quadrant</span>
+          <span class="row-val">I all, II sine, III tangent, IV cosine</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Identities</p>
+        <div class="row">
+          <span class="row-desc">Reciprocal</span>
+          <span class="row-val">\(\csc = \tfrac{1}{\sin}\), \(\sec = \tfrac{1}{\cos}\), \(\cot = \tfrac{1}{\tan}\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Pythagorean</span>
+          <span class="row-val">\(\sin^2\theta + \cos^2\theta = 1\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Derived forms</span>
+          <span class="row-val">\(1 + \tan^2\theta = \sec^2\theta\), \(1 + \cot^2\theta = \csc^2\theta\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Double angle</span>
+          <span class="row-val">\(\sin 2\theta = 2\sin\theta\cos\theta\), \(\cos 2\theta = \cos^2\theta - \sin^2\theta\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Power reduction</span>
+          <span class="row-val">\(\sin^2\theta = \tfrac{1 - \cos 2\theta}{2}\), \(\cos^2\theta = \tfrac{1 + \cos 2\theta}{2}\) <span class="badge teal">needed for integrals</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Sum</span>
+          <span class="row-val">\(\sin(a \pm b) = \sin a\cos b \pm \cos a\sin b\)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Graphs</p>
+        <div class="row">
+          <span class="row-desc">\(y = a\sin(bx + c) + d\)</span>
+          <span class="row-val">amplitude \(|a|\), period \(\dfrac{2\pi}{|b|}\), vertical shift \(d\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Sine and cosine</span>
+          <span class="row-val">range \([-1, 1]\), period \(2\pi\), defined everywhere</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Tangent</span>
+          <span class="row-val">period \(\pi\), asymptotes at \(\tfrac{\pi}{2} + n\pi\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Radians only</span>
+          <span class="row-val">every calculus formula assumes radians <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Inverse trig</p>
+        <div class="row">
+          <span class="row-desc">\(\arcsin x\)</span>
+          <span class="row-val">domain \([-1,1]\), range \(\left[-\tfrac{\pi}{2}, \tfrac{\pi}{2}\right]\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\arccos x\)</span>
+          <span class="row-val">domain \([-1,1]\), range \([0, \pi]\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\arctan x\)</span>
+          <span class="row-val">domain all reals, range \(\left(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\right)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Why ranges are restricted</span>
+          <span class="row-val">trig functions repeat, so they are only invertible on one chosen cycle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Getting ready for limits ── -->
+  <div class="section" id="sec-limits-prep">
+    <p class="section-label">Getting ready for limits</p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Algebraic moves that resolve \(0/0\)</p>
+        <div class="row">
+          <span class="row-desc">Factor and cancel</span>
+          <span class="row-val">\(\dfrac{x^2 - 9}{x - 3} = x + 3\) for \(x \neq 3\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Multiply by the conjugate</span>
+          <span class="row-val">use it whenever a square root sits in a difference</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Clear inner fractions</span>
+          <span class="row-val">multiply through by the common denominator</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Divide by the highest power</span>
+          <span class="row-val">the standard move for limits as \(x \to \infty\)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Things worth memorizing now</p>
+        <div class="row">
+          <span class="row-desc">Difference quotient</span>
+          <span class="row-val">\(\dfrac{f(x+h) - f(x)}{h}\), the definition of the derivative</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Piecewise continuity</span>
+          <span class="row-val">the two sides must agree in value at the joining point</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Binomial expansion</span>
+          <span class="row-val">\((x+h)^2 = x^2 + 2xh + h^2\), \((x+h)^3 = x^3 + 3x^2h + 3xh^2 + h^3\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Function notation</span>
+          <span class="row-val">\(f(x+h)\) means substitute \(x+h\) everywhere, not add \(h\) to the output <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../../physics/notes.js"></script>
+</body>
+</html>

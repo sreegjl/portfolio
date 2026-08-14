@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundations</title>
+
+<link rel="icon" href="/files/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/files/favicon/favicon.svg">
+<link rel="apple-touch-icon" href="/files/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/files/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<!-- notes.css / notes.js still live under physics/ because that was the only course when they
+     were written; they are shared assets, not physics-specific. -->
+<link rel="stylesheet" href="../../physics/notes.css">
+<script src="/theme.js"></script>
+<script>
+  window.MathJax = {
+    loader: { load: ['[tex]/html'] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], packages: {'[+]': ['html']} },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="../../../" class="logo">@sreegjl</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="../../../notes.html" class="nav-link active">NOTES</a>
+    </div>
+    <span class="nav-divider"></span>
+    <button class="theme-toggle" id="themeToggle" type="button" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <header>
+    <a href="../" class="syllabus-back">← Calculus</a>
+    <div>
+      <h1>foundations</h1>
+      <span>limit notation, limit laws, resolving limits algebraically, indeterminate forms, and l'hôpital's rule</span>
+    </div>
+    <div class="study-toggle" id="studyToggle" title="Hide answers for self-testing">
+      <span class="study-toggle-label">study mode</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </header>
+
+  <!-- ── What a limit says ── -->
+  <div class="section" id="sec-limits">
+    <p class="section-label">What a limit says</p>
+
+    <p class="prose">
+      A <strong>limit</strong> is the value a function heads toward as its input closes in on some number. It describes the approach, not the arrival, so the function does not have to be defined at that point for the limit to exist:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-purple-bg); color: var(--accent-purple); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\lim_{\class{var-gn}{x} \to \class{var-gn}{a}} \class{var-fn}{f}(\class{var-gn}{x}) = \class{var-lim}{L}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Reading the notation</p>
+        <div class="row">
+          <span class="row-desc">\(x \to a\)</span>
+          <span class="row-val">\(x\) gets arbitrarily close to \(a\) from both sides, never equalling it</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(x \to a^-\)</span>
+          <span class="row-val">left-hand limit, approaching through values below \(a\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(x \to a^+\)</span>
+          <span class="row-val">right-hand limit, approaching through values above \(a\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Existence</span>
+          <span class="row-val">the two-sided limit exists only if both one-sided limits exist and agree <span class="badge teal">both sides must match</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(f(a)\)</span>
+          <span class="row-val">irrelevant to the limit; it can differ from \(L\) or not exist at all</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">When a limit fails to exist</p>
+        <div class="row">
+          <span class="row-desc">Jump</span>
+          <span class="row-val">the one-sided limits are both finite but different <span class="badge coral">no limit</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Infinite</span>
+          <span class="row-val">the function blows up at a vertical asymptote <span class="badge coral">no limit</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Oscillation</span>
+          <span class="row-val">values swing forever without settling, as \(\sin(1/x)\) does near \(0\) <span class="badge coral">no limit</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Removable hole</span>
+          <span class="row-val">the limit still exists; only the point itself is missing <span class="badge teal">limit exists</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      A function is <strong>continuous</strong> at \(a\) when the limit exists, \(f(a)\) exists, and the two are equal. Continuity is what makes the shortcut in the next section legal: for a continuous function, finding the limit is just plugging in.
+    </p>
+  </div>
+
+  <!-- ── Limit laws ── -->
+  <div class="section" id="sec-laws">
+    <p class="section-label">Limit laws</p>
+
+    <p class="prose">
+      When two limits both exist, the limit operation passes straight through arithmetic. That lets a complicated expression be broken into pieces and evaluated one at a time:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-teal-bg); color: var(--accent-teal); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\lim_{x \to a}\big[\class{var-fn}{f}(x) \pm \class{var-gn}{g}(x)\big] = \lim_{x \to a}\class{var-fn}{f}(x) \pm \lim_{x \to a}\class{var-gn}{g}(x)\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">The laws</p>
+        <div class="row">
+          <span class="row-desc">Constant multiple</span>
+          <span class="row-val">\(\lim\, c\,f(x) = c \lim f(x)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Product</span>
+          <span class="row-val">\(\lim\, f(x)g(x) = \lim f(x) \cdot \lim g(x)\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Quotient</span>
+          <span class="row-val">\(\lim \dfrac{f(x)}{g(x)} = \dfrac{\lim f(x)}{\lim g(x)}\), provided \(\lim g(x) \neq 0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Power and root</span>
+          <span class="row-val">\(\lim [f(x)]^n = [\lim f(x)]^n\), same for \(\sqrt[n]{\ }\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Composition</span>
+          <span class="row-val">\(\lim f(g(x)) = f(\lim g(x))\) when \(f\) is continuous there</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Direct substitution</p>
+        <div class="row">
+          <span class="row-desc">Always try it first</span>
+          <span class="row-val">substitute \(x = a\) and see what comes out <span class="badge teal">step one</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Works for</span>
+          <span class="row-val">polynomials, roots, \(\sin\), \(\cos\), \(e^x\), and \(\ln x\) anywhere on their domain</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">A number comes out</span>
+          <span class="row-val">that number is the limit; you are done <span class="badge teal">done</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\frac{k}{0}\) with \(k \neq 0\)</span>
+          <span class="row-val">a vertical asymptote; check each side for \(+\infty\) or \(-\infty\) <span class="badge amber">not indeterminate</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\frac{0}{0}\)</span>
+          <span class="row-val">indeterminate, so the expression needs rewriting first <span class="badge coral">keep going</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Substitution only fails in the cases where the function is not continuous at \(a\), and almost always that failure shows up as \(0/0\). Those are the interesting limits, and every technique below exists to handle them.
+    </p>
+  </div>
+
+  <!-- ── Resolving 0/0 by algebra ── -->
+  <div class="section" id="sec-algebra">
+    <p class="section-label">Resolving 0/0 by algebra</p>
+
+    <p class="prose">
+      A \(0/0\) result never means the limit is zero or undefined. It means numerator and denominator share a hidden factor that vanishes at \(a\), and cancelling it exposes the real behavior:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-amber-bg); color: var(--accent-amber); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\lim_{x \to 4}\frac{x^2 - x - 12}{x - 4} = \lim_{x \to 4}\frac{(x-4)(x+3)}{x-4} = \lim_{x \to 4}(x+3) = 7\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">The four standard moves</p>
+        <div class="row">
+          <span class="row-desc">Factor and cancel</span>
+          <span class="row-val">the first thing to try on any rational expression</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Multiply by the conjugate</span>
+          <span class="row-val">use whenever a square root sits inside a difference</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Clear inner fractions</span>
+          <span class="row-val">multiply top and bottom by the common denominator</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Divide by the highest power</span>
+          <span class="row-val">the move for \(x \to \pm\infty\), not for \(x \to a\) <span class="badge amber">end behavior</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Limits at infinity of a rational function</p>
+        <div class="row">
+          <span class="row-desc">Top degree \(&lt;\) bottom</span>
+          <span class="row-val">limit is \(0\); the denominator wins</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Degrees equal</span>
+          <span class="row-val">limit is the ratio of the leading coefficients</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Top degree \(&gt;\) bottom</span>
+          <span class="row-val">limit is \(\pm\infty\); the numerator wins <span class="badge coral">no finite limit</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Growth ranking</span>
+          <span class="row-val">\(\ln x \ll x^n \ll e^x \ll x!\), which settles most \(\infty/\infty\) races</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Cancelling \((x-4)\) is legal because the limit only cares about \(x\) values near \(4\), never \(4\) itself, and there the factor is nonzero. The original function still has a hole at \(x = 4\); the limit fills it in.
+    </p>
+  </div>
+
+  <!-- ── Indeterminate forms ── -->
+  <div class="section" id="sec-indeterminate">
+    <p class="section-label">Indeterminate forms</p>
+
+    <p class="prose">
+      An <strong>indeterminate form</strong> is a result that carries no information. Two competing behaviors are pulling in opposite directions, and which one wins depends entirely on the specific functions, so the expression has to be rewritten before it can be evaluated.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">The seven indeterminate forms</p>
+        <div class="row">
+          <span class="row-desc">\(\dfrac{0}{0}\) and \(\dfrac{\infty}{\infty}\)</span>
+          <span class="row-val">quotient forms; l'hôpital applies directly <span class="badge teal">ready to use</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(0 \cdot \infty\)</span>
+          <span class="row-val">a product form; rewrite one factor as a reciprocal</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\infty - \infty\)</span>
+          <span class="row-val">combine over a common denominator or rationalize</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(1^\infty\), \(0^0\), \(\infty^0\)</span>
+          <span class="row-val">exponential forms; take a logarithm first <span class="badge amber">log trick</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Forms that only look indeterminate</p>
+        <div class="row">
+          <span class="row-desc">\(\dfrac{k}{0}\), \(k \neq 0\)</span>
+          <span class="row-val">grows without bound, so the answer is \(\pm\infty\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\dfrac{0}{k}\) and \(\dfrac{k}{\infty}\)</span>
+          <span class="row-val">both equal \(0\), no work needed</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\infty + \infty\) and \(\infty \cdot \infty\)</span>
+          <span class="row-val">both equal \(\infty\); only the difference is ambiguous</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(0^\infty\)</span>
+          <span class="row-val">equals \(0\); it is \(0^0\) that is indeterminate <span class="badge coral">easy to confuse</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Why it matters</span>
+          <span class="row-val">l'hôpital on a determinate form gives a wrong answer <span class="badge coral">common error</span></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      The clearest example of the ambiguity is \(\infty/\infty\). It can come out as \(0\), as any finite number, or as \(\infty\), depending on how fast each piece grows. That is exactly why the form itself tells you nothing.
+    </p>
+  </div>
+
+  <!-- ── L'Hôpital's rule ── -->
+  <div class="section" id="sec-lhopital">
+    <p class="section-label">L'Hôpital's rule</p>
+
+    <p class="prose">
+      When a quotient evaluates to \(0/0\) or \(\infty/\infty\), comparing how fast the two parts change resolves the race. Differentiate the numerator and denominator <strong>separately</strong> and take the limit again:
+    </p>
+
+    <p class="prose formula" style="background: var(--accent-coral-bg); color: var(--accent-coral); padding: 0.6rem 0.9rem; border-radius: var(--radius); font-weight: 500;">
+      \[\lim_{x \to a}\frac{\class{var-fn}{f}(x)}{\class{var-gn}{g}(x)} = \lim_{x \to a}\frac{\class{var-fn}{f}'(x)}{\class{var-gn}{g}'(x)}\]
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <p class="card-title">Conditions and cautions</p>
+        <div class="row">
+          <span class="row-desc">Check the form first</span>
+          <span class="row-val">the limit must actually be \(0/0\) or \(\infty/\infty\) <span class="badge coral">verify every time</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Differentiability</span>
+          <span class="row-val">\(f\) and \(g\) differentiable near \(a\), with \(g'(x) \neq 0\) there</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Not the quotient rule</span>
+          <span class="row-val">top and bottom are differentiated independently <span class="badge coral">common error</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Repeat as needed</span>
+          <span class="row-val">still indeterminate? apply it again, rechecking the form each pass</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">If it never resolves</span>
+          <span class="row-val">the rule is inconclusive; go back to algebra or growth ranking <span class="badge amber">know when to stop</span></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Converting the other forms</p>
+        <div class="row">
+          <span class="row-desc">\(0 \cdot \infty\)</span>
+          <span class="row-val">write \(f g\) as \(\dfrac{f}{1/g}\) to make it \(0/0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(\infty - \infty\)</span>
+          <span class="row-val">combine into a single fraction, which lands on \(0/0\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">\(1^\infty\), \(0^0\), \(\infty^0\)</span>
+          <span class="row-val">set \(y = f(x)^{g(x)}\), find \(\lim \ln y = \lim g \ln f\)</span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Finish the log trick</span>
+          <span class="row-val">the answer is \(e^{\lim \ln y}\), not \(\lim \ln y\) <span class="badge coral">easy to forget</span></span>
+        </div>
+        <div class="row">
+          <span class="row-desc">Classic result</span>
+          <span class="row-val">\(\lim\limits_{x \to \infty}\left(1 + \tfrac{1}{x}\right)^x = e\), a \(1^\infty\) form</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="prose">
+      The rule works because near \(a\) each function is well approximated by its tangent line, and when both pass through zero the constant terms drop out, leaving only the ratio of slopes. That is why it needs a genuine \(0/0\): the shared zero is what makes the approximation exact in the limit.
+    </p>
+  </div>
+
+  <!-- ── Key takeaways ── -->
+  <div class="section" id="sec-summary">
+    <p class="section-label">Key takeaways</p>
+
+    <div class="card">
+      <p class="card-title">Summary</p>
+      <div class="row">
+        <span class="row-desc">Limit</span>
+        <span class="row-val">\(\lim\limits_{x \to a} f(x) = L\), the approach value; exists only if both sides agree</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Continuity</span>
+        <span class="row-val">\(\lim\limits_{x \to a} f(x) = f(a)\), which is what licenses direct substitution</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Limit laws</span>
+        <span class="row-val">limits distribute over sums, products, quotients, and powers when each piece exists</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Algebraic toolkit</span>
+        <span class="row-val">factor, conjugate, clear fractions, or divide by the highest power</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Indeterminate forms</span>
+        <span class="row-val">\(\frac{0}{0}\), \(\frac{\infty}{\infty}\), \(0 \cdot \infty\), \(\infty - \infty\), \(1^\infty\), \(0^0\), \(\infty^0\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">L'Hôpital</span>
+        <span class="row-val">\(\lim \frac{f}{g} = \lim \frac{f'}{g'}\), only after confirming \(\frac{0}{0}\) or \(\frac{\infty}{\infty}\)</span>
+      </div>
+      <div class="row">
+        <span class="row-desc">Indeterminate vs. undefined</span>
+        <span class="row-val">\(\frac{0}{0}\) needs more work; \(\frac{k}{0}\) is already an infinite answer</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="../../physics/notes.js"></script>
+</body>
+</html>
